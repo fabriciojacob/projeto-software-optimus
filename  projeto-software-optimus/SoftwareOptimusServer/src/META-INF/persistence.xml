@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	<persistence-unit name="SoftwareOptimusServer" transaction-type="RESOURCE_LOCAL">
+	<class>br.com.softwareOptimus.entidades.Pessoa</class>
+		<class>br.com.softwareOptimus.comercial.Comercial</class>
+		<class>br.com.softwareOptimus.comercial.ComercialFiscais</class>
+		<class>br.com.softwareOptimus.comercial.ComercialInfComp</class>
+		<class>br.com.softwareOptimus.comercial.ComercialItens</class>
+		<class>br.com.softwareOptimus.comercial.Cotacao</class>
+		<class>br.com.softwareOptimus.comercial.CotacaoItens</class>
+		<class>br.com.softwareOptimus.comercial.PedidoComItens</class>
+		<class>br.com.softwareOptimus.comercial.PedidoCompra</class>
+		<class>br.com.softwareOptimus.comercial.PedidoFatur</class>
+		<class>br.com.softwareOptimus.comercial.PedidoFaturItens</class>
+		<class>br.com.softwareOptimus.comercial.RequisicaoItens</class>
+		<class>br.com.softwareOptimus.comercial.Requisicao</class>
+		<class>br.com.softwareOptimus.contabilidade.LancContabil</class>
+		<class>br.com.softwareOptimus.contabilidade.PlanoDeContas</class>
+		<class>br.com.softwareOptimus.contabilidade.PlanoDeContasRef</class>
+		<class>br.com.softwareOptimus.contabilidade.SaldoContas</class>
+		<class>br.com.softwareOptimus.contabilidade.SaldoContasCC</class>
+		<class>br.com.softwareOptimus.entidades.CenCusto</class>
+		<class>br.com.softwareOptimus.entidades.Email</class>
+		<class>br.com.softwareOptimus.entidades.Estado</class>
+		<class>br.com.softwareOptimus.entidades.Logradouro</class>
+		<class>br.com.softwareOptimus.entidades.Municipio</class>
+		<class>br.com.softwareOptimus.entidades.Pais</class>
+		<class>br.com.softwareOptimus.entidades.PessoaFisica</class>
+		<class>br.com.softwareOptimus.entidades.PessoaJuridica</class>
+		<class>br.com.softwareOptimus.entidades.Telefone</class>
+		<class>br.com.softwareOptimus.entidades.TipoPessoa</class>
+		<class>br.com.softwareOptimus.entidades.Usuario</class>
+		<class>br.com.softwareOptimus.estoque.Inventario</class>
+		<class>br.com.softwareOptimus.estoque.ProdutoEstoque</class>
+		<class>br.com.softwareOptimus.financeiro.Banco</class>
+		<class>br.com.softwareOptimus.financeiro.Caixa</class>
+		<class>br.com.softwareOptimus.financeiro.CondPgto</class>
+		<class>br.com.softwareOptimus.financeiro.Conta</class>
+		<class>br.com.softwareOptimus.financeiro.ContaCorrente</class>
+		<class>br.com.softwareOptimus.financeiro.ExtratoContaCorrente</class>
+		<class>br.com.softwareOptimus.financeiro.FormaPgto</class>
+		<class>br.com.softwareOptimus.financeiro.Titulo</class>
+		<class>br.com.softwareOptimus.financeiro.Vencimento</class>
+		<class>br.com.softwareOptimus.fiscal.Aliquota</class>
+		<class>br.com.softwareOptimus.fiscal.CodigoFiscalGenerico</class>
+		<class>br.com.softwareOptimus.fiscal.CodigoFiscalOperacao</class>
+		<class>br.com.softwareOptimus.fiscal.CodigoSituacaoTributaria</class>
+		<class>br.com.softwareOptimus.fiscal.CodTabelaGov</class>
+		<class>br.com.softwareOptimus.fiscal.FiguraFiscal</class>
+		<class>br.com.softwareOptimus.fiscal.GradeTributaria</class>
+		<class>br.com.softwareOptimus.fiscal.Ncm</class>
+		<class>br.com.softwareOptimus.fiscal.Vigencia</class>
+		<class>br.com.softwareOptimus.producao.Fases</class>
+		<class>br.com.softwareOptimus.producao.Impedimento</class>
+		<class>br.com.softwareOptimus.producao.ProdutoFilho</class>
+		<class>br.com.softwareOptimus.producao.ProdutoPrincipal</class>
+		<class>softwareOptimus.com.produto.Produto</class>
+		<class>softwareOptimus.com.produto.UnidMed</class>
+		<properties>
+			<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:xe" />
+			<property name="javax.persistence.jdbc.user" value="projeto" />
+			<property name="javax.persistence.jdbc.password" value="123" />
+			<property name="javax.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver" />
+			
+			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.format_sql" value="true" />
+		</properties>
+	</persistence-unit>
+</persistence>
