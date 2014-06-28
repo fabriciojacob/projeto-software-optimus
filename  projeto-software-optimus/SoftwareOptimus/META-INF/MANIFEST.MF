@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: SoftwareOptimus
+Bundle-SymbolicName: SoftwareOptimus
+Bundle-Version: 1.0.0.qualifier
+Export-Package: br.com.softwareOptimus.comercial,
+ br.com.softwareOptimus.contabilidade,
+ br.com.softwareOptimus.entidades,
+ br.com.softwareOptimus.entidades.RN,
+ br.com.softwareOptimus.entidades.dao.usuario,
+ br.com.softwareOptimus.estoque,
+ br.com.softwareOptimus.financeiro,
+ br.com.softwareOptimus.fiscal,
+ br.com.softwareOptimus.patrimonio,
+ br.com.softwareOptimus.producao,
+ br.com.softwareOptimus.util,
+ softwareOptimus.com.produto
