@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import br.com.softwareOptimus.entidades.Pessoa;
 
@@ -46,6 +48,7 @@ public class PlanoDeContas implements Serializable{
 	
 	private TipoConta tipoConta;
 	
+	@Temporal(TemporalType.DATE)
 	private Calendar datInclusao;
 
 	public Calendar getDatInclusao() {

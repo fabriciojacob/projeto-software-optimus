@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="tbVigencia")
@@ -15,6 +17,7 @@ public class Vigencia {
 	@GeneratedValue
 	private Long idVigencia;
 	
+	@Temporal(TemporalType.DATE)
 	private Date vigencia;
 	
 	@ManyToOne
