@@ -13,7 +13,7 @@ public class Teste {
 	public static void main(String[] args) {
 		EntityManagerFactory fac = Persistence.createEntityManagerFactory("persistence");
 		EntityManager em = fac.createEntityManager();
-		List<PessoaJuridica> retorno = new ArrayList<PessoaJuridica>();
+		List<PessoaJuridica> retorno = new ArrayList<>();
 		String consulta = "Select p from PessoaJuridica p";
 		Query query = em.createQuery(consulta,
 				PessoaJuridica.class);
