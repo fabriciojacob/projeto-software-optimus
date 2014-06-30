@@ -10,9 +10,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import br.com.softwareOptimus.com.produto.Produto;
 import br.com.softwareOptimus.fiscal.CodigoFiscalOperacao;
 
-import softwareOptimus.com.produto.Produto;
 
 
 @Entity
