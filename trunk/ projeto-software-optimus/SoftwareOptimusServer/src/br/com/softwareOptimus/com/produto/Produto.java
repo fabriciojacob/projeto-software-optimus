@@ -1,4 +1,4 @@
-package softwareOptimus.com.produto;
+package br.com.softwareOptimus.com.produto;
 
 import java.io.Serializable;
 import javax.persistence.Column;
