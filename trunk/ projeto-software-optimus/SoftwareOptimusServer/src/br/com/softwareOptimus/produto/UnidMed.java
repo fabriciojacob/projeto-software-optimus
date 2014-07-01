@@ -1,4 +1,4 @@
-package br.com.softwareOptimus.com.produto;
+package br.com.softwareOptimus.produto;
 
 import java.io.Serializable;
 import java.util.Collection;

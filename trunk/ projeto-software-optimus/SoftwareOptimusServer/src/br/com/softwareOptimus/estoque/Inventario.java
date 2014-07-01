@@ -12,8 +12,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import br.com.softwareOptimus.com.produto.Produto;
 import br.com.softwareOptimus.entidades.PessoaJuridica;
+import br.com.softwareOptimus.produto.Produto;
 
 
 
