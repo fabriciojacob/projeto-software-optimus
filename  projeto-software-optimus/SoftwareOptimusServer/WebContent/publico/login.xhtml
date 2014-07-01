@@ -11,12 +11,24 @@
 </h:head>
 <h:body>
 	<h:form id="login">
-		<h:panelGrid columns="4" cellpadding="5">
-			<h:outputLabel for="name" value="Name:" style="font-weight:bold" />
-			<p:inputText id="name" value="#{basicView.text}" />
-			<p:commandButton value="Submit" update="display" icon="ui-icon-check" />
-			<h:outputText id="display" value="#{basicView.text}" />
-		</h:panelGrid>
+		<div align="center">
+			<h:messages />
+			<h:panelGrid columns="2" cellpadding="5">
+			
+				<h:outputLabel for="login" value="Login: " style="font-weight:bold" />
+				<p:inputText id="login" value="#{usuarioBean.usuario.login}"
+					size="15" maxlength="15" required="true"
+					validadorMessage="Login requer no mínimo 5 e no máximo 15 caracteres e só pode ter os símbolos
+				'.' e '_'">
+					<f:validateRegex pattern="([a-z]|[0-15][.]|[_]){5,15}" />
+				</p:inputText>
+				
+				<h:outputLabel for="senha" value="Senha: " style="font-weight:bold" />
+				<p:password id="senha" value="#{usuarioBean.usuario.password}"
+					size="15" maxlength="15" required="true" redisplay="true" />
+			</h:panelGrid>
+			<p:commandButton value="Entrar" update="login" icon="ui-icon-check" />
+		</div>
 	</h:form>
 </h:body>
 </html>
