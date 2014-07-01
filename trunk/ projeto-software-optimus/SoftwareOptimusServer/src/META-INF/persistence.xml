@@ -53,8 +53,8 @@
 		<class>br.com.softwareOptimus.producao.Impedimento</class>
 		<class>br.com.softwareOptimus.producao.ProdutoFilho</class>
 		<class>br.com.softwareOptimus.producao.ProdutoPrincipal</class>
-		<class>br.com.softwareOptimus.com.produto.Produto</class>
-		<class>br.com.softwareOptimus.com.produto.UnidMed</class>
+		<class>br.com.softwareOptimus.produto.Produto</class>
+		<class>br.com.softwareOptimus.produto.UnidMed</class>
 		<class>br.com.softwareOptimus.entidades.Pessoa</class>
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:xe" />
