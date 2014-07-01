@@ -1,7 +1,7 @@
 package br.com.softwareOptimus.entidades;
 
+import java.io.Serializable;
 import java.util.Collection;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -10,31 +10,26 @@ import javax.persistence.Table;
 
 import br.com.softwareOptimus.comercial.Requisicao;
 
-
-
 @Entity
 @Table(name="tbUsuario")
-public class Usuario {
+public class Usuario implements Serializable{	 
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7940469917784244437L;
 
 	@Id
 	@GeneratedValue
 	private Long idUsuario;
 	
-	private String Nome;
+	private String login;
 	
-	private String Senha;
+	private String password;
 	
-	private String Email;
+	private String email;
 	
-	//public Void UsuarioView(Long idUsuario, String Nome){
-	//	this.idUsuario = idUsuario;
-	//	this.Nome = Nome;
-	//	return null;
-	//}
-	
-	public void setEmail(String email) {
-		Email = email;
-	}
+	private boolean ativo;
 
 	@OneToMany(mappedBy ="UsuRequisita")
 	private Collection<Requisicao> requisicao;	
@@ -47,26 +42,45 @@ public class Usuario {
 		this.idUsuario = idUsuario;
 	}
 
-	public String getNome() {
-		return Nome;
+	public String getLogin() {
+		return login;
 	}
 
-	public void setNome(String nome) {
-		Nome = nome;
-	}
-	
-	public String getSenha() {
-		return Senha;
+	public void setLogin(String login) {
+		this.login = login;
 	}
 
-	public void setSenha(String senha) {
-		Senha = senha;
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getEmail() {
-		return Email;
+		return email;
 	}
 
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
+	}
+
+	public Collection<Requisicao> getRequisicao() {
+		return requisicao;
+	}
+
+	public void setRequisicao(Collection<Requisicao> requisicao) {
+		this.requisicao = requisicao;
+	}
 
 	@Override
 	public int hashCode() {
