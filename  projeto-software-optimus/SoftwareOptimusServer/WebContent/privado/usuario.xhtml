@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+</h:head>
+<body>
+	<h:form>
+		<div align="center">
+			<h:inputHidden value="#{usuarioBean.usuario.idUsuario}" />
+			<h:inputHidden value="#{usuarioBean.usuario.ativo}" />
+			<p:panelGrid style="margin-top:20px" columns="2">
+				<f:facet name="header">
+					<p:row>
+						<p:column colspan="7">Cadastro de Usuario</p:column>
+					</p:row>
+				</f:facet>
+
+				<h:outputLabel for="nome" value="Nome: "
+					style="font-size: 13px;font-weight:bold" />
+				<p:inputText id="nome" value="#{usuarioBean.usuario.nome}"
+					style="font-size: 13px" />
+
+				<h:outputLabel for="login" value="Login: "
+					style="font-size: 13px;font-weight:bold" />
+				<p:inputText id="login" value="#{usuarioBean.usuario.login}"
+					maxlength="15" required="true"
+					validadorMessage="Login requer no mínimo 5 e no máximo 15 caracteres e só pode ter os símbolos
+				'.' e '_'"
+					style="font-size: 13px">
+					<f:validateRegex pattern="([a-z]|[0-15][.]|[_]){5,15}" />
+				</p:inputText>
+
+				<h:outputLabel for="senha" value="Senha: "
+					style="font-size:13px;font-weight:bold" />
+				<p:password id="senha" value="#{usuarioBean.usuario.password}"
+					maxlength="15" required="true" redisplay="true" feedback="true"
+					inline="true" />
+
+				<h:outputLabel for="confSenha" value="Confirmar Senha: "
+					style="font-size:13px;font-weight:bold" />
+				<p:password id="confSenha" value="#{usuarioBean.confirmarSenha}"
+					maxlength="15" required="true" redisplay="true" feedback="true"
+					inline="true" style="font-size:13px;font-weight:bold" />
+
+				<h:outputLabel for="adm" value="Administrador: "
+					style="font-size:13px;font-weight:bold" />
+				<p:selectBooleanCheckbox value="#{usuarioBean.usuario.adm}" />
+			</p:panelGrid>
+			<h:panelGrid columns="2">
+				<p:commandButton value="Save"
+					style="font-size: 13px;font-weight:bold">
+					<p:dialog widgetVar="dlg2" modal="true" height="100">
+						<h:outputText value="Cadastro salvo com sucesso"
+							style="font-size: 13px;font-weight:bold" />
+					</p:dialog>
+				</p:commandButton>
+				<p:commandButton value="Cancelar"
+					style="font-size:13px;font-weight:bold" />
+			</h:panelGrid>
+		</div>
+	</h:form>
+</body>
+</html>
