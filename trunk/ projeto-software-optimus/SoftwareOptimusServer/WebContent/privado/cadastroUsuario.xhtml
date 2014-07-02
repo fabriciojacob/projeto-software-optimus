@@ -10,7 +10,7 @@
 	<ui:define name="cabecalho">
 		<ui:include src="menu.xhtml" />
 	</ui:define>
-	
+
 	<ui:define name="conteudo">
 		<h:form>
 			<div align="center">
@@ -23,39 +23,45 @@
 						</p:row>
 					</f:facet>
 
-					<h:outputLabel for="nome" value="Nome: " style="font-weight:bold" />
-					<p:inputText id="nome" value="#{usuarioBean.usuario.nome}" />
+					<h:outputLabel for="nome" value="Nome: "
+						style="font-size: 13px;font-weight:bold" />
+					<p:inputText id="nome" value="#{usuarioBean.usuario.nome}"
+						style="font-size: 13px" />
 
-					<h:outputLabel for="login" value="Login: " style="font-weight:bold" />
+					<h:outputLabel for="login" value="Login: "
+						style="font-size: 13px;font-weight:bold" />
 					<p:inputText id="login" value="#{usuarioBean.usuario.login}"
 						maxlength="15" required="true"
 						validadorMessage="Login requer no mínimo 5 e no máximo 15 caracteres e só pode ter os símbolos
-				'.' e '_'">
+				'.' e '_'"
+						style="font-size: 13px">
 						<f:validateRegex pattern="([a-z]|[0-15][.]|[_]){5,15}" />
 					</p:inputText>
 
-					<h:outputLabel for="senha" value="Senha: " style="font-weight:bold" />
+					<h:outputLabel for="senha" value="Senha: "
+						style="font-size:13px;font-weight:bold" />
 					<p:password id="senha" value="#{usuarioBean.usuario.password}"
 						maxlength="15" required="true" redisplay="true" feedback="true"
 						inline="true" />
 
 					<h:outputLabel for="confSenha" value="Confirmar Senha: "
-						style="font-weight:bold" />
+						style="font-size:13px;font-weight:bold" />
 					<p:password id="confSenha" value="#{usuarioBean.confirmarSenha}"
 						maxlength="15" required="true" redisplay="true" feedback="true"
-						inline="true" />
+						inline="true" style="font-size:13px;font-weight:bold" />
 
 					<h:outputLabel for="adm" value="Administrador: "
-						style="font-weight:bold" />
+						style="font-size:13px;font-weight:bold" />
 					<p:selectBooleanCheckbox value="#{usuarioBean.usuario.adm}" />
 				</p:panelGrid>
 				<h:panelGrid columns="2">
-					<p:commandButton value="Save">
+					<p:commandButton value="Save" style="font-size: 13px;font-weight:bold">
 						<p:dialog widgetVar="dlg2" modal="true" height="100">
-							<h:outputText value="Cadastro salvo com sucesso" />
+							<h:outputText value="Cadastro salvo com sucesso"
+								style="font-size: 13px;font-weight:bold" />
 						</p:dialog>
 					</p:commandButton>
-					<p:commandButton value="Cancelar" />
+					<p:commandButton value="Cancelar" style="font-size:13px;font-weight:bold" />
 				</h:panelGrid>
 			</div>
 		</h:form>
