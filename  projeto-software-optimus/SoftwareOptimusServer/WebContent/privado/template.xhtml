@@ -1,0 +1,28 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a4j="http://richfaces.org/a4j" 
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<ui:insert name="head">
+		<link rel="StyleSheet" type="text/css" href="${pageContext.request.contextPath}/css/fonte.css" 
+		media="screen"/>
+	</ui:insert>
+</h:head>
+
+<h:body>
+	<h:form id="form">
+		<table width="100%">
+			<tr>
+				<td colspan="2" align="center">
+				<ui:insert name="cabecalho">
+				</ui:insert></td>
+			</tr>
+			<tr>
+				<td>
+				<ui:insert name="conteudo">
+				</ui:insert></td>
+			</tr>
+		</table>
+	</h:form>
+</h:body>
+</html>
