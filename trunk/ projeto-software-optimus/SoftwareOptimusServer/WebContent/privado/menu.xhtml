@@ -5,34 +5,34 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
+ 
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
-	<link rel="StyleSheet" type="text/css" href="/css/fonte.css"
-		media="screen" />
+<h:outputStylesheet library="css" name="fonte.css" />
 </h:head>
 <h:body>
 	<h:form>
 		<div align="center">
 			<h:form>
 				<p:menubar>
-					<p:submenu label="Cadastros Gerais" style="font-size: 13px">
+					<p:submenu label="Cadastros Gerais">
 						<p:menuitem value="Cadastro de Usuario" url="cadastroUsuario.jsf"
-							style="font-size: 13px" />
+							/>
 						<p:menuitem value="Cadastro de Empresa" url="#"
-							style="font-size: 13px" />
+							 />
 						<p:separator />
 					</p:submenu>
 
-					<p:submenu label="Cadastros Financeiros" style="font-size: 13px">
+					<p:submenu label="Cadastros Financeiros">
 						<p:menuitem value="Cadastro de conta" url="#"
-							style="font-size: 13px" />
+							 />
 						<p:menuitem value="Cadastro de Banco" url="#"
-							style="font-size: 13px" />
+							 />
 					</p:submenu>
 
 					<f:facet name="options">
 						<p:commandButton type="button" value="Sair" icon="ui-icon-extlink"
-							style="font-size: 13px" />
+							 />
 					</f:facet>
 				</p:menubar>
 			</h:form>

@@ -17,3 +17,4 @@ Export-Package: br.com.softwareOptimus.comercial,
  br.com.softwareOptimus.producao,
  br.com.softwareOptimus.produto,
  br.com.softwareOptimus.util
+Import-Package: javax.servlet
