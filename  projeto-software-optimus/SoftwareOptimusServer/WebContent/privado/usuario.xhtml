@@ -7,7 +7,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
-
+<h:outputStylesheet library="css" name="fonte.css" />
 </h:head>
 <body>
 	<h:form>
@@ -22,12 +22,12 @@
 				</f:facet>
 
 				<h:outputLabel for="nome" value="Nome: "
-					style="font-size: 13px;font-weight:bold" />
+					/>
 				<p:inputText id="nome" value="#{usuarioBean.usuario.nome}"
-					style="font-size: 13px" />
+					/>
 
 				<h:outputLabel for="login" value="Login: "
-					style="font-size: 13px;font-weight:bold" />
+					/>
 				<p:inputText id="login" value="#{usuarioBean.usuario.login}"
 					maxlength="15" required="true"
 					validadorMessage="Login requer no mínimo 5 e no máximo 15 caracteres e só pode ter os símbolos
@@ -43,10 +43,10 @@
 					inline="true" />
 
 				<h:outputLabel for="confSenha" value="Confirmar Senha: "
-					style="font-size:13px;font-weight:bold" />
+					 />
 				<p:password id="confSenha" value="#{usuarioBean.confirmarSenha}"
 					maxlength="15" required="true" redisplay="true" feedback="true"
-					inline="true" style="font-size:13px;font-weight:bold" />
+					inline="true" />
 
 				<h:outputLabel for="adm" value="Administrador: "
 					style="font-size:13px;font-weight:bold" />
@@ -57,11 +57,11 @@
 					style="font-size: 13px;font-weight:bold">
 					<p:dialog widgetVar="dlg2" modal="true" height="100">
 						<h:outputText value="Cadastro salvo com sucesso"
-							style="font-size: 13px;font-weight:bold" />
+							 />
 					</p:dialog>
 				</p:commandButton>
 				<p:commandButton value="Cancelar"
-					style="font-size:13px;font-weight:bold" />
+					/>
 			</h:panelGrid>
 		</div>
 	</h:form>
