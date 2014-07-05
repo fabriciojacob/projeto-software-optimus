@@ -31,13 +31,11 @@
 				<p:inputText id="login" value="#{usuarioBean.usuario.login}"
 					maxlength="15" required="true"
 					validadorMessage="Login requer no mínimo 5 e no máximo 15 caracteres e só pode ter os símbolos
-				'.' e '_'"
-					style="font-size: 13px">
+				'.' e '_'">
 					<f:validateRegex pattern="([a-z]|[0-15][.]|[_]){5,15}" />
 				</p:inputText>
 
-				<h:outputLabel for="senha" value="Senha: "
-					style="font-size:13px;font-weight:bold" />
+				<h:outputLabel for="senha" value="Senha: "/>
 				<p:password id="senha" value="#{usuarioBean.usuario.password}"
 					maxlength="15" required="true" redisplay="true" feedback="true"
 					inline="true" />
@@ -48,13 +46,11 @@
 					maxlength="15" required="true" redisplay="true" feedback="true"
 					inline="true" />
 
-				<h:outputLabel for="adm" value="Administrador: "
-					style="font-size:13px;font-weight:bold" />
+				<h:outputLabel for="adm" value="Administrador: "/>
 				<p:selectBooleanCheckbox value="#{usuarioBean.usuario.adm}" />
 			</p:panelGrid>
 			<h:panelGrid columns="2">
-				<p:commandButton value="Save"
-					style="font-size: 13px;font-weight:bold">
+				<p:commandButton value="Save">
 					<p:dialog widgetVar="dlg2" modal="true" height="100">
 						<h:outputText value="Cadastro salvo com sucesso"
 							 />
