@@ -7,7 +7,7 @@ import javax.persistence.Persistence;
 
 public class JpaUtil {
 
-	private static final String PERSISTENCE_UNIT = "megatron";
+	private static final String PERSISTENCE_UNIT = "SoftwareOptimusServer";
 
 	private static ThreadLocal<EntityManager> threadEntityManager = new ThreadLocal<>();
 

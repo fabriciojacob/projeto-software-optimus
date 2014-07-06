@@ -13,7 +13,7 @@ import javax.servlet.ServletResponse;
 import br.com.softwareOptimus.util.JpaUtil;
 
 public class ConexaoHibernateFilter implements Filter {
-	private EntityManager session;
+	private EntityManager session ;
 
 	@Override
 	public void destroy() {

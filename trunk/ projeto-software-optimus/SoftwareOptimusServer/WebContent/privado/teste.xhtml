@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<h:outputStylesheet library="css" name="fonte.css" />
+</h:head>
+<body>
+	<h:form>
+		<p:panelGrid style="margin-top:20px" columns="2">
+			<f:facet name="header">
+				<p:row>
+					<p:column colspan="7">Cadastro de Usuario</p:column>
+				</p:row>
+			</f:facet>
+
+			Nome:
+			<p:inputText id="nome" value="#{usuarioBean.usuario.nome}" />
+
+			Login:
+			<p:inputText id="login" value="#{usuarioBean.usuario.login}" />
+
+			Senha:
+			<p:password id="senha" value="#{usuarioBean.usuario.password}" />
+
+			Confirmar senha:
+			<p:password id="confSenha" value="#{usuarioBean.confirmarSenha}" />
+
+			Administrador:
+			<p:selectBooleanCheckbox value="#{usuarioBean.usuario.adm}" />
+
+			<h:commandButton value="Salvar" action="#{usuarioBean.salvar}" />
+			<h:commandButton value="Cancelar" />
+		</p:panelGrid>
+	</h:form>
+</body>
+</html>
