@@ -1,9 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<persistence version="2.0"
-	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
-	<persistence-unit name="SoftwareOptimusServer"
-		transaction-type="RESOURCE_LOCAL">
+<?xml version="1.0" encoding="UTF-8"?><persistence xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	<persistence-unit name="SoftwareOptimusServer" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<class>br.com.softwareOptimus.comercial.Comercial</class>
 		<class>br.com.softwareOptimus.comercial.ComercialFiscais</class>
 		<class>br.com.softwareOptimus.comercial.ComercialInfComp</class>
@@ -59,15 +56,68 @@
 		<class>br.com.softwareOptimus.produto.Produto</class>
 		<class>br.com.softwareOptimus.produto.UnidMed</class>
 		<class>br.com.softwareOptimus.entidades.Pessoa</class>
+        <class>model.TbCotacao</class>
+        <class>model.TbCotacaoIten</class>
+        <class>model.TbAliquota</class>
+        <class>model.TbBanco</class>
+        <class>model.TbCFOP</class>
+        <class>model.TbCST</class>
+        <class>model.TbCaixa</class>
+        <class>model.TbCenCusto</class>
+        <class>model.TbCodTableGov</class>
+        <class>model.TbComFiscai</class>
+        <class>model.TbComInfComp</class>
+        <class>model.TbComIten</class>
+        <class>model.TbComercial</class>
+        <class>model.TbCondPgto</class>
+        <class>model.TbConta</class>
+        <class>model.TbContaCorrente</class>
+        <class>model.TbEmail</class>
+        <class>model.TbEstado</class>
+        <class>model.TbExtratoConta</class>
+        <class>model.TbFas</class>
+        <class>model.TbFigFiscal</class>
+        <class>model.TbFormPgto</class>
+        <class>model.TbGradeTributaria</class>
+        <class>model.TbImpedimento</class>
+        <class>model.TbInventario</class>
+        <class>model.TbLancContabil</class>
+        <class>model.TbLogradouro</class>
+        <class>model.TbMunicipio</class>
+        <class>model.TbNCM</class>
+        <class>model.TbPai</class>
+        <class>model.TbPedFaturIten</class>
+        <class>model.TbPedidoComIten</class>
+        <class>model.TbPedidoCompra</class>
+        <class>model.TbPedidoFatur</class>
+        <class>model.TbPessoa</class>
+        <class>model.TbPessoaFisica</class>
+        <class>model.TbPessoaJuridica</class>
+        <class>model.TbPlanoDeContaRef</class>
+        <class>model.TbPlanodeConta</class>
+        <class>model.TbProdFilho</class>
+        <class>model.TbProduto</class>
+        <class>model.TbProdutoEstoque</class>
+        <class>model.TbProdutoPrin</class>
+        <class>model.TbRequisItem</class>
+        <class>model.TbRequisicao</class>
+        <class>model.TbSaldoConta</class>
+        <class>model.TbTelefone</class>
+        <class>model.TbTipoPessoa</class>
+        <class>model.TbTitulo</class>
+        <class>model.TbUnidMed</class>
+        <class>model.TbUsuario</class>
+        <class>model.TbVencimento</class>
+        <class>model.TbVigencia</class>
 		<properties>
-			<property name=" javax.persistence.jdbc.driver " value="org.postgresql.Driver" />
-			<property name=" javax.persistence.jdbc.user " value="projeto" />
-			<property name=" javax.persistence.jdbc.password " value="1234 " />
-			<property name=" javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/projeto" />
+			<property name=" javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+			<property name=" javax.persistence.jdbc.user" value="root"/>
+			<property name=" javax.persistence.jdbc.password" value="root"/>
+			<property name=" javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/projeto"/>
 
-			<property name="hibernate.hbm2ddl.auto" value="update" />
-			<property name="hibernate.show_sql" value="true" />
-			<property name="hibernate.format_sql" value="true" />
+			<property name="hibernate.hbm2ddl.auto" value="update"/>
+			<property name="hibernate.show_sql" value="true"/>
+			<property name="hibernate.format_sql" value="true"/>
 		</properties>
 	</persistence-unit>
 </persistence>
