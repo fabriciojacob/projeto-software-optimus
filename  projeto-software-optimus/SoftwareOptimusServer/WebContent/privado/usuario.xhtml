@@ -7,7 +7,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
-<h:outputStylesheet library="css" name="fonte.css" />
+	<h:outputStylesheet library="css" name="fonte.css" />
 </h:head>
 <body>
 	<h:form>
@@ -21,44 +21,34 @@
 					</p:row>
 				</f:facet>
 
-				<h:outputLabel for="nome" value="Nome: "
-					/>
-				<p:inputText id="nome" value="#{usuarioBean.usuario.nome}"
-					/>
+				Nome:
+				<p:inputText id="nome" value="#{usuarioBean.usuario.nome}" />
 
-				<h:outputLabel for="login" value="Login: "
-					/>
+				Login:
 				<p:inputText id="login" value="#{usuarioBean.usuario.login}"
-					maxlength="15" required="true"
-					validadorMessage="Login requer no mínimo 5 e no máximo 15 caracteres e só pode ter os símbolos
-				'.' e '_'">
-					<f:validateRegex pattern="([a-z]|[0-15][.]|[_]){5,15}" />
-				</p:inputText>
+					maxlength="15" required="true"/>
 
-				<h:outputLabel for="senha" value="Senha: "/>
+				Senha:
 				<p:password id="senha" value="#{usuarioBean.usuario.password}"
 					maxlength="15" required="true" redisplay="true" feedback="true"
 					inline="true" />
 
-				<h:outputLabel for="confSenha" value="Confirmar Senha: "
-					 />
+				Confirmar Senha:
 				<p:password id="confSenha" value="#{usuarioBean.confirmarSenha}"
 					maxlength="15" required="true" redisplay="true" feedback="true"
 					inline="true" />
 
-				<h:outputLabel for="adm" value="Administrador: "/>
+				Administrador:
 				<p:selectBooleanCheckbox value="#{usuarioBean.usuario.adm}" />
 			</p:panelGrid>
-			<h:panelGrid columns="2">
-				<p:commandButton value="Save">
+			<p:panelGrid columns="2">
+				<h:commandButton value="Salvar" action="#{usuarioBean.salvar}">
 					<p:dialog widgetVar="dlg2" modal="true" height="100">
-						<h:outputText value="Cadastro salvo com sucesso"
-							 />
+						<p:outputLabel value="Cadastro salvo com sucesso" />
 					</p:dialog>
-				</p:commandButton>
-				<p:commandButton value="Cancelar"
-					/>
-			</h:panelGrid>
+				</h:commandButton>
+				<h:commandButton value="Cancelar" />
+			</p:panelGrid>
 		</div>
 	</h:form>
 </body>

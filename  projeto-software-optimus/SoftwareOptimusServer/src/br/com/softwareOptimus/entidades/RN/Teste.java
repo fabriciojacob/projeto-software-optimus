@@ -7,6 +7,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import br.com.softwareOptimus.entidades.PessoaJuridica;
+import br.com.softwareOptimus.util.JpaUtil;
 
 public class Teste {
 	
