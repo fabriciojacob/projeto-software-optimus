@@ -12,8 +12,8 @@ import br.com.softwareOptimus.util.JpaUtil;
 public class Teste {
 	
 	public static void main(String[] args) {
-		EntityManagerFactory fac = Persistence.createEntityManagerFactory("SoftwareOptimusServer");
-		EntityManager em = fac.createEntityManager();
+		EntityManager em = JpaUtil.getEntityManager();
+		em.getTransaction().begin();
 		/*List<PessoaJuridica> retorno = new ArrayList<>();
 		String consulta = "Select p from PessoaJuridica p";
 		Query query = em.createQuery(consulta,

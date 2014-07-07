@@ -26,7 +26,7 @@
 
 				Login:
 				<p:inputText id="login" value="#{usuarioBean.usuario.login}"
-					maxlength="15" required="true"/>
+					maxlength="15" required="true" />
 
 				Senha:
 				<p:password id="senha" value="#{usuarioBean.usuario.password}"
@@ -40,14 +40,10 @@
 
 				Administrador:
 				<p:selectBooleanCheckbox value="#{usuarioBean.usuario.adm}" />
-			</p:panelGrid>
-			<p:panelGrid columns="2">
-				<h:commandButton value="Salvar" action="#{usuarioBean.salvar}">
-					<p:dialog widgetVar="dlg2" modal="true" height="100">
-						<p:outputLabel value="Cadastro salvo com sucesso" />
-					</p:dialog>
-				</h:commandButton>
-				<h:commandButton value="Cancelar" />
+				<p:commandButton value="Salvar"
+					actionListener="#{usuarioBean.salvar}" />
+				<p:commandButton value="Cancelar" />
+
 			</p:panelGrid>
 		</div>
 	</h:form>

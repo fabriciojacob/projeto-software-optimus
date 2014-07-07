@@ -17,14 +17,6 @@
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>*.jsf</url-pattern>
 	</servlet-mapping>
-	<filter>
-		<filter-name>conexaoFilter</filter-name>
-		<filter-class>br.com.softwareOptimus.filter.ConexaoHibernateFilter</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>conexaoFilter</filter-name>
-		<url-pattern>*.jsf</url-pattern>
-	</filter-mapping>
 	<servlet-mapping>
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>*.xhtml</url-pattern>

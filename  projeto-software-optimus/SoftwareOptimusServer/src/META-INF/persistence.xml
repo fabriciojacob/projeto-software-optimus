@@ -56,59 +56,6 @@
 		<class>br.com.softwareOptimus.produto.Produto</class>
 		<class>br.com.softwareOptimus.produto.UnidMed</class>
 		<class>br.com.softwareOptimus.entidades.Pessoa</class>
-        <class>model.TbCotacao</class>
-        <class>model.TbCotacaoIten</class>
-        <class>model.TbAliquota</class>
-        <class>model.TbBanco</class>
-        <class>model.TbCFOP</class>
-        <class>model.TbCST</class>
-        <class>model.TbCaixa</class>
-        <class>model.TbCenCusto</class>
-        <class>model.TbCodTableGov</class>
-        <class>model.TbComFiscai</class>
-        <class>model.TbComInfComp</class>
-        <class>model.TbComIten</class>
-        <class>model.TbComercial</class>
-        <class>model.TbCondPgto</class>
-        <class>model.TbConta</class>
-        <class>model.TbContaCorrente</class>
-        <class>model.TbEmail</class>
-        <class>model.TbEstado</class>
-        <class>model.TbExtratoConta</class>
-        <class>model.TbFas</class>
-        <class>model.TbFigFiscal</class>
-        <class>model.TbFormPgto</class>
-        <class>model.TbGradeTributaria</class>
-        <class>model.TbImpedimento</class>
-        <class>model.TbInventario</class>
-        <class>model.TbLancContabil</class>
-        <class>model.TbLogradouro</class>
-        <class>model.TbMunicipio</class>
-        <class>model.TbNCM</class>
-        <class>model.TbPai</class>
-        <class>model.TbPedFaturIten</class>
-        <class>model.TbPedidoComIten</class>
-        <class>model.TbPedidoCompra</class>
-        <class>model.TbPedidoFatur</class>
-        <class>model.TbPessoa</class>
-        <class>model.TbPessoaFisica</class>
-        <class>model.TbPessoaJuridica</class>
-        <class>model.TbPlanoDeContaRef</class>
-        <class>model.TbPlanodeConta</class>
-        <class>model.TbProdFilho</class>
-        <class>model.TbProduto</class>
-        <class>model.TbProdutoEstoque</class>
-        <class>model.TbProdutoPrin</class>
-        <class>model.TbRequisItem</class>
-        <class>model.TbRequisicao</class>
-        <class>model.TbSaldoConta</class>
-        <class>model.TbTelefone</class>
-        <class>model.TbTipoPessoa</class>
-        <class>model.TbTitulo</class>
-        <class>model.TbUnidMed</class>
-        <class>model.TbUsuario</class>
-        <class>model.TbVencimento</class>
-        <class>model.TbVigencia</class>
 		<properties>
 			<property name=" javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
 			<property name=" javax.persistence.jdbc.user" value="root"/>

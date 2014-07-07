@@ -35,7 +35,7 @@ public class UsuarioBean {
 		return "usuario";
 	}
 
-	public String salvar() {
+	public void salvar() {
 		FacesContext context = FacesContext.getCurrentInstance();
 
 		String senha = this.usuario.getPassword();
@@ -43,13 +43,10 @@ public class UsuarioBean {
 			FacesMessage facesMessage = new FacesMessage(
 					"A senha não foi confirmada corretamente");
 			context.addMessage(null, facesMessage);
-			return null;
 		}
 
 		UsuarioRN usuarioRN = new UsuarioRN();
 		usuarioRN.salvar(this.usuario);
-
-		return "usuarioSucesso";
 	}
 
 }

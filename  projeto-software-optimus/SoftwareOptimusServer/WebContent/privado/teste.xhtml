@@ -11,31 +11,39 @@
 </h:head>
 <body>
 	<h:form>
-		<p:panelGrid style="margin-top:20px" columns="2">
-			<f:facet name="header">
-				<p:row>
-					<p:column colspan="7">Cadastro de Usuario</p:column>
-				</p:row>
-			</f:facet>
-
+		<div align="center">
+			<h:inputHidden value="#{usuarioBean.usuario.idUsuario}" />
+			<h:inputHidden value="#{usuarioBean.usuario.ativo}" />
+			<h:panelGrid style="margin-top:20px" columns="2">
+				<f:facet name="header">
+					<p:row>
+						<p:column colspan="7">Cadastro de Usuario</p:column>
+					</p:row>
+				</f:facet>
+		
 			Nome:
 			<p:inputText id="nome" value="#{usuarioBean.usuario.nome}" />
 
 			Login:
-			<p:inputText id="login" value="#{usuarioBean.usuario.login}" />
+			<p:inputText id="login" value="#{usuarioBean.usuario.login}"
+			maxlength="15" required="true"  />
 
 			Senha:
-			<p:password id="senha" value="#{usuarioBean.usuario.password}" />
+			<p:password id="senha" value="#{usuarioBean.usuario.password}"
+					maxlength="15" required="true" redisplay="true" feedback="true"
+					inline="true" />
 
 			Confirmar senha:
-			<p:password id="confSenha" value="#{usuarioBean.confirmarSenha}" />
+			<p:password id="confSenha" value="#{usuarioBean.confirmarSenha}"
+					maxlength="15" required="true" redisplay="true" feedback="true"
+					inline="true" />
 
-			Administrador:
-			<p:selectBooleanCheckbox value="#{usuarioBean.usuario.adm}" />
 
-			<h:commandButton value="Salvar" action="#{usuarioBean.salvar}" />
-			<h:commandButton value="Cancelar" />
-		</p:panelGrid>
+				<p:commandButton value="Salvar"
+					actionListener="#{usuarioBean.salvar}" />
+				<p:commandButton value="Cancelar" />
+			</h:panelGrid>
+		</div>
 	</h:form>
 </body>
 </html>
