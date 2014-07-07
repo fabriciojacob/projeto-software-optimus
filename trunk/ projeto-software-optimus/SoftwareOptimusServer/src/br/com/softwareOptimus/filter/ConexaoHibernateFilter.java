@@ -13,7 +13,7 @@ import javax.servlet.ServletResponse;
 import br.com.softwareOptimus.util.JpaUtil;
 
 public class ConexaoHibernateFilter implements Filter {
-	private EntityManager session ;
+	//private EntityManager session ;
 
 	@Override
 	public void destroy() {
@@ -24,11 +24,11 @@ public class ConexaoHibernateFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
 			FilterChain chain) throws IOException, ServletException {
-		try{
+		/*try{
 			this.session.getTransaction().begin();
 			chain.doFilter(servletRequest, servletResponse);
 			this.session.getTransaction().commit();
-			this.session.close();
+			//this.session.close();
 		}catch (Throwable ex){
 			try{
 				if(this.session.getTransaction().isActive()){
@@ -40,12 +40,12 @@ public class ConexaoHibernateFilter implements Filter {
 			throw new ServletException(ex);
 		}
 		
-		destroy();
+		destroy();*/
 	}
 
 	@Override
 	public void init(FilterConfig arg0) throws ServletException {
-		this.session = JpaUtil.getEntityManager();
+		//this.session = JpaUtil.getEntityManager();
 		
 	}
 

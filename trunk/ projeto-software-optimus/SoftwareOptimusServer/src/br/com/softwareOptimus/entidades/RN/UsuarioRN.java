@@ -4,6 +4,7 @@ import java.util.List;
 
 import br.com.softwareOptimus.entidades.Usuario;
 import br.com.softwareOptimus.entidades.dao.usuario.UsuarioDAO;
+import br.com.softwareOptimus.entidades.dao.usuario.UsuarioDAOHibernate;
 import br.com.softwareOptimus.util.DAOFactory;
 
 public class UsuarioRN {

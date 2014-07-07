@@ -1,18 +1,24 @@
 package br.com.softwareOptimus.entidades.dao.usuario;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import br.com.softwareOptimus.entidades.Usuario;
+import br.com.softwareOptimus.util.JpaUtil;
 
 public class UsuarioDAOHibernate implements UsuarioDAO {
 
 	private EntityManager session;
+	private EntityTransaction transaction;
 
 	@Override
 	public void salvar(Usuario usuario) {
 		this.session.persist(usuario);
+		this.transaction.commit();
 
 	}
 
@@ -56,6 +62,15 @@ public class UsuarioDAOHibernate implements UsuarioDAO {
 
 	public void setSession(EntityManager session) {
 		this.session = session;
+	}
+
+	public void begin() throws IOException, SQLException {
+
+		this.transaction = session.getTransaction();
+
+		if (!transaction.isActive()) {
+			transaction.begin();
+		}
 	}
 
 }
