@@ -19,8 +19,18 @@ public class UsuarioRN {
 		return this.usuarioDAO.carregar(codigo);
 	}
 	
-	public Usuario buscarPorLogin(String login){
-		return this.usuarioDAO.buscaPorLogin(login);
+	public int buscarPorLogin(String login, String senha){
+		int check;
+		Usuario usuario = this.usuarioDAO.buscaPorLogin(login, senha);
+		if(usuario == null){
+			check =0;
+		}else if(!usuario.isAtivo()){
+			check =0;
+		}else{
+			check = 1;
+		}
+		
+		return check;
 	}
 	
 	public void salvar(Usuario usuario){
