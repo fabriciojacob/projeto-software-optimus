@@ -48,7 +48,7 @@ public class UsuarioBean {
 		UsuarioRN usuarioRN = new UsuarioRN();
 		usuarioRN.salvar(this.usuario);
 		
-		return "/privado/usuario/usuarioSucesso";
+		return "/privado/usuario/usuarioSucesso.xhtml";
 	}
 
 }
