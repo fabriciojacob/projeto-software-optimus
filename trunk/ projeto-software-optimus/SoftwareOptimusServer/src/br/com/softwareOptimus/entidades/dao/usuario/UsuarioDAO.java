@@ -10,7 +10,7 @@ public interface UsuarioDAO {
 	public void atualizar(Usuario usuario);
 	public void excluir(Usuario usuario);
 	public Usuario carregar(Long codigo);
-	public Usuario buscaPorLogin(String login);
+	public Usuario buscaPorLogin(String login, String senha);
 	public List<Usuario> listar();
 
 }

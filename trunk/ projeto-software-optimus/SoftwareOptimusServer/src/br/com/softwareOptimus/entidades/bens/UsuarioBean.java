@@ -35,7 +35,7 @@ public class UsuarioBean {
 		return "usuario";
 	}
 
-	public void salvar() {
+	public String salvar() {
 		FacesContext context = FacesContext.getCurrentInstance();
 
 		String senha = this.usuario.getPassword();
@@ -47,6 +47,8 @@ public class UsuarioBean {
 
 		UsuarioRN usuarioRN = new UsuarioRN();
 		usuarioRN.salvar(this.usuario);
+		
+		return "/privado/usuario/usuarioSucesso";
 	}
 
 }
