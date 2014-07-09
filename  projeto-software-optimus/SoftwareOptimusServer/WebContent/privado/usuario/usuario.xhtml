@@ -31,8 +31,7 @@
 
 			Senha:
 			<p:password id="senha" value="#{usuarioBean.usuario.password}"
-					maxlength="15" required="true" redisplay="true" feedback="true"
-					inline="true" />
+					maxlength="15" required="true" />
 
 			Confirmar senha:
 			<p:password id="confSenha" value="#{usuarioBean.confirmarSenha}"
@@ -43,10 +42,10 @@
 				<p:selectBooleanCheckbox value="#{usuarioBean.usuario.adm}" />
 			</p:panelGrid>
 			<div align="center">
-			<p>
-				<p:commandButton value="Salvar"
-					actionListener="#{usuarioBean.salvar}" />
-				<p:commandButton value="Cancelar" />
+				<p>
+					<p:commandButton value="Salvar"
+						actionListener="#{usuarioBean.salvar}" />
+					<p:commandButton value="Cancelar" />
 				</p>
 			</div>
 		</div>
