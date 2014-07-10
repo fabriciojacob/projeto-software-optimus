@@ -23,11 +23,11 @@ public class UsuarioRN {
 		int check;
 		Usuario usuario = this.usuarioDAO.buscaPorLogin(login, senha);
 		if(usuario == null){
-			check =1;
+			check =0;
 		}else if(!usuario.isAtivo()){
-			check =1;
+			check =0;
 		}else{
-			check = 0;
+			check = 1;
 		}
 		
 		return check;
