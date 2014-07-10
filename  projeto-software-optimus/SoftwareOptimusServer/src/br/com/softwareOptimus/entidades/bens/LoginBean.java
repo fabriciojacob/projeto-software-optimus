@@ -12,7 +12,7 @@ public class LoginBean {
 		int check;	
 		UsuarioRN usuarioRN = new UsuarioRN();
 		check = usuarioRN.buscarPorLogin(usuario.getLogin(), usuario.getPassword());
-		if(check == 0){
+		if(check == 1){
 			return "/privado/menu.xhtml";
 		}else{
 			return null;
