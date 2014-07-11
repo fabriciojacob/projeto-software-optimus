@@ -36,30 +36,32 @@ public class UsuarioBean {
 	}
 
 	public void salvar() {
-		
+
 		String senha = this.usuario.getPassword();
 		if (!senha.equals(this.confirmarSenha)) {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_WARN, "Info",
-							"A senha não foi confirmada corretamente"));
+							"A senha nao foi confirmada corretamente"));
 		}
+		
+		if (senha.equals(this.confirmarSenha)) {
+			try {
+				UsuarioRN usuarioRN = new UsuarioRN();
+				usuarioRN.salvar(this.usuario);
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
+								"Usuario salvo com sucesso"));
+			} catch (Exception ex) {
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+								"Problemas na gravacao do usuario "
+										+ ex.getMessage()));
+			}
 
-		try {
-			UsuarioRN usuarioRN = new UsuarioRN();
-			usuarioRN.salvar(this.usuario);
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-							"Usuário salvo com sucesso"));
-		} catch (Exception ex) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na gravação do usuário "
-									+ ex.getMessage()));
 		}
-
 	}
 
 }
