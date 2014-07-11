@@ -7,6 +7,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+
 import br.com.softwareOptimus.entidades.Usuario;
 import br.com.softwareOptimus.util.JpaUtil;
 
@@ -43,12 +45,13 @@ public class UsuarioDAOHibernate implements UsuarioDAO {
 
 	@Override
 	public Usuario buscaPorLogin(String login, String senha) throws Exception {
-		String jpql = "select u From Usuario u where u.login = :login" +
-				" and u.password = :senha";
-		Query consulta = this.session.createQuery(jpql);
+		String jpql = "select u From Usuario u where u.login = :login"
+				+ " and u.password = :senha";
+		TypedQuery<Usuario> consulta = this.session.createQuery(jpql,
+				Usuario.class);
 		consulta.setParameter("login", login);
 		consulta.setParameter("senha", senha);
-		return (Usuario) consulta.getResultList();
+		return consulta.getSingleResult();
 	}
 
 	@SuppressWarnings("unchecked")

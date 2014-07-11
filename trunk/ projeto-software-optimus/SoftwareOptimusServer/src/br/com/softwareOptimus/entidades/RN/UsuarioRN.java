@@ -24,7 +24,7 @@ public class UsuarioRN {
 		Usuario usuario = this.usuarioDAO.buscaPorLogin(login, senha);
 		if(usuario == null){
 			check =0;
-		}else if(!usuario.isAtivo()){
+		}else if(!((Usuario) usuario).isAtivo()){
 			check =0;
 		}else{
 			check = 1;
