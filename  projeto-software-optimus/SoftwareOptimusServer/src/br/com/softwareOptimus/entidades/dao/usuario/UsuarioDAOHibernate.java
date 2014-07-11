@@ -17,6 +17,7 @@ public class UsuarioDAOHibernate implements UsuarioDAO {
 
 	@Override
 	public void salvar(Usuario usuario) {
+		usuario.setAtivo(true);
 		this.session.persist(usuario);
 		this.transaction.commit();
 
