@@ -42,13 +42,13 @@ public class UsuarioDAOHibernate implements UsuarioDAO {
 	}
 
 	@Override
-	public Usuario buscaPorLogin(String login, String senha) {
+	public Usuario buscaPorLogin(String login, String senha) throws Exception {
 		String jpql = "select u From Usuario u where u.login = :login" +
 				" and u.password = :senha";
 		Query consulta = this.session.createQuery(jpql);
 		consulta.setParameter("login", login);
 		consulta.setParameter("senha", senha);
-		return (Usuario) consulta.getSingleResult();
+		return (Usuario) consulta.getResultList();
 	}
 
 	@SuppressWarnings("unchecked")
