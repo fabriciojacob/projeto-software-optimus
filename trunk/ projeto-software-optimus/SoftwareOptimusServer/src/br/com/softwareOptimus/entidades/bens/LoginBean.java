@@ -13,11 +13,11 @@ public class LoginBean {
 	public String login(Usuario usuario) {
 		int check;
 		UsuarioRN usuarioRN = new UsuarioRN();
-		check = usuarioRN.buscarPorLogin(usuario.getLogin(),
-				usuario.getPassword());
-		if (check == 1) {
+		try {
+			check = usuarioRN.buscarPorLogin(usuario.getLogin(),
+					usuario.getPassword());
 			return "/privado/menu.xhtml";
-		} else {
+		} catch (Exception ex) {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",

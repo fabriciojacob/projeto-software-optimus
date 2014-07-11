@@ -19,7 +19,7 @@ public class UsuarioRN {
 		return this.usuarioDAO.carregar(codigo);
 	}
 	
-	public int buscarPorLogin(String login, String senha){
+	public int buscarPorLogin(String login, String senha) throws Exception{
 		int check;
 		Usuario usuario = this.usuarioDAO.buscaPorLogin(login, senha);
 		if(usuario == null){
