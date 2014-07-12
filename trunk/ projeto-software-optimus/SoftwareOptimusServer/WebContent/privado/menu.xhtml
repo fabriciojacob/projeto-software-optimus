@@ -5,10 +5,9 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
- 
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
-<h:outputStylesheet library="css" name="fonte.css" />
+	<h:outputStylesheet library="css" name="fonte.css" />
 </h:head>
 <h:body>
 	<h:form>
@@ -16,23 +15,20 @@
 			<h:form>
 				<p:menubar>
 					<p:submenu label="Cadastros Gerais">
-						<p:menuitem value="Cadastro de Usuario" url="/privado/usuario/cadastroUsuario.jsf"
-							/>
-						<p:menuitem value="Cadastro de Empresa" url="#"
-							 />
+						<p:menuitem value="Cadastro de Usuario"
+							url="/privado/usuario/cadastroUsuario.jsf" />
+						<p:menuitem value="Cadastro de Empresa"
+							url="/privado/empresa/cadastroEmpresa.jsf" />
 						<p:separator />
 					</p:submenu>
 
 					<p:submenu label="Cadastros Financeiros">
-						<p:menuitem value="Cadastro de conta" url="#"
-							 />
-						<p:menuitem value="Cadastro de Banco" url="#"
-							 />
+						<p:menuitem value="Cadastro de conta" url="#" />
+						<p:menuitem value="Cadastro de Banco" url="#" />
 					</p:submenu>
 
 					<f:facet name="options">
-						<p:commandButton type="button" value="Sair" icon="ui-icon-extlink"
-							 />
+						<p:commandButton type="button" value="Sair" icon="ui-icon-extlink" />
 					</f:facet>
 				</p:menubar>
 			</h:form>

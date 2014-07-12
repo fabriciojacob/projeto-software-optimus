@@ -20,7 +20,7 @@ public class Logradouro<T> implements Serializable{
 	@GeneratedValue
 	private Long idEndereco;
 	
-	private String Endereco;
+	private String endereco;
 	
 	private Integer numero;
 	
@@ -79,11 +79,11 @@ public class Logradouro<T> implements Serializable{
 	}
 
 	public String getEndereco() {
-		return Endereco;
+		return endereco;
 	}
 
 	public void setEndereco(String endereco) {
-		Endereco = endereco;
+		this.endereco = endereco;
 	}
 
 	public Integer getNumero() {
