@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+</h:head>
+<h:body>
+	<h:form>
+	<br/>
+		<div align="left">
+			<p:messages id="messages" showDetail="true" autoUpdate="true"
+				closable="true" />
+				
+			<p:tabView style="border: 0px">
+				<p:tab id="cadEmpresa" title="Cadastro">
+					<h:panelGrid columns="2" columnClasses="label, value" >
+			
+					Codigo Empresa:
+					<p:inputText id="idEmpresa" disabled="true"
+							value="#{pessoaJuridicaBean.pessoaJuridica.idPessoa}" />
+		
+					Nome Fantasia:
+					<p:inputText id="nomeFantasia"
+							value="#{pessoaJuridicaBean.pessoaJuridica.fantasia}" />
+					
+					Razão Social:
+					<p:inputText id="razaoSocial"
+							value="#{pessoaJuridicaBean.pessoaJuridica.razaoSocial}" />
+			
+					CNPJ:
+					<p:inputText id="cnpj"
+							value="#{pessoaJuridicaBean.pessoaJuridica.cnpj}" />
+					
+					Inscrição estadual:
+					<p:inputText id="ie"
+							value="#{pessoaJuridicaBean.pessoaJuridica.ie}" />
+					
+					CNAE:
+					<p:inputText id="cnae"
+							value="#{pessoaJuridicaBean.pessoaJuridica.cnae}" />
+
+						<p:commandButton value="Salvar"
+							actionListener="#{pessoaJuridicaBean.salvar}" />
+						<p:commandButton value="Cancelar" />
+
+					</h:panelGrid>
+				</p:tab>
+
+				<p:tab id="cadLogr" title="Logradouro">
+					<h:panelGrid columns="2" columnClasses="label, value">
+					
+					Codigo logradouro:
+					<p:inputText id="idLogradouro" disabled="true"
+							value="#{pessoaJuridicaBean.logradouro.idEndereco}" />
+								
+					Logradouro:
+					<p:inputText id="logradouro" size="40"
+							value="#{pessoaJuridicaBean.logradouro.endereco}" />
+							
+					Complemento:
+					<p:inputText id="complemento" size="40"
+							value="#{pessoaJuridicaBean.logradouro.complemento}" />							
+					
+					Bairro:
+					<p:inputText id="bairro" size="40"
+							value="#{pessoaJuridicaBean.logradouro.bairro}" />
+					
+					Numero:
+					<p:inputText id="numero" size="15"
+							value="#{pessoaJuridicaBean.logradouro.numero}" />							
+							
+					Tipo Endereco:
+					 <p:selectOneMenu id="tipoLogr"
+							value="#{pessoaJuridicaBean.logradouro.tipoLogr}">
+							<f:selectItem itemLabel="Selecione tipo endereço" itemValue="" />
+							<f:selectItem itemLabel="Xbox One" itemValue="Xbox One" />
+							<f:selectItem itemLabel="PS4" itemValue="PS4" />
+							<f:selectItem itemLabel="Wii U" itemValue="Wii U" />
+						</p:selectOneMenu>
+						
+					Estado:
+					 <p:selectOneMenu id="uf"
+							value="#{pessoaJuridicaBean.logradouro.uf}">
+							<f:selectItem itemLabel="Selecione o estado" itemValue="" />
+							<f:selectItem itemLabel="Xbox One" itemValue="Xbox One" />
+							<f:selectItem itemLabel="PS4" itemValue="PS4" />
+							<f:selectItem itemLabel="Wii U" itemValue="Wii U" />
+						</p:selectOneMenu>
+					
+					Município:
+					 <p:selectOneMenu id="municipio"
+							value="#{pessoaJuridicaBean.logradouro.municipío}">
+							<f:selectItem itemLabel="Selecione a cidade" itemValue="" />
+							<f:selectItem itemLabel="Xbox One" itemValue="Xbox One" />
+							<f:selectItem itemLabel="PS4" itemValue="PS4" />
+							<f:selectItem itemLabel="Wii U" itemValue="Wii U" />
+						</p:selectOneMenu>
+
+					</h:panelGrid>
+					<p:commandButton value="+"
+						actionListener="#{pessoaJuridicaBean.incluirLogr}" disabled="true" />
+					<p:commandButton value="-" disabled="true" />
+				</p:tab>
+
+			</p:tabView>
+		</div>
+	</h:form>
+</h:body>
+</html>
