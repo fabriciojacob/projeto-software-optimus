@@ -13,7 +13,7 @@
 <h:body>
 	<h:form>
 		<br />
-		<h3 style="margin-top:0">CADASTRO DE EMPRESA</h3>
+		<h3 style="margin-top: 0">CADASTRO DE EMPRESA</h3>
 		<div align="left">
 			<p:messages id="messages" showDetail="true" autoUpdate="true"
 				closable="true" />
@@ -34,12 +34,12 @@
 					Nome Fantasia:
 					<p:inputText id="nomeFantasia"
 							value="#{pessoaJuridicaBean.pessoaJuridica.fantasia}"
-							rendered="true" />
+							rendered="true" size="40" />
 					
 					Razão Social:
 					<p:inputText id="razaoSocial"
 							value="#{pessoaJuridicaBean.pessoaJuridica.razaoSocial}"
-							rendered="true" />
+							rendered="true" size="40" />
 			
 					CNPJ:
 					<p:inputText id="cnpj"
@@ -108,8 +108,71 @@
 						</p:selectOneMenu>
 
 					</h:panelGrid>
-				</p:tab>
 
+					<p:commandButton value="Mais Enderecos" type="button"
+						onclick="PF('dlg2').show();" />
+					<p:dialog header="Mais Enderecos" widgetVar="dlg2" modal="true"
+						height="300" width="400">
+
+
+						<h:panelGrid columns="2" columnClasses="label, value">
+					
+						Codigo logradouro:
+						<p:inputText id="idLogradouroMais" disabled="true"
+								value="#{pessoaJuridicaBean.logradouro.idEndereco}"
+								rendered="true" />
+								
+						Logradouro:
+						<p:inputText id="logradouroMais" size="40"
+								value="#{pessoaJuridicaBean.logradouro.endereco}"
+								rendered="true" />
+								
+						Complemento:
+						<p:inputText id="complementoMais" size="40"
+								value="#{pessoaJuridicaBean.logradouro.complemento}"
+								rendered="true" />							
+					
+						Bairro:
+						<p:inputText id="bairroMais" size="40"
+								value="#{pessoaJuridicaBean.logradouro.bairro}" rendered="true" />
+					
+						Numero:
+						<p:inputText id="numeroMais" size="15"
+								value="#{pessoaJuridicaBean.logradouro.numero}" rendered="true" />							
+							
+						Tipo Endereco:
+					 	<p:selectOneMenu id="tipoLogrMais"
+								value="#{pessoaJuridicaBean.logradouro.tipoLogr}">
+								<f:selectItem itemLabel="Selecione tipo endereço" itemValue="" />
+								<f:selectItem itemLabel="Xbox One" itemValue="Xbox One" />
+								<f:selectItem itemLabel="PS4" itemValue="PS4" />
+								<f:selectItem itemLabel="Wii U" itemValue="Wii U" />
+							</p:selectOneMenu>
+						
+						Estado:
+						 <p:selectOneMenu id="ufMais"
+								value="#{pessoaJuridicaBean.logradouro.uf}">
+								<f:selectItem itemLabel="Selecione o estado" itemValue="" />
+								<f:selectItem itemLabel="Xbox One" itemValue="Xbox One" />
+								<f:selectItem itemLabel="PS4" itemValue="PS4" />
+								<f:selectItem itemLabel="Wii U" itemValue="Wii U" />
+							</p:selectOneMenu>
+					
+						Município:
+						<p:selectOneMenu id="municipioMais"
+								value="#{pessoaJuridicaBean.logradouro.municipío}">
+								<f:selectItem itemLabel="Selecione a cidade" itemValue="" />
+								<f:selectItem itemLabel="Xbox One" itemValue="Xbox One" />
+								<f:selectItem itemLabel="PS4" itemValue="PS4" />
+								<f:selectItem itemLabel="Wii U" itemValue="Wii U" />
+							</p:selectOneMenu>
+							<p:commandButton value="Incluir" />
+							<p:commandButton value="Cancelar" />
+
+						</h:panelGrid>
+
+					</p:dialog>
+				</p:tab>
 			</p:tabView>
 		</div>
 	</h:form>
