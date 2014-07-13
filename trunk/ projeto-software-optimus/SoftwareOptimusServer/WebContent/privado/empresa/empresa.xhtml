@@ -12,43 +12,46 @@
 </h:head>
 <h:body>
 	<h:form>
-	<br/>
+		<br />
+		<h3 style="margin-top:0">CADASTRO DE EMPRESA</h3>
 		<div align="left">
 			<p:messages id="messages" showDetail="true" autoUpdate="true"
 				closable="true" />
-				
+			<p:commandButton value="Salvar"
+				actionListener="#{pessoaJuridicaBean.salvar}" />
+			<p:commandButton value="Cancelar" />
+
 			<p:tabView style="border: 0px">
-				<p:tab id="cadEmpresa" title="Cadastro">
-					<h:panelGrid columns="2" columnClasses="label, value" >
+				<p:tab id="cadEmpresa" title="Informações Gerais">
+					<h:panelGrid columns="2" columnClasses="label, value"
+						rendered="true">
 			
 					Codigo Empresa:
 					<p:inputText id="idEmpresa" disabled="true"
-							value="#{pessoaJuridicaBean.pessoaJuridica.idPessoa}" />
+							value="#{pessoaJuridicaBean.pessoaJuridica.idPessoa}"
+							rendered="true" />
 		
 					Nome Fantasia:
 					<p:inputText id="nomeFantasia"
-							value="#{pessoaJuridicaBean.pessoaJuridica.fantasia}" />
+							value="#{pessoaJuridicaBean.pessoaJuridica.fantasia}"
+							rendered="true" />
 					
 					Razão Social:
 					<p:inputText id="razaoSocial"
-							value="#{pessoaJuridicaBean.pessoaJuridica.razaoSocial}" />
+							value="#{pessoaJuridicaBean.pessoaJuridica.razaoSocial}"
+							rendered="true" />
 			
 					CNPJ:
 					<p:inputText id="cnpj"
-							value="#{pessoaJuridicaBean.pessoaJuridica.cnpj}" />
+							value="#{pessoaJuridicaBean.pessoaJuridica.cnpj}" rendered="true" />
 					
 					Inscrição estadual:
 					<p:inputText id="ie"
-							value="#{pessoaJuridicaBean.pessoaJuridica.ie}" />
+							value="#{pessoaJuridicaBean.pessoaJuridica.ie}" rendered="true" />
 					
 					CNAE:
 					<p:inputText id="cnae"
-							value="#{pessoaJuridicaBean.pessoaJuridica.cnae}" />
-
-						<p:commandButton value="Salvar"
-							actionListener="#{pessoaJuridicaBean.salvar}" />
-						<p:commandButton value="Cancelar" />
-
+							value="#{pessoaJuridicaBean.pessoaJuridica.cnae}" rendered="true" />
 					</h:panelGrid>
 				</p:tab>
 
@@ -57,23 +60,25 @@
 					
 					Codigo logradouro:
 					<p:inputText id="idLogradouro" disabled="true"
-							value="#{pessoaJuridicaBean.logradouro.idEndereco}" />
+							value="#{pessoaJuridicaBean.logradouro.idEndereco}"
+							rendered="true" />
 								
 					Logradouro:
 					<p:inputText id="logradouro" size="40"
-							value="#{pessoaJuridicaBean.logradouro.endereco}" />
+							value="#{pessoaJuridicaBean.logradouro.endereco}" rendered="true" />
 							
 					Complemento:
 					<p:inputText id="complemento" size="40"
-							value="#{pessoaJuridicaBean.logradouro.complemento}" />							
+							value="#{pessoaJuridicaBean.logradouro.complemento}"
+							rendered="true" />							
 					
 					Bairro:
 					<p:inputText id="bairro" size="40"
-							value="#{pessoaJuridicaBean.logradouro.bairro}" />
+							value="#{pessoaJuridicaBean.logradouro.bairro}" rendered="true" />
 					
 					Numero:
 					<p:inputText id="numero" size="15"
-							value="#{pessoaJuridicaBean.logradouro.numero}" />							
+							value="#{pessoaJuridicaBean.logradouro.numero}" rendered="true" />							
 							
 					Tipo Endereco:
 					 <p:selectOneMenu id="tipoLogr"
@@ -103,9 +108,6 @@
 						</p:selectOneMenu>
 
 					</h:panelGrid>
-					<p:commandButton value="+"
-						actionListener="#{pessoaJuridicaBean.incluirLogr}" disabled="true" />
-					<p:commandButton value="-" disabled="true" />
 				</p:tab>
 
 			</p:tabView>
