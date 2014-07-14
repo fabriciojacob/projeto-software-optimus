@@ -186,17 +186,19 @@
 						<p:selectBooleanCheckbox value="" />
 					</h:panelGrid>
 					<h:panelGrid columns="2">
+						<h:panelGrid columns="2">
 
-						<p:outputLabel value="Data iníciio:" />
-						<p:calendar id="dataIni" value="#{calendarView.date8}"
-							effect="fold" />
+							<p:outputLabel value="Data iníciio:" />
+							<p:calendar id="dataIni" value="#{calendarView.date8}"
+								effect="fold" />
 
-						<p:outputLabel value="Data Fim:" />
-						<p:calendar id="dataFim" value="#{calendarView.date8}"
-							effect="fold" />
-							
+							<p:outputLabel value="Data Fim:" />
+							<p:calendar id="dataFim" value="#{calendarView.date8}"
+								effect="fold" />
+
+
+						</h:panelGrid>
 						<p:commandButton id="incluirReg" icon="ui-icon-disk" />
-
 					</h:panelGrid>
 					<p:dataTable>
 						<p:column headerText="Regime de Apuração">
@@ -208,6 +210,9 @@
 						</p:column>
 
 						<p:column headerText="Fim da Vigência">
+
+						</p:column>
+						<p:column headerText="Excluir">
 
 						</p:column>
 					</p:dataTable>
