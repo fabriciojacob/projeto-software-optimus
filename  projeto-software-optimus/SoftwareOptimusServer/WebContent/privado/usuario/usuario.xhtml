@@ -12,7 +12,8 @@
 </h:head>
 <body>
 	<h:form>
-		<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+		<p:messages id="messages" showDetail="true" autoUpdate="true"
+			closable="true" />
 		<div align="center">
 			<h:inputHidden value="#{usuarioBean.usuario.idUsuario}" />
 			<p:panelGrid style="margin-top:20px" columns="2">
@@ -31,7 +32,8 @@
 
 			Senha:
 			<p:password id="senha" value="#{usuarioBean.usuario.password}"
-					maxlength="15" required="true" />
+					maxlength="15" required="true" redisplay="true" feedback="true"
+					inline="true" />
 
 			Confirmar senha:
 			<p:password id="confSenha" value="#{usuarioBean.confirmarSenha}"
