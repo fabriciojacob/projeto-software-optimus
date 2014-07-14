@@ -173,6 +173,45 @@
 
 					</p:dialog>
 				</p:tab>
+				<p:tab id="infFiscais" title="Dados Fiscais">
+					<h:panelGrid columns="6" cellspacing="5">
+
+						<h:outputText value="Simples: " />
+						<p:selectBooleanCheckbox value="" />
+
+						<h:outputText value="Presumido: " />
+						<p:selectBooleanCheckbox value="" />
+
+						<h:outputText value="Real: " />
+						<p:selectBooleanCheckbox value="" />
+					</h:panelGrid>
+					<h:panelGrid columns="2">
+
+						<p:outputLabel value="Data iníciio:" />
+						<p:calendar id="dataIni" value="#{calendarView.date8}"
+							effect="fold" />
+
+						<p:outputLabel value="Data Fim:" />
+						<p:calendar id="dataFim" value="#{calendarView.date8}"
+							effect="fold" />
+							
+						<p:commandButton id="incluirReg" icon="ui-icon-disk" />
+
+					</h:panelGrid>
+					<p:dataTable>
+						<p:column headerText="Regime de Apuração">
+
+						</p:column>
+
+						<p:column headerText="Início da Vigência">
+
+						</p:column>
+
+						<p:column headerText="Fim da Vigência">
+
+						</p:column>
+					</p:dataTable>
+				</p:tab>
 			</p:tabView>
 		</div>
 	</h:form>
