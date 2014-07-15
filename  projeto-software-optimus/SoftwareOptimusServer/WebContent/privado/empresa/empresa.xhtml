@@ -92,7 +92,7 @@
 					Estado:
 					 <p:selectOneMenu id="uf" value="#{geralBean.uf}">
 							<f:selectItems value="#{geralBean.estados}" var="listaEstados"
-								itemLabel="#{listaEstados.descricao}" />
+								itemValue="#{listaEstados}"  itemLabel="#{listaEstados.descricao}" />
 							<p:ajax update="municipios" event="change"
 								listener="#{geralBean.filtraEstado}" />
 						</p:selectOneMenu>
