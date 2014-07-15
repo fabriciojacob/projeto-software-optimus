@@ -1,6 +1,6 @@
 package br.com.softwareOptimus.entidades.bens.geral;
 
-import java.util.ArrayList;
+
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -18,6 +18,7 @@ public class GeralBean {
 	private EstadoRN estadoRN = new EstadoRN();
 	private MunicipioRN municipioRN = new MunicipioRN();
 	private Estado uf = new Estado();
+	private Municipio municipio = new Municipio();
 	
 	public GeralBean(){
 		setEstados(this.estadoRN.listaEstado());
@@ -54,5 +55,12 @@ public class GeralBean {
 		this.municipios = municipioRN.listaMunicipios(uf);
 	}
 	
+	public Municipio getMunicipio() {
+		return municipio;
+	}
+	
+	public void setMunicipio(Municipio municipio) {
+		this.municipio = municipio;
+	}
 
 }

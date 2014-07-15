@@ -98,9 +98,9 @@
 						</p:selectOneMenu>
 					
 					Município:
-					 <p:selectOneMenu id="municipios">
-							<f:selectItem value="#{geralBean.municipios}"
-								var="listaMun" itemLabel="#{listaMun.descricao}" />
+					 <p:selectOneMenu id="municipios" value="#{geralBean.municipio}">
+							<f:selectItems value="#{geralBean.municipios}" var="listaMun"
+								itemLabel="#{listaMun.descricao}" />
 						</p:selectOneMenu>
 
 					</h:panelGrid>
