@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import br.com.softwareOptimus.entidades.dao.geral.EstadoDAO;
 import br.com.softwareOptimus.entidades.dao.geral.EstadoDAOHibernate;
+import br.com.softwareOptimus.entidades.dao.geral.MunicipioDAO;
+import br.com.softwareOptimus.entidades.dao.geral.MunicipioDAOHibernate;
 import br.com.softwareOptimus.entidades.dao.usuario.UsuarioDAO;
 import br.com.softwareOptimus.entidades.dao.usuario.UsuarioDAOHibernate;
 
@@ -30,5 +32,16 @@ public class DAOFactory {
 		}
 		return estadoDAO;
 	}
-
+	
+	public static MunicipioDAO criaMunicipioDAO(){
+		MunicipioDAOHibernate municipioDAO = new MunicipioDAOHibernate();
+		municipioDAO.setSession(JpaUtil.getEntityManager());
+		try{
+			municipioDAO.begin();
+		}catch (IOException | SQLException e){
+			e.printStackTrace();
+		}
+		return municipioDAO;
+	}
+	
 }
