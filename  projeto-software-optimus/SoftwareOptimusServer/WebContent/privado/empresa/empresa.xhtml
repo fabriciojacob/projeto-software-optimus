@@ -90,12 +90,9 @@
 						</p:selectOneMenu>
 						
 					Estado:
-					 <p:selectOneMenu id="uf"
-							value="#{pessoaJuridicaBean.logradouro.uf}">
-							<f:selectItem itemLabel="Selecione o estado" itemValue="" />
-							<f:selectItem itemLabel="Xbox One" itemValue="Xbox One" />
-							<f:selectItem itemLabel="PS4" itemValue="PS4" />
-							<f:selectItem itemLabel="Wii U" itemValue="Wii U" />
+					 <p:selectOneMenu id="uf">
+							<f:selectItems value="#{estadoBean.estados}" var="listaEstados"
+								itemLabel="#{listaEstados.descricao}" />
 						</p:selectOneMenu>
 					
 					Município:

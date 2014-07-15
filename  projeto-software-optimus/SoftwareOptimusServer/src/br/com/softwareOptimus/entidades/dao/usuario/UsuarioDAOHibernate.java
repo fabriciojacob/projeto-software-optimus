@@ -3,14 +3,12 @@ package br.com.softwareOptimus.entidades.dao.usuario;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-
 import br.com.softwareOptimus.entidades.Usuario;
-import br.com.softwareOptimus.util.JpaUtil;
+
 
 public class UsuarioDAOHibernate implements UsuarioDAO {
 
@@ -77,6 +75,10 @@ public class UsuarioDAOHibernate implements UsuarioDAO {
 		if (!transaction.isActive()) {
 			transaction.begin();
 		}
+	}
+	
+	public void close() throws Exception{
+		this.session.close();
 	}
 
 }
