@@ -90,18 +90,17 @@
 						</p:selectOneMenu>
 						
 					Estado:
-					 <p:selectOneMenu id="uf">
-							<f:selectItems value="#{estadoBean.estados}" var="listaEstados"
+					 <p:selectOneMenu id="uf" value="#{geralBean.uf}">
+							<f:selectItems value="#{geralBean.estados}" var="listaEstados"
 								itemLabel="#{listaEstados.descricao}" />
+							<p:ajax update="municipios" event="change"
+								listener="#{geralBean.filtraEstado}" />
 						</p:selectOneMenu>
 					
 					Município:
-					 <p:selectOneMenu id="municipio"
-							value="#{pessoaJuridicaBean.logradouro.municipío}">
-							<f:selectItem itemLabel="Selecione a cidade" itemValue="" />
-							<f:selectItem itemLabel="Xbox One" itemValue="Xbox One" />
-							<f:selectItem itemLabel="PS4" itemValue="PS4" />
-							<f:selectItem itemLabel="Wii U" itemValue="Wii U" />
+					 <p:selectOneMenu id="municipios">
+							<f:selectItem value="#{geralBean.municipios}"
+								var="listaMun" itemLabel="#{listaMun.descricao}" />
 						</p:selectOneMenu>
 
 					</h:panelGrid>
