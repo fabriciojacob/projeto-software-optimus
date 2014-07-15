@@ -92,7 +92,8 @@
 					Estado:
 					 <p:selectOneMenu id="uf" value="#{geralBean.uf}">
 							<f:selectItems value="#{geralBean.estados}" var="listaEstados"
-								itemValue="#{listaEstados}"  itemLabel="#{listaEstados.descricao}" />
+								itemValue="#{listaEstados}"
+								itemLabel="#{listaEstados.descricao}" />
 							<p:ajax update="municipios" event="change"
 								listener="#{geralBean.filtraEstado}" />
 						</p:selectOneMenu>
@@ -107,6 +108,7 @@
 
 					<p:commandButton value="Mais Enderecos" type="button"
 						onclick="PF('dlg2').show();" />
+
 					<p:dialog header="Mais Enderecos" widgetVar="dlg2" modal="true"
 						height="300" width="400">
 
@@ -146,29 +148,30 @@
 							</p:selectOneMenu>
 						
 						Estado:
-						 <p:selectOneMenu id="ufMais"
-								value="#{pessoaJuridicaBean.logradouro.uf}">
-								<f:selectItem itemLabel="Selecione o estado" itemValue="" />
-								<f:selectItem itemLabel="Xbox One" itemValue="Xbox One" />
-								<f:selectItem itemLabel="PS4" itemValue="PS4" />
-								<f:selectItem itemLabel="Wii U" itemValue="Wii U" />
+						  <p:selectOneMenu id="ufMais" value="#{geralBean.uf}">
+								<f:selectItems value="#{geralBean.estados}" var="listaEstados"
+									itemValue="#{listaEstados}"
+									itemLabel="#{listaEstados.descricao}" />
+								<p:ajax update="municipiosMais" event="change"
+									listener="#{geralBean.filtraEstado}" />
 							</p:selectOneMenu>
 					
 						Município:
-						<p:selectOneMenu id="municipioMais"
-								value="#{pessoaJuridicaBean.logradouro.municipío}">
-								<f:selectItem itemLabel="Selecione a cidade" itemValue="" />
-								<f:selectItem itemLabel="Xbox One" itemValue="Xbox One" />
-								<f:selectItem itemLabel="PS4" itemValue="PS4" />
-								<f:selectItem itemLabel="Wii U" itemValue="Wii U" />
+						<p:selectOneMenu id="municipiosMais"
+								value="#{geralBean.municipio}">
+								<f:selectItems value="#{geralBean.municipios}" var="listaMun"
+									itemLabel="#{listaMun.descricao}" />
 							</p:selectOneMenu>
+
+						</h:panelGrid>
+						<h:panelGrid>
 							<p:commandButton value="Incluir" />
 							<p:commandButton value="Cancelar" />
-
 						</h:panelGrid>
 
 					</p:dialog>
 				</p:tab>
+
 				<p:tab id="infFiscais" title="Dados Fiscais">
 					<h:panelGrid columns="6" cellspacing="5">
 
