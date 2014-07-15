@@ -3,6 +3,11 @@ package br.com.softwareOptimus.entidades;
 import java.io.Serializable;
 import java.util.Collection;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.convert.Converter;
+import javax.faces.convert.ConverterException;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -12,61 +17,60 @@ import javax.persistence.Table;
 
 import br.com.softwareOptimus.fiscal.GradeTributaria;
 
-
 @Entity
-@Table(name="tbEstado")
-public class Estado implements Serializable{
+@Table(name = "tbEstado")
+public class Estado implements Serializable, Converter {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -652813449840837138L;
-	
+
 	@Id
 	@GeneratedValue
 	private Long idUf;
-	
+
 	private String descricao;
-	
+
 	private Integer codIbge;
-	
+
 	@ManyToOne
 	private Pais pais;
-	
+
 	@OneToMany(mappedBy = "estado")
 	private Collection<GradeTributaria> grades;
-	
+
 	@OneToMany(mappedBy = "uf")
 	private Collection<Municipio> municipio;
-	
+
 	public Collection<Municipio> getMunicipio() {
 		return municipio;
 	}
-	
+
 	public void setMunicipio(Collection<Municipio> municipio) {
 		this.municipio = municipio;
 	}
-	
+
 	public Collection<GradeTributaria> getGrades() {
 		return grades;
 	}
-	
+
 	public void setGrades(Collection<GradeTributaria> grades) {
 		this.grades = grades;
 	}
-	
+
 	public Integer getCodIbge() {
 		return codIbge;
 	}
-	
+
 	public void setCodIbge(Integer codIbge) {
 		this.codIbge = codIbge;
 	}
-	
+
 	public Pais getPais() {
 		return pais;
 	}
-	
+
 	public void setPais(Pais pais) {
 		this.pais = pais;
 	}
@@ -111,5 +115,32 @@ public class Estado implements Serializable{
 			return false;
 		return true;
 	}
-	
+
+	@Override
+	public Object getAsObject(FacesContext arg0, UIComponent arg1, String arg2) {
+		Estado estado = new Estado();
+		int ufId;
+
+		try {
+			ufId = Integer.parseInt(arg2);
+		} catch (NumberFormatException exception) {
+			throw new ConverterException(
+					new FacesMessage(
+							FacesMessage.SEVERITY_ERROR,
+							"Type the name of a Dog and select it (or use the dropdow)",
+							"Type the name of a Dog and select it (or use the dropdow)"));
+		}
+
+		return null;
+	}
+
+	@Override
+	public String getAsString(FacesContext arg0, UIComponent arg1, Object arg2) {
+		if (arg2 == null) {
+			return "";
+		}
+		Estado estado = (Estado) arg2;
+		return String.valueOf(estado.getIdUf());
+	}
+
 }
