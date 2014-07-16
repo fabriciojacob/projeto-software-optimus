@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="tbLogradouro")
-public class Logradouro<T> implements Serializable{
+public class Logradouro implements Serializable{
 	
 	/**
 	 * 
@@ -42,8 +42,8 @@ public class Logradouro<T> implements Serializable{
 		return pessoa;
 	}
 	
-	public void setPessoa(T pessoa) {
-		this.pessoa = (Pessoa) pessoa;
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
 	}
 	
 	public TipoLogradouro getTipoLogr() {
