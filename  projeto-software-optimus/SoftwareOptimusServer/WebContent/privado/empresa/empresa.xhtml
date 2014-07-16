@@ -11,16 +11,15 @@
 
 </h:head>
 <h:body>
-	<h:form>
+	<h:form id="frmCadEmpresa">
 		<br />
 		<h3 style="margin-top: 0">CADASTRO DE EMPRESA</h3>
 		<div align="left">
+			<p:commandButton value="Salvar"
+				actionListener="#{empresaBean.salvar(geralBean.municipio)}"/>
+			<p:commandButton value="Cancelar" />
 			<p:messages id="messages" showDetail="true" autoUpdate="true"
 				closable="true" />
-			<p:commandButton value="Salvar"
-				actionListener="#{pessoaJuridicaBean.salvar}" />
-			<p:commandButton value="Cancelar" />
-
 			<p:tabView style="border: 0px">
 				<p:tab id="cadEmpresa" title="Informações Gerais">
 					<h:panelGrid columns="2" columnClasses="label, value"
@@ -28,30 +27,29 @@
 			
 					Codigo Empresa:
 					<p:inputText id="idEmpresa" disabled="true"
-							value="#{pessoaJuridicaBean.pessoaJuridica.idPessoa}"
-							rendered="true" />
+							value="#{empresaBean.pessoaJuridica.idPessoa}" rendered="true" />
 		
 					Nome Fantasia:
 					<p:inputText id="nomeFantasia"
-							value="#{pessoaJuridicaBean.pessoaJuridica.fantasia}"
-							rendered="true" size="40" />
+							value="#{empresaBean.pessoaJuridica.fantasia}" rendered="true"
+							size="40" />
 					
 					Razão Social:
 					<p:inputText id="razaoSocial"
-							value="#{pessoaJuridicaBean.pessoaJuridica.razaoSocial}"
-							rendered="true" size="40" />
+							value="#{empresaBean.pessoaJuridica.razaoSocial}" rendered="true"
+							size="40" />
 			
 					CNPJ:
-					<p:inputText id="cnpj"
-							value="#{pessoaJuridicaBean.pessoaJuridica.cnpj}" rendered="true" />
+					<p:inputText id="cnpj" value="#{empresaBean.pessoaJuridica.cnpj}"
+							rendered="true" />
 					
 					Inscrição estadual:
-					<p:inputText id="ie"
-							value="#{pessoaJuridicaBean.pessoaJuridica.ie}" rendered="true" />
+					<p:inputText id="ie" value="#{empresaBean.pessoaJuridica.ie}"
+							rendered="true" />
 					
 					CNAE:
-					<p:inputText id="cnae"
-							value="#{pessoaJuridicaBean.pessoaJuridica.cnae}" rendered="true" />
+					<p:inputText id="cnae" value="#{empresaBean.pessoaJuridica.cnae}"
+							rendered="true" />
 					</h:panelGrid>
 				</p:tab>
 
@@ -60,37 +58,42 @@
 					
 					Codigo logradouro:
 					<p:inputText id="idLogradouro" disabled="true"
-							value="#{pessoaJuridicaBean.logradouro.idEndereco}"
-							rendered="true" />
+							value="#{empresaBean.logradouro.idEndereco}" rendered="true" />
 								
 					Logradouro:
-					<p:inputText id="logradouro" size="40"
-							value="#{pessoaJuridicaBean.logradouro.endereco}" rendered="true" />
+					<p:inputText id="logradouro" size="40" rendered="true"
+							value="#{empresaBean.logradouro.endereco}" />
+ 							
 							
 					Complemento:
-					<p:inputText id="complemento" size="40"
-							value="#{pessoaJuridicaBean.logradouro.complemento}"
-							rendered="true" />							
+					<p:inputText id="complemento" size="40" rendered="true"
+							value="#{empresaBean.logradouro.complemento}" />							
 					
 					Bairro:
-					<p:inputText id="bairro" size="40"
-							value="#{pessoaJuridicaBean.logradouro.bairro}" rendered="true" />
+					<p:inputText id="bairro" size="40" rendered="true"
+							value="#{empresaBean.logradouro.bairro}" />
 					
 					Numero:
-					<p:inputText id="numero" size="15"
-							value="#{pessoaJuridicaBean.logradouro.numero}" rendered="true" />							
+					<p:inputText id="numero" size="15" rendered="true"
+							value="#{empresaBean.logradouro.numero}" />
+					
+					CEP:
+					<p:inputText id="cep" size="8" rendered="true"
+							value="#{empresaBean.logradouro.cep}" />							
 							
 					Tipo Endereco:
 					 <p:selectOneMenu id="tipoLogr"
-							value="#{pessoaJuridicaBean.logradouro.tipoLogr}">
+							value="#{empresaBean.tipoSelecionado}">
 							<f:selectItem itemLabel="Selecione tipo endereço" itemValue="" />
-							<f:selectItem itemLabel="Xbox One" itemValue="Xbox One" />
-							<f:selectItem itemLabel="PS4" itemValue="PS4" />
-							<f:selectItem itemLabel="Wii U" itemValue="Wii U" />
+							<f:selectItem itemLabel="ENTREGA" itemValue="entrega" />
+							<f:selectItem itemLabel="COMERCIAL" itemValue="comercial" />
+							<f:selectItem itemLabel="RESIDENCIAL" itemValue="residencial" />
+							<f:selectItem itemLabel="COBRANCA" itemValue="cobranca" />
 						</p:selectOneMenu>
 						
 					Estado:
 					 <p:selectOneMenu id="uf" value="#{geralBean.uf}">
+							<f:selectItem itemLabel="Selecione um estado" itemValue="" />
 							<f:selectItems value="#{geralBean.estados}" var="listaEstados"
 								itemValue="#{listaEstados}"
 								itemLabel="#{listaEstados.descricao}" />
@@ -100,6 +103,7 @@
 					
 					Município:
 					 <p:selectOneMenu id="municipios" value="#{geralBean.municipio}">
+							<f:selectItem itemLabel="Selecione um municipio" itemValue="" />
 							<f:selectItems value="#{geralBean.municipios}" var="listaMun"
 								itemLabel="#{listaMun.descricao}" />
 						</p:selectOneMenu>
@@ -116,27 +120,19 @@
 						<h:panelGrid columns="2" columnClasses="label, value">
 					
 						Codigo logradouro:
-						<p:inputText id="idLogradouroMais" disabled="true"
-								value="#{pessoaJuridicaBean.logradouro.idEndereco}"
-								rendered="true" />
+						<p:inputText id="idLogradouroMais" disabled="true" rendered="true" />
 								
 						Logradouro:
-						<p:inputText id="logradouroMais" size="40"
-								value="#{pessoaJuridicaBean.logradouro.endereco}"
-								rendered="true" />
+						<p:inputText id="logradouroMais" size="40" rendered="true" />
 								
 						Complemento:
-						<p:inputText id="complementoMais" size="40"
-								value="#{pessoaJuridicaBean.logradouro.complemento}"
-								rendered="true" />							
+						<p:inputText id="complementoMais" size="40" rendered="true" />							
 					
 						Bairro:
-						<p:inputText id="bairroMais" size="40"
-								value="#{pessoaJuridicaBean.logradouro.bairro}" rendered="true" />
+						<p:inputText id="bairroMais" size="40" rendered="true" />
 					
 						Numero:
-						<p:inputText id="numeroMais" size="15"
-								value="#{pessoaJuridicaBean.logradouro.numero}" rendered="true" />							
+						<p:inputText id="numeroMais" size="15" rendered="true" />							
 							
 						Tipo Endereco:
 					 	<p:selectOneMenu id="tipoLogrMais"
@@ -149,6 +145,7 @@
 						
 						Estado:
 						  <p:selectOneMenu id="ufMais" value="#{geralBean.uf}">
+								<f:selectItem itemLabel="Selecione um estado" itemValue="" />
 								<f:selectItems value="#{geralBean.estados}" var="listaEstados"
 									itemValue="#{listaEstados}"
 									itemLabel="#{listaEstados.descricao}" />
@@ -159,6 +156,7 @@
 						Município:
 						<p:selectOneMenu id="municipiosMais"
 								value="#{geralBean.municipio}">
+								<f:selectItem itemLabel="Selecione um municipio" itemValue="" />
 								<f:selectItems value="#{geralBean.municipios}" var="listaMun"
 									itemLabel="#{listaMun.descricao}" />
 							</p:selectOneMenu>
