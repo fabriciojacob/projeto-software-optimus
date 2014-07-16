@@ -2,8 +2,13 @@ package br.com.softwareOptimus.util;
 
 import java.io.IOException;
 import java.sql.SQLException;
+
+import br.com.softwareOptimus.entidades.dao.empresa.EmpresaDAO;
+import br.com.softwareOptimus.entidades.dao.empresa.EmpresaDAOHibernate;
 import br.com.softwareOptimus.entidades.dao.geral.EstadoDAO;
 import br.com.softwareOptimus.entidades.dao.geral.EstadoDAOHibernate;
+import br.com.softwareOptimus.entidades.dao.geral.LogradouroDAO;
+import br.com.softwareOptimus.entidades.dao.geral.LogradouroDAOHibernate;
 import br.com.softwareOptimus.entidades.dao.geral.MunicipioDAO;
 import br.com.softwareOptimus.entidades.dao.geral.MunicipioDAOHibernate;
 import br.com.softwareOptimus.entidades.dao.usuario.UsuarioDAO;
@@ -32,16 +37,38 @@ public class DAOFactory {
 		}
 		return estadoDAO;
 	}
-	
-	public static MunicipioDAO criaMunicipioDAO(){
+
+	public static MunicipioDAO criaMunicipioDAO() {
 		MunicipioDAOHibernate municipioDAO = new MunicipioDAOHibernate();
 		municipioDAO.setSession(JpaUtil.getEntityManager());
-		try{
+		try {
 			municipioDAO.begin();
-		}catch (IOException | SQLException e){
+		} catch (IOException | SQLException e) {
 			e.printStackTrace();
 		}
 		return municipioDAO;
 	}
+
+	public static EmpresaDAO criaEmpresaDAO(){
+		EmpresaDAOHibernate empresaDAO = new EmpresaDAOHibernate();
+		empresaDAO.setSession(JpaUtil.getEntityManager());
+		try{
+			empresaDAO.begin();
+		}catch (IOException | SQLException e){
+			e.printStackTrace();
+		}
+		return empresaDAO;
+	}
 	
+	public static LogradouroDAO criaLogrDAO(){
+		LogradouroDAOHibernate logrDAO = new LogradouroDAOHibernate();
+		logrDAO.setSession(JpaUtil.getEntityManager());
+		try{
+			logrDAO.begin();
+		}catch (IOException | SQLException e){
+			e.printStackTrace();
+		}
+		
+		return logrDAO;
+	}
 }
