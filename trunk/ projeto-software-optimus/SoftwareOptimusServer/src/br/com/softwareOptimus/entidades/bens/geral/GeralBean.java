@@ -10,7 +10,6 @@ import br.com.softwareOptimus.entidades.RN.geral.EstadoRN;
 import br.com.softwareOptimus.entidades.RN.geral.MunicipioRN;
 
 @ManagedBean
-@ViewScoped
 public class GeralBean {
 	
 	private List<Estado> estados;
