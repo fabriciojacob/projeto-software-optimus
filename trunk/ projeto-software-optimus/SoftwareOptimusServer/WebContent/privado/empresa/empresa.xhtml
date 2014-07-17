@@ -26,17 +26,15 @@
 			
 					Codigo Empresa:
 					<p:inputText id="idEmpresa" disabled="true"
-							value="#{empresaBean.pessoaJuridica.idPessoa}"/>
+							value="#{empresaBean.pessoaJuridica.idPessoa}" />
 		
 					Nome Fantasia:
 					<p:inputText id="nomeFantasia"
-							value="#{empresaBean.pessoaJuridica.fantasia}" 
-							size="40" />
+							value="#{empresaBean.pessoaJuridica.fantasia}" size="40" />
 					
 					Razão Social:
 					<p:inputText id="razaoSocial"
-							value="#{empresaBean.pessoaJuridica.razaoSocial}"
-							size="40" />
+							value="#{empresaBean.pessoaJuridica.razaoSocial}" size="40" />
 			
 					CNPJ:
 					<p:inputText id="cnpj" value="#{empresaBean.pessoaJuridica.cnpj}" />
@@ -46,8 +44,12 @@
 							rendered="true" />
 					
 					CNAE:
-					<p:inputText id="cnae" value="#{empresaBean.pessoaJuridica.cnae}"/>
+					<p:inputText id="cnae" value="#{empresaBean.pessoaJuridica.cnae}" />
 					</h:panelGrid>
+
+				</p:tab>
+
+				<p:tab id="cadLogr" title="Lista de endereços">
 
 					<p:commandButton value=" Enderecos" type="button"
 						onclick="PF('dlg2').show();" />
@@ -58,35 +60,39 @@
 
 						<h:panelGrid columns="2" columnClasses="label, value">
 						
-						Empresa:
-						<p:outputLabel value="#{empresaBean.pessoaJuridica.idPessoa}"/>
-						
-						Codigo logradouro:
-						<p:inputText id="idLogradouro" disabled="true"/>
+						Codigo logradouro
+						<p:inputText id="idLogradouro"
+								value="#{empresaBean.logradouro.idEndereco}" disabled="true" />
 								
 						Logradouro:
-						<p:inputText id="logradouro" size="40" />
+						<p:inputText id="logradouro" value="#{empresaBean.logradouro.endereco}"
+								size="40" />
 								
 						Complemento:
-						<p:inputText id="complemento" size="40" />							
+						<p:inputText id="complemento" value="#{empresaBean.logradouro.complemento}"
+								size="40" />							
 					
 						Bairro:
-						<p:inputText id="bairro" size="40"/>
+						<p:inputText id="bairro" value="#{empresaBean.logradouro.bairro}" size="40" />
 					
 						Numero:
-						<p:inputText id="numero" size="15" />							
+						<p:inputText id="numero" value="#{empresaBean.logradouro.numero}" size="15" />		
+						
+						CEP:
+						<p:inputText id="cep" value="#{empresaBean.logradouro.cep}" size="8" />							
 							
 						Tipo Endereco:
 					 	<p:selectOneMenu id="tipoLogr">
 								<f:selectItem itemLabel="Selecione tipo endereço" />
-								<f:selectItem itemLabel="Xbox One" itemValue="Xbox One" />
-								<f:selectItem itemLabel="PS4" itemValue="PS4" />
-								<f:selectItem itemLabel="Wii U" itemValue="Wii U" />
+								<f:selectItem itemLabel="COMERCIAL" itemValue="COMERCIAL" />
+								<f:selectItem itemLabel="RESIDENCIAL" itemValue="RESIDENCIAL" />
+								<f:selectItem itemLabel="COBRANCA" itemValue="COBRANCA" />
+								<f:selectItem itemLabel="ENTREGA" itemValue="ENTREGA" />
 							</p:selectOneMenu>
 						
 						Estado:
 						<p:selectOneMenu id="uf" value="#{geralBean.uf}">
-								<f:selectItem itemLabel="Selecione um estado"/>
+								<f:selectItem itemLabel="Selecione um estado" />
 								<f:selectItems value="#{geralBean.estados}" var="listaEstados"
 									itemValue="#{listaEstados}"
 									itemLabel="#{listaEstados.descricao}" />
@@ -96,22 +102,20 @@
 					
 						Município:
 					 	<p:selectOneMenu id="municipios" value="#{geralBean.municipio}">
-								<f:selectItem itemLabel="Selecione um municipio"/>
+								<f:selectItem itemLabel="Selecione um municipio" />
 								<f:selectItems value="#{geralBean.municipios}" var="listaMun"
 									itemValue="#{listaMun}" itemLabel="#{listaMun.descricao}" />
-						</p:selectOneMenu>
+							</p:selectOneMenu>
 
 						</h:panelGrid>
 						<h:panelGrid columns="2">
-							<p:commandButton value="Incluir" actionListener="#{empresaBean.salvarLogr(geralBean.municipio)}"/>
+							<p:commandButton value="Incluir"
+								actionListener="#{empresaBean.salvarLogr(geralBean.municipio)}" />
 							<p:commandButton value="Cancelar" />
 						</h:panelGrid>
 
 					</p:dialog>
 
-				</p:tab>
-
-				<p:tab id="cadLogr" title="Lista de endereços">
 				</p:tab>
 
 				<p:tab id="infFiscais" title="Dados Fiscais">
@@ -121,7 +125,7 @@
 						<p:selectBooleanCheckbox />
 
 						<h:outputText value="Presumido: " />
-						<p:selectBooleanCheckbox  />
+						<p:selectBooleanCheckbox />
 
 						<h:outputText value="Real: " />
 						<p:selectBooleanCheckbox />
@@ -141,7 +145,7 @@
 						</h:panelGrid>
 						<p:commandButton id="incluirReg" icon="ui-icon-disk" />
 					</h:panelGrid>
-					
+
 					<p:dataTable>
 						<p:column headerText="Regime de Apuração">
 
@@ -158,9 +162,9 @@
 
 						</p:column>
 					</p:dataTable>
-					
+
 				</p:tab>
-				
+
 			</p:tabView>
 		</div>
 	</h:form>
