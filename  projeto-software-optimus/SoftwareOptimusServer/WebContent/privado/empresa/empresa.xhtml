@@ -16,171 +16,115 @@
 		<h3 style="margin-top: 0">CADASTRO DE EMPRESA</h3>
 		<div align="left">
 			<p:commandButton value="Salvar"
-				actionListener="#{empresaBean.salvar(geralBean.municipio)}"/>
+				actionListener="#{empresaBean.salvarEmp}" />
 			<p:commandButton value="Cancelar" />
 			<p:messages id="messages" showDetail="true" autoUpdate="true"
 				closable="true" />
 			<p:tabView style="border: 0px">
 				<p:tab id="cadEmpresa" title="Informações Gerais">
-					<h:panelGrid columns="2" columnClasses="label, value"
-						rendered="true">
+					<h:panelGrid columns="2" columnClasses="label, value">
 			
 					Codigo Empresa:
 					<p:inputText id="idEmpresa" disabled="true"
-							value="#{empresaBean.pessoaJuridica.idPessoa}" rendered="true" />
+							value="#{empresaBean.pessoaJuridica.idPessoa}"/>
 		
 					Nome Fantasia:
 					<p:inputText id="nomeFantasia"
-							value="#{empresaBean.pessoaJuridica.fantasia}" rendered="true"
+							value="#{empresaBean.pessoaJuridica.fantasia}" 
 							size="40" />
 					
 					Razão Social:
 					<p:inputText id="razaoSocial"
-							value="#{empresaBean.pessoaJuridica.razaoSocial}" rendered="true"
+							value="#{empresaBean.pessoaJuridica.razaoSocial}"
 							size="40" />
 			
 					CNPJ:
-					<p:inputText id="cnpj" value="#{empresaBean.pessoaJuridica.cnpj}"
-							rendered="true" />
+					<p:inputText id="cnpj" value="#{empresaBean.pessoaJuridica.cnpj}" />
 					
 					Inscrição estadual:
 					<p:inputText id="ie" value="#{empresaBean.pessoaJuridica.ie}"
 							rendered="true" />
 					
 					CNAE:
-					<p:inputText id="cnae" value="#{empresaBean.pessoaJuridica.cnae}"
-							rendered="true" />
-					</h:panelGrid>
-				</p:tab>
-
-				<p:tab id="cadLogr" title="Logradouro">
-					<h:panelGrid columns="2" columnClasses="label, value">
-					
-					Codigo logradouro:
-					<p:inputText id="idLogradouro" disabled="true"
-							value="#{empresaBean.logradouro.idEndereco}" rendered="true" />
-								
-					Logradouro:
-					<p:inputText id="logradouro" size="40" rendered="true"
-							value="#{empresaBean.logradouro.endereco}" />
- 							
-							
-					Complemento:
-					<p:inputText id="complemento" size="40" rendered="true"
-							value="#{empresaBean.logradouro.complemento}" />							
-					
-					Bairro:
-					<p:inputText id="bairro" size="40" rendered="true"
-							value="#{empresaBean.logradouro.bairro}" />
-					
-					Numero:
-					<p:inputText id="numero" size="15" rendered="true"
-							value="#{empresaBean.logradouro.numero}" />
-					
-					CEP:
-					<p:inputText id="cep" size="8" rendered="true"
-							value="#{empresaBean.logradouro.cep}" />							
-							
-					Tipo Endereco:
-					 <p:selectOneMenu id="tipoLogr"
-							value="#{empresaBean.tipoSelecionado}">
-							<f:selectItem itemLabel="Selecione tipo endereço" itemValue="" />
-							<f:selectItem itemLabel="ENTREGA" itemValue="entrega" />
-							<f:selectItem itemLabel="COMERCIAL" itemValue="comercial" />
-							<f:selectItem itemLabel="RESIDENCIAL" itemValue="residencial" />
-							<f:selectItem itemLabel="COBRANCA" itemValue="cobranca" />
-						</p:selectOneMenu>
-						
-					Estado:
-					 <p:selectOneMenu id="uf" value="#{geralBean.uf}">
-							<f:selectItem itemLabel="Selecione um estado" itemValue="" />
-							<f:selectItems value="#{geralBean.estados}" var="listaEstados"
-								itemValue="#{listaEstados}"
-								itemLabel="#{listaEstados.descricao}" />
-							<p:ajax update="municipios" event="change"
-								listener="#{geralBean.filtraEstado}" />
-						</p:selectOneMenu>
-					
-					Município:
-					 <p:selectOneMenu id="municipios" value="#{geralBean.municipio}">
-							<f:selectItem itemLabel="Selecione um municipio" itemValue="" />
-							<f:selectItems value="#{geralBean.municipios}" var="listaMun"
-								itemLabel="#{listaMun.descricao}" />
-						</p:selectOneMenu>
-
+					<p:inputText id="cnae" value="#{empresaBean.pessoaJuridica.cnae}"/>
 					</h:panelGrid>
 
-					<p:commandButton value="Mais Enderecos" type="button"
+					<p:commandButton value=" Enderecos" type="button"
 						onclick="PF('dlg2').show();" />
 
-					<p:dialog header="Mais Enderecos" widgetVar="dlg2" modal="true"
+					<p:dialog header=" Enderecos" widgetVar="dlg2" modal="true"
 						height="300" width="400">
 
 
 						<h:panelGrid columns="2" columnClasses="label, value">
-					
+						
+						Empresa:
+						<p:outputLabel value="#{empresaBean.pessoaJuridica.idPessoa}"/>
+						
 						Codigo logradouro:
-						<p:inputText id="idLogradouroMais" disabled="true" rendered="true" />
+						<p:inputText id="idLogradouro" disabled="true"/>
 								
 						Logradouro:
-						<p:inputText id="logradouroMais" size="40" rendered="true" />
+						<p:inputText id="logradouro" size="40" />
 								
 						Complemento:
-						<p:inputText id="complementoMais" size="40" rendered="true" />							
+						<p:inputText id="complemento" size="40" />							
 					
 						Bairro:
-						<p:inputText id="bairroMais" size="40" rendered="true" />
+						<p:inputText id="bairro" size="40"/>
 					
 						Numero:
-						<p:inputText id="numeroMais" size="15" rendered="true" />							
+						<p:inputText id="numero" size="15" />							
 							
 						Tipo Endereco:
-					 	<p:selectOneMenu id="tipoLogrMais"
-								value="#{pessoaJuridicaBean.logradouro.tipoLogr}">
-								<f:selectItem itemLabel="Selecione tipo endereço" itemValue="" />
+					 	<p:selectOneMenu id="tipoLogr">
+								<f:selectItem itemLabel="Selecione tipo endereço" />
 								<f:selectItem itemLabel="Xbox One" itemValue="Xbox One" />
 								<f:selectItem itemLabel="PS4" itemValue="PS4" />
 								<f:selectItem itemLabel="Wii U" itemValue="Wii U" />
 							</p:selectOneMenu>
 						
 						Estado:
-						  <p:selectOneMenu id="ufMais" value="#{geralBean.uf}">
-								<f:selectItem itemLabel="Selecione um estado" itemValue="" />
+						<p:selectOneMenu id="uf" value="#{geralBean.uf}">
+								<f:selectItem itemLabel="Selecione um estado"/>
 								<f:selectItems value="#{geralBean.estados}" var="listaEstados"
 									itemValue="#{listaEstados}"
 									itemLabel="#{listaEstados.descricao}" />
-								<p:ajax update="municipiosMais" event="change"
+								<p:ajax update="municipios" event="change"
 									listener="#{geralBean.filtraEstado}" />
 							</p:selectOneMenu>
 					
 						Município:
-						<p:selectOneMenu id="municipiosMais"
-								value="#{geralBean.municipio}">
-								<f:selectItem itemLabel="Selecione um municipio" itemValue="" />
+					 	<p:selectOneMenu id="municipios" value="#{geralBean.municipio}">
+								<f:selectItem itemLabel="Selecione um municipio"/>
 								<f:selectItems value="#{geralBean.municipios}" var="listaMun"
-									itemLabel="#{listaMun.descricao}" />
-							</p:selectOneMenu>
+									itemValue="#{listaMun}" itemLabel="#{listaMun.descricao}" />
+						</p:selectOneMenu>
 
 						</h:panelGrid>
-						<h:panelGrid>
+						<h:panelGrid columns="2">
 							<p:commandButton value="Incluir" />
 							<p:commandButton value="Cancelar" />
 						</h:panelGrid>
 
 					</p:dialog>
+
+				</p:tab>
+
+				<p:tab id="cadLogr" title="Lista de endereços">
 				</p:tab>
 
 				<p:tab id="infFiscais" title="Dados Fiscais">
 					<h:panelGrid columns="6" cellspacing="5">
 
 						<h:outputText value="Simples: " />
-						<p:selectBooleanCheckbox value="" />
+						<p:selectBooleanCheckbox />
 
 						<h:outputText value="Presumido: " />
-						<p:selectBooleanCheckbox value="" />
+						<p:selectBooleanCheckbox  />
 
 						<h:outputText value="Real: " />
-						<p:selectBooleanCheckbox value="" />
+						<p:selectBooleanCheckbox />
 					</h:panelGrid>
 					<h:panelGrid columns="2">
 						<h:panelGrid columns="2">
@@ -197,6 +141,7 @@
 						</h:panelGrid>
 						<p:commandButton id="incluirReg" icon="ui-icon-disk" />
 					</h:panelGrid>
+					
 					<p:dataTable>
 						<p:column headerText="Regime de Apuração">
 
@@ -213,7 +158,9 @@
 
 						</p:column>
 					</p:dataTable>
+					
 				</p:tab>
+				
 			</p:tabView>
 		</div>
 	</h:form>

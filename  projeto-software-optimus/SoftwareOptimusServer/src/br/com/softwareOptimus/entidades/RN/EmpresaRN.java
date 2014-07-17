@@ -15,7 +15,7 @@ public class EmpresaRN {
 	public void salvar(PessoaJuridica empresa){
 		Long codigo = empresa.getIdPessoa();
 		if(codigo == null || codigo == 0){
-			
+			this.empresaDAO.salvar(empresa);
 		}else{
 			this.empresaDAO.atualizar(empresa);
 		}
