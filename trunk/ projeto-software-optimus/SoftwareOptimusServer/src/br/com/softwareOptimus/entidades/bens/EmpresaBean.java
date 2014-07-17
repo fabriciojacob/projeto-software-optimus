@@ -2,16 +2,16 @@ package br.com.softwareOptimus.entidades.bens;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import br.com.softwareOptimus.entidades.Logradouro;
-import br.com.softwareOptimus.entidades.Municipio;
 import br.com.softwareOptimus.entidades.PessoaJuridica;
 import br.com.softwareOptimus.entidades.TipoLogradouro;
 import br.com.softwareOptimus.entidades.RN.EmpresaRN;
 import br.com.softwareOptimus.entidades.RN.geral.LogradouroRN;
 
-@ManagedBean
+@ManagedBean(name = "empresaBean")
+@SessionScoped
 public class EmpresaBean {
 
 	private PessoaJuridica pessoaJuridica = new PessoaJuridica();
@@ -42,25 +42,12 @@ public class EmpresaBean {
 		this.tipoSelecionado = tipoSelecionado;
 	}
 
-	public void salvar(Municipio municipio) {
+	public void salvarEmp() {
 		try {
-			
-			if (tipoSelecionado == TipoLogradouro.COBRANCA.toString()) {
-				logradouro.setTipoLogr(TipoLogradouro.COBRANCA);
-			} else if (tipoSelecionado == TipoLogradouro.ENTREGA.toString()) {
-				logradouro.setTipoLogr(TipoLogradouro.ENTREGA);
-			} else if (tipoSelecionado == TipoLogradouro.COMERCIAL.toString()) {
-				logradouro.setTipoLogr(TipoLogradouro.COMERCIAL);
-			} else {
-				logradouro.setTipoLogr(TipoLogradouro.RESIDENCIAL);
-			}
 
 			EmpresaRN empresaRN = new EmpresaRN();
-			LogradouroRN logrRN = new LogradouroRN();
 			empresaRN.salvar(pessoaJuridica);
-			logradouro.setPessoa(pessoaJuridica);
-			logradouro.setMunicipio(municipio);
-			logrRN.salvar(logradouro);
+
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
@@ -69,7 +56,37 @@ public class EmpresaBean {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na gravacao do usuario "
+							"Problemas na gravacao da empresa "
+									+ e.getMessage()));
+		}
+	}
+
+	public void salvarLogr() {
+
+		if (tipoSelecionado == TipoLogradouro.COBRANCA.toString()) {
+			logradouro.setTipoLogr(TipoLogradouro.COBRANCA);
+		} else if (tipoSelecionado == TipoLogradouro.ENTREGA.toString()) {
+			logradouro.setTipoLogr(TipoLogradouro.ENTREGA);
+		} else if (tipoSelecionado == TipoLogradouro.COMERCIAL.toString()) {
+			logradouro.setTipoLogr(TipoLogradouro.COMERCIAL);
+		} else {
+			logradouro.setTipoLogr(TipoLogradouro.RESIDENCIAL);
+		}
+		
+		try {
+			LogradouroRN logrRN = new LogradouroRN();
+			logradouro.setPessoa(pessoaJuridica);
+			// logradouro.setMunicipio(municipio);
+			logrRN.salvar(logradouro);
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
+							"Endereço salvo com sucesso"));
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+							"Problemas na gravacao do endereço "
 									+ e.getMessage()));
 		}
 	}
