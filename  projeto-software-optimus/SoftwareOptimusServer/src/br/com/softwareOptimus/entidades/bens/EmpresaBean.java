@@ -4,7 +4,9 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+
 import br.com.softwareOptimus.entidades.Logradouro;
+import br.com.softwareOptimus.entidades.Municipio;
 import br.com.softwareOptimus.entidades.PessoaJuridica;
 import br.com.softwareOptimus.entidades.TipoLogradouro;
 import br.com.softwareOptimus.entidades.RN.EmpresaRN;
@@ -61,7 +63,7 @@ public class EmpresaBean {
 		}
 	}
 
-	public void salvarLogr() {
+	public void salvarLogr(Municipio municipio) {
 
 		if (tipoSelecionado == TipoLogradouro.COBRANCA.toString()) {
 			logradouro.setTipoLogr(TipoLogradouro.COBRANCA);
@@ -76,7 +78,7 @@ public class EmpresaBean {
 		try {
 			LogradouroRN logrRN = new LogradouroRN();
 			logradouro.setPessoa(pessoaJuridica);
-			// logradouro.setMunicipio(municipio);
+			logradouro.setMunicipio(municipio);
 			logrRN.salvar(logradouro);
 			FacesContext.getCurrentInstance().addMessage(
 					null,
