@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+</h:head>
+<body>
+	<h:form id="frmCadProduto">
+		<br />
+		<h3 style="margin-top: 0">CADASTRO DE PRODUTO</h3>
+		<div align="left">
+			<p:commandButton value="Salvar"
+				actionListener="#{ProdutoBean.salvarProd}" />
+			<p:commandButton value="Cancelar" />
+			<p:messages id="messages" showDetail="true" autoUpdate="true"
+				closable="true" />
+			<h:panelGrid columns="2" columnClasses="label">
+				
+					Codigo do Produto:
+					<p:inputText id="idProduto" disabled="true"
+					value="#{produtoBean.produto.idProduto}" />
+		
+					Descrição do Produto:
+					<p:inputText id="descProd" value="#{produtoBean.produto.descProd}"
+					size="40" />
+					
+					Codigo de Barra:
+					<p:inputText id="codBarra" value="#{produtoBean.produto.codBarra}"
+					size="40" />
+			
+					Figura:
+					<p:selectOneMenu id="figura" value="#{produtoBean.figura}">
+					<f:selectItem itemLabel="Selecione uma Figura" />
+					<f:selectItems value="#{produtoBean.figura}" var="listaFig"
+						itemValue="#{listaFig}" itemLabel="#{listaFig.descricao}" />
+				</p:selectOneMenu>
+						
+					Tipo do Item:
+					<p:selectOneMenu id="tipoProd">
+					<f:selectItem itemLabel="Selecione tipo do item" />
+					<f:selectItem itemLabel="00 – Mercadoria para Revenda"
+						itemValue="00 - Mercadoria para Revenda" />
+					<f:selectItem itemLabel="01 – Matéria-Prima"
+						itemValue="01 – Matéria-Prima" />
+					<f:selectItem itemLabel="02 – Embalagem" itemValue="02 – Embalagem" />
+					<f:selectItem itemLabel="03 – Produto em Processo"
+						itemValue="03 – Produto em Processo" />
+					<f:selectItem itemLabel="04 – Produto Acabado"
+						itemValue="04 – Produto Acabado" />
+					<f:selectItem itemLabel="05 – Subproduto"
+						itemValue="05 – Subproduto" />
+					<f:selectItem itemLabel="06 – Produto Intermediário"
+						itemValue="06 – Produto Intermediário" />
+					<f:selectItem itemLabel="07 – Material de Uso e Consumo"
+						itemValue="07 – Material de Uso e Consumo" />
+					<f:selectItem itemLabel="08 – Ativo Imobilizado"
+						itemValue="08 – Ativo Imobilizado" />
+					<f:selectItem itemLabel="09 – Serviços" itemValue="09 – Serviços" />
+					<f:selectItem itemLabel="10 – Outros insumos"
+						itemValue="10 – Outros insumos" />
+					<f:selectItem itemLabel="99 – Outras" itemValue="99 – Outras" />
+				</p:selectOneMenu>
+			</h:panelGrid>
+		</div>
+	</h:form>
+</body>
+</html>
