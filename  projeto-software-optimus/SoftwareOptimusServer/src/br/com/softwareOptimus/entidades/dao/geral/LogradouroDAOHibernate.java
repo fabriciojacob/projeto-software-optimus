@@ -37,6 +37,10 @@ public class LogradouroDAOHibernate implements LogradouroDAO{
 		
 	}
 	
+	public void refresh(){
+		
+	}
+	
 	@Override
 	public void atualizar(Logradouro logradouro) {
 		this.session.merge(logradouro);
