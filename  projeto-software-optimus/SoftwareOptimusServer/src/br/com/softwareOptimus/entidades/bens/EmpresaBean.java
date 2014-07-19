@@ -20,6 +20,15 @@ public class EmpresaBean {
 	private PessoaJuridica pessoaJuridica = new PessoaJuridica();
 	private Logradouro logradouro = new Logradouro();
 	private String tipoSelecionado;
+	private boolean disable = false;
+
+	public boolean isDisable() {
+		return disable;
+	}
+
+	public void setDisable(boolean disable) {
+		this.disable = disable;
+	}
 
 	public PessoaJuridica getPessoaJuridica() {
 		return pessoaJuridica;
@@ -56,6 +65,7 @@ public class EmpresaBean {
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
 							"Empresa salva com sucesso"));
+			setDisable(false);
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
@@ -95,6 +105,14 @@ public class EmpresaBean {
 							"Problemas na gravacao do endereço "
 									+ e.getMessage()));
 		}
+	}
+	
+	public boolean habilitaButton(){
+		return true;
+	}
+	
+	public boolean desabilitaButton(){
+		return false;
 	}
 
 }

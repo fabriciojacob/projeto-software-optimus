@@ -15,11 +15,14 @@
 		<br />
 		<h3 style="margin-top: 0">CADASTRO DE EMPRESA</h3>
 		<div align="left">
+
 			<p:commandButton value="Salvar"
-				actionListener="#{empresaBean.salvarEmp}" />
-			<p:commandButton value="Cancelar" />
+				actionListener="#{empresaBean.salvarEmp}"/>
+
+			<p:commandButton value="Cancelar" type="reset" />
 			<p:messages id="messages" showDetail="true" autoUpdate="true"
 				closable="true" />
+
 			<p:tabView style="border: 0px">
 				<p:tab id="cadEmpresa" title="Informações Gerais">
 					<h:panelGrid columns="2" columnClasses="label, value">
@@ -51,8 +54,8 @@
 
 				<p:tab id="cadLogr" title="Lista de endereços">
 
-					<p:commandButton value=" Enderecos" type="button"
-						onclick="PF('dlg2').show();" />
+					<p:commandButton value="Enderecos" type="button"
+						onclick="PF('dlg2').show();" disabled="#{empresaBean.disable}"/>
 
 					<p:dialog header=" Enderecos" widgetVar="dlg2" modal="true"
 						height="300" width="400">
@@ -65,21 +68,24 @@
 								value="#{empresaBean.logradouro.idEndereco}" disabled="true" />
 								
 						Logradouro:
-						<p:inputText id="logradouro" value="#{empresaBean.logradouro.endereco}"
-								size="40" />
+						<p:inputText id="logradouro"
+								value="#{empresaBean.logradouro.endereco}" size="40" />
 								
 						Complemento:
-						<p:inputText id="complemento" value="#{empresaBean.logradouro.complemento}"
-								size="40" />							
+						<p:inputText id="complemento"
+								value="#{empresaBean.logradouro.complemento}" size="40" />							
 					
 						Bairro:
-						<p:inputText id="bairro" value="#{empresaBean.logradouro.bairro}" size="40" />
+						<p:inputText id="bairro" value="#{empresaBean.logradouro.bairro}"
+								size="40" />
 					
 						Numero:
-						<p:inputText id="numero" value="#{empresaBean.logradouro.numero}" size="15" />		
+						<p:inputText id="numero" value="#{empresaBean.logradouro.numero}"
+								size="15" />		
 						
 						CEP:
-						<p:inputText id="cep" value="#{empresaBean.logradouro.cep}" size="8" />							
+						<p:inputText id="cep" value="#{empresaBean.logradouro.cep}"
+								size="8" />							
 							
 						Tipo Endereco:
 					 	<p:selectOneMenu id="tipoLogr">
