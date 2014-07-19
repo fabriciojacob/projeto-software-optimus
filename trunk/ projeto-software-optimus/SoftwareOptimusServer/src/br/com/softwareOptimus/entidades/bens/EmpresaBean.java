@@ -9,6 +9,7 @@ import br.com.softwareOptimus.entidades.Logradouro;
 import br.com.softwareOptimus.entidades.Municipio;
 import br.com.softwareOptimus.entidades.PessoaJuridica;
 import br.com.softwareOptimus.entidades.TipoLogradouro;
+import br.com.softwareOptimus.entidades.TipoPessoaJuridica;
 import br.com.softwareOptimus.entidades.RN.EmpresaRN;
 import br.com.softwareOptimus.entidades.RN.geral.LogradouroRN;
 
@@ -48,6 +49,7 @@ public class EmpresaBean {
 		try {
 
 			EmpresaRN empresaRN = new EmpresaRN();
+			this.pessoaJuridica.setTipoPessoaJuridica(TipoPessoaJuridica.FABRICANTE);
 			empresaRN.salvar(pessoaJuridica);
 
 			FacesContext.getCurrentInstance().addMessage(
@@ -64,22 +66,24 @@ public class EmpresaBean {
 	}
 
 	public void salvarLogr(Municipio municipio) {
-
+		Logradouro logr = new Logradouro();
+		logr = this.logradouro;
+		logr.setIdEndereco(null);
 		if (tipoSelecionado == TipoLogradouro.COBRANCA.toString()) {
-			logradouro.setTipoLogr(TipoLogradouro.COBRANCA);
+			logr.setTipoLogr(TipoLogradouro.COBRANCA);
 		} else if (tipoSelecionado == TipoLogradouro.ENTREGA.toString()) {
-			logradouro.setTipoLogr(TipoLogradouro.ENTREGA);
+			logr.setTipoLogr(TipoLogradouro.ENTREGA);
 		} else if (tipoSelecionado == TipoLogradouro.COMERCIAL.toString()) {
-			logradouro.setTipoLogr(TipoLogradouro.COMERCIAL);
+			logr.setTipoLogr(TipoLogradouro.COMERCIAL);
 		} else {
-			logradouro.setTipoLogr(TipoLogradouro.RESIDENCIAL);
+			logr.setTipoLogr(TipoLogradouro.RESIDENCIAL);
 		}
 		
 		try {
 			LogradouroRN logrRN = new LogradouroRN();
-			logradouro.setPessoa(pessoaJuridica);
-			logradouro.setMunicipio(municipio);
-			logrRN.salvar(logradouro);
+			logr.setPessoa(pessoaJuridica);
+			logr.setMunicipio(municipio);
+			logrRN.salvar(logr);
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
