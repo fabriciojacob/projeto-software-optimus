@@ -13,9 +13,11 @@
 	<h:form id="frmCadProduto">
 		<br />
 		<h3 style="margin-top: 0">CADASTRO DE PRODUTO</h3>
-		<div align="left">
+		<div align="center">
+		
 			<p:commandButton value="Salvar"
-				actionListener="#{ProdutoBean.salvarProd}" />
+				actionListener="#{produtoBean.salvarProd}" />
+				
 			<p:commandButton value="Cancelar" />
 			<p:messages id="messages" showDetail="true" autoUpdate="true"
 				closable="true" />
@@ -41,7 +43,7 @@
 				</p:selectOneMenu>
 						
 					Tipo do Item:
-					<p:selectOneMenu id="tipoProd">
+					<p:selectOneMenu id="tipoProd" value='#{produtoBean.produto.tipoProd}'>
 					<f:selectItem itemLabel="Selecione tipo do item" />
 					<f:selectItem itemLabel="00 – Mercadoria para Revenda"
 						itemValue="00 - Mercadoria para Revenda" />
