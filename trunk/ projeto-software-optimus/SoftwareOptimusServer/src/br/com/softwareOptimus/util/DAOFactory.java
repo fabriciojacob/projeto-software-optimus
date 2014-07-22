@@ -5,6 +5,8 @@ import java.sql.SQLException;
 
 import br.com.softwareOptimus.dao.produto.ProdutoDAO;
 import br.com.softwareOptimus.dao.produto.ProdutoDAOHibernate;
+import br.com.softwareOptimus.dao.produto.UnidMedDAO;
+import br.com.softwareOptimus.dao.produto.UnidMedDAOHibernate;
 import br.com.softwareOptimus.entidades.dao.empresa.EmpresaDAO;
 import br.com.softwareOptimus.entidades.dao.empresa.EmpresaDAOHibernate;
 import br.com.softwareOptimus.entidades.dao.geral.EstadoDAO;
@@ -75,14 +77,24 @@ public class DAOFactory {
 	}
 
 	public static ProdutoDAO criaProdutoDAO() {
-		ProdutoDAOHibernate ProdDAO = new ProdutoDAOHibernate();
-		ProdDAO.setSession(JpaUtil.getEntityManager());
+		ProdutoDAOHibernate prodDAO = new ProdutoDAOHibernate();
+		prodDAO.setSession(JpaUtil.getEntityManager());
 		try {
-			ProdDAO.begin();
+			prodDAO.begin();
 		} catch (IOException | SQLException e) {
 			e.printStackTrace();
 		}
-		return ProdDAO;
-
+		return prodDAO;
+	}
+	
+	public static UnidMedDAO criaUnidMedDAO(){
+		UnidMedDAOHibernate unidDAO = new UnidMedDAOHibernate();
+		unidDAO.setSession(JpaUtil.getEntityManager());
+		try {
+			unidDAO.begin();
+		} catch (IOException | SQLException e) {
+			e.printStackTrace();
+		}
+		return unidDAO;
 	}
 }

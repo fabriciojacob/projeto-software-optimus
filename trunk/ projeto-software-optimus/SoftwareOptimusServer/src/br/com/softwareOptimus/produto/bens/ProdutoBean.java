@@ -1,12 +1,10 @@
 package br.com.softwareOptimus.produto.bens;
 
 import java.util.List;
-
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-
 import br.com.softwareOptimus.entidades.RN.ProdutoRN;
 import br.com.softwareOptimus.fiscal.FiguraFiscal;
 import br.com.softwareOptimus.fiscal.Ncm;
