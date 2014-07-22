@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+</h:head>
+<body>
+	<h:form id="frmCadUnidMed">
+		<br />
+		<h3 style="margin-top: 0">CADASTRO DE UNIDADE DE MEDIDA</h3>
+		<div align="center">
+
+			<p:commandButton value="Salvar"
+				actionListener="#{unidMedBean.salvarUnid}" />
+
+			<p:commandButton value="Pesquisar" type="button"
+				onclick="PF('dlg3').show();" disabled="#{unidMedBean.disable}" />
+
+			<p:commandButton value="Limpar" type="reset" />
+			<p:messages id="messages" showDetail="true" autoUpdate="true"
+				closable="true" />
+
+			<h:panelGrid columns="2" columnClasses="label">
+				
+					Codigo da Unidade:
+					<p:inputText id="idUnidMed" disabled="true"
+					value="#{unidMedBean.unidMed.idUnidMed}" />
+		
+					Unidade Abreviada:
+					<p:inputText id="unid" value="#{unidMedBean.unidMed.unid}"
+					size="10" />
+					
+					Descrição da Unidade:
+					<p:inputText id="descUnid" value="#{unidMedBean.unidMed.descUnid}"
+					size="40" />
+			</h:panelGrid>
+
+
+
+			<p:dialog header=" Pesquisa Unidade de Medida" widgetVar="dlg3"
+				modal="true" height="300" width="400">
+				
+
+			</p:dialog>
+		</div>
+	</h:form>
+</body>
+</html>

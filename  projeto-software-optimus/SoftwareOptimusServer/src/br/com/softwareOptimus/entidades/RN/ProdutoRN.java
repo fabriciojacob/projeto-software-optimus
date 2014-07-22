@@ -6,14 +6,14 @@ import br.com.softwareOptimus.util.DAOFactory;
 
 public class ProdutoRN {
 	
-	private ProdutoDAO produtoDao;
+	private ProdutoDAO produtoDAO;
 	
 	public ProdutoRN(){
-		this.produtoDao = DAOFactory.criaProdutoDAO();
+		this.produtoDAO = DAOFactory.criaProdutoDAO();
 	}
 	
-	public void salvar(Produto p1){
-		this.produtoDao.salvar(p1);
+	public void salvar(Produto produto){
+		this.produtoDAO.salvar(produto);
 	}
 
 }
