@@ -17,11 +17,28 @@
 		<div align="left">
 
 			<p:commandButton value="Salvar"
-				actionListener="#{empresaBean.salvarEmp}"/>
+				actionListener="#{empresaBean.salvarEmp}" />
+
+			<p:commandButton value="Consulta" type="button"
+				onclick="PF('consulta').show();" />
 
 			<p:commandButton value="Cancelar" type="reset" />
+
 			<p:messages id="messages" showDetail="true" autoUpdate="true"
 				closable="true" />
+
+			<p:dialog header="Consulta" widgetVar="consulta" modal="true"
+				height="300" width="400">
+				<h:panelGrid columns="2">
+
+					<p:inputText id="textoConsulta" size="40" />
+
+					<p:selectOneMenu id="fConsult" value="#{empresaBean.filtro}">/>
+						<f:selectItem itemLabel="CNPJ" itemValue="cnpj" />
+						<f:selectItem itemLabel="Nome Fantasia" itemValue="nomeFantasia" />
+					</p:selectOneMenu>
+				</h:panelGrid>
+			</p:dialog>
 
 			<p:tabView style="border: 0px">
 				<p:tab id="cadEmpresa" title="Informações Gerais">
@@ -55,7 +72,7 @@
 				<p:tab id="cadLogr" title="Lista de endereços">
 
 					<p:commandButton value="Enderecos" type="button"
-						onclick="PF('dlg2').show();" disabled="#{empresaBean.disable}"/>
+						onclick="PF('dlg2').show();" disabled="#{empresaBean.disable}" />
 
 					<p:dialog header=" Enderecos" widgetVar="dlg2" modal="true"
 						height="300" width="400">
@@ -88,7 +105,8 @@
 								size="8" />							
 							
 						Tipo Endereco:
-					 	<p:selectOneMenu id="tipoLogr">
+					 	<p:selectOneMenu id="tipoLogr"
+					 		value="#{empresaBean.tipoSelecionado}">
 								<f:selectItem itemLabel="Selecione tipo endereço" />
 								<f:selectItem itemLabel="COMERCIAL" itemValue="COMERCIAL" />
 								<f:selectItem itemLabel="RESIDENCIAL" itemValue="RESIDENCIAL" />
