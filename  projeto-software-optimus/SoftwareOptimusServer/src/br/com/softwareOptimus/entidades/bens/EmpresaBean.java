@@ -4,7 +4,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-
 import br.com.softwareOptimus.entidades.Logradouro;
 import br.com.softwareOptimus.entidades.Municipio;
 import br.com.softwareOptimus.entidades.PessoaJuridica;
@@ -21,6 +20,16 @@ public class EmpresaBean {
 	private Logradouro logradouro = new Logradouro();
 	private String tipoSelecionado;
 	private boolean disable = false;
+	private String filtro = null;
+
+	
+	public String getFiltro() {
+		return filtro;
+	}
+	
+	public void setFiltro(String filtro) {
+		this.filtro = filtro;
+	}
 
 	public boolean isDisable() {
 		return disable;
