@@ -29,6 +29,14 @@
 
 			<p:dialog header="Consulta" widgetVar="consulta" modal="true"
 				height="300" width="400">
+				
+				<div align="right">
+					<h:panelGrid columns="2">
+						<p:commandButton value="Pesquisar" />
+						<p:commandButton value="Selecionar" />
+					</h:panelGrid>
+				</div>
+				
 				<h:panelGrid columns="2">
 
 					<p:inputText id="textoConsulta" size="40" />
@@ -37,7 +45,15 @@
 						<f:selectItem itemLabel="CNPJ" itemValue="cnpj" />
 						<f:selectItem itemLabel="Nome Fantasia" itemValue="nomeFantasia" />
 					</p:selectOneMenu>
+
 				</h:panelGrid>
+				<p:dataTable>
+					<p:column headerText="Nome Fantasia" />
+
+					<p:column headerText="CNPJ" />
+
+				</p:dataTable>
+
 			</p:dialog>
 
 			<p:tabView style="border: 0px">
@@ -106,7 +122,7 @@
 							
 						Tipo Endereco:
 					 	<p:selectOneMenu id="tipoLogr"
-					 		value="#{empresaBean.tipoSelecionado}">
+								value="#{empresaBean.tipoSelecionado}">
 								<f:selectItem itemLabel="Selecione tipo endereço" />
 								<f:selectItem itemLabel="COMERCIAL" itemValue="COMERCIAL" />
 								<f:selectItem itemLabel="RESIDENCIAL" itemValue="RESIDENCIAL" />
@@ -139,6 +155,23 @@
 						</h:panelGrid>
 
 					</p:dialog>
+					<br />
+					<p:dataTable>
+						<p:column headerText="Endereco" />
+
+						<p:column headerText="Número" />
+
+						<p:column headerText="Complemento" />
+
+						<p:column headerText="Bairro" />
+
+						<p:column headerText="CEP" />
+
+						<p:column headerText="Cidade" />
+
+						<p:column headerText="Estado" />
+
+					</p:dataTable>
 
 				</p:tab>
 
