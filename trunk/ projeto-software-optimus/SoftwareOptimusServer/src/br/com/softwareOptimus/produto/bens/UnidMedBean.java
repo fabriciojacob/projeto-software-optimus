@@ -1,5 +1,7 @@
 package br.com.softwareOptimus.produto.bens;
 
+import java.util.List;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -13,7 +15,44 @@ public class UnidMedBean {
 	
 	private UnidMed unidMed = new UnidMed();
 	private boolean disable = false;
+	private List<UnidMed> unidMedLis;
+	private String busca;
+	private boolean chkId = false;
+	private boolean chkUnid = false;
+	private boolean chkDesc = false;	
 	
+	public boolean isChkId() {
+		return chkId;
+	}
+
+	public void setChkId(boolean chkId) {
+		this.chkId = chkId;
+	}
+
+	public boolean isChkUnid() {
+		return chkUnid;
+	}
+
+	public void setChkUnid(boolean chkUnid) {
+		this.chkUnid = chkUnid;
+	}
+
+	public boolean isChkDesc() {
+		return chkDesc;
+	}
+
+	public void setChkDesc(boolean chkDesc) {
+		this.chkDesc = chkDesc;
+	}
+
+	public String getBusca() {
+		return busca;
+	}
+
+	public void setBusca(String busca) {
+		this.busca = busca;
+	}
+
 	public boolean isDisable() {
 		return disable;
 	}
@@ -30,6 +69,14 @@ public class UnidMedBean {
 		this.unidMed = unidMed;
 	}
 	
+	public List<UnidMed> getUnidMedLis() {
+		return unidMedLis;
+	}
+
+	public void setUnidMedLis(List<UnidMed> unidMedLis) {
+		this.unidMedLis = unidMedLis;
+	}
+
 	public void salvarUnid(){
 		try {
 			UnidMedRN unidRN = new UnidMedRN();
@@ -46,6 +93,16 @@ public class UnidMedBean {
 							"Problemas na gravacao da Unidade "
 									+ e.getMessage()));
 		}
-		
+	}
+	
+	public void buscaUnid(){
+		UnidMedRN unidRN = new UnidMedRN();
+		if (chkId == true && busca != null) {
+			unidMedLis = unidRN.consultaId(Long.parseLong(busca));
+		}else if(chkUnid == true && busca != null){
+			unidMedLis = unidRN.consultaUnid(busca);
+		}else if (chkDesc == true && busca != null){
+			unidMedLis = unidRN.consultaDesc(busca);
+		}
 	}
 }

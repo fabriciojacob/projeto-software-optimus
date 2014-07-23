@@ -13,15 +13,15 @@
 	<h:form id="frmCadUnidMed">
 		<br />
 		<h3 style="margin-top: 0">CADASTRO DE UNIDADE DE MEDIDA</h3>
-		<div align="center">
+		<div align="left">
 
 			<p:commandButton value="Salvar"
 				actionListener="#{unidMedBean.salvarUnid}" />
 
-			<p:commandButton value="Pesquisar" type="button"
+			<p:commandButton value="Consultar" type="button"
 				onclick="PF('dlg3').show();" disabled="#{unidMedBean.disable}" />
 
-			<p:commandButton value="Limpar" type="reset" />
+			<p:commandButton value="Cancelar" type="reset" />
 			<p:messages id="messages" showDetail="true" autoUpdate="true"
 				closable="true" />
 
@@ -40,12 +40,41 @@
 					size="40" />
 			</h:panelGrid>
 
-
-
 			<p:dialog header=" Pesquisa Unidade de Medida" widgetVar="dlg3"
-				modal="true" height="300" width="400">
+				modal="true" height="300" width="650">
+				<h:panelGrid columns="8" columnClasses="label" cellspacing="3">
 				
+				    Dados da Busca:
+					<p:inputText id="texto" value="#{unidMedBean.busca}" size="40" />
 
+					<h:outputText value="Codigo: " />
+					<p:selectBooleanCheckbox value="#{unidMedBean.chkId}" id="chkId" />
+
+					<h:outputText value="Unid. Abrev.: " />
+					<p:selectBooleanCheckbox value="#{unidMedBean.chkUnid}"
+						id="chkUnid" />
+
+					<h:outputText value="Descrição: " />
+					<p:selectBooleanCheckbox value="#{unidMedBean.chkDesc}"
+						id="chkDesc" />
+
+				</h:panelGrid>
+				<p:dataTable>
+					<p:columns headerText="Codigo da Unidade">
+
+					</p:columns>
+
+					<p:columns headerText="Unidade Abreviada">
+
+					</p:columns>
+
+					<p:columns headerText="Descrição da Unidade">
+					
+					</p:columns>
+				</p:dataTable>
+
+				<p:commandButton value="Ok"
+					actionListener="#{unidMedBean.buscaUnid}" />
 			</p:dialog>
 		</div>
 	</h:form>
