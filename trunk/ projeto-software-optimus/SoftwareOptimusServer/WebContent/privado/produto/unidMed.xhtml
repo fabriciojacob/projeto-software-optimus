@@ -59,17 +59,17 @@
 						id="chkDesc" />
 
 				</h:panelGrid>
-				<p:dataTable>
+				<p:dataTable value="#{unidMedBean.unidMedLis}" var="unidades">
 					<p:columns headerText="Codigo da Unidade">
-
+						<h:outputText value="#{unidades.idUnidMed}" />
 					</p:columns>
 
 					<p:columns headerText="Unidade Abreviada">
-
+						<h:outputText value="#{unidades.unid}" />
 					</p:columns>
 
 					<p:columns headerText="Descrição da Unidade">
-					
+						<h:outputText value="#{unidades.descUnid}" />
 					</p:columns>
 				</p:dataTable>
 
