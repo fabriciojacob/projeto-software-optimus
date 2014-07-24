@@ -1,5 +1,7 @@
 package br.com.softwareOptimus.entidades.RN;
 
+import java.util.List;
+
 import br.com.softwareOptimus.entidades.PessoaJuridica;
 import br.com.softwareOptimus.entidades.dao.empresa.EmpresaDAO;
 import br.com.softwareOptimus.util.DAOFactory;
@@ -19,6 +21,14 @@ public class EmpresaRN {
 		}else{
 			this.empresaDAO.atualizar(empresa);
 		}
+	}
+	
+	public List<PessoaJuridica> pesquisaCNPJ(String cnpj) throws Exception{
+		return this.empresaDAO.buscaCNPJ(cnpj);
+	}
+	
+	public List<PessoaJuridica> pesquisaNome(String nome) throws Exception{
+		return this.empresaDAO.buscaNome(nome);
 	}
 
 }

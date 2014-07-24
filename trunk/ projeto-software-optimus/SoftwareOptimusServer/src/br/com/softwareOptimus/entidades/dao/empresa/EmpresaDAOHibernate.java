@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
+
 import br.com.softwareOptimus.entidades.NaturezaPessoa;
 import br.com.softwareOptimus.entidades.PessoaJuridica;
 
@@ -68,12 +70,6 @@ public class EmpresaDAOHibernate implements EmpresaDAO {
 	}
 
 	@Override
-	public void consultar() throws Exception {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public PessoaJuridica carregar(Long codigo) {
 		// TODO Auto-generated method stub
 		return null;
@@ -83,6 +79,24 @@ public class EmpresaDAOHibernate implements EmpresaDAO {
 	public List<PessoaJuridica> listar() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<PessoaJuridica> buscaCNPJ(String cnpj) throws Exception {
+		String jpql = "Select a PessoaJuridica a where a.cnpj = :parCNPJ";
+		TypedQuery<PessoaJuridica> consulta = this.session.createQuery(jpql,
+				PessoaJuridica.class);
+		consulta.setParameter("parCNPJ", cnpj);
+		return consulta.getResultList();
+	}
+
+	@Override
+	public List<PessoaJuridica> buscaNome(String nome) throws Exception {
+		String jpql = "Select a from PessoaJuridica a where a.fantasia LIKE :parNome and a.tipoPessoaJuridica = 1";
+		TypedQuery<PessoaJuridica> consultaLista = this.session.createQuery(
+				jpql, PessoaJuridica.class);
+		consultaLista.setParameter("parNome", nome);
+		return consultaLista.getResultList();
 	}
 
 }
