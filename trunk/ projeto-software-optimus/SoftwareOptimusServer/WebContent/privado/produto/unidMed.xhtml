@@ -60,7 +60,7 @@
 
 				</h:panelGrid>
 				<p:dataTable id="Data" value="#{unidMedBean.unidMedLis}"
-					var="unidades" paginator="true" >
+					var="unidades" paginator="true">
 
 					<p:column headerText="Codigo da Unidade">
 						<h:outputText value="#{unidades.idUnidMed}" />
@@ -75,7 +75,9 @@
 					</p:column>
 				</p:dataTable>
 				<p:commandButton value="Ok"
-					actionListener="#{unidMedBean.buscaUnid}" />
+					actionListener="#{unidMedBean.buscaUnid}">
+					<f:ajax immediate="true" render="Data" />
+				</p:commandButton>
 			</p:dialog>
 		</div>
 	</h:form>
