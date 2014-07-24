@@ -37,22 +37,32 @@ public class UnidMedDAOHibernate implements UnidMedDAO {
 
 	public List<UnidMed> consultarId(Long id) {
 		String jpql = "Select u From UnidMed u Where u.idUnidMed = :id ";
-		TypedQuery<UnidMed> listaUnidade = this.session.createQuery(jpql,UnidMed.class);
+		TypedQuery<UnidMed> listaUnidade = this.session.createQuery(jpql,
+				UnidMed.class);
 		listaUnidade.setParameter("id", id);
 		return listaUnidade.getResultList();
 	}
 
 	public List<UnidMed> consultarUnid(String unid) {
-		String jpql = "Select u From UnidMed u Where u.unid LIKE unid%";
-		TypedQuery<UnidMed> listaUnidade = this.session.createQuery(jpql,UnidMed.class);
-		listaUnidade.setParameter("unid", unid);
+		String jpql = "Select u From UnidMed u Where u.unid LIKE :unid";
+		TypedQuery<UnidMed> listaUnidade = this.session.createQuery(jpql,
+				UnidMed.class);
+		listaUnidade.setParameter("unid", "%" + unid + "%");
 		return listaUnidade.getResultList();
 	}
 
 	public List<UnidMed> consultarDesc(String desc) {
-		String jpql = "Select u From UnidMed u.descUnid LIKE desc%";
-		TypedQuery<UnidMed> listaUnidade = this.session.createQuery(jpql,UnidMed.class);
-		listaUnidade.setParameter("desc", desc);
+		String jpql = "Select u From UnidMed u Where u.descUnid LIKE :desc";
+		TypedQuery<UnidMed> listaUnidade = this.session.createQuery(jpql,
+				UnidMed.class);
+		listaUnidade.setParameter("desc", "%" + desc + "%");
+		return listaUnidade.getResultList();
+	}
+	
+	public List<UnidMed> lista() {
+		String jpql = "Select u From UnidMed u";
+		TypedQuery<UnidMed> listaUnidade = this.session.createQuery(jpql,
+				UnidMed.class);
 		return listaUnidade.getResultList();
 	}
 

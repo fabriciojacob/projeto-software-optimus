@@ -103,6 +103,8 @@ public class UnidMedBean {
 			unidMedLis = unidRN.consultaUnid(busca);
 		}else if (chkDesc == true && busca != null){
 			unidMedLis = unidRN.consultaDesc(busca);
+		}else{
+			unidMedLis = unidRN.lista();
 		}
 	}
 }
