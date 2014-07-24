@@ -29,4 +29,8 @@ public class UnidMedRN {
 	public List<UnidMed> consultaDesc(String desc){
 		return this.unidMedDAO.consultarDesc(desc);
 	}
+	
+	public List<UnidMed> lista(){
+		return this.unidMedDAO.lista();
+	}
 }

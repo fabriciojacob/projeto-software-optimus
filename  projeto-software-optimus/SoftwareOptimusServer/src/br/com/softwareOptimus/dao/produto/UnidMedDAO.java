@@ -11,8 +11,8 @@ public interface UnidMedDAO {
 	public List<UnidMed> consultarUnid(String unid);
 	public List<UnidMed> consultarDesc(String desc);
 	public List<UnidMed> consultarId(Long id);
+	public List<UnidMed> lista();
 	public void salvar(UnidMed unid);
 	public void begin() throws IOException, SQLException;
 	public void close() throws Exception;
-
 }

@@ -59,20 +59,21 @@
 						id="chkDesc" />
 
 				</h:panelGrid>
-				<p:dataTable value="#{unidMedBean.unidMedLis}" var="unidades">
-					<p:columns headerText="Codigo da Unidade">
+				<p:dataTable id="Data" value="#{unidMedBean.unidMedLis}"
+					var="unidades" paginator="true" >
+
+					<p:column headerText="Codigo da Unidade">
 						<h:outputText value="#{unidades.idUnidMed}" />
-					</p:columns>
+					</p:column>
 
-					<p:columns headerText="Unidade Abreviada">
+					<p:column headerText="Unidade Abreviada">
 						<h:outputText value="#{unidades.unid}" />
-					</p:columns>
+					</p:column>
 
-					<p:columns headerText="Descrição da Unidade">
+					<p:column headerText="Descrição da Unidade">
 						<h:outputText value="#{unidades.descUnid}" />
-					</p:columns>
+					</p:column>
 				</p:dataTable>
-
 				<p:commandButton value="Ok"
 					actionListener="#{unidMedBean.buscaUnid}" />
 			</p:dialog>
