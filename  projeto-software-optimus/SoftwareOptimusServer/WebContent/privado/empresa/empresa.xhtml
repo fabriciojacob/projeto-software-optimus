@@ -29,17 +29,23 @@
 
 			<p:dialog header="Consulta" widgetVar="consulta" modal="true"
 				height="300" width="400">
-				
+
 				<div align="right">
 					<h:panelGrid columns="2">
-						<p:commandButton value="Pesquisar" />
+					
+						<p:commandButton value="Pesquisar"
+							actionListener="#{empresaBean.pesquisa}">
+							<f:ajax immediate="true" render="dataPesquisa" />
+						</p:commandButton>
+						
 						<p:commandButton value="Selecionar" />
 					</h:panelGrid>
 				</div>
-				
+
 				<h:panelGrid columns="2">
 
-					<p:inputText id="textoConsulta" size="40" />
+					<p:inputText id="textoConsulta" size="40"
+						value="#{empresaBean.tipoConsulta}" />
 
 					<p:selectOneMenu id="fConsult" value="#{empresaBean.filtro}">/>
 						<f:selectItem itemLabel="CNPJ" itemValue="cnpj" />
@@ -47,10 +53,15 @@
 					</p:selectOneMenu>
 
 				</h:panelGrid>
-				<p:dataTable>
-					<p:column headerText="Nome Fantasia" />
+				<p:dataTable id="dataPesquisa"
+					value="#{empresaBean.retornoListaPessoa}" var="pesEmpresa">
+					<p:column headerText="Nome Fantasia">
+						<h:outputText value="#{pesEmpresa.fantasia}" />
+					</p:column>
 
-					<p:column headerText="CNPJ" />
+					<p:column headerText="CNPJ">
+						<h:outputText value="#{pesEmpresa.cnpj}" />
+					</p:column>
 
 				</p:dataTable>
 

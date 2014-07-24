@@ -1,5 +1,8 @@
 package br.com.softwareOptimus.entidades.bens;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -18,15 +21,24 @@ public class EmpresaBean {
 
 	private PessoaJuridica pessoaJuridica = new PessoaJuridica();
 	private Logradouro logradouro = new Logradouro();
-	private String tipoSelecionado;
+	private String tipoSelecionado = null;
+	private String tipoConsulta = null;
 	private boolean disable = false;
 	private String filtro = null;
+	private List<PessoaJuridica> retornoListaPessoa = new ArrayList<>();
 
-	
+	public List<PessoaJuridica> getRetornoListaPessoa() {
+		return retornoListaPessoa;
+	}
+
+	public void setRetornoListaPessoa(List<PessoaJuridica> retornoListaPessoa) {
+		this.retornoListaPessoa = retornoListaPessoa;
+	}
+
 	public String getFiltro() {
 		return filtro;
 	}
-	
+
 	public void setFiltro(String filtro) {
 		this.filtro = filtro;
 	}
@@ -63,11 +75,20 @@ public class EmpresaBean {
 		this.tipoSelecionado = tipoSelecionado;
 	}
 
+	public String getTipoConsulta() {
+		return tipoConsulta;
+	}
+
+	public void setTipoConsulta(String tipoConsulta) {
+		this.tipoConsulta = tipoConsulta;
+	}
+
 	public void salvarEmp() {
 		try {
 
 			EmpresaRN empresaRN = new EmpresaRN();
-			this.pessoaJuridica.setTipoPessoaJuridica(TipoPessoaJuridica.FABRICANTE);
+			this.pessoaJuridica
+					.setTipoPessoaJuridica(TipoPessoaJuridica.FABRICANTE);
 			empresaRN.salvar(pessoaJuridica);
 
 			FacesContext.getCurrentInstance().addMessage(
@@ -97,7 +118,7 @@ public class EmpresaBean {
 		} else {
 			logr.setTipoLogr(TipoLogradouro.RESIDENCIAL);
 		}
-		
+
 		try {
 			LogradouroRN logrRN = new LogradouroRN();
 			logr.setPessoa(pessoaJuridica);
@@ -115,13 +136,31 @@ public class EmpresaBean {
 									+ e.getMessage()));
 		}
 	}
-	
-	public boolean habilitaButton(){
+
+	public boolean habilitaButton() {
 		return true;
 	}
-	
-	public boolean desabilitaButton(){
+
+	public boolean desabilitaButton() {
 		return false;
 	}
 
+	public void pesquisa() {
+		EmpresaRN empresaRN = new EmpresaRN();
+		String varFiltro = this.filtro;
+		try {
+			if (varFiltro.toString() == "cnpj") {
+				this.retornoListaPessoa = empresaRN.pesquisaCNPJ(tipoConsulta);
+			} else {
+				this.retornoListaPessoa = empresaRN.pesquisaNome(tipoConsulta);
+			}
+
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+							"Problemas na consulta do registro "
+									+ e.getMessage()));
+		}
+	}
 }
