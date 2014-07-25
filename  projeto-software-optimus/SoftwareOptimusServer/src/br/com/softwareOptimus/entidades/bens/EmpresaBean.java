@@ -147,9 +147,9 @@ public class EmpresaBean {
 
 	public void pesquisa() {
 		EmpresaRN empresaRN = new EmpresaRN();
-		String varFiltro = this.filtro;
+		String cnpj = "cnpj";
 		try {
-			if (varFiltro.toString() == "cnpj") {
+			if (filtro.equals(cnpj)) {
 				this.retornoListaPessoa = empresaRN.pesquisaCNPJ(tipoConsulta);
 			} else {
 				this.retornoListaPessoa = empresaRN.pesquisaNome(tipoConsulta);
