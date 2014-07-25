@@ -32,12 +32,10 @@
 
 				<div align="right">
 					<h:panelGrid columns="2">
-					
+
 						<p:commandButton value="Pesquisar"
-							actionListener="#{empresaBean.pesquisa}">
-							<f:ajax immediate="true" render="dataPesquisa" />
-						</p:commandButton>
-						
+							actionListener="#{empresaBean.pesquisa}" update="dataPesquisa" />
+
 						<p:commandButton value="Selecionar" />
 					</h:panelGrid>
 				</div>
@@ -54,7 +52,9 @@
 
 				</h:panelGrid>
 				<p:dataTable id="dataPesquisa"
-					value="#{empresaBean.retornoListaPessoa}" var="pesEmpresa">
+					value="#{empresaBean.retornoListaPessoa}" var="pesEmpresa"
+					paginator="true" rows="6">
+
 					<p:column headerText="Nome Fantasia">
 						<h:outputText value="#{pesEmpresa.fantasia}" />
 					</p:column>
