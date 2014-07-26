@@ -103,6 +103,7 @@ public class UnidMedBean {
 
 	public void editUnid() {
 		UnidMedRN unidRN = new UnidMedRN();
-		unidMedLis = unidRN.consultaId(id);
+		unidMedLis = unidRN.editUnid(id);
+		unidMed = unidMedLis.get(0);
 	}
 }

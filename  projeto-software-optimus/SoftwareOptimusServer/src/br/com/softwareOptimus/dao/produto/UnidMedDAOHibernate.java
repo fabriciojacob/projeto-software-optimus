@@ -65,6 +65,14 @@ public class UnidMedDAOHibernate implements UnidMedDAO {
 				UnidMed.class);
 		return listaUnidade.getResultList();
 	}
+	
+	public List<UnidMed> editBusc(Long id){
+		String jpql = "Select u From UnidMed u Where u.idUnidMed = :id ";
+		TypedQuery<UnidMed> listaUnidade = this.session.createQuery(jpql,
+				UnidMed.class);
+		listaUnidade.setParameter("id", id);
+		return listaUnidade.getResultList();
+	}
 
 	@Override
 	public void begin() throws IOException, SQLException {
