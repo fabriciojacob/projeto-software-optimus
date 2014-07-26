@@ -73,6 +73,11 @@ public class UnidMedDAOHibernate implements UnidMedDAO {
 		listaUnidade.setParameter("id", id);
 		return listaUnidade.getResultList();
 	}
+	
+	public void altUnid(UnidMed unidMed){
+		this.session.merge(unidMed);
+		this.transaction.commit();
+	}
 
 	@Override
 	public void begin() throws IOException, SQLException {
