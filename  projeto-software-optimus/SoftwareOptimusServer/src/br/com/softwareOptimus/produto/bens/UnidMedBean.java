@@ -101,6 +101,30 @@ public class UnidMedBean {
 		}
 	}
 
+	public void limpar() {
+		unidMed = new UnidMed();
+		unidMedLis.clear();
+	}
+	
+	public void altUnid(){
+		try {
+			unidMedLis.clear();
+			UnidMedRN unidRN = new UnidMedRN();
+			unidRN.altUnid(unidMed);
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
+							"Unidade alterada com sucesso"));
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+							"Problemas na alteração da Unidade "
+									+ e.getMessage()));
+		}
+
+	}
+
 	public void editUnid() {
 		UnidMedRN unidRN = new UnidMedRN();
 		unidMedLis = unidRN.editUnid(id);

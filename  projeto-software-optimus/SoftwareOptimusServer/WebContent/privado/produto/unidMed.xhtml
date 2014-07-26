@@ -14,14 +14,20 @@
 		<br />
 		<h3 style="margin-top: 0">CADASTRO DE UNIDADE DE MEDIDA</h3>
 		<div align="left">
+			<p:commandButton value="Incluir"
+				actionListener="#" />
 
 			<p:commandButton value="Salvar"
 				actionListener="#{unidMedBean.salvarUnid}" />
 
-			<p:commandButton value="Consultar" type="button"
+			<p:commandButton value="Alterar"
+				actionListener="#{unidMedBean.altUnid}" />
+
+			<p:commandButton value="Consultar" type="button" update="data"
 				onclick="PF('dlg3').show();" disabled="#{unidMedBean.disable}" />
 
-			<p:commandButton value="Cancelar" type="reset" />
+			<p:commandButton value="Cancelar"
+				actionListener="#{unidMedBean.limpar}" ajax="grid" />
 			<p:messages id="messages" showDetail="true" autoUpdate="true"
 				closable="true" />
 

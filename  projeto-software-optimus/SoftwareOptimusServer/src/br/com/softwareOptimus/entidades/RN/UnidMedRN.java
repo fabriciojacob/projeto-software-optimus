@@ -37,4 +37,8 @@ public class UnidMedRN {
 	public List<UnidMed> editUnid(Long id){
 		return this.unidMedDAO.editBusc(id);
 	}
+	
+	public void altUnid(UnidMed unidMed){
+		this.unidMedDAO.altUnid(unidMed);		
+	}
 }
