@@ -12,37 +12,28 @@ import br.com.softwareOptimus.produto.UnidMed;
 @ManagedBean(name = "unidMedBean")
 @SessionScoped
 public class UnidMedBean {
-	
+
 	private UnidMed unidMed = new UnidMed();
 	private boolean disable = false;
 	private List<UnidMed> unidMedLis;
 	private String busca;
-	private boolean chkId = false;
-	private boolean chkUnid = false;
-	private boolean chkDesc = false;	
-	
-	public boolean isChkId() {
-		return chkId;
+	private String filtro;
+	private Long id;
+
+	public Long getId() {
+		return id;
 	}
 
-	public void setChkId(boolean chkId) {
-		this.chkId = chkId;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
-	public boolean isChkUnid() {
-		return chkUnid;
+	public String getFiltro() {
+		return filtro;
 	}
 
-	public void setChkUnid(boolean chkUnid) {
-		this.chkUnid = chkUnid;
-	}
-
-	public boolean isChkDesc() {
-		return chkDesc;
-	}
-
-	public void setChkDesc(boolean chkDesc) {
-		this.chkDesc = chkDesc;
+	public void setFiltro(String filtro) {
+		this.filtro = filtro;
 	}
 
 	public String getBusca() {
@@ -68,7 +59,7 @@ public class UnidMedBean {
 	public void setUnidMed(UnidMed unidMed) {
 		this.unidMed = unidMed;
 	}
-	
+
 	public List<UnidMed> getUnidMedLis() {
 		return unidMedLis;
 	}
@@ -77,7 +68,7 @@ public class UnidMedBean {
 		this.unidMedLis = unidMedLis;
 	}
 
-	public void salvarUnid(){
+	public void salvarUnid() {
 		try {
 			UnidMedRN unidRN = new UnidMedRN();
 			unidMed.setIdUnidMed(null);
@@ -94,17 +85,24 @@ public class UnidMedBean {
 									+ e.getMessage()));
 		}
 	}
-	
-	public void buscaUnid(){
+
+	public void buscaUnid() {
 		UnidMedRN unidRN = new UnidMedRN();
-		if (chkId == true && busca != null) {
-			unidMedLis = unidRN.consultaId(Long.parseLong(busca));
-		}else if(chkUnid == true && busca != null){
-			unidMedLis = unidRN.consultaUnid(busca);
-		}else if (chkDesc == true && busca != null){
-			unidMedLis = unidRN.consultaDesc(busca);
-		}else{
+		if (!busca.equals("")) {
+			if (filtro.equals("id")) {
+				unidMedLis = unidRN.consultaId(Long.parseLong(busca));
+			} else if (filtro.equals("unid")) {
+				unidMedLis = unidRN.consultaUnid(busca);
+			} else if (filtro.equals("desc")) {
+				unidMedLis = unidRN.consultaDesc(busca);
+			}
+		} else {
 			unidMedLis = unidRN.lista();
 		}
+	}
+
+	public void editUnid() {
+		UnidMedRN unidRN = new UnidMedRN();
+		unidMedLis = unidRN.consultaId(id);
 	}
 }
