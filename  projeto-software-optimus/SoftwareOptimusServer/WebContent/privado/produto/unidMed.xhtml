@@ -25,7 +25,7 @@
 			<p:messages id="messages" showDetail="true" autoUpdate="true"
 				closable="true" />
 
-			<h:panelGrid columns="2" columnClasses="label">
+			<h:panelGrid id="grid" columns="2" columnClasses="label">
 				
 					Codigo da Unidade:
 					<p:inputText id="idUnidMed" disabled="true"
@@ -42,26 +42,21 @@
 
 			<p:dialog id="dialog" header=" Pesquisa Unidade de Medida"
 				widgetVar="dlg3" modal="true" height="300" width="650">
-				<h:panelGrid columns="8" columnClasses="label" cellspacing="3">
+				<h:panelGrid columns="3" columnClasses="label" cellspacing="3">
 				
 				    Dados da Busca:
 					<p:inputText id="texto" value="#{unidMedBean.busca}" size="40" />
 
-					<h:outputText value="Codigo: " />
-					<p:selectBooleanCheckbox value="#{unidMedBean.chkId}" id="chkId" />
-
-					<h:outputText value="Unid. Abrev.: " />
-					<p:selectBooleanCheckbox value="#{unidMedBean.chkUnid}"
-						id="chkUnid" />
-
-					<h:outputText value="Descrição: " />
-					<p:selectBooleanCheckbox value="#{unidMedBean.chkDesc}"
-						id="chkDesc" />
+					<p:selectOneMenu id="fConsult" value="#{unidMedBean.filtro}">/>
+						<f:selectItem itemLabel="Código" itemValue="id" />
+						<f:selectItem itemLabel="Unid. Abreviada" itemValue="unid" />
+						<f:selectItem itemLabel="Descrição" itemValue="desc" />
+					</p:selectOneMenu>
 
 				</h:panelGrid>
 				<p:dataTable id="data" widgetVar="wData"
 					value="#{unidMedBean.unidMedLis}" var="unidades" paginator="true"
-					rows="6" rowIndexVar="rowNumber">
+					rows="6" rowIndexVar="rowNumber" rowKey="unidades.idUnidMed">
 					<p:column headerText="Codigo da Unidade">
 						<h:outputText value="#{unidades.idUnidMed}" />
 					</p:column>
@@ -72,6 +67,13 @@
 
 					<p:column headerText="Descrição da Unidade">
 						<h:outputText value="#{unidades.descUnid}" />
+					</p:column>
+					<p:column headerText="Selecionar">
+						<p:commandLink id="link" value="Editar" ajax="dialog"
+							action="#{unidMedBean.editUnid}">
+							<f:setPropertyActionListener value="#{unidades}"
+								target="#{unidMedBean.unidMed}" />
+						</p:commandLink>
 					</p:column>
 				</p:dataTable>
 				<p:commandButton value="Ok" action="#{unidMedBean.buscaUnid}"
