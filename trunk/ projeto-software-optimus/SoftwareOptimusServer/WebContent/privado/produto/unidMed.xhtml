@@ -71,8 +71,8 @@
 					<p:column headerText="Selecionar">
 						<p:commandLink id="link" value="Editar" ajax="dialog"
 							action="#{unidMedBean.editUnid}">
-							<f:setPropertyActionListener value="#{unidades}"
-								target="#{unidMedBean.unidMed}" />
+							<f:setPropertyActionListener value="#{unidades.idUnidMed}"
+								target="#{unidMedBean.id}" />
 						</p:commandLink>
 					</p:column>
 				</p:dataTable>
