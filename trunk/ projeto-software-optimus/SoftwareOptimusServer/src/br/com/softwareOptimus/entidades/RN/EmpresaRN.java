@@ -30,5 +30,9 @@ public class EmpresaRN {
 	public List<PessoaJuridica> pesquisaNome(String nome) throws Exception{
 		return this.empresaDAO.buscaNome(nome);
 	}
+	
+	public PessoaJuridica pesquisaId(Long id){
+		return this.empresaDAO.carregar(id);
+	}
 
 }

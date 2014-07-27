@@ -26,6 +26,15 @@ public class EmpresaBean {
 	private boolean disable = false;
 	private String filtro = null;
 	private List<PessoaJuridica> retornoListaPessoa = new ArrayList<>();
+	private Long id;
+	
+	public Long getId() {
+		return id;
+	}
+	
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public List<PessoaJuridica> getRetornoListaPessoa() {
 		return retornoListaPessoa;
@@ -162,5 +171,10 @@ public class EmpresaBean {
 							"Problemas na consulta do registro "
 									+ e.getMessage()));
 		}
+	}
+
+	public void editEmp() {
+		EmpresaRN empresaRN = new EmpresaRN();
+		this.pessoaJuridica = empresaRN.pesquisaId(id);
 	}
 }
