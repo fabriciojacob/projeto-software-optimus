@@ -31,12 +31,10 @@
 				height="300" width="400">
 
 				<div align="right">
-					<h:panelGrid columns="2">
+					<h:panelGrid columns="1">
 
 						<p:commandButton value="Pesquisar"
 							actionListener="#{empresaBean.pesquisa}" update="dataPesquisa" />
-
-						<p:commandButton value="Selecionar" />
 					</h:panelGrid>
 				</div>
 
@@ -61,6 +59,14 @@
 
 					<p:column headerText="CNPJ">
 						<h:outputText value="#{pesEmpresa.cnpj}" />
+					</p:column>
+					
+					<p:column headerText="Selecionar">
+						<p:commandLink id="link" value="Editar" ajax="dialog"
+							action="#{empresaBean.editEmp}">
+							<f:setPropertyActionListener value="#{pesEmpresa.idPessoa}"
+								target="#{empresaBean.id}" />
+						</p:commandLink>
 					</p:column>
 
 				</p:dataTable>

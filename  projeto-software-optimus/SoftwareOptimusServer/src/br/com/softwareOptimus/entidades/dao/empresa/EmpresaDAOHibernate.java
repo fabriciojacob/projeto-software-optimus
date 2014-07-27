@@ -71,8 +71,11 @@ public class EmpresaDAOHibernate implements EmpresaDAO {
 
 	@Override
 	public PessoaJuridica carregar(Long codigo) {
-		// TODO Auto-generated method stub
-		return null;
+		String jpql = "Select a from PessoaJuridica a where a.idPessoa = :parCodigo";
+		TypedQuery<PessoaJuridica> consulta = this.session.createQuery(jpql,
+				PessoaJuridica.class);
+		consulta.setParameter("parCodigo", codigo);
+		return consulta.getSingleResult();
 	}
 
 	@Override
