@@ -14,6 +14,8 @@ import br.com.softwareOptimus.entidades.TipoLogradouro;
 import br.com.softwareOptimus.entidades.TipoPessoaJuridica;
 import br.com.softwareOptimus.entidades.RN.EmpresaRN;
 import br.com.softwareOptimus.entidades.RN.geral.LogradouroRN;
+import br.com.softwareOptimus.fiscal.Regime;
+import br.com.softwareOptimus.fiscal.VigenciaRegime;
 
 @ManagedBean(name = "empresaBean")
 @SessionScoped
@@ -22,16 +24,35 @@ public class EmpresaBean {
 	private PessoaJuridica pessoaJuridica = new PessoaJuridica();
 	private Logradouro logradouro = new Logradouro();
 	private String tipoSelecionado = null;
+	private String tipoRegime = null;
 	private String tipoConsulta = null;
 	private boolean disable = false;
 	private String filtro = null;
 	private List<PessoaJuridica> retornoListaPessoa = new ArrayList<>();
 	private Long id;
+	private VigenciaRegime regime = new VigenciaRegime();
 	
+
+	public String getTipoRegime() {
+		return tipoRegime;
+	}
+
+	public void setTipoRegime(String tipoRegime) {
+		this.tipoRegime = tipoRegime;
+	}
+
+	public VigenciaRegime getRegime() {
+		return regime;
+	}
+
+	public void setRegime(VigenciaRegime regime) {
+		this.regime = regime;
+	}
+
 	public Long getId() {
 		return id;
 	}
-	
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -173,12 +194,42 @@ public class EmpresaBean {
 		}
 	}
 
+	public void salvarRegime() {
+		EmpresaRN empresaRN = new EmpresaRN();
+		VigenciaRegime reg =  new VigenciaRegime();
+		reg = this.regime;
+		reg.setIdVigReg(null);
+		if (tipoRegime.equals(Regime.LUCROPRESUMIDO.toString())) {
+			reg.setRegime(Regime.LUCROPRESUMIDO);
+		} else if (tipoRegime.equals(Regime.LUCROREAL.toString())) {
+			reg.setRegime(Regime.LUCROREAL);
+		} else {
+			reg.setRegime(Regime.SIMPLES);
+		}
+		try {
+			reg.setPessaoJuridica(this.pessoaJuridica);
+			empresaRN.salvarRegime(reg);
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
+							"Regime salvo com sucesso"));
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance()
+					.addMessage(
+							null,
+							new FacesMessage(FacesMessage.SEVERITY_ERROR,
+									"Info", "Problemas na gravacao do regime"
+											+ e.getMessage()));
+		}
+
+	}
+
 	public void editEmp() {
 		EmpresaRN empresaRN = new EmpresaRN();
 		this.pessoaJuridica = empresaRN.pesquisaId(id);
 	}
-	
-	public void novo(){
+
+	public void novo() {
 		this.pessoaJuridica.setIdPessoa(null);
 	}
 }

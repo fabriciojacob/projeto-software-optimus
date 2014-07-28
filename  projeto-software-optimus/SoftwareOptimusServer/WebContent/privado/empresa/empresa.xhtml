@@ -15,10 +15,9 @@
 		<br />
 		<h3 style="margin-top: 0">CADASTRO DE EMPRESA</h3>
 		<div align="left">
-		
-			<p:commandButton value="Novo"
-			 actionListener="#{empresaBean.novo}"
-			 type="reset"/>
+
+			<p:commandButton value="Novo" actionListener="#{empresaBean.novo}"
+				type="reset" />
 
 			<p:commandButton value="Salvar"
 				actionListener="#{empresaBean.salvarEmp}" />
@@ -27,6 +26,8 @@
 				onclick="PF('consulta').show();" />
 
 			<p:commandButton value="Cancelar" type="reset" />
+
+			<p:commandButton value="Remover" />
 
 			<p:messages id="messages" showDetail="true" autoUpdate="true"
 				closable="true" />
@@ -64,7 +65,7 @@
 					<p:column headerText="CNPJ">
 						<h:outputText value="#{pesEmpresa.cnpj}" />
 					</p:column>
-					
+
 					<p:column headerText="Selecionar">
 						<p:commandLink id="link" value="Editar" ajax="dialog"
 							action="#{empresaBean.editEmp}">
@@ -199,29 +200,28 @@
 				<p:tab id="infFiscais" title="Dados Fiscais">
 					<h:panelGrid columns="6" cellspacing="5">
 
-						<h:outputText value="Simples: " />
-						<p:selectBooleanCheckbox />
+						<p:selectOneMenu id="fConsult" value="#{empresaBean.tipoRegime}">/>
+							<f:selectItem itemLabel="SIMPLES" itemValue="SIMPLES" />
+							<f:selectItem itemLabel="REAL" itemValue="LUCROREAL" />
+							<f:selectItem itemLabel="PRESUMIDO" itemValue="LUCROPRESUMIDO" />
+						</p:selectOneMenu>
 
-						<h:outputText value="Presumido: " />
-						<p:selectBooleanCheckbox />
-
-						<h:outputText value="Real: " />
-						<p:selectBooleanCheckbox />
 					</h:panelGrid>
 					<h:panelGrid columns="2">
 						<h:panelGrid columns="2">
 
 							<p:outputLabel value="Data iníciio:" />
-							<p:calendar id="dataIni" value="#{calendarView.date8}"
+							<p:calendar id="dataIni" value="#{empresaBean.regime.dataInicio}"
 								effect="fold" />
 
 							<p:outputLabel value="Data Fim:" />
-							<p:calendar id="dataFim" value="#{calendarView.date8}"
+							<p:calendar id="dataFim" value="#{empresaBean.regime.dataFim}"
 								effect="fold" />
 
 
 						</h:panelGrid>
-						<p:commandButton id="incluirReg" icon="ui-icon-disk" />
+						<p:commandButton id="incluirReg" icon="ui-icon-disk"
+							actionListener="#{empresaBean.salvarRegime()}" />
 					</h:panelGrid>
 
 					<p:dataTable>
