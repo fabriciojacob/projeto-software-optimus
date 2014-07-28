@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
 
 import br.com.softwareOptimus.entidades.Logradouro;
 
@@ -85,8 +86,9 @@ public class LogradouroDAOHibernate implements LogradouroDAO{
 	
 	@Override
 	public List<Logradouro> listar() {
-		// TODO Auto-generated method stub
-		return null;
+		String jpql = "Select l From Logradouro l";
+		TypedQuery<Logradouro> consulta = this.session.createQuery(jpql,Logradouro.class);
+		return consulta.getResultList();
 	}
 
 }

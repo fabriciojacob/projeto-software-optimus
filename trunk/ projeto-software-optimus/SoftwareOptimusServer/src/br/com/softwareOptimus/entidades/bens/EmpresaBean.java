@@ -29,9 +29,17 @@ public class EmpresaBean {
 	private boolean disable = false;
 	private String filtro = null;
 	private List<PessoaJuridica> retornoListaPessoa = new ArrayList<>();
+	private List<Logradouro> listaEnd = new ArrayList<>();
 	private Long id;
 	private VigenciaRegime regime = new VigenciaRegime();
 	
+	public List<Logradouro> getListaEnd() {
+		return listaEnd;
+	}
+	
+	public void setListaEnd(List<Logradouro> listaEnd) {
+		this.listaEnd = listaEnd;
+	}
 
 	public String getTipoRegime() {
 		return tipoRegime;
@@ -184,7 +192,7 @@ public class EmpresaBean {
 			} else {
 				this.retornoListaPessoa = empresaRN.pesquisaNome(tipoConsulta);
 			}
-
+			listaLogradouro();
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
@@ -220,6 +228,11 @@ public class EmpresaBean {
 											+ e.getMessage()));
 		}
 
+	}
+	
+	public void listaLogradouro(){
+		EmpresaRN empresaRN = new EmpresaRN();
+		this.listaEnd = empresaRN.listaLogr();
 	}
 
 	public void editEmp() {

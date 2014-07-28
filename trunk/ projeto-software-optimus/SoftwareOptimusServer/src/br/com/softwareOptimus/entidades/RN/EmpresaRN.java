@@ -1,15 +1,20 @@
 package br.com.softwareOptimus.entidades.RN;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import br.com.softwareOptimus.entidades.Logradouro;
 import br.com.softwareOptimus.entidades.PessoaJuridica;
 import br.com.softwareOptimus.entidades.dao.empresa.EmpresaDAO;
+import br.com.softwareOptimus.entidades.dao.geral.LogradouroDAO;
 import br.com.softwareOptimus.fiscal.VigenciaRegime;
 import br.com.softwareOptimus.util.DAOFactory;
 
 public class EmpresaRN {
 
 	private EmpresaDAO empresaDAO;
+	private List<Logradouro> lista = new ArrayList<>();
+	private LogradouroDAO logrDAO = DAOFactory.criaLogrDAO();
 
 	public EmpresaRN() {
 		empresaDAO = DAOFactory.criaEmpresaDAO();
@@ -22,6 +27,10 @@ public class EmpresaRN {
 		} else {
 			this.empresaDAO.atualizar(empresa);
 		}
+	}
+	
+	public List<Logradouro> listaLogr(){
+		 return this.lista = logrDAO.listar();
 	}
 
 	public void salvarRegime(VigenciaRegime regime) throws Exception {
