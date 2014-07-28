@@ -9,6 +9,7 @@ import javax.persistence.TypedQuery;
 
 import br.com.softwareOptimus.entidades.NaturezaPessoa;
 import br.com.softwareOptimus.entidades.PessoaJuridica;
+import br.com.softwareOptimus.fiscal.VigenciaRegime;
 
 public class EmpresaDAOHibernate implements EmpresaDAO {
 
@@ -100,6 +101,18 @@ public class EmpresaDAOHibernate implements EmpresaDAO {
 				jpql, PessoaJuridica.class);
 		consultaLista.setParameter("parNome", "%" + nome + "%");
 		return consultaLista.getResultList();
+	}
+
+	@Override
+	public void salvarRegime(VigenciaRegime regime) throws Exception {
+		this.session.persist(regime);
+		this.transaction.commit();
+	}
+
+	@Override
+	public void atualizarRegime(VigenciaRegime regime) {
+		this.session.merge(regime);
+		
 	}
 
 }
