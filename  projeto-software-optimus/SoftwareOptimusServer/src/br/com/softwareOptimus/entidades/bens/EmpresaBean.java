@@ -196,19 +196,17 @@ public class EmpresaBean {
 
 	public void salvarRegime() {
 		EmpresaRN empresaRN = new EmpresaRN();
-		VigenciaRegime reg =  new VigenciaRegime();
-		reg = this.regime;
-		reg.setIdVigReg(null);
+		this.regime.setIdVigReg(null);
 		if (tipoRegime.equals(Regime.LUCROPRESUMIDO.toString())) {
-			reg.setRegime(Regime.LUCROPRESUMIDO);
+			this.regime.setRegime(Regime.LUCROPRESUMIDO);
 		} else if (tipoRegime.equals(Regime.LUCROREAL.toString())) {
-			reg.setRegime(Regime.LUCROREAL);
+			this.regime.setRegime(Regime.LUCROREAL);
 		} else {
-			reg.setRegime(Regime.SIMPLES);
+			this.regime.setRegime(Regime.SIMPLES);
 		}
 		try {
-			reg.setPessaoJuridica(this.pessoaJuridica);
-			empresaRN.salvarRegime(reg);
+			this.regime.setPessaoJuridica(this.pessoaJuridica);
+			empresaRN.salvarRegime(this.regime);
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
