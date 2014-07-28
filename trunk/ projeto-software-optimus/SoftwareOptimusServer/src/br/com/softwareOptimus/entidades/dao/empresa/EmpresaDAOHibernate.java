@@ -3,7 +3,6 @@ package br.com.softwareOptimus.entidades.dao.empresa;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;

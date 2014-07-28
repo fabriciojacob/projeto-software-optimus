@@ -14,13 +14,13 @@
 		<br />
 		<h3 style="margin-top: 0">CADASTRO DE UNIDADE DE MEDIDA</h3>
 		<div align="left">
-			<p:commandButton value="Incluir"
-				actionListener="#" />
+			<p:commandButton value="Novo" actionListener="#{unidMedBean.limpar}"
+				ajax="grid" />
 
-			<p:commandButton value="Salvar"
+			<p:commandButton value="Salvar" disabled="#{unidMedBean.sal}"
 				actionListener="#{unidMedBean.salvarUnid}" />
 
-			<p:commandButton value="Alterar"
+			<p:commandButton value="Alterar" disabled="#{unidMedBean.alt}"
 				actionListener="#{unidMedBean.altUnid}" />
 
 			<p:commandButton value="Consultar" type="button" update="data"
@@ -31,9 +31,9 @@
 			<p:messages id="messages" showDetail="true" autoUpdate="true"
 				closable="true" />
 
-			<h:panelGrid id="grid" columns="2" columnClasses="label">
+			<h:panelGrid columns="2" columnClasses="label, value">
 				
-					Codigo da Unidade:
+					Codigo unidades:
 					<p:inputText id="idUnidMed" disabled="true"
 					value="#{unidMedBean.unidMed.idUnidMed}" />
 		
@@ -44,6 +44,7 @@
 					Descrição da Unidade:
 					<p:inputText id="descUnid" value="#{unidMedBean.unidMed.descUnid}"
 					size="40" />
+
 			</h:panelGrid>
 
 			<p:dialog id="dialog" header=" Pesquisa Unidade de Medida"

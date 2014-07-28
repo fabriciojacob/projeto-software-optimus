@@ -19,6 +19,23 @@ public class UnidMedBean {
 	private String busca;
 	private String filtro;
 	private Long id;
+	private boolean alt = true, sal = true;
+
+	public boolean isAlt() {
+		return alt;
+	}
+
+	public void setAlt(boolean alt) {
+		this.alt = alt;
+	}
+
+	public boolean isSal() {
+		return sal;
+	}
+
+	public void setSal(boolean sal) {
+		this.sal = sal;
+	}
 
 	public Long getId() {
 		return id;
@@ -122,12 +139,12 @@ public class UnidMedBean {
 							"Problemas na alteração da Unidade "
 									+ e.getMessage()));
 		}
-
+		this.alt = true;
 	}
 
 	public void editUnid() {
 		UnidMedRN unidRN = new UnidMedRN();
-		unidMedLis = unidRN.editUnid(id);
-		unidMed = unidMedLis.get(0);
+		unidMed = unidRN.editUnid(id);
+		this.alt = false;
 	}
 }
