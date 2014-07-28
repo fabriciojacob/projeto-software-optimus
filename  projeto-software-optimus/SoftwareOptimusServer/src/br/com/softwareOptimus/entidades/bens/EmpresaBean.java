@@ -177,4 +177,8 @@ public class EmpresaBean {
 		EmpresaRN empresaRN = new EmpresaRN();
 		this.pessoaJuridica = empresaRN.pesquisaId(id);
 	}
+	
+	public void novo(){
+		this.pessoaJuridica.setIdPessoa(null);
+	}
 }
