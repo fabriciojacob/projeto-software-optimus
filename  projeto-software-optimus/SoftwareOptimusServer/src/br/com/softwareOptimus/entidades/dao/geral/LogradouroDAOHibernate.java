@@ -7,9 +7,9 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 
 import br.com.softwareOptimus.entidades.Logradouro;
+import br.com.softwareOptimus.entidades.PessoaJuridica;
 
 public class LogradouroDAOHibernate implements LogradouroDAO {
 
@@ -86,9 +86,11 @@ public class LogradouroDAOHibernate implements LogradouroDAO {
 	}
 
 	@Override
-	public List<Logradouro> listar() {
-		String jpql = "Select l From Logradouro l inner join l.municipio c inner join c.uf";
+	public List<Logradouro> listar(PessoaJuridica pessoaJuridica) {
+		String jpql = "Select l From Logradouro l inner join l.municipio c inner join c.uf "
+				+ " where l.pessoa = :parPessoa";
 		Query consulta = this.session.createQuery(jpql);
+		consulta.setParameter("parPessoa", pessoaJuridica);
 		return consulta.getResultList();
 	}
 

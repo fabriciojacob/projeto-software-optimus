@@ -14,7 +14,7 @@ public class Simulacao {
 	public static void main(String[] args) {
 		List<Logradouro> obj = new ArrayList<>();
 		EmpresaRN rn = new EmpresaRN();
-		obj = rn.listaLogr();
+		//obj = rn.listaLogr();
 		
 		for(Logradouro e : obj){
 			System.out.println(e.getEndereco());

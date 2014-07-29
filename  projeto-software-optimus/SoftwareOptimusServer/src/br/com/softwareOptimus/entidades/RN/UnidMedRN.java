@@ -38,11 +38,11 @@ public class UnidMedRN {
 		return this.unidMedDAO.editBusc(id);
 	}
 	
-	public void altUnid(UnidMed unidMed){
+	public void altUnid(UnidMed unidMed) throws Exception{
 		this.unidMedDAO.altUnid(unidMed);		
 	}
 	
-	public void remove(Long idUnid){
+	public void remove(Long idUnid) throws Exception {
 		this.unidMedDAO.remover(idUnid);		
 	}
 }

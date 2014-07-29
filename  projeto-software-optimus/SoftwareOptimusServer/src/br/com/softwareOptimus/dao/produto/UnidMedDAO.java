@@ -14,11 +14,11 @@ public interface UnidMedDAO {
 
 	public List<UnidMed> consultarId(Long id);
 
-	public void altUnid(UnidMed unidMed);
+	public void altUnid(UnidMed unidMed) throws Exception;
 
 	public UnidMed editBusc(Long id);
 
-	public void remover(Long id);
+	public void remover(Long id) throws Exception;
 
 	public List<UnidMed> lista();
 

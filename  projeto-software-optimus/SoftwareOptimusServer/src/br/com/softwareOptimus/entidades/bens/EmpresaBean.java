@@ -232,12 +232,13 @@ public class EmpresaBean {
 	
 	public void listaLogradouro(){
 		EmpresaRN empresaRN = new EmpresaRN();
-		this.listaEnd = empresaRN.listaLogr();
+		this.listaEnd = empresaRN.listaLogr(this.pessoaJuridica);
 	}
 
 	public void editEmp() {
 		EmpresaRN empresaRN = new EmpresaRN();
 		this.pessoaJuridica = empresaRN.pesquisaId(id);
+		listaLogradouro();
 	}
 
 	public void novo() {
