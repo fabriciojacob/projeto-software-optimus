@@ -29,8 +29,8 @@ public class EmpresaRN {
 		}
 	}
 	
-	public List<Logradouro> listaLogr(){
-		 return this.lista = logrDAO.listar();
+	public List<Logradouro> listaLogr(PessoaJuridica pessoaJuridica){
+		 return this.lista = logrDAO.listar(pessoaJuridica);
 	}
 
 	public void salvarRegime(VigenciaRegime regime) throws Exception {

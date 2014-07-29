@@ -28,9 +28,6 @@ public class VigenciaRegime implements Serializable{
 	@Temporal(TemporalType.DATE)
 	private Date dataInicio;
 	
-	@Temporal(TemporalType.DATE)
-	private Date dataFim;
-	
 	private Regime regime;
 	
 	@ManyToOne
@@ -58,14 +55,6 @@ public class VigenciaRegime implements Serializable{
 
 	public void setDataInicio(Date dataInicio) {
 		this.dataInicio = dataInicio;
-	}
-
-	public Date getDataFim() {
-		return dataFim;
-	}
-
-	public void setDataFim(Date dataFim) {
-		this.dataFim = dataFim;
 	}
 
 	public Regime getRegime() {

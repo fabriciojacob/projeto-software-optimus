@@ -3,9 +3,11 @@ package br.com.softwareOptimus.dao.produto;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
+
 import br.com.softwareOptimus.produto.UnidMed;
 
 public class UnidMedDAOHibernate implements UnidMedDAO {
@@ -35,7 +37,7 @@ public class UnidMedDAOHibernate implements UnidMedDAO {
 		this.transaction.commit();
 	}
 	
-	public void remover(Long unid){
+	public void remover(Long unid) throws Exception{
 		UnidMed unidMed = this.session.find(UnidMed.class, unid);
 		this.session.remove(unidMed);
 		this.transaction.commit();
@@ -80,7 +82,7 @@ public class UnidMedDAOHibernate implements UnidMedDAO {
 		return listaUnidade.getSingleResult();
 	}
 	
-	public void altUnid(UnidMed unidMed){
+	public void altUnid(UnidMed unidMed) throws Exception{
 		this.session.merge(unidMed);
 		this.transaction.commit();
 	}
