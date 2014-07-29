@@ -4,26 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.softwareOptimus.entidades.Estado;
+import br.com.softwareOptimus.entidades.Logradouro;
 import br.com.softwareOptimus.entidades.Municipio;
-import br.com.softwareOptimus.entidades.RN.geral.EstadoRN;
+import br.com.softwareOptimus.entidades.RN.EmpresaRN;
 import br.com.softwareOptimus.entidades.RN.geral.MunicipioRN;
 
 public class Simulacao {
 	
 	public static void main(String[] args) {
-		List<Estado> estados = new ArrayList<>();
-		EstadoRN rnUf = new EstadoRN();
-		estados = rnUf.listaEstado();
+		List<Logradouro> obj = new ArrayList<>();
+		EmpresaRN rn = new EmpresaRN();
+		obj = rn.listaLogr();
 		
-		List<Municipio> municipios = new ArrayList<>();
-		MunicipioRN rnMun = new MunicipioRN();
-		
-		for(Estado e : estados){
-			System.out.println(e.getDescricao());
-			municipios = rnMun.listaMunicipios(e);
-			for(Municipio m : municipios){
-				System.out.println(m.getDescricao());
-			}
+		for(Logradouro e : obj){
+			System.out.println(e.getEndereco());
+			System.out.println(e.getMunicipio().getDescricao());
+			System.out.println(e.getMunicipio().getUf().getDescricao());
 		}
 		
 	}

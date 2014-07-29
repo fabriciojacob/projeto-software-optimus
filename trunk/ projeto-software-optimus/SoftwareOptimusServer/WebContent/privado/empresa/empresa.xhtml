@@ -81,6 +81,9 @@
 			<p:tabView style="border: 0px">
 				<p:tab id="cadEmpresa" title="Informações Gerais">
 					<h:panelGrid columns="2" columnClasses="label, value">
+					
+					Inativa:
+					<p:selectBooleanCheckbox />
 			
 					Codigo Empresa:
 					<p:inputText id="idEmpresa" disabled="true"
@@ -201,13 +204,17 @@
 						<p:column headerText="CEP">
 							<h:outputText value="#{listaEnd.cep}"/>
 						</p:column>
+						
+						<p:column headerText="Tipo">
+							<h:outputLabel value="#{listaEnd.tipoLogr}"/>
+						</p:column>
 
 						<p:column headerText="Cidade">
 							<h:outputText value="#{listaEnd.municipio.descricao}"/>
 						</p:column>
 
 						<p:column headerText="Estado">
-							<h:outputText value="#{listaEnd.municipio.uf}"/>
+							<h:outputText value="#{listaEnd.municipio.uf.descricao}"/>
 						</p:column>
 
 					</p:dataTable>
