@@ -30,6 +30,14 @@ public class Municipio implements Serializable{
 	@ManyToOne
 	private Estado uf;
 
+	public Estado getUf() {
+		return uf;
+	}
+
+	public void setUf(Estado uf) {
+		this.uf = uf;
+	}
+
 	public Long getIdMunicipio() {
 		return idMunicipio;
 	}
