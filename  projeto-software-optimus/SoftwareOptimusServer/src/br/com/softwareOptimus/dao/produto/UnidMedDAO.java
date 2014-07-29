@@ -18,6 +18,8 @@ public interface UnidMedDAO {
 
 	public UnidMed editBusc(Long id);
 
+	public void remover(Long id);
+
 	public List<UnidMed> lista();
 
 	public void salvar(UnidMed unid);
