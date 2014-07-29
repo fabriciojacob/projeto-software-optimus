@@ -1,5 +1,6 @@
 package br.com.softwareOptimus.produto.bens;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -114,7 +115,7 @@ public class UnidMedBean {
 	}
 
 	public void buscaUnid() {
-        unidMedLis = null;
+        unidMedLis = new ArrayList<>();
 		UnidMedRN unidRN = new UnidMedRN();
 		if (!busca.equals("")) {
 			if (filtro.equals("id")) {
@@ -145,7 +146,7 @@ public class UnidMedBean {
 
 	public void limpa() {
 		unidMed = new UnidMed();
-		unidMedLis = null;
+		unidMedLis = new ArrayList<>();
 	}
 
 	public void altUnid() {
@@ -169,6 +170,7 @@ public class UnidMedBean {
 	}
 	
 	public void editUnid() {
+		unidMedLis = new ArrayList<>();
 		UnidMedRN unidRN = new UnidMedRN();
 		unidMed = unidRN.editUnid(id);
 		this.alt = false;

@@ -79,7 +79,7 @@
 						<h:outputText value="#{unidades.descUnid}" />
 					</p:column>
 					<p:column headerText="Selecionar">
-						<p:commandLink id="link" value="Editar" ajax="dialog"
+						<p:commandLink id="link" value="Editar" ajax="data, dialog"
 							action="#{unidMedBean.editUnid}">
 							<f:setPropertyActionListener value="#{unidades.idUnidMed}"
 								target="#{unidMedBean.id}" />
