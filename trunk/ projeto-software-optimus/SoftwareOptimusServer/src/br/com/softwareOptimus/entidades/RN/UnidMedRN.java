@@ -41,4 +41,8 @@ public class UnidMedRN {
 	public void altUnid(UnidMed unidMed){
 		this.unidMedDAO.altUnid(unidMed);		
 	}
+	
+	public void remove(Long idUnid){
+		this.unidMedDAO.remover(idUnid);		
+	}
 }

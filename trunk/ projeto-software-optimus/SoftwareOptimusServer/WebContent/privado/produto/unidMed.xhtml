@@ -14,20 +14,23 @@
 		<br />
 		<h3 style="margin-top: 0">CADASTRO DE UNIDADE DE MEDIDA</h3>
 		<div align="left">
-			<p:commandButton value="Novo" actionListener="#{unidMedBean.limpar}"
+			<p:commandButton value="Novo" actionListener="#{unidMedBean.novo}"
 				ajax="grid" />
 
 			<p:commandButton value="Salvar" disabled="#{unidMedBean.sal}"
-				actionListener="#{unidMedBean.salvarUnid}" />
+				actionListener="#{unidMedBean.salvarUnid}" ajax="grid" />
 
 			<p:commandButton value="Alterar" disabled="#{unidMedBean.alt}"
-				actionListener="#{unidMedBean.altUnid}" />
+				actionListener="#{unidMedBean.altUnid}" ajax="grid" />
 
-			<p:commandButton value="Consultar" type="button" update="data"
+			<p:commandButton value="Remover" disabled="#{unidMedBean.rem}"
+				actionListener="#{unidMedBean.remUnid}" ajax="grid" />
+
+			<p:commandButton value="Consultar" type="button" ajax="dialog, grid"
 				onclick="PF('dlg3').show();" disabled="#{unidMedBean.disable}" />
 
 			<p:commandButton value="Cancelar"
-				actionListener="#{unidMedBean.limpar}" ajax="grid" />
+				actionListener="#{unidMedBean.cancelar}" ajax="grid" />
 			<p:messages id="messages" showDetail="true" autoUpdate="true"
 				closable="true" />
 

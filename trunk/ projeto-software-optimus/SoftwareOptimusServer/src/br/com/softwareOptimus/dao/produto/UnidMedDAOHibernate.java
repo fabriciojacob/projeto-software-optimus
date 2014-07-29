@@ -34,6 +34,12 @@ public class UnidMedDAOHibernate implements UnidMedDAO {
 		this.session.persist(unid);
 		this.transaction.commit();
 	}
+	
+	public void remover(Long unid){
+		UnidMed unidMed = this.session.find(UnidMed.class, unid);
+		this.session.remove(unidMed);
+		this.transaction.commit();
+	}
 
 	public List<UnidMed> consultarId(Long id) {
 		String jpql = "Select u From UnidMed u Where u.idUnidMed = :id ";

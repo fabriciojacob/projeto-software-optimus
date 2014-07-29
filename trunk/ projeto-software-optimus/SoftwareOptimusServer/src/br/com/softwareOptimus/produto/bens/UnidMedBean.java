@@ -19,7 +19,15 @@ public class UnidMedBean {
 	private String busca;
 	private String filtro;
 	private Long id;
-	private boolean alt = true, sal = true;
+	private boolean alt = true, sal = true, rem = true;
+
+	public boolean isRem() {
+		return rem;
+	}
+
+	public void setRem(boolean rem) {
+		this.rem = rem;
+	}
 
 	public boolean isAlt() {
 		return alt;
@@ -101,9 +109,12 @@ public class UnidMedBean {
 							"Problemas na gravacao da Unidade "
 									+ e.getMessage()));
 		}
+		this.sal = true;
+		limpa();
 	}
 
 	public void buscaUnid() {
+        unidMedLis = null;
 		UnidMedRN unidRN = new UnidMedRN();
 		if (!busca.equals("")) {
 			if (filtro.equals("id")) {
@@ -118,14 +129,27 @@ public class UnidMedBean {
 		}
 	}
 
-	public void limpar() {
-		unidMed = new UnidMed();
-		unidMedLis.clear();
+	public void cancelar() {
+		this.sal = true;
+		this.alt = true;
+		this.rem = true;
+		limpa();
 	}
-	
-	public void altUnid(){
+
+	public void novo() {
+		this.sal = false;
+		this.alt = true;
+		this.rem = true;
+		limpa();
+	}
+
+	public void limpa() {
+		unidMed = new UnidMed();
+		unidMedLis = null;
+	}
+
+	public void altUnid() {
 		try {
-			unidMedLis.clear();
 			UnidMedRN unidRN = new UnidMedRN();
 			unidRN.altUnid(unidMed);
 			FacesContext.getCurrentInstance().addMessage(
@@ -140,11 +164,23 @@ public class UnidMedBean {
 									+ e.getMessage()));
 		}
 		this.alt = true;
+		this.rem = true;
+		limpa();
 	}
-
+	
 	public void editUnid() {
 		UnidMedRN unidRN = new UnidMedRN();
 		unidMed = unidRN.editUnid(id);
 		this.alt = false;
+		this.rem = false;
+		this.sal = true;
+	}
+
+	public void remUnid() {
+		UnidMedRN unidRN = new UnidMedRN();
+		unidRN.remove(unidMed.getIdUnidMed());
+		this.alt = true;
+		this.rem = true;
+		limpa();
 	}
 }
