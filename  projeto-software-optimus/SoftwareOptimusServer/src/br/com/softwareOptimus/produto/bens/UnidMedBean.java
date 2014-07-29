@@ -1,6 +1,5 @@
 package br.com.softwareOptimus.produto.bens;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -115,7 +114,7 @@ public class UnidMedBean {
 	}
 
 	public void buscaUnid() {
-        unidMedLis = new ArrayList<>();
+		unidMedLis = null;
 		UnidMedRN unidRN = new UnidMedRN();
 		if (!busca.equals("")) {
 			if (filtro.equals("id")) {
@@ -146,7 +145,7 @@ public class UnidMedBean {
 
 	public void limpa() {
 		unidMed = new UnidMed();
-		unidMedLis = new ArrayList<>();
+		unidMedLis = null;
 	}
 
 	public void altUnid() {
@@ -168,9 +167,8 @@ public class UnidMedBean {
 		this.rem = true;
 		limpa();
 	}
-	
+
 	public void editUnid() {
-		unidMedLis = new ArrayList<>();
 		UnidMedRN unidRN = new UnidMedRN();
 		unidMed = unidRN.editUnid(id);
 		this.alt = false;
@@ -180,7 +178,20 @@ public class UnidMedBean {
 
 	public void remUnid() {
 		UnidMedRN unidRN = new UnidMedRN();
-		unidRN.remove(unidMed.getIdUnidMed());
+		try {
+			unidRN.remove(unidMed.getIdUnidMed());
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
+							"Unidade removida com sucesso"));
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance()
+					.addMessage(
+							null,
+							new FacesMessage(FacesMessage.SEVERITY_ERROR,
+									"Info", "Problemas na remoção da Unidade "
+											+ e.getMessage()));
+		}
 		this.alt = true;
 		this.rem = true;
 		limpa();
