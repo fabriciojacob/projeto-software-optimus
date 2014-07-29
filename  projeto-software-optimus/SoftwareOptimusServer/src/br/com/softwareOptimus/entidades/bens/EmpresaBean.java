@@ -205,8 +205,14 @@ public class EmpresaBean {
 		String cnpj = "cnpj";
 		try {
 			if (filtro.equals(cnpj)) {
+				if (this.retornoListaPessoa != null) {
+					this.retornoListaPessoa.clear();
+				}
 				this.retornoListaPessoa = empresaRN.pesquisaCNPJ(tipoConsulta);
 			} else {
+				if (this.retornoListaPessoa != null) {
+					this.retornoListaPessoa.clear();
+				}
 				this.retornoListaPessoa = empresaRN.pesquisaNome(tipoConsulta);
 			}
 			listaLogradouro();
