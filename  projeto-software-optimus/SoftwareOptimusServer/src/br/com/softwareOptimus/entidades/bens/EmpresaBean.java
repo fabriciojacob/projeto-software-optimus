@@ -30,13 +30,30 @@ public class EmpresaBean {
 	private String filtro = null;
 	private List<PessoaJuridica> retornoListaPessoa = new ArrayList<>();
 	private List<Logradouro> listaEnd = new ArrayList<>();
-	private Long id;
+	private Long id, idReg;
 	private VigenciaRegime regime = new VigenciaRegime();
-	
+	private List<VigenciaRegime> listaReg = new ArrayList<>();
+
+	public List<VigenciaRegime> getListaReg() {
+		return listaReg;
+	}
+
+	public void setListaReg(List<VigenciaRegime> listaReg) {
+		this.listaReg = listaReg;
+	}
+
+	public Long getIdReg() {
+		return idReg;
+	}
+
+	public void setIdReg(Long idReg) {
+		this.idReg = idReg;
+	}
+
 	public List<Logradouro> getListaEnd() {
 		return listaEnd;
 	}
-	
+
 	public void setListaEnd(List<Logradouro> listaEnd) {
 		this.listaEnd = listaEnd;
 	}
@@ -147,11 +164,11 @@ public class EmpresaBean {
 		Logradouro logr = new Logradouro();
 		logr = this.logradouro;
 		logr.setIdEndereco(null);
-		if (tipoSelecionado == TipoLogradouro.COBRANCA.toString()) {
+		if (tipoSelecionado.equals(TipoLogradouro.COBRANCA.toString())) {
 			logr.setTipoLogr(TipoLogradouro.COBRANCA);
-		} else if (tipoSelecionado == TipoLogradouro.ENTREGA.toString()) {
+		} else if (tipoSelecionado.equals(TipoLogradouro.ENTREGA.toString())) {
 			logr.setTipoLogr(TipoLogradouro.ENTREGA);
-		} else if (tipoSelecionado == TipoLogradouro.COMERCIAL.toString()) {
+		} else if (tipoSelecionado.equals(TipoLogradouro.COMERCIAL.toString())) {
 			logr.setTipoLogr(TipoLogradouro.COMERCIAL);
 		} else {
 			logr.setTipoLogr(TipoLogradouro.RESIDENCIAL);
@@ -193,6 +210,7 @@ public class EmpresaBean {
 				this.retornoListaPessoa = empresaRN.pesquisaNome(tipoConsulta);
 			}
 			listaLogradouro();
+			listaRegime();
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
@@ -229,16 +247,30 @@ public class EmpresaBean {
 		}
 
 	}
-	
-	public void listaLogradouro(){
+
+	public void listaLogradouro() {
 		EmpresaRN empresaRN = new EmpresaRN();
 		this.listaEnd = empresaRN.listaLogr(this.pessoaJuridica);
+	}
+
+	public void listaRegime() {
+		EmpresaRN empresaRN = new EmpresaRN();
+		try {
+			this.listaReg = empresaRN.listaReg(this.pessoaJuridica);
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+							"Problemas na listagem dos regimes"
+									+ e.getMessage()));
+		}
 	}
 
 	public void editEmp() {
 		EmpresaRN empresaRN = new EmpresaRN();
 		this.pessoaJuridica = empresaRN.pesquisaId(id);
 		listaLogradouro();
+		listaRegime();
 	}
 
 	public void novo() {

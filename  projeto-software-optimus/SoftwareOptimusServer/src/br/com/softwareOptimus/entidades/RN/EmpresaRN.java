@@ -7,6 +7,7 @@ import br.com.softwareOptimus.entidades.Logradouro;
 import br.com.softwareOptimus.entidades.PessoaJuridica;
 import br.com.softwareOptimus.entidades.dao.empresa.EmpresaDAO;
 import br.com.softwareOptimus.entidades.dao.geral.LogradouroDAO;
+import br.com.softwareOptimus.entidades.dao.geral.RegimeDAO;
 import br.com.softwareOptimus.fiscal.VigenciaRegime;
 import br.com.softwareOptimus.util.DAOFactory;
 
@@ -14,7 +15,9 @@ public class EmpresaRN {
 
 	private EmpresaDAO empresaDAO;
 	private List<Logradouro> lista = new ArrayList<>();
+	private List<VigenciaRegime> vigReg = new ArrayList<>();
 	private LogradouroDAO logrDAO = DAOFactory.criaLogrDAO();
+	private RegimeDAO regDAO = DAOFactory.criaVigenciaRegDAO();
 
 	public EmpresaRN() {
 		empresaDAO = DAOFactory.criaEmpresaDAO();
@@ -27,6 +30,18 @@ public class EmpresaRN {
 		} else {
 			this.empresaDAO.atualizar(empresa);
 		}
+	}
+	
+	public List<VigenciaRegime> getVigReg() {
+		return vigReg;
+	}
+	
+	public void setVigReg(List<VigenciaRegime> vigReg) {
+		this.vigReg = vigReg;
+	}
+	
+	public List<VigenciaRegime> listaReg(PessoaJuridica pessoaJuridica) throws Exception{
+		return this.vigReg = regDAO.listaRegime(pessoaJuridica);
 	}
 	
 	public List<Logradouro> listaLogr(PessoaJuridica pessoaJuridica){

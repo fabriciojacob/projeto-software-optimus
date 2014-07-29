@@ -83,7 +83,7 @@
 					<h:panelGrid columns="2" columnClasses="label, value">
 					
 					Inativa:
-					<p:selectBooleanCheckbox />
+					<p:selectBooleanCheckbox id="inativaEmp" value="#{empresaBean.pessoaJuridica.status}"/>
 			
 					Codigo Empresa:
 					<p:inputText id="idEmpresa" disabled="true"
@@ -230,30 +230,32 @@
 								effect="fold" />
 							Regime:
 							<p:selectOneMenu id="fConsult" value="#{empresaBean.tipoRegime}">
-									<f:selectItem itemLabel="SIMPLES" itemValue="SIMPLES" />
-									<f:selectItem itemLabel="REAL" itemValue="LUCROREAL" />
-									<f:selectItem itemLabel="PRESUMIDO" itemValue="LUCROPRESUMIDO" />
-								</p:selectOneMenu>
-								<p:commandButton id="incluirReg" icon="ui-icon-disk"
-									actionListener="#{empresaBean.salvarRegime()}" />
+								<f:selectItem itemLabel="SIMPLES" itemValue="SIMPLES" />
+								<f:selectItem itemLabel="REAL" itemValue="LUCROREAL" />
+								<f:selectItem itemLabel="PRESUMIDO" itemValue="LUCROPRESUMIDO" />
+							</p:selectOneMenu>
+							<p:commandButton id="incluirReg" icon="ui-icon-disk"
+								actionListener="#{empresaBean.salvarRegime()}" />
 
 						</h:panelGrid>
 					</h:panelGrid>
 
-					<p:dataTable>
-						<p:column headerText="Regime de Apuração">
+					<p:dataTable id="listaRegime" value="#{empresaBean.listaReg}"
+						var="listaReg" paginator="true" rows="6">
 
+						<p:column headerText="Regime de Apuração">
+							<h:outputLabel value="#{listaReg.regime}" />
 						</p:column>
 
 						<p:column headerText="Início da Vigência">
-
+							<h:outputLabel value="#{listaEnd.dataInicio}" />
 						</p:column>
 
-						<p:column headerText="Fim da Vigência">
-
-						</p:column>
 						<p:column headerText="Excluir">
-
+							<p:commandLink id="linkReg" value="Excluir" ajax="dialog">
+							<f:setPropertyActionListener value="#{listaReg.idVigReg}"
+								target="#{empresaBean.idReg}" />
+						</p:commandLink>
 						</p:column>
 					</p:dataTable>
 

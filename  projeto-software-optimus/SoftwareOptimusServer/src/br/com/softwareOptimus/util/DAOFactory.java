@@ -15,6 +15,8 @@ import br.com.softwareOptimus.entidades.dao.geral.LogradouroDAO;
 import br.com.softwareOptimus.entidades.dao.geral.LogradouroDAOHibernate;
 import br.com.softwareOptimus.entidades.dao.geral.MunicipioDAO;
 import br.com.softwareOptimus.entidades.dao.geral.MunicipioDAOHibernate;
+import br.com.softwareOptimus.entidades.dao.geral.RegimeDAO;
+import br.com.softwareOptimus.entidades.dao.geral.RegimeDAOHibernate;
 import br.com.softwareOptimus.entidades.dao.usuario.UsuarioDAO;
 import br.com.softwareOptimus.entidades.dao.usuario.UsuarioDAOHibernate;
 
@@ -29,6 +31,17 @@ public class DAOFactory {
 			e.printStackTrace();
 		}
 		return usuarioDAO;
+	}
+	
+	public static RegimeDAO criaVigenciaRegDAO(){
+		RegimeDAOHibernate regimeDAO = new RegimeDAOHibernate();
+		regimeDAO.setSession(JpaUtil.getEntityManager());
+		try{
+			regimeDAO.begin();
+		}catch (IOException | SQLException e){
+			e.printStackTrace();
+		}
+		return regimeDAO;
 	}
 
 	public static EstadoDAO criaEstadoDAO() {
