@@ -21,14 +21,14 @@
 
 			<p:commandButton value="Salvar"
 				actionListener="#{empresaBean.salvarEmp}" />
+				
+			<p:commandButton value="Alterar"/>
 
 			<p:commandButton value="Consulta" type="button"
 				onclick="PF('consulta').show();" />
 
 			<p:commandButton value="Cancelar" type="reset" />
-
-			<p:commandButton value="Remover" />
-
+			
 			<p:messages id="messages" showDetail="true" autoUpdate="true"
 				closable="true" />
 
@@ -83,7 +83,8 @@
 					<h:panelGrid columns="2" columnClasses="label, value">
 					
 					Inativa:
-					<p:selectBooleanCheckbox id="inativaEmp" value="#{empresaBean.pessoaJuridica.status}"/>
+					<p:selectBooleanCheckbox id="inativaEmp"
+							value="#{empresaBean.pessoaJuridica.status}" />
 			
 					Codigo Empresa:
 					<p:inputText id="idEmpresa" disabled="true"
@@ -248,14 +249,16 @@
 						</p:column>
 
 						<p:column headerText="Início da Vigência">
-							<h:outputLabel value="#{listaEnd.dataInicio}" />
+							<h:outputLabel value="#{listaReg.dataInicio}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputLabel>
 						</p:column>
 
 						<p:column headerText="Excluir">
 							<p:commandLink id="linkReg" value="Excluir" ajax="dialog">
-							<f:setPropertyActionListener value="#{listaReg.idVigReg}"
-								target="#{empresaBean.idReg}" />
-						</p:commandLink>
+								<f:setPropertyActionListener value="#{listaReg.idVigReg}"
+									target="#{empresaBean.idReg}" />
+							</p:commandLink>
 						</p:column>
 					</p:dataTable>
 
