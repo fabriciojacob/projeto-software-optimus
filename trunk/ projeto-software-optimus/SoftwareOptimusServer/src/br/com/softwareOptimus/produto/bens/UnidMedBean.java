@@ -1,5 +1,6 @@
 package br.com.softwareOptimus.produto.bens;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -15,7 +16,7 @@ public class UnidMedBean {
 
 	private UnidMed unidMed = new UnidMed();
 	private boolean disable = false;
-	private List<UnidMed> unidMedLis;
+	private List<UnidMed> unidMedLis = new ArrayList<UnidMed>();
 	private String busca;
 	private String filtro;
 	private Long id;
@@ -96,7 +97,7 @@ public class UnidMedBean {
 	public void salvarUnid() {
 		try {
 			UnidMedRN unidRN = new UnidMedRN();
-			unidMed.setIdUnidMed(null);
+			this.unidMed.setIdUnidMed(null);
 			unidRN.salvar(unidMed);
 			FacesContext.getCurrentInstance().addMessage(
 					null,
@@ -114,18 +115,18 @@ public class UnidMedBean {
 	}
 
 	public void buscaUnid() {
-		unidMedLis = null;
+		limpa();
 		UnidMedRN unidRN = new UnidMedRN();
 		if (!busca.equals("")) {
 			if (filtro.equals("id")) {
-				unidMedLis = unidRN.consultaId(Long.parseLong(busca));
+				this.unidMedLis = unidRN.consultaId(Long.parseLong(busca));
 			} else if (filtro.equals("unid")) {
-				unidMedLis = unidRN.consultaUnid(busca);
+				this.unidMedLis = unidRN.consultaUnid(busca);
 			} else if (filtro.equals("desc")) {
-				unidMedLis = unidRN.consultaDesc(busca);
+				this.unidMedLis = unidRN.consultaDesc(busca);
 			}
 		} else {
-			unidMedLis = unidRN.lista();
+			this.unidMedLis = unidRN.lista();
 		}
 	}
 
@@ -144,8 +145,8 @@ public class UnidMedBean {
 	}
 
 	public void limpa() {
-		unidMed = new UnidMed();
-		unidMedLis = null;
+		this.unidMed = new UnidMed();
+		this.unidMedLis = new ArrayList<UnidMed>();
 	}
 
 	public void altUnid() {
@@ -170,7 +171,7 @@ public class UnidMedBean {
 
 	public void editUnid() {
 		UnidMedRN unidRN = new UnidMedRN();
-		unidMed = unidRN.editUnid(id);
+		this.unidMed = unidRN.editUnid(id);
 		this.alt = false;
 		this.rem = false;
 		this.sal = true;
