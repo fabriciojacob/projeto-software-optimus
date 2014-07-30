@@ -33,6 +33,57 @@ public class EmpresaBean {
 	private Long id, idReg, idLogr;
 	private VigenciaRegime regime = new VigenciaRegime();
 	private List<VigenciaRegime> listaReg = new ArrayList<>();
+	private boolean salvar = true, cancelar = true, enderecos = true, salReg = true;
+	private boolean novo = false, consulta = false;
+	
+
+	public boolean isSalReg() {
+		return salReg;
+	}
+
+	public void setSalReg(boolean salReg) {
+		this.salReg = salReg;
+	}
+
+	public boolean isNovo() {
+		return novo;
+	}
+
+	public void setNovo(boolean novo) {
+		this.novo = novo;
+	}
+
+	public boolean isSalvar() {
+		return salvar;
+	}
+
+	public void setSalvar(boolean salvar) {
+		this.salvar = salvar;
+	}
+
+	public boolean isCancelar() {
+		return cancelar;
+	}
+
+	public void setCancelar(boolean cancelar) {
+		this.cancelar = cancelar;
+	}
+
+	public boolean isConsulta() {
+		return consulta;
+	}
+
+	public void setConsulta(boolean consulta) {
+		this.consulta = consulta;
+	}
+
+	public boolean isEnderecos() {
+		return enderecos;
+	}
+
+	public void setEnderecos(boolean enderecos) {
+		this.enderecos = enderecos;
+	}
 
 	public Long getIdLogr() {
 		return idLogr;
@@ -159,6 +210,9 @@ public class EmpresaBean {
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
 							"Empresa salva com sucesso"));
 			setDisable(false);
+			this.novo = false;
+			this.enderecos = false;
+			this.salReg = false;
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
@@ -225,6 +279,10 @@ public class EmpresaBean {
 				}
 				this.retornoListaPessoa = empresaRN.pesquisaNome(tipoConsulta);
 			}
+			this.salvar = false;
+			this.cancelar = false;
+			this.enderecos = false;
+			this.salReg = false;
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
@@ -252,7 +310,7 @@ public class EmpresaBean {
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
 							"Regime salvo com sucesso"));
 			listaRegime();
-			this.regime =  new VigenciaRegime();
+			this.regime = new VigenciaRegime();
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance()
 					.addMessage(
@@ -299,6 +357,12 @@ public class EmpresaBean {
 		this.pessoaJuridica = new PessoaJuridica();
 		this.listaEnd = new ArrayList<>();
 		this.listaReg = new ArrayList<>();
+		this.salvar = false;
+		this.cancelar = false;
+		this.novo = true;
+		this.salReg = true;
+		this.enderecos = true;
+		
 	}
 
 	public void excluirRegime() {
@@ -309,7 +373,7 @@ public class EmpresaBean {
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
 							"Regime excluido com sucesso"));
-			 listaRegime();
+			listaRegime();
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance()
 					.addMessage(
