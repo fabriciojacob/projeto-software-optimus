@@ -16,7 +16,7 @@
 			closable="true" />
 		<div align="center">
 			<h:inputHidden value="#{usuarioBean.usuario.idUsuario}" />
-			<p:panelGrid style="margin-top:20px" columns="2">
+			<p:panelGrid id="cadastroUsuario" style="margin-top:20px" columns="2">
 				<f:facet name="header">
 					<p:row>
 						<p:column colspan="7">Cadastro de Usuario</p:column>
@@ -47,7 +47,8 @@
 				<p>
 					<p:commandButton value="Salvar"
 						actionListener="#{usuarioBean.salvar}" />
-					<p:commandButton value="Cancelar" type="reset" />
+					<p:commandButton value="Cancelar"
+						actionListener="#{usuarioBean.cancelar}" ajax="cadastroUsuario" />
 				</p>
 			</div>
 		</div>
