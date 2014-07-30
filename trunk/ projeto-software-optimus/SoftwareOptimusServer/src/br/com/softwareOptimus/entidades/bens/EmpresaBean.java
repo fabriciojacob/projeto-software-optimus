@@ -297,6 +297,8 @@ public class EmpresaBean {
 
 	public void novo() {
 		this.pessoaJuridica = new PessoaJuridica();
+		this.listaEnd = new ArrayList<>();
+		this.listaReg = new ArrayList<>();
 	}
 
 	public void excluirRegime() {
