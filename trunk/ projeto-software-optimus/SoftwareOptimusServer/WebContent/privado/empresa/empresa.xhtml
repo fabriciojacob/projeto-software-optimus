@@ -57,6 +57,10 @@
 				<p:dataTable id="dataPesquisa"
 					value="#{empresaBean.retornoListaPessoa}" var="pesEmpresa"
 					paginator="true" rows="6">
+					
+					<p:column headerText="Codigo">
+						<h:outputText value="#{pesEmpresa.idPessoa}" />
+					</p:column>
 
 					<p:column headerText="Nome Fantasia">
 						<h:outputText value="#{pesEmpresa.fantasia}" />
@@ -226,7 +230,7 @@
 						
 						<p:column headerText="Excluir">
 							<p:commandLink id="linkLogr" value="Excluir" ajax="dialog" 
-							actionListener="#{empresaBean.excluirLogr}" update="listaEndereco">
+							action="#{empresaBean.excluirLogr}" update="listaEndereco">
 								<f:setPropertyActionListener value="#{listaEnd.idEndereco}"
 									target="#{empresaBean.idLogr}" />
 							</p:commandLink>
@@ -264,7 +268,7 @@
 						
 						
 						<p:column headerText="Regime de Apuração">
-							<h:outputLabel value="#{listaReg.idVigReg}" />
+							<h:outputLabel value="#{listaReg.regime}" />
 						</p:column>
 
 						<p:column headerText="Início da Vigência">
@@ -275,7 +279,7 @@
 
 						<p:column headerText="Excluir">
 							<p:commandLink id="linkReg" value="Excluir" ajax="dialog" 
-							actionListener="#{empresaBean.excluirRegime}" update="listaRegime">
+							action="#{empresaBean.excluirRegime}" update="listaRegime">
 								<f:setPropertyActionListener value="#{listaReg.idVigReg}"
 									target="#{empresaBean.idReg}" />
 							</p:commandLink>

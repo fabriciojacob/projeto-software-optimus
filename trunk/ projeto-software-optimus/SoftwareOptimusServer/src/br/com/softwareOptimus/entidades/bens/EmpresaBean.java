@@ -191,6 +191,7 @@ public class EmpresaBean {
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
 							"EndereÃ§o salvo com sucesso"));
+			listaLogradouro();
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
@@ -249,6 +250,7 @@ public class EmpresaBean {
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
 							"Regime salvo com sucesso"));
+			listaRegime();
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance()
 					.addMessage(
@@ -303,12 +305,13 @@ public class EmpresaBean {
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
 							"Regime excluido com sucesso"));
+			 listaRegime();
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance()
 					.addMessage(
 							null,
 							new FacesMessage(FacesMessage.SEVERITY_ERROR,
-									"Info", "Problemas na exclusão do regime"
+									"Info", "Problemas na exclusï¿½o do regime"
 											+ e.getMessage()));
 		}
 	}
@@ -321,11 +324,12 @@ public class EmpresaBean {
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
 							"Logradouro excluido com sucesso"));
+			listaLogradouro();
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na exclusão do logradouro"
+							"Problemas na exclusï¿½o do logradouro"
 									+ e.getMessage()));
 		}
 	}
