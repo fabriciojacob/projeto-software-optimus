@@ -51,8 +51,8 @@ public class LogradouroDAOHibernate implements LogradouroDAO {
 	}
 
 	@Override
-	public void excluir(Logradouro logradouro) {
-		this.session.remove(logradouro);
+	public void excluir(Long idLogr) {
+		this.session.remove(this.session.getReference(Logradouro.class, idLogr));
 		this.transaction.commit();
 
 	}

@@ -30,9 +30,17 @@ public class EmpresaBean {
 	private String filtro = null;
 	private List<PessoaJuridica> retornoListaPessoa = new ArrayList<>();
 	private List<Logradouro> listaEnd = new ArrayList<>();
-	private Long id, idReg;
+	private Long id, idReg, idLogr;
 	private VigenciaRegime regime = new VigenciaRegime();
 	private List<VigenciaRegime> listaReg = new ArrayList<>();
+
+	public Long getIdLogr() {
+		return idLogr;
+	}
+
+	public void setIdLogr(Long idLogr) {
+		this.idLogr = idLogr;
+	}
 
 	public List<VigenciaRegime> getListaReg() {
 		return listaReg;
@@ -254,14 +262,18 @@ public class EmpresaBean {
 
 	public void listaLogradouro() {
 		EmpresaRN empresaRN = new EmpresaRN();
-		this.listaEnd.clear();
+		if (this.listaEnd != null) {
+			this.listaEnd.clear();
+		}
 		this.listaEnd = empresaRN.listaLogr(this.pessoaJuridica);
 	}
 
 	public void listaRegime() {
 		EmpresaRN empresaRN = new EmpresaRN();
 		try {
-			this.listaReg.clear();
+			if (this.listaReg != null) {
+				this.listaReg.clear();
+			}
 			this.listaReg = empresaRN.listaReg(this.pessoaJuridica);
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
@@ -280,6 +292,41 @@ public class EmpresaBean {
 	}
 
 	public void novo() {
-		this.pessoaJuridica.setIdPessoa(null);
+		this.pessoaJuridica = new PessoaJuridica();
+	}
+
+	public void excluirRegime() {
+		EmpresaRN empresaRN = new EmpresaRN();
+		try {
+			empresaRN.excluirVigReg(idReg);
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
+							"Regime excluido com sucesso"));
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance()
+					.addMessage(
+							null,
+							new FacesMessage(FacesMessage.SEVERITY_ERROR,
+									"Info", "Problemas na exclusão do regime"
+											+ e.getMessage()));
+		}
+	}
+
+	public void excluirLogr() {
+		LogradouroRN logrRN = new LogradouroRN();
+		try {
+			logrRN.excluirLogr(idLogr);
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
+							"Logradouro excluido com sucesso"));
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+							"Problemas na exclusão do logradouro"
+									+ e.getMessage()));
+		}
 	}
 }

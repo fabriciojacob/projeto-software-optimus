@@ -13,5 +13,7 @@ public interface RegimeDAO {
 	public void begin()  throws IOException, SQLException;
 	
 	public void close()  throws Exception;
+	
+	public void excluirRegime(Long idRegime) throws Exception;
 
 }

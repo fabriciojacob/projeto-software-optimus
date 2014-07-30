@@ -17,10 +17,11 @@ public class EmpresaRN {
 	private List<Logradouro> lista = new ArrayList<>();
 	private List<VigenciaRegime> vigReg = new ArrayList<>();
 	private LogradouroDAO logrDAO = DAOFactory.criaLogrDAO();
-	private RegimeDAO regDAO = DAOFactory.criaVigenciaRegDAO();
+	private RegimeDAO regDAO;
 
 	public EmpresaRN() {
 		empresaDAO = DAOFactory.criaEmpresaDAO();
+		regDAO = DAOFactory.criaVigenciaRegDAO();
 	}
 
 	public void salvar(PessoaJuridica empresa) {
@@ -62,6 +63,10 @@ public class EmpresaRN {
 
 	public PessoaJuridica pesquisaId(Long id) {
 		return this.empresaDAO.carregar(id);
+	}
+	
+	public void excluirVigReg(Long idVig) throws Exception{
+		this.regDAO.excluirRegime(idVig);
 	}
 
 }

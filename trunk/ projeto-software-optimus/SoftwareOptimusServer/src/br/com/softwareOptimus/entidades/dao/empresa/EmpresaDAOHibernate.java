@@ -95,8 +95,8 @@ public class EmpresaDAOHibernate implements EmpresaDAO {
 
 	@Override
 	public List<PessoaJuridica> buscaNome(String nome) throws Exception {
-		String jpql = "Select a from PessoaJuridica a where a.fantasia LIKE :parNome " +
-				"and a.tipoPessoaJuridica = 1";
+		String jpql = "Select a from PessoaJuridica a where a.fantasia LIKE :parNome "
+				+ "and a.tipoPessoaJuridica = 1";
 		TypedQuery<PessoaJuridica> consultaLista = this.session.createQuery(
 				jpql, PessoaJuridica.class);
 		consultaLista.setParameter("parNome", "%" + nome + "%");
@@ -112,7 +112,7 @@ public class EmpresaDAOHibernate implements EmpresaDAO {
 	@Override
 	public void atualizarRegime(VigenciaRegime regime) {
 		this.session.merge(regime);
-		
+
 	}
 
 }
