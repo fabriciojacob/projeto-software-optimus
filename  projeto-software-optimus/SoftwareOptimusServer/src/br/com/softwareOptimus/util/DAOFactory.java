@@ -95,7 +95,7 @@ public class DAOFactory {
 
 	public static ProdutoDAO criaProdutoDAO() {
 		ProdutoDAOHibernate prodDAO = new ProdutoDAOHibernate();
-		prodDAO.setSession(JpaUtil.getEntityManager());
+		prodDAO.setSession(session);
 		try {
 			prodDAO.begin();
 		} catch (IOException | SQLException e) {
@@ -106,7 +106,7 @@ public class DAOFactory {
 	
 	public static UnidMedDAO criaUnidMedDAO(){
 		UnidMedDAOHibernate unidDAO = new UnidMedDAOHibernate();
-		unidDAO.setSession(JpaUtil.getEntityManager());
+		unidDAO.setSession(session);
 		try {
 			unidDAO.begin();
 		} catch (IOException | SQLException e) {
