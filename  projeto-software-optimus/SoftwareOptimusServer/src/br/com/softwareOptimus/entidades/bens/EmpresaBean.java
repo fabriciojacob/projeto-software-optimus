@@ -192,6 +192,7 @@ public class EmpresaBean {
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
 							"Endereço salvo com sucesso"));
 			listaLogradouro();
+			this.logradouro = new Logradouro();
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
@@ -251,6 +252,7 @@ public class EmpresaBean {
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
 							"Regime salvo com sucesso"));
 			listaRegime();
+			this.regime =  new VigenciaRegime();
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance()
 					.addMessage(
