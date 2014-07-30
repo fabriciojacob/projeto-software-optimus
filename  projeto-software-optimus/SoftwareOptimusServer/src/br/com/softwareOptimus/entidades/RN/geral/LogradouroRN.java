@@ -19,5 +19,9 @@ public class LogradouroRN {
 	public void salvar(Logradouro logr) {
 		this.logradouroDAO.salvar(logr);
 	}
+	
+	public void excluirLogr(Long idLogr) throws Exception {
+		this.logradouroDAO.excluir(idLogr);
+	}
 
 }

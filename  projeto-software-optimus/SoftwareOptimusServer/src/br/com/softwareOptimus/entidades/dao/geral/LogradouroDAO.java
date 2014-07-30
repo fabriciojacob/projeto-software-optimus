@@ -12,7 +12,7 @@ public interface LogradouroDAO {
 	
 	public void salvar(Logradouro logradouro);
 	public void atualizar(Logradouro logradouro);
-	public void excluir(Logradouro logradouro);
+	public void excluir(Long idLogr);
 	public void begin() throws IOException, SQLException;
 	public void close() throws Exception;
 	public void consultar() throws Exception;

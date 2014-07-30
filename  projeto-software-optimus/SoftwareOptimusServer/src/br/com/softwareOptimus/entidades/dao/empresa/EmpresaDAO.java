@@ -20,5 +20,4 @@ public interface EmpresaDAO {
 	public List<PessoaJuridica> listar();
 	public List<PessoaJuridica> buscaCNPJ(String cnpj) throws Exception;
 	public List<PessoaJuridica> buscaNome(String nome) throws Exception;
-
 }
