@@ -34,6 +34,10 @@ public class UsuarioBean {
 		this.usuario.setAtivo(true);
 		return "usuario";
 	}
+	
+	public void cancelar(){
+		this.usuario = new Usuario();
+	}
 
 	public void salvar() {
 

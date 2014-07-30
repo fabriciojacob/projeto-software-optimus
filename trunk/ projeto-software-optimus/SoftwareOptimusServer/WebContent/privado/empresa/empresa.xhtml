@@ -17,17 +17,16 @@
 		<div align="left">
 
 			<p:commandButton value="Novo" actionListener="#{empresaBean.novo}"
-				type="reset" />
+				ajax="cadEmpresa"/>
 
 			<p:commandButton value="Salvar"
 				actionListener="#{empresaBean.salvarEmp}" />
-				
-			<p:commandButton value="Alterar"/>
 
 			<p:commandButton value="Consulta" type="button"
 				onclick="PF('consulta').show();" />
 
-			<p:commandButton value="Cancelar" type="reset" />
+			<p:commandButton value="Cancelar" type="reset" ajax="cadEmpresa" 
+			actionListener="#{empresaBean.novo}"/>
 			
 			<p:messages id="messages" showDetail="true" autoUpdate="true"
 				closable="true" />
@@ -84,7 +83,7 @@
 
 			<p:tabView style="border: 0px">
 				<p:tab id="cadEmpresa" title="Informações Gerais">
-					<h:panelGrid columns="2" columnClasses="label, value">
+					<h:panelGrid id="cadastroEmpresa" columns="2" columnClasses="label, value">
 					
 					Inativa:
 					<p:selectBooleanCheckbox id="inativaEmp"
