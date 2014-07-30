@@ -215,8 +215,6 @@ public class EmpresaBean {
 				}
 				this.retornoListaPessoa = empresaRN.pesquisaNome(tipoConsulta);
 			}
-			listaLogradouro();
-			listaRegime();
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
@@ -256,12 +254,14 @@ public class EmpresaBean {
 
 	public void listaLogradouro() {
 		EmpresaRN empresaRN = new EmpresaRN();
+		this.listaEnd.clear();
 		this.listaEnd = empresaRN.listaLogr(this.pessoaJuridica);
 	}
 
 	public void listaRegime() {
 		EmpresaRN empresaRN = new EmpresaRN();
 		try {
+			this.listaReg.clear();
 			this.listaReg = empresaRN.listaReg(this.pessoaJuridica);
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
