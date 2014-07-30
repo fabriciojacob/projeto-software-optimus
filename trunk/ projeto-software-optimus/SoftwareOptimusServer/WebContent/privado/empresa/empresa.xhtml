@@ -17,16 +17,16 @@
 		<div align="left">
 
 			<p:commandButton value="Novo" actionListener="#{empresaBean.novo}"
-				ajax="cadEmpresa"/>
+				ajax="frmCadEmpresa" disabled="#{empresaBean.novo}"/>
 
-			<p:commandButton value="Salvar"
-				actionListener="#{empresaBean.salvarEmp}" />
+			<p:commandButton value="Salvar" disabled="#{empresaBean.salvar}"
+				actionListener="#{empresaBean.salvarEmp}"  ajax="frmCadEmpresa"/>
 
 			<p:commandButton value="Consulta" type="button"
-				onclick="PF('consulta').show();" />
+				onclick="PF('consulta').show();" disabled="#{empresaBean.consulta}"/>
 
 			<p:commandButton value="Cancelar" ajax="cadEmpresa" 
-			actionListener="#{empresaBean.novo}"/>
+			actionListener="#{empresaBean.novo}" disabled="#{empresaBean.cancelar}"/>
 			
 			<p:messages id="messages" showDetail="true" autoUpdate="true"
 				closable="true" />
@@ -38,7 +38,8 @@
 					<h:panelGrid columns="1">
 
 						<p:commandButton value="Pesquisar"
-							actionListener="#{empresaBean.pesquisa}" update="dataPesquisa" />
+							actionListener="#{empresaBean.pesquisa}" update="dataPesquisa" 
+							/>
 					</h:panelGrid>
 				</div>
 
@@ -117,7 +118,7 @@
 				<p:tab id="cadLogr" title="Lista de endereços">
 
 					<p:commandButton value="Enderecos" type="button"
-						onclick="PF('dlg2').show();" disabled="#{empresaBean.disable}" />
+						onclick="PF('dlg2').show();" disabled="#{empresaBean.enderecos}" />
 
 					<p:dialog header=" Enderecos" widgetVar="dlg2" modal="true"
 						height="300" width="400">
@@ -252,8 +253,9 @@
 								<f:selectItem itemLabel="REAL" itemValue="LUCROREAL" />
 								<f:selectItem itemLabel="PRESUMIDO" itemValue="LUCROPRESUMIDO" />
 							</p:selectOneMenu>
-							<p:commandButton id="incluirReg" icon="ui-icon-disk"
-								actionListener="#{empresaBean.salvarRegime()}" update="listaRegime" />
+							
+							<p:commandButton id="incluirReg" icon="ui-icon-disk" disabled="#{empresaBean.salReg}" 
+								actionListener="#{empresaBean.salvarRegime()}" update="listaRegime"/>
 
 						</h:panelGrid>
 					</h:panelGrid>
