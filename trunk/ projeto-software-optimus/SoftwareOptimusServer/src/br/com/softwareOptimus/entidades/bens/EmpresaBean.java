@@ -12,6 +12,7 @@ import br.com.softwareOptimus.entidades.Municipio;
 import br.com.softwareOptimus.entidades.PessoaJuridica;
 import br.com.softwareOptimus.entidades.TipoLogradouro;
 import br.com.softwareOptimus.entidades.TipoPessoaJuridica;
+import br.com.softwareOptimus.entidades.RN.EmailRN;
 import br.com.softwareOptimus.entidades.RN.EmpresaRN;
 import br.com.softwareOptimus.entidades.RN.geral.LogradouroRN;
 import br.com.softwareOptimus.fiscal.Regime;
@@ -35,7 +36,23 @@ public class EmpresaBean {
 	private List<VigenciaRegime> listaReg = new ArrayList<>();
 	private boolean salvar = true, cancelar = true, enderecos = true, salReg = true;
 	private boolean novo = false, consulta = false;
-	
+
+
+	public Long getIdTel() {
+		return idTel;
+	}
+
+	public void setIdTel(Long idTel) {
+		this.idTel = idTel;
+	}
+
+	public Long getIdEmail() {
+		return idEmail;
+	}
+
+	public void setIdEmail(Long idEmail) {
+		this.idEmail = idEmail;
+	}
 
 	public boolean isSalReg() {
 		return salReg;
@@ -400,5 +417,12 @@ public class EmpresaBean {
 							"Problemas na exclus�o do logradouro"
 									+ e.getMessage()));
 		}
+	}
+	
+	public void salvarEmail(){
+		EmailRN emailRN = new EmailRN();
+		try{
+			
+		}catch ()
 	}
 }
