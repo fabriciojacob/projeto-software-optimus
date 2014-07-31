@@ -329,14 +329,6 @@ public class EmpresaBean {
 		}
 	}
 
-	public boolean habilitaButton() {
-		return true;
-	}
-
-	public boolean desabilitaButton() {
-		return false;
-	}
-
 	public void pesquisa() {
 		EmpresaRN empresaRN = new EmpresaRN();
 		String cnpj = "cnpj";
