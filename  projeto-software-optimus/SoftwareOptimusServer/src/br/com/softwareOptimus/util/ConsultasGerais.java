@@ -34,6 +34,7 @@ public class ConsultasGerais {
 
 	public <T> Long retornaCodigo(T tipo, final EntityManager em) {
 		Long codigo = null;
+		@SuppressWarnings("unused")
 		Object x = em.find(tipo.getClass(), 1l);
 		return codigo;
 	}

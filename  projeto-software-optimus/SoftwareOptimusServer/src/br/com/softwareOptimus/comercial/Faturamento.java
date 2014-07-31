@@ -4,6 +4,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+@SuppressWarnings("serial")
 public class Faturamento extends Comercial{
 
 	@ManyToMany

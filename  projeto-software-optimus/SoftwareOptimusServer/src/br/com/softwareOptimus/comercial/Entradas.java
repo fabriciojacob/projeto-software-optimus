@@ -6,6 +6,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+@SuppressWarnings("serial")
 public class Entradas extends Comercial{
 
 	@ManyToMany

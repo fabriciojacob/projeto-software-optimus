@@ -13,6 +13,10 @@ import br.com.softwareOptimus.entidades.CenCusto;
 @Table(name ="tbSaldoContasCC")
 public class SaldoContasCC extends SaldoContas {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6191461201037988298L;
 	@ManyToMany
 	private Collection<CenCusto> cCusto;
 

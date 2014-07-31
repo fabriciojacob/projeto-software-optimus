@@ -88,6 +88,7 @@ public class LogradouroDAOHibernate implements LogradouroDAO {
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Logradouro> listar(PessoaJuridica pessoaJuridica) {
 		String jpql = "Select l From Logradouro l inner join l.municipio c inner join c.uf "
