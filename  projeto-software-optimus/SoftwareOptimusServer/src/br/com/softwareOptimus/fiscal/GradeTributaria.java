@@ -34,6 +34,17 @@ public class GradeTributaria implements Serializable{
 	
 	private IO io;
 	
+	@ManyToOne
+	private PautaMVA pautaMva;
+	
+	public PautaMVA getPautaMva() {
+		return pautaMva;
+	}
+	
+	public void setPautaMva(PautaMVA pautaMva) {
+		this.pautaMva = pautaMva;
+	}
+	
 	public Estado getOrigem() {
 		return origem;
 	}
