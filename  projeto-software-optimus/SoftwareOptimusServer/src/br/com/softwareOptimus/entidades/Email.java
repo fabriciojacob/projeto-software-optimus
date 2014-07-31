@@ -1,7 +1,6 @@
 package br.com.softwareOptimus.entidades;
 
 import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -76,7 +75,6 @@ public class Email implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		@SuppressWarnings("rawtypes")
 		Email other = (Email) obj;
 		if (idEmail == null) {
 			if (other.idEmail != null)

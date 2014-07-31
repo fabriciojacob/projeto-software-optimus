@@ -30,7 +30,7 @@ public class EmpresaBean {
 	private String filtro = null;
 	private List<PessoaJuridica> retornoListaPessoa = new ArrayList<>();
 	private List<Logradouro> listaEnd = new ArrayList<>();
-	private Long id, idReg, idLogr;
+	private Long id, idReg, idLogr, idTel, idEmail;
 	private VigenciaRegime regime = new VigenciaRegime();
 	private List<VigenciaRegime> listaReg = new ArrayList<>();
 	private boolean salvar = true, cancelar = true, enderecos = true, salReg = true;
