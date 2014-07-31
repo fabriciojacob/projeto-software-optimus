@@ -11,6 +11,8 @@ import br.com.softwareOptimus.dao.produto.UnidMedDAO;
 import br.com.softwareOptimus.dao.produto.UnidMedDAOHibernate;
 import br.com.softwareOptimus.entidades.dao.empresa.EmpresaDAO;
 import br.com.softwareOptimus.entidades.dao.empresa.EmpresaDAOHibernate;
+import br.com.softwareOptimus.entidades.dao.geral.EmailDAO;
+import br.com.softwareOptimus.entidades.dao.geral.EmailDAOHibernate;
 import br.com.softwareOptimus.entidades.dao.geral.EstadoDAO;
 import br.com.softwareOptimus.entidades.dao.geral.EstadoDAOHibernate;
 import br.com.softwareOptimus.entidades.dao.geral.LogradouroDAO;
@@ -19,12 +21,36 @@ import br.com.softwareOptimus.entidades.dao.geral.MunicipioDAO;
 import br.com.softwareOptimus.entidades.dao.geral.MunicipioDAOHibernate;
 import br.com.softwareOptimus.entidades.dao.geral.RegimeDAO;
 import br.com.softwareOptimus.entidades.dao.geral.RegimeDAOHibernate;
+import br.com.softwareOptimus.entidades.dao.geral.TelefoneDAO;
+import br.com.softwareOptimus.entidades.dao.geral.TelefoneDAOHibernate;
 import br.com.softwareOptimus.entidades.dao.usuario.UsuarioDAO;
 import br.com.softwareOptimus.entidades.dao.usuario.UsuarioDAOHibernate;
 
 public class DAOFactory {
 	
 	private static EntityManager session = JpaUtil.getEntityManager();
+	
+	public static EmailDAO criaEmailDAO(){
+		EmailDAOHibernate emailDAO = new EmailDAOHibernate();
+		emailDAO.setSession(session);
+		try{
+			emailDAO.begin();
+		}catch (IOException | SQLException e){
+			e.printStackTrace();
+		}
+		return emailDAO;
+	}
+	
+	public static TelefoneDAO criaTelefoneDAO(){
+		TelefoneDAOHibernate telefoneDAO =  new TelefoneDAOHibernate();
+		telefoneDAO.setSession(session);
+		try{
+			telefoneDAO.begin();
+		}catch(IOException | SQLException e){
+			e.printStackTrace();
+		}
+		return telefoneDAO;
+	}
 
 	public static UsuarioDAO criaUsuarioDAO() {
 		UsuarioDAOHibernate usuarioDAO = new UsuarioDAOHibernate();
