@@ -51,6 +51,18 @@ public class ProdutoEstoque implements Serializable {
 	
 	private String justificativa;
 	
+	public Double getCustoMedio() {
+		return custoMedio;
+	}
+
+	public void setCustoMedio(Double custoMedio) {
+		this.custoMedio = custoMedio;
+	}
+
+	public void setSaldo(Double saldo) {
+		this.saldo = saldo;
+	}
+
 	public TipoMovEst getTipoMovEst() {
 		return tipoMovEst;
 	}
@@ -140,6 +152,7 @@ public class ProdutoEstoque implements Serializable {
 		this.totalCusto = totalCusto;
 	}
 	
+	@SuppressWarnings("static-access")
 	public void setCustoMedio(TipoMovEst tipo) {
 		if(tipoMovEst.COMPRA.equals(tipo.COMPRA) && this.saldo <= 0){
 			this.custoMedio = this.totalCusto / (this.quantEntrada + this.saldo);

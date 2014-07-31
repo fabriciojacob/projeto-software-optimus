@@ -76,6 +76,7 @@ public class Email<T> implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
+		@SuppressWarnings("rawtypes")
 		Email other = (Email) obj;
 		if (idEmail == null) {
 			if (other.idEmail != null)

@@ -37,8 +37,12 @@ public class Estado implements Serializable, Converter {
 	@ManyToOne
 	private Pais pais;
 
-	@OneToMany(mappedBy = "estado")
-	private Collection<GradeTributaria> grades;
+	@OneToMany(mappedBy = "origem")
+	private Collection<GradeTributaria> grades1;
+	
+	@OneToMany(mappedBy = "destino")
+	private Collection<GradeTributaria> grades2;
+	
 
 	@OneToMany(mappedBy = "uf")
 	private Collection<Municipio> municipio;
@@ -51,12 +55,20 @@ public class Estado implements Serializable, Converter {
 		this.municipio = municipio;
 	}
 
-	public Collection<GradeTributaria> getGrades() {
-		return grades;
+	public Collection<GradeTributaria> getGrades1() {
+		return grades1;
 	}
 
-	public void setGrades(Collection<GradeTributaria> grades) {
-		this.grades = grades;
+	public void setGrades1(Collection<GradeTributaria> grades1) {
+		this.grades1 = grades1;
+	}
+
+	public Collection<GradeTributaria> getGrades2() {
+		return grades2;
+	}
+
+	public void setGrades2(Collection<GradeTributaria> grades2) {
+		this.grades2 = grades2;
 	}
 
 	public Integer getCodIbge() {
@@ -118,7 +130,9 @@ public class Estado implements Serializable, Converter {
 
 	@Override
 	public Object getAsObject(FacesContext arg0, UIComponent arg1, String arg2) {
+		@SuppressWarnings("unused")
 		Estado estado = new Estado();
+		@SuppressWarnings("unused")
 		int ufId;
 
 		try {

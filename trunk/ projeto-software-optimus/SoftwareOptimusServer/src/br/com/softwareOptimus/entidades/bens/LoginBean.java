@@ -11,6 +11,7 @@ import br.com.softwareOptimus.entidades.RN.UsuarioRN;
 public class LoginBean {
 
 	public String login(Usuario usuario) {
+		@SuppressWarnings("unused")
 		int check;
 		UsuarioRN usuarioRN = new UsuarioRN();
 		try {

@@ -39,6 +39,7 @@ public class JpaUtil {
 
 		if (em == null) {
 
+			@SuppressWarnings("null")
 			EntityTransaction transaction = em.getTransaction();
 
 			if (transaction.isActive()) {

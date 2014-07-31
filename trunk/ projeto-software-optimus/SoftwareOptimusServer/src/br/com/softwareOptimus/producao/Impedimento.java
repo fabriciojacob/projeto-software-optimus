@@ -21,7 +21,20 @@ public class Impedimento implements Serializable{
 	private Long idImp;
 	
 	private String descricao;
-	
-	
 
+	public Long getIdImp() {
+		return idImp;
+	}
+
+	public void setIdImp(Long idImp) {
+		this.idImp = idImp;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
 }

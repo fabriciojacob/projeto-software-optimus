@@ -6,7 +6,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -22,9 +21,6 @@ public class Ncm {
 	@Column ( length = 85 , nullable = true , unique = false)
 	private String descricao;
 	
-	@OneToOne
-	private Aliquota aliquota;
-	
 	@ManyToMany
 	private Collection<Vigencia> vigencia;
 	
@@ -34,14 +30,6 @@ public class Ncm {
 	
 	public void setVigencia(Collection<Vigencia> vigencia) {
 		this.vigencia = vigencia;
-	}
-	
-	public Aliquota getAliquota() {
-		return aliquota;
-	}
-	
-	public void setAliquota(Aliquota aliquota) {
-		this.aliquota = aliquota;
 	}
 	
 	public Long getIdNcm() {

@@ -14,6 +14,7 @@ import br.com.softwareOptimus.util.DAOFactory;
 public class EmpresaRN {
 
 	private EmpresaDAO empresaDAO;
+	@SuppressWarnings("unused")
 	private List<Logradouro> lista = new ArrayList<>();
 	private List<VigenciaRegime> vigReg = new ArrayList<>();
 	private LogradouroDAO logrDAO = DAOFactory.criaLogrDAO();

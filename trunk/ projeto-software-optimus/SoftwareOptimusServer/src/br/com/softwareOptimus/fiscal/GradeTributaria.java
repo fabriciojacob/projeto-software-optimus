@@ -24,12 +24,31 @@ public class GradeTributaria implements Serializable{
 	private Long id;
 	
 	@ManyToOne
-	private Estado estado;
+	private Estado origem;
+	
+	@ManyToOne
+	private Estado destino;
 	
 	@OneToOne
 	private Aliquota aliquota;
 	
 	private IO io;
+	
+	public Estado getOrigem() {
+		return origem;
+	}
+
+	public void setOrigem(Estado origem) {
+		this.origem = origem;
+	}
+
+	public Estado getDestino() {
+		return destino;
+	}
+
+	public void setDestino(Estado destino) {
+		this.destino = destino;
+	}
 	
 	public IO getIo() {
 		return io;
@@ -47,14 +66,6 @@ public class GradeTributaria implements Serializable{
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Estado getEstado() {
-		return estado;
-	}
-	
-	public void setEstado(Estado estado) {
-		this.estado = estado;
 	}
 
 	public Aliquota getAliquota() {
