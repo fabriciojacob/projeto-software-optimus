@@ -423,6 +423,8 @@ public class EmpresaBean {
 		EmailRN emailRN = new EmailRN();
 		try{
 			
-		}catch ()
+		}catch (Exception e){
+			
+		}
 	}
 }
