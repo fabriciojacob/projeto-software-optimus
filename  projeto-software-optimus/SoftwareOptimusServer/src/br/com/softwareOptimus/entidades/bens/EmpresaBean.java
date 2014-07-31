@@ -2,19 +2,21 @@ package br.com.softwareOptimus.entidades.bens;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import br.com.softwareOptimus.entidades.Email;
 import br.com.softwareOptimus.entidades.Logradouro;
 import br.com.softwareOptimus.entidades.Municipio;
 import br.com.softwareOptimus.entidades.PessoaJuridica;
+import br.com.softwareOptimus.entidades.Telefone;
 import br.com.softwareOptimus.entidades.TipoLogradouro;
 import br.com.softwareOptimus.entidades.TipoPessoaJuridica;
-import br.com.softwareOptimus.entidades.RN.EmailRN;
 import br.com.softwareOptimus.entidades.RN.EmpresaRN;
+import br.com.softwareOptimus.entidades.RN.geral.EmailRN;
 import br.com.softwareOptimus.entidades.RN.geral.LogradouroRN;
+import br.com.softwareOptimus.entidades.RN.geral.TelefoneRN;
 import br.com.softwareOptimus.fiscal.Regime;
 import br.com.softwareOptimus.fiscal.VigenciaRegime;
 
@@ -34,9 +36,61 @@ public class EmpresaBean {
 	private Long id, idReg, idLogr, idTel, idEmail;
 	private VigenciaRegime regime = new VigenciaRegime();
 	private List<VigenciaRegime> listaReg = new ArrayList<>();
-	private boolean salvar = true, cancelar = true, enderecos = true, salReg = true;
+	private Email emails = new Email();
+	private List<Email> listaEmail = new ArrayList<>();
+	private List<Telefone> listaTelefone = new ArrayList<>();
+	private Telefone tel = new Telefone();
+	private boolean salvar = true, cancelar = true, enderecos = true,
+			salReg = true, email = true, telefone = true;
 	private boolean novo = false, consulta = false;
 
+	public List<Telefone> getListaTelefone() {
+		return listaTelefone;
+	}
+
+	public void setListaTelefone(List<Telefone> listaTelefone) {
+		this.listaTelefone = listaTelefone;
+	}
+
+	public Telefone getTel() {
+		return tel;
+	}
+
+	public void setTel(Telefone tel) {
+		this.tel = tel;
+	}
+
+	public boolean isTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(boolean telefone) {
+		this.telefone = telefone;
+	}
+
+	public List<Email> getListaEmail() {
+		return listaEmail;
+	}
+
+	public void setListaEmail(List<Email> listaEmail) {
+		this.listaEmail = listaEmail;
+	}
+
+	public Email getEmails() {
+		return emails;
+	}
+
+	public void setEmails(Email emails) {
+		this.emails = emails;
+	}
+
+	public boolean isEmail() {
+		return email;
+	}
+
+	public void setEmail(boolean email) {
+		this.email = email;
+	}
 
 	public Long getIdTel() {
 		return idTel;
@@ -230,6 +284,8 @@ public class EmpresaBean {
 			this.novo = false;
 			this.enderecos = false;
 			this.salReg = false;
+			this.email = false;
+			this.telefone = false;
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
@@ -300,6 +356,8 @@ public class EmpresaBean {
 			this.cancelar = false;
 			this.enderecos = false;
 			this.salReg = false;
+			this.email = false;
+			this.telefone = false;
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
@@ -379,7 +437,9 @@ public class EmpresaBean {
 		this.novo = true;
 		this.salReg = true;
 		this.enderecos = true;
-		
+		this.email = true;
+		this.telefone = true;
+
 	}
 
 	public void excluirRegime() {
@@ -392,12 +452,11 @@ public class EmpresaBean {
 							"Regime excluido com sucesso"));
 			listaRegime();
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance()
-					.addMessage(
-							null,
-							new FacesMessage(FacesMessage.SEVERITY_ERROR,
-									"Info", "Problemas na exclusï¿½o do regime"
-											+ e.getMessage()));
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+							"Problemas na exclusï¿½o do regime"
+									+ e.getMessage()));
 		}
 	}
 
@@ -418,13 +477,110 @@ public class EmpresaBean {
 									+ e.getMessage()));
 		}
 	}
-	
-	public void salvarEmail(){
+
+	public void listaEmail() {
 		EmailRN emailRN = new EmailRN();
-		try{
-			teste
-		}catch (Exception e){
-			
+		try {
+			if (this.listaEmail != null) {
+				this.listaEmail.clear();
+			}
+			this.listaEmail = emailRN.listaEmail(pessoaJuridica);
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance()
+					.addMessage(
+							null,
+							new FacesMessage(FacesMessage.SEVERITY_ERROR,
+									"Info", "Problemas na listagem de emails"
+											+ e.getMessage()));
+		}
+	}
+
+	public void excluirEmail() {
+		EmailRN emailRN = new EmailRN();
+		try {
+			emailRN.excluir(idEmail);
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
+							"Email excluido com sucesso"));
+			listaEmail();
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+							"Problemas na exclusão do email" + e.getMessage()));
+		}
+	}
+
+	public void salvarEmail() {
+		EmailRN emailRN = new EmailRN();
+		try {
+			emails.setPessoa(pessoaJuridica);
+			emailRN.salvar(emails);
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
+							"Email salvo com sucesso"));
+			this.emails = new Email();
+			listaEmail();
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+							"Problemas na exclusao do email" + e.getMessage()));
+		}
+	}
+
+	public void excluirTelefone() {
+		TelefoneRN telefoneRN = new TelefoneRN();
+		try {
+			telefoneRN.excluir(idTel);
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
+							"Telefone excluido com sucesso"));
+			listaTelefone();
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+							"Problemas na exclusao do telefone"
+									+ e.getMessage()));
+		}
+	}
+
+	public void listaTelefone() {
+		TelefoneRN telefoneRN = new TelefoneRN();
+		try {
+			if (this.listaTelefone != null) {
+				this.listaTelefone.clear();
+			}
+			this.listaTelefone = telefoneRN.listaTelefone(pessoaJuridica);
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance()
+					.addMessage(
+							null,
+							new FacesMessage(FacesMessage.SEVERITY_ERROR,
+									"Info", "Problemas em listar os telefones"
+											+ e.getMessage()));
+		}
+	}
+
+	public void salvarTelefone() {
+		TelefoneRN telefoneRN = new TelefoneRN();
+		try {
+			this.tel.setPessoa(pessoaJuridica);
+			telefoneRN.salvar(tel);
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
+							"Telefone salvo com sucesso"));
+			listaTelefone();
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+							"Problemas em salvar o telefone" + e.getMessage()));
 		}
 	}
 }
