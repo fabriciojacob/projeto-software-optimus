@@ -3,7 +3,6 @@ package br.com.softwareOptimus.entidades;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
@@ -46,24 +45,12 @@ public class Pessoa implements Serializable {
 	@JoinTable(name="TbLogradouroPessoa")
 	private Collection<Logradouro> logradouro;
 	
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinTable(name="tbPessoaFone")
-	private Collection<Telefone> telefones;
-	
-	public Collection<Telefone> getTelefones() {
-		return telefones;
-	}
-	
 	public String getCrc() {
 		return Crc;
 	}
 
 	public void setCrc(String crc) {
 		Crc = crc;
-	}
-
-	public void setTelefones(Collection<Telefone> telefones) {
-		this.telefones = telefones;
 	}
 
 	public String getFantasia() {
