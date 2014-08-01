@@ -40,9 +40,18 @@ public class EmpresaBean {
 	private List<Email> listaEmail = new ArrayList<>();
 	private List<Telefone> listaTelefone = new ArrayList<>();
 	private Telefone tel = new Telefone();
+	private boolean padraoNFE;
 	private boolean salvar = true, cancelar = true, enderecos = true,
 			salReg = true, email = true, telefone = true;
 	private boolean novo = false, consulta = false;
+
+	public boolean isPadraoNFE() {
+		return padraoNFE;
+	}
+
+	public void setPadraoNFE(boolean padraoNFE) {
+		this.padraoNFE = padraoNFE;
+	}
 
 	public List<Telefone> getListaTelefone() {
 		return listaTelefone;
@@ -418,6 +427,8 @@ public class EmpresaBean {
 		this.pessoaJuridica = empresaRN.pesquisaId(id);
 		listaLogradouro();
 		listaRegime();
+		listaEmail();
+		listaTelefone();
 	}
 
 	public void novo() {
@@ -506,8 +517,15 @@ public class EmpresaBean {
 
 	public void salvarEmail() {
 		EmailRN emailRN = new EmailRN();
+		Integer pNfe = 0;
 		try {
 			emails.setPessoa(pessoaJuridica);
+			if (padraoNFE == true) {
+				pNfe = 1;
+				emails.setPadraoNFe(pNfe);
+			} else {
+				emails.setPadraoNFe(pNfe);
+			}
 			emailRN.salvar(emails);
 			FacesContext.getCurrentInstance().addMessage(
 					null,

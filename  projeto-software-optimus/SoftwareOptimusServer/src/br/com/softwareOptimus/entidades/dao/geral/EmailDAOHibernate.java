@@ -62,7 +62,7 @@ public class EmailDAOHibernate implements EmailDAO {
 
 	@Override
 	public List<Email> listaEmail(Pessoa pessoa) throws Exception {
-		String jpql = "Select e from Email where pessoa = :parPessoa";
+		String jpql = "Select e from Email e where e.pessoa = :parPessoa";
 		TypedQuery<Email> consulta = this.session
 				.createQuery(jpql, Email.class);
 		consulta.setParameter("parPessoa", pessoa);
