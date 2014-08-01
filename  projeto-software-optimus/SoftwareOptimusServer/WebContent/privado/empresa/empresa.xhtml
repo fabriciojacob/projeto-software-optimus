@@ -295,7 +295,7 @@
 					<p:commandButton value="Emails" type="button"
 						onclick="PF('dlg3').show();" disabled="#{empresaBean.email}" />
 					<br />
-
+					<br />
 					<p:dialog header="Emails" widgetVar="dlg3" modal="true"
 						height="100" width="400">
 						<h:panelGrid columns="2">
@@ -303,7 +303,7 @@
 						<p:inputText value="#{empresaBean.emails.email}" size="50"/>
 						
 						Padrão NF-e:
-						<p:selectBooleanCheckbox value="{#empresaBean.padraoNFE}" />
+						<p:selectBooleanCheckbox value="#{empresaBean.padraoNFE}" />
 
 							<p:commandButton id="incluirEmail" icon="ui-icon-disk"
 								disabled="#{empresaBean.email}"
