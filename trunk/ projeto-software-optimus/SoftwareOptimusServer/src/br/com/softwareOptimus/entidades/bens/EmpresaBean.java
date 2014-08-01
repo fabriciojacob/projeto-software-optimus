@@ -520,7 +520,7 @@ public class EmpresaBean {
 		Integer pNfe = 0;
 		try {
 			emails.setPessoa(pessoaJuridica);
-			if (padraoNFE == true) {
+			if (padraoNFE) {
 				pNfe = 1;
 				emails.setPadraoNFe(pNfe);
 			} else {
