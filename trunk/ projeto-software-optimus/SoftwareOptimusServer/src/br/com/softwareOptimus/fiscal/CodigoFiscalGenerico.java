@@ -1,5 +1,6 @@
 package br.com.softwareOptimus.fiscal;
 
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
@@ -11,6 +12,7 @@ public class CodigoFiscalGenerico {
 	@GeneratedValue
 	private Long id;
 	
+	@Column (length = 350, nullable = true , unique = false)
 	private String descricao;
 	
 	private IO io;
