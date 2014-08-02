@@ -21,16 +21,26 @@
 							url="/privado/empresa/cadastroEmpresa.jsf" />
 						<p:menuitem value="Cliente"
 							url="/privado/cliente/cadastroCliente.jsf" />
-						<p:menuitem value="Produto"
-							url="/privado/produto/cadastroProduto.jsf" />
-						<p:menuitem value="Unidade de Medida"
-							url="/privado/produto/cadastroUnidMed.jsf" />
 						<p:separator />
 					</p:submenu>
 
 					<p:submenu label="Cadastros Financeiros">
 						<p:menuitem value="Conta" url="#" />
 						<p:menuitem value="Banco" url="#" />
+					</p:submenu>
+
+					<p:submenu label="Cadastro de Produto">
+						<p:menuitem value="Produto"
+							url="/privado/produto/cadastroProduto.jsf" />
+						<p:separator />
+						<p:menuitem value="Unidade de Medida"
+							url="/privado/produto/cadastroUnidMed.jsf" />
+					</p:submenu>
+
+					<p:submenu label="Cadastros Fiscais">
+						<p:menuitem value="Aliquota"
+							url="/privado/produto/cadastroAliquota.jsf" />
+						<p:separator />
 					</p:submenu>
 
 					<f:facet name="options">

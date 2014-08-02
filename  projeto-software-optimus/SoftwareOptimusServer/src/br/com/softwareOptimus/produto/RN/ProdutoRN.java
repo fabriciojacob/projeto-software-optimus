@@ -1,4 +1,4 @@
-package br.com.softwareOptimus.entidades.RN;
+package br.com.softwareOptimus.produto.RN;
 
 import br.com.softwareOptimus.dao.produto.ProdutoDAO;
 import br.com.softwareOptimus.produto.Produto;
