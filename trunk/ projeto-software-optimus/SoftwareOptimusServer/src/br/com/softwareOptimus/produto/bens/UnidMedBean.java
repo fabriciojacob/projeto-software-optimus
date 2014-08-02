@@ -7,8 +7,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import br.com.softwareOptimus.entidades.RN.UnidMedRN;
 import br.com.softwareOptimus.produto.UnidMed;
+import br.com.softwareOptimus.produto.RN.UnidMedRN;
 
 @ManagedBean(name = "unidMedBean")
 @SessionScoped
@@ -190,7 +190,7 @@ public class UnidMedBean {
 					.addMessage(
 							null,
 							new FacesMessage(FacesMessage.SEVERITY_ERROR,
-									"Info", "Problemas na remoção da Unidade "
+									"Info", "Problemas na remoï¿½ï¿½o da Unidade "
 											+ e.getMessage()));
 		}
 		this.alt = true;

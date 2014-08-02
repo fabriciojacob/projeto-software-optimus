@@ -1,4 +1,4 @@
-package br.com.softwareOptimus.entidades.RN;
+package br.com.softwareOptimus.produto.RN;
 
 import java.util.List;
 
