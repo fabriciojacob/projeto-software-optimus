@@ -22,7 +22,7 @@ public class Telefone implements Serializable{
 	
 	private Integer numero;
 	
-	private char tipoFone;
+	private TipoTelefone tipoFone;
 	
 	@ManyToOne
 	private Pessoa pessoa;
@@ -51,11 +51,11 @@ public class Telefone implements Serializable{
 		this.numero = numero;
 	}
 
-	public char getTipoFone() {
+	public TipoTelefone getTipoFone() {
 		return tipoFone;
 	}
 
-	public void setTipoFone(char tipoFone) {
+	public void setTipoFone(TipoTelefone tipoFone) {
 		this.tipoFone = tipoFone;
 	}
 

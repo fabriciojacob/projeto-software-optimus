@@ -13,6 +13,7 @@ import br.com.softwareOptimus.entidades.PessoaJuridica;
 import br.com.softwareOptimus.entidades.Telefone;
 import br.com.softwareOptimus.entidades.TipoLogradouro;
 import br.com.softwareOptimus.entidades.TipoPessoaJuridica;
+import br.com.softwareOptimus.entidades.TipoTelefone;
 import br.com.softwareOptimus.entidades.RN.EmpresaRN;
 import br.com.softwareOptimus.entidades.RN.geral.EmailRN;
 import br.com.softwareOptimus.entidades.RN.geral.LogradouroRN;
@@ -27,6 +28,7 @@ public class EmpresaBean {
 	private PessoaJuridica pessoaJuridica = new PessoaJuridica();
 	private Logradouro logradouro = new Logradouro();
 	private String tipoSelecionado = null;
+	private String tipoSelecionadoTel = null;
 	private String tipoRegime = null;
 	private String tipoConsulta = null;
 	private boolean disable = false;
@@ -44,6 +46,14 @@ public class EmpresaBean {
 	private boolean salvar = true, cancelar = true, enderecos = true,
 			salReg = true, email = true, telefone = true;
 	private boolean novo = false, consulta = false;
+	
+	public String getTipoSelecionadoTel() {
+		return tipoSelecionadoTel;
+	}
+	
+	public void setTipoSelecionadoTel(String tipoSelecionadoTel) {
+		this.tipoSelecionadoTel = tipoSelecionadoTel;
+	}
 
 	public boolean isPadraoNFE() {
 		return padraoNFE;
@@ -429,12 +439,20 @@ public class EmpresaBean {
 		listaRegime();
 		listaEmail();
 		listaTelefone();
+		this.salvar = false;
+		this.cancelar = false;
+		this.enderecos = false;
+		this.salReg = false;
+		this.email = false;
+		this.telefone = false;
 	}
 
 	public void novo() {
 		this.pessoaJuridica = new PessoaJuridica();
 		this.listaEnd = new ArrayList<>();
 		this.listaReg = new ArrayList<>();
+		this.listaEmail = new ArrayList<>();
+		this.listaTelefone = new ArrayList<>();
 		this.salvar = false;
 		this.cancelar = false;
 		this.novo = true;
@@ -511,7 +529,7 @@ public class EmpresaBean {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na exclusão do email" + e.getMessage()));
+							"Problemas na exclusï¿½o do email" + e.getMessage()));
 		}
 	}
 
@@ -578,6 +596,14 @@ public class EmpresaBean {
 
 	public void salvarTelefone() {
 		TelefoneRN telefoneRN = new TelefoneRN();
+		
+		if (tipoSelecionadoTel.equals(TipoTelefone.CELULAR.toString())) {
+			this.tel.setTipoFone(TipoTelefone.CELULAR);
+		} else if (tipoSelecionadoTel.equals(TipoTelefone.COMERCIAL.toString())) {
+			this.tel.setTipoFone(TipoTelefone.COMERCIAL);
+		} else {
+			this.tel.setTipoFone(TipoTelefone.RESIDENCIAL);
+		}
 		try {
 			this.tel.setPessoa(pessoaJuridica);
 			telefoneRN.salvar(tel);
