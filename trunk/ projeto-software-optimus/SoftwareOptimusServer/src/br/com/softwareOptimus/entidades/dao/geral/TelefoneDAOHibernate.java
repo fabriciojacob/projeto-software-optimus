@@ -64,7 +64,7 @@ public class TelefoneDAOHibernate implements TelefoneDAO {
 
 	@Override
 	public List<Telefone> listaTelefone(Pessoa pessoa) throws Exception {
-		String jpql = "Select e From Telefone e where pessoa = :parPessoa";
+		String jpql = "Select e From Telefone e where e.pessoa = :parPessoa";
 		TypedQuery<Telefone> consulta = this.session.createQuery(jpql,
 				Telefone.class);
 		consulta.setParameter("parPessoa", pessoa);
