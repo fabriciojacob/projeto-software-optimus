@@ -4,17 +4,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
-
-<ui:composition template="">
-	<ui:define name="header">
-	    Add your header here or delete to use the default
-	</ui:define>
-	<ui:define name="content">
-	    Add your content here or delete to use the default
-	</ui:define>
-	<ui:define name="footer">
-	    Add your footer here or delete to use the default
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/privado/template.xhtml">
+	<ui:define name="conteudo">
+		<ui:include src="/privado/fiscal/aliquota.xhtml"/>
 	</ui:define>
 </ui:composition>
 </html>

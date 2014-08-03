@@ -4,17 +4,50 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
 
-<ui:composition template="">
-	<ui:define name="header">
-	    Add your header here or delete to use the default
-	</ui:define>
-	<ui:define name="content">
-	    Add your content here or delete to use the default
-	</ui:define>
-	<ui:define name="footer">
-	    Add your footer here or delete to use the default
-	</ui:define>
-</ui:composition>
+</h:head>
+<body>
+	<h:form id="frmCadAliquota">
+		<br />
+		<h3 style="margin-top: 0">CADASTRO DE ALÍQUOTA</h3>
+		<div align="left">
+			<p:commandButton value="Novo" actionListener="#{aliquotaBean.novo}"
+				ajax="grid" />
+
+			<p:commandButton value="Salvar" disabled="#{aliquotaBean.sal}"
+				actionListener="#{aliquotaBean.salvar}" ajax="grid" />
+
+			<p:commandButton value="Alterar" disabled="#{aliquotaBean.alt}"
+				actionListener="#{aliquotaBean.alterar}" ajax="grid" />
+
+			<p:commandButton value="Remover" disabled="#{aliquotaBean.rem}"
+				actionListener="#{aliquotaBean.remover}" ajax="grid" />
+
+			<p:commandButton value="Consultar" type="button" ajax="dialog, grid"
+				onclick="PF('dlg3').show();"
+				actionListener="#{aliquotaBean.consultar}" />
+
+			<p:commandButton value="Cancelar"
+				actionListener="#{aliquotaBean.cancelar}" ajax="grid" />
+			<p:messages id="messages" showDetail="true" autoUpdate="true"
+				closable="true" />
+
+			<h:panelGrid id="grid" columns="2" columnClasses="label, value">
+				
+					Codigo da Aliquota:
+					<p:inputText id="" disabled="true" value="#" />
+		
+					Alíquota:
+					<p:inputText id="unid" value="#" size="10" />
+					
+					Redução:
+					<p:inputText id="descUnid" value="#" size="40" />
+
+			</h:panelGrid>
+		</div>
+	</h:form>
+</body>
 </html>
