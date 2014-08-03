@@ -27,8 +27,8 @@
 				actionListener="#{aliquotaBean.remover}" ajax="grid" />
 
 			<p:commandButton value="Consultar" type="button" ajax="dialog, grid"
-				onclick="PF('dlg3').show();"
-				actionListener="#{aliquotaBean.consultar}" />
+				onclick="PF('dlg3').show();" disabled="#{unidMedBean.disable}"
+				actionListener="#{unidMedBean.cancelar}" />
 
 			<p:commandButton value="Cancelar"
 				actionListener="#{aliquotaBean.cancelar}" ajax="grid" />
@@ -38,15 +38,65 @@
 			<h:panelGrid id="grid" columns="2" columnClasses="label, value">
 				
 					Codigo da Aliquota:
-					<p:inputText id="" disabled="true" value="#" />
+					<p:inputText id="idAliq" disabled="true"
+					value="#{aliquotaBean.aliquota.idAliq}" />
 		
 					Alíquota:
-					<p:inputText id="unid" value="#" size="10" />
+					<p:inputText id="aliq" value="#{aliquotaBean.aliquota.aliquota}"
+					size="10" />
 					
 					Redução:
-					<p:inputText id="descUnid" value="#" size="40" />
+					<p:inputText id="red" value="#{aliquotaBean.aliquota.reducao}"
+					size="40" />
 
 			</h:panelGrid>
+
+			<p:dialog id="dialog" header="Consulta" widgetVar="dlg3" modal="true"
+				height="300" width="650">
+
+				<div align="right">
+					<h:panelGrid columns="1">
+						<p:commandButton value="Pesquisar"
+							actionListener="#{aliquotaBean.buscaAliq}" update="gridData">
+						</p:commandButton>
+					</h:panelGrid>
+				</div>
+				<h:panelGrid columns="3" columnClasses="label" cellspacing="3">
+				    Dados da Busca:
+					<p:inputText id="texto" value="#{aliquotaBean.busca}" size="40" />
+
+					<p:selectOneMenu id="fConsult" value="#{aliquotaBean.filtro}">/>
+						<f:selectItem itemLabel="Código" itemValue="id" />
+						<f:selectItem itemLabel="Alíquota" itemValue="aliq" />
+						<f:selectItem itemLabel="Redução" itemValue="red" />
+					</p:selectOneMenu>
+
+				</h:panelGrid>
+				<h:panelGrid id="gridData" columns="1" columnClasses="label, value">
+					<p:dataTable id="data" value="#{aliquotaBean.aliqList}"
+						paginator="true" rows="6" var="aliquota"
+						rowKey="unidades.idUnidMed">
+						<p:column headerText="Codigo da Aliquota">
+							<h:outputText value="#{aliquota.idAliq}" />
+						</p:column>
+
+						<p:column headerText="Alíquota">
+							<h:outputText value="#{aliquota.aliquota}" />
+						</p:column>
+
+						<p:column headerText="Redução">
+							<h:outputText value="#{aliquota.reducao}" />
+						</p:column>
+						<p:column headerText="Selecionar">
+							<p:commandLink id="link" value="Editar" ajax="data"
+								action="#{aliquotaBean.editAliq}">
+								<f:setPropertyActionListener value="#{aliquota.idAliq}"
+									target="#{aliquotaBean.id}" />
+							</p:commandLink>
+						</p:column>
+					</p:dataTable>
+				</h:panelGrid>
+			</p:dialog>
 		</div>
 	</h:form>
 </body>
