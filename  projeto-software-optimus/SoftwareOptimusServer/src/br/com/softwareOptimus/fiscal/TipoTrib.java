@@ -4,6 +4,5 @@ public enum TipoTrib {
 	SUBSTITUICAO,
 	TRIBUTADO,
 	ISENTO,
-	PISCOFINS,
-	IPI
+	NTRIB
 }
