@@ -23,7 +23,7 @@
 			<p:commandButton value="Alterar" disabled="#{unidMedBean.alt}"
 				actionListener="#{unidMedBean.altUnid}" ajax="grid" />
 
-			<p:commandButton value="Remover" disabled="#{unidMedBean.rem}"
+			<p:commandButton value="Excluir" disabled="#{unidMedBean.rem}"
 				actionListener="#{unidMedBean.remUnid}" ajax="grid" />
 
 			<p:commandButton value="Consultar" type="button" ajax="dialog, grid"
@@ -51,8 +51,16 @@
 
 			</h:panelGrid>
 
-			<p:dialog id="dialog" header=" Pesquisa Unidade de Medida"
-				widgetVar="dlg3" modal="true" height="300" width="650">
+			<p:dialog id="dialog" header="Consulta" widgetVar="dlg3" modal="true"
+				height="300" width="650">
+
+				<div align="right">
+					<h:panelGrid columns="1">
+						<p:commandButton value="Pesquisar"
+							actionListener="#{unidMedBean.buscaUnid}" update="gridData">
+						</p:commandButton>
+					</h:panelGrid>
+				</div>
 				<h:panelGrid columns="3" columnClasses="label" cellspacing="3">
 				
 				    Dados da Busca:
@@ -66,7 +74,7 @@
 
 				</h:panelGrid>
 				<h:panelGrid id="gridData" columns="1" columnClasses="label, value">
-					<p:dataTable id="data" value="#{unidMedBean.unidMedLis}"
+					<p:dataTable id="data" value="#{unidMedBean.unidMedLis}" paginator="true" rows="6"
 						var="unidades" rowKey="unidades.idUnidMed">
 						<p:column headerText="Codigo da Unidade">
 							<h:outputText value="#{unidades.idUnidMed}" />
@@ -88,9 +96,7 @@
 						</p:column>
 					</p:dataTable>
 				</h:panelGrid>
-				<p:commandButton value="Ok"
-					actionListener="#{unidMedBean.buscaUnid}" update="gridData">
-				</p:commandButton>
+
 			</p:dialog>
 		</div>
 	</h:form>

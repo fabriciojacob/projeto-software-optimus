@@ -1,8 +1,9 @@
-package br.com.softeareOprimus.fiscal.bean;
+package br.com.softeareOprimus.fiscal.bens;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-
 import br.com.softwareOptimus.fiscal.Aliquota;
 
 @ManagedBean(name = "aliquotaBean")
@@ -10,8 +11,43 @@ import br.com.softwareOptimus.fiscal.Aliquota;
 public class AliquotaBean {
 	
 	private Aliquota aliquota = new Aliquota();
+	private List<Aliquota> aliqList = new ArrayList<Aliquota>();
+	private String busca, filtro;
+	private int id;
 	private boolean sal = true, alt = true, rem = true;
 	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public List<Aliquota> getAliqList() {
+		return aliqList;
+	}
+
+	public void setAliqList(List<Aliquota> aliqList) {
+		this.aliqList = aliqList;
+	}
+
+	public String getFiltro() {
+		return filtro;
+	}
+
+	public void setFiltro(String filtro) {
+		this.filtro = filtro;
+	}
+
+	public String getBusca() {
+		return busca;
+	}
+
+	public void setBusca(String busca) {
+		this.busca = busca;
+	}
+
 	public boolean isSal() {
 		return sal;
 	}
@@ -65,6 +101,14 @@ public class AliquotaBean {
 	}
 	
 	public void cancelar(){
+		
+	}
+	
+	public void buscaAliq(){
+		
+	}
+	
+	public void editAliq(){
 		
 	}
 }

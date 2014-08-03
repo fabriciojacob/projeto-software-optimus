@@ -2,9 +2,9 @@ package br.com.softwareOptimus.util;
 
 import java.io.IOException;
 import java.sql.SQLException;
-
 import javax.persistence.EntityManager;
-
+import br.com.softwareOptimus.dao.fiscal.AliquotaDAO;
+import br.com.softwareOptimus.dao.fiscal.AliquotaDAOHibernate;
 import br.com.softwareOptimus.dao.produto.ProdutoDAO;
 import br.com.softwareOptimus.dao.produto.ProdutoDAOHibernate;
 import br.com.softwareOptimus.dao.produto.UnidMedDAO;
@@ -139,5 +139,16 @@ public class DAOFactory {
 			e.printStackTrace();
 		}
 		return unidDAO;
+	}
+	
+	public static AliquotaDAO criaAliquotaDao(){
+		AliquotaDAOHibernate aliqDAO = new AliquotaDAOHibernate();
+		aliqDAO.setSession(session);
+		try {
+			aliqDAO.begin();
+		} catch (IOException | SQLException e) {
+			e.printStackTrace();
+		}
+		return aliqDAO;		
 	}
 }
