@@ -30,7 +30,7 @@ public class ParticipanteBean {
 	private List<Logradouro> listaEnd = new ArrayList<>();
 	private ParticipanteRN participanteRN;
 	private LogradouroRN logrRN;
-	private Logradouro logradouro;
+	private Logradouro logradouro = new Logradouro();
 	private String tipoPJ;
 	private String tipoLogrSelecionado = null, selecionadaPessoa = null;
 	private List<Telefone> listaTelefone = new ArrayList<>();
@@ -313,5 +313,15 @@ public class ParticipanteBean {
 	public void setIdEmail(Long idEmail) {
 		this.idEmail = idEmail;
 	}
+
+	public Pessoa getPessoaGeral() {
+		return pessoaGeral;
+	}
+
+	public void setPessoaGeral(Pessoa pessoaGeral) {
+		this.pessoaGeral = pessoaGeral;
+	}
+	
+	
 
 }
