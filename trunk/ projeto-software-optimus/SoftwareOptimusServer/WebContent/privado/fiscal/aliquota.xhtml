@@ -37,7 +37,7 @@
 
 			<h:panelGrid id="grid" columns="2" columnClasses="label, value">
 				
-					Codigo da Aliquota:
+					Codigo da Alíquota:
 					<p:inputText id="idAliq" disabled="true"
 					value="#{aliquotaBean.aliquota.idAliq}" />
 		
@@ -50,6 +50,9 @@
 					size="40" />
 
 			</h:panelGrid>
+
+			<p:commandButton value="Vincular CST" type="button"
+				onclick="PF('dlg4').show();" />
 
 			<p:dialog id="dialog" header="Consulta" widgetVar="dlg3" modal="true"
 				height="300" width="650">
@@ -95,6 +98,29 @@
 							</p:commandLink>
 						</p:column>
 					</p:dataTable>
+				</h:panelGrid>
+			</p:dialog>
+
+			<p:dialog id="dialog1" header="Vincular CST" widgetVar="dlg4"
+				modal="true" height="300" width="650">
+				<h:panelGrid id="gridSelect" columns="1"
+					columnClasses="label, value">
+					Tipo CST
+					<p:selectOneMenu id="tipCst" value="#{aliquotaBean.tipCst}"
+						style="width:200px;">
+						<f:selectItem itemLabel="Icms" itemValue="icm" />
+						<f:selectItem itemLabel="Pis Cofins" itemValue="pc" />
+						<f:selectItem itemLabel="Ipi" itemValue="ipi" />
+					</p:selectOneMenu>
+					
+					Tipo Tributação Icms
+					<p:selectOneMenu id="tipTrib" value="#{aliquotaBean.tipTrib}"
+						style="width:250px;">
+						<f:selectItem itemLabel="Substituicao" itemValue="sub" />
+						<f:selectItem itemLabel="Tributado" itemValue="trib" />
+						<f:selectItem itemLabel="Isento" itemValue="ise" />
+						<f:selectItem itemLabel="Não Tributado" itemValue="nTrib" />
+					</p:selectOneMenu>
 				</h:panelGrid>
 			</p:dialog>
 		</div>

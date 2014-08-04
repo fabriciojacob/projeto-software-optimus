@@ -12,10 +12,26 @@ public class AliquotaBean {
 	
 	private Aliquota aliquota = new Aliquota();
 	private List<Aliquota> aliqList = new ArrayList<Aliquota>();
-	private String busca, filtro;
+	private String busca, filtro, tipCst, tipTrib;
 	private int id;
 	private boolean sal = true, alt = true, rem = true;
 	
+	public String getTipTrib() {
+		return tipTrib;
+	}
+
+	public void setTipTrib(String tipTrib) {
+		this.tipTrib = tipTrib;
+	}
+
+	public String getTipCst() {
+		return tipCst;
+	}
+
+	public void setTipCst(String tipCst) {
+		this.tipCst = tipCst;
+	}
+
 	public int getId() {
 		return id;
 	}
