@@ -8,31 +8,52 @@ import br.com.softwareOptimus.entidades.dao.geral.EmailDAO;
 import br.com.softwareOptimus.util.DAOFactory;
 
 public class EmailRN {
-	
+
 	private EmailDAO emailDAO;
-	
-	public EmailRN(){
+	private List<Email> listaEmails;
+
+	public EmailRN() {
 		this.emailDAO = DAOFactory.criaEmailDAO();
 	}
-	
+
 	public void salvar(Email email) throws Exception {
 		this.emailDAO.salvar(email);
 	}
-	
-	public List<Email> listaEmail(Pessoa pessoa) throws Exception{
+
+	public List<Email> listaEmail(Pessoa pessoa) throws Exception {
 		return this.emailDAO.listaEmail(pessoa);
 	}
-	
+
+	public Integer validaEmailNFE(Pessoa pessoa) throws Exception {
+		Integer nfe = 0;
+		listaEmails = this.emailDAO.emailNFE(pessoa);
+		if(listaEmails.isEmpty()){
+			nfe = 0;
+		}else{
+			nfe = 1;
+		}
+		
+		return nfe;
+	}
+
 	public EmailDAO getEmailDAO() {
 		return emailDAO;
 	}
-	
+
 	public void setEmailDAO(EmailDAO emailDAO) {
 		this.emailDAO = emailDAO;
 	}
-	
+
 	public void excluir(Long idEmail) throws Exception {
 		this.emailDAO.excluir(idEmail);
+	}
+
+	public List<Email> getListaEmails() {
+		return listaEmails;
+	}
+
+	public void setListaEmails(List<Email> listaEmails) {
+		this.listaEmails = listaEmails;
 	}
 
 }

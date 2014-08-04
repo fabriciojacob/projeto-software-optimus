@@ -13,5 +13,6 @@ public interface EmailDAO {
 	public void close() throws Exception;
 	public void excluir(Long idEmail) throws Exception;
 	public List<Email> listaEmail(Pessoa pessoa) throws Exception;
+	public List<Email> emailNFE(Pessoa pessoa) throws Exception;
 
 }
