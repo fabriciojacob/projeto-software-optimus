@@ -76,5 +76,16 @@ public class EmpresaRN {
 	public void excluirVigReg(Long idVig) throws Exception {
 		this.regDAO.excluirRegime(idVig);
 	}
+	
+	public Integer validaCampoNulo(PessoaJuridica pessoa){
+		Integer retorno = 0;
+		
+		if(pessoa.getCnpj().isEmpty() || pessoa.getFantasia().isEmpty() || pessoa.getRazaoSocial().isEmpty() || 
+				pessoa.getCnae().isEmpty() || pessoa.getIe().isEmpty()){
+			retorno = 1;
+		}
+		
+		return retorno;
+	}
 
 }

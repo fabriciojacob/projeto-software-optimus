@@ -69,4 +69,16 @@ public class EmailDAOHibernate implements EmailDAO {
 		return consulta.getResultList();
 	}
 
+	@Override
+	public List<Email> emailNFE(Pessoa pessoa) throws Exception {
+		Integer nfe = 1;
+		String jpql = "Select e From Email e where e.pessoa = :parPessoa" +
+				" and e.padraoNFe = :parNFe";
+		TypedQuery<Email> consulta = this.session
+				.createQuery(jpql, Email.class);
+		consulta.setParameter("parPessoa", pessoa);
+		consulta.setParameter("parNFe", nfe);
+		return consulta.getResultList();
+	}
+
 }

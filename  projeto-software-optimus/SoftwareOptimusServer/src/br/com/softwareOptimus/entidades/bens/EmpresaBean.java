@@ -294,20 +294,28 @@ public class EmpresaBean {
 		try {
 
 			EmpresaRN empresaRN = new EmpresaRN();
-			this.pessoaJuridica
-					.setTipoPessoaJuridica(TipoPessoaJuridica.FABRICANTE);
-			empresaRN.salvar(pessoaJuridica);
+			Integer retorno = empresaRN.validaCampoNulo(pessoaJuridica);
+			if (retorno == 0) {
+				this.pessoaJuridica
+						.setTipoPessoaJuridica(TipoPessoaJuridica.FABRICANTE);
+				empresaRN.salvar(pessoaJuridica);
 
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-							"Empresa salva com sucesso"));
-			setDisable(false);
-			this.novo = false;
-			this.enderecos = false;
-			this.salReg = false;
-			this.email = false;
-			this.telefone = false;
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
+								"Empresa salva com sucesso"));
+				setDisable(false);
+				this.novo = false;
+				this.enderecos = false;
+				this.salReg = false;
+				this.email = false;
+				this.telefone = false;
+			} else {
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+								"Existem campos nulos no formulário"));
+			}
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
@@ -425,10 +433,10 @@ public class EmpresaBean {
 		try {
 			List<VigenciaRegime> listaRegime = empresaRN.validaRegime(pessoa,
 					data);
-			if(listaRegime.isEmpty()){
+			if (listaRegime.isEmpty()) {
 				retorno = 0;
-			}else{
-				retorno =1;
+			} else {
+				retorno = 1;
 			}
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
@@ -570,21 +578,29 @@ public class EmpresaBean {
 
 	public void salvarEmail() {
 		EmailRN emailRN = new EmailRN();
-		Integer pNfe = 0;
+		Integer pNfe = 0, checkNFe = 0;
 		try {
-			emails.setPessoa(pessoaJuridica);
-			if (padraoNFE) {
-				pNfe = 1;
-				emails.setPadraoNFe(pNfe);
+			checkNFe = emailRN.validaEmailNFE(pessoaJuridica);
+			if (padraoNFE && checkNFe == 1) {
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+								"Ja existe um email como padrão NFE"));
 			} else {
-				emails.setPadraoNFe(pNfe);
+				emails.setPessoa(pessoaJuridica);
+				if (padraoNFE) {
+					pNfe = 1;
+					emails.setPadraoNFe(pNfe);
+				} else {
+					emails.setPadraoNFe(pNfe);
+				}
+				emailRN.salvar(emails);
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
+								"Email salvo com sucesso"));
+				this.emails = new Email();
 			}
-			emailRN.salvar(emails);
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-							"Email salvo com sucesso"));
-			this.emails = new Email();
 			listaEmail();
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
