@@ -1,11 +1,14 @@
 package br.com.softwareOptimus.entidades.bens;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+
 import br.com.softwareOptimus.entidades.Email;
 import br.com.softwareOptimus.entidades.Logradouro;
 import br.com.softwareOptimus.entidades.Municipio;
@@ -46,11 +49,11 @@ public class EmpresaBean {
 	private boolean salvar = true, cancelar = true, enderecos = true,
 			salReg = true, email = true, telefone = true;
 	private boolean novo = false, consulta = false;
-	
+
 	public String getTipoSelecionadoTel() {
 		return tipoSelecionadoTel;
 	}
-	
+
 	public void setTipoSelecionadoTel(String tipoSelecionadoTel) {
 		this.tipoSelecionadoTel = tipoSelecionadoTel;
 	}
@@ -380,32 +383,62 @@ public class EmpresaBean {
 
 	public void salvarRegime() {
 		EmpresaRN empresaRN = new EmpresaRN();
-		this.regime.setIdVigReg(null);
-		if (tipoRegime.equals(Regime.LUCROPRESUMIDO.toString())) {
-			this.regime.setRegime(Regime.LUCROPRESUMIDO);
-		} else if (tipoRegime.equals(Regime.LUCROREAL.toString())) {
-			this.regime.setRegime(Regime.LUCROREAL);
+		int retorno = validaRegime(this.pessoaJuridica,
+				this.regime.getDataInicio(), empresaRN);
+		if (retorno == 0) {
+			this.regime.setIdVigReg(null);
+			if (tipoRegime.equals(Regime.LUCROPRESUMIDO.toString())) {
+				this.regime.setRegime(Regime.LUCROPRESUMIDO);
+			} else if (tipoRegime.equals(Regime.LUCROREAL.toString())) {
+				this.regime.setRegime(Regime.LUCROREAL);
+			} else {
+				this.regime.setRegime(Regime.SIMPLES);
+			}
+			try {
+				this.regime.setPessaoJuridica(this.pessoaJuridica);
+				empresaRN.salvarRegime(this.regime);
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
+								"Regime salvo com sucesso"));
+				listaRegime();
+				this.regime = new VigenciaRegime();
+			} catch (Exception e) {
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+								"Problemas na gravacao do regime"
+										+ e.getMessage()));
+			}
 		} else {
-			this.regime.setRegime(Regime.SIMPLES);
-		}
-		try {
-			this.regime.setPessaoJuridica(this.pessoaJuridica);
-			empresaRN.salvarRegime(this.regime);
 			FacesContext.getCurrentInstance().addMessage(
 					null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-							"Regime salvo com sucesso"));
-			listaRegime();
-			this.regime = new VigenciaRegime();
-		} catch (Exception e) {
-			FacesContext.getCurrentInstance()
-					.addMessage(
-							null,
-							new FacesMessage(FacesMessage.SEVERITY_ERROR,
-									"Info", "Problemas na gravacao do regime"
-											+ e.getMessage()));
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+							"Ja existe esse regime cadastrado"));
 		}
 
+	}
+
+	public int validaRegime(PessoaJuridica pessoa, Date data,
+			EmpresaRN empresaRN) {
+		int retorno = 0;
+		try {
+			List<VigenciaRegime> listaRegime = empresaRN.validaRegime(pessoa,
+					data);
+			if(listaRegime.isEmpty()){
+				retorno = 0;
+			}else{
+				retorno =1;
+			}
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+							"Problemas na verificação do regime"
+									+ e.getMessage()));
+			retorno = 1;
+		}
+		return retorno;
 	}
 
 	public void listaLogradouro() {
@@ -526,10 +559,12 @@ public class EmpresaBean {
 							"Email excluido com sucesso"));
 			listaEmail();
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na exclusï¿½o do email" + e.getMessage()));
+			FacesContext.getCurrentInstance()
+					.addMessage(
+							null,
+							new FacesMessage(FacesMessage.SEVERITY_ERROR,
+									"Info", "Problemas na exclusï¿½o do email"
+											+ e.getMessage()));
 		}
 	}
 
@@ -596,7 +631,7 @@ public class EmpresaBean {
 
 	public void salvarTelefone() {
 		TelefoneRN telefoneRN = new TelefoneRN();
-		
+
 		if (tipoSelecionadoTel.equals(TipoTelefone.CELULAR.toString())) {
 			this.tel.setTipoFone(TipoTelefone.CELULAR);
 		} else if (tipoSelecionadoTel.equals(TipoTelefone.COMERCIAL.toString())) {

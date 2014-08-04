@@ -31,14 +31,14 @@ public class VigenciaRegime implements Serializable{
 	private Regime regime;
 	
 	@ManyToOne
-	private PessoaJuridica pessaoJuridica;
+	private PessoaJuridica pessoaJuridica;
 	
 	public PessoaJuridica getPessaoJuridica() {
-		return pessaoJuridica;
+		return pessoaJuridica;
 	}
 	
 	public void setPessaoJuridica(PessoaJuridica pessaoJuridica) {
-		this.pessaoJuridica = pessaoJuridica;
+		this.pessoaJuridica = pessaoJuridica;
 	}
 
 	public Long getIdVigReg() {

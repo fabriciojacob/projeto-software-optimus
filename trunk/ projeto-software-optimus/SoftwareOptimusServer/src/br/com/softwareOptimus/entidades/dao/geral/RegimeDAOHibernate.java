@@ -35,7 +35,7 @@ public class RegimeDAOHibernate implements RegimeDAO{
 	@Override
 	public List<VigenciaRegime> listaRegime(PessoaJuridica pessoaJuridica)
 			throws Exception {
-		String jpql = "Select r from VigenciaRegime r where r.pessaoJuridica = :parPes";
+		String jpql = "Select r from VigenciaRegime r where r.pessoaJuridica = :parPes";
 		TypedQuery<VigenciaRegime> consulta = this.session.createQuery(jpql, VigenciaRegime.class);
 		consulta.setParameter("parPes", pessoaJuridica);
 		return consulta.getResultList();
@@ -59,13 +59,6 @@ public class RegimeDAOHibernate implements RegimeDAO{
 	
 	@Override
 	public void excluirRegime(Long idRegime) throws Exception {
-		/*
-		 * String jpql =
-		 * "Delete from VigenciaRegime v where v.idVigReg = :parVig";
-		 * TypedQuery<VigenciaRegime> delete = this.session.createQuery(jpql,
-		 * VigenciaRegime.class); delete.setParameter("parVig", idRegime);
-		 * this.transaction.commit();
-		 */
 		VigenciaRegime vig = this.session.find(VigenciaRegime.class, idRegime);
 		this.session.remove(vig);
 		this.transaction.commit();
