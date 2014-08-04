@@ -8,6 +8,10 @@ import br.com.softwareOptimus.entidades.PessoaFisica;
 import br.com.softwareOptimus.entidades.PessoaJuridica;
 
 public interface ParticipanteDAO {
+	
+	public void salvarPessoa(Pessoa pessoa) throws Exception;
+	
+	public void atualizaPessoa(Pessoa pessoa) throws Exception;
 
 	public void salvarPessoaJuridica(PessoaJuridica pessoa) throws Exception;
 

@@ -84,18 +84,19 @@
 
 			<p:tabView style="border: 0px">
 				<p:tab id="cadParticipante" title="Informações Gerais">
-				
+
 					<p:selectOneRadio id="tipoParticipante" value="">
 						<f:selectItem itemLabel="CLIENTE" itemValue="CLIENTE" />
 						<f:selectItem itemLabel="FORNECEDOR" itemValue="FORNECEDOR" />
-						<f:selectItem itemLabel="TRANSPORTADORA" itemValue="TRANSPORTADORA" />
+						<f:selectItem itemLabel="TRANSPORTADORA"
+							itemValue="TRANSPORTADORA" />
 					</p:selectOneRadio>
-					
+
 					<p:selectOneRadio id="tipoPessoa" value="">
 						<f:selectItem itemLabel="FISICA" itemValue="FISICA" />
 						<f:selectItem itemLabel="JURIDICA" itemValue="JURIFDICA" />
 					</p:selectOneRadio>
-					
+
 					<h:panelGrid id="cadastroParticipante" columns="2"
 						columnClasses="label, value">
 						
@@ -103,19 +104,24 @@
 					<p:selectBooleanCheckbox id="inativaEmp" value="" />
 			
 					Codigo Empresa:
-					<p:inputText id="idEmpresa" disabled="true" value="" />
+					<p:inputText id="idEmpresa" disabled="true"
+							value="#{participanteBean.pessoa.idPessoa}" />
 		
 					Nome Fantasia:
-					<p:inputText id="nomeFantasia" value="" size="40" />
+					<p:inputText id="nomeFantasia"
+							value="#{participanteBean.pessoalGeral.fantasia}" size="40" />
 					
 					Razão Social:
-					<p:inputText id="razaoSocial" value="" size="40" />
+					<p:inputText id="razaoSocial"
+							value="#{participanteBean.pessoaGeral.razaoSocial}" size="40" />
 			
 					CNPJ:
-					<p:inputText id="cnpj" value="" />
+					<p:inputText id="cnpj"
+							value="#{participanteBean.pessoaJuridica.cnpj}" />
 					
 					Inscrição estadual:
-					<p:inputText id="ie" value="" rendered="true" />
+					<p:inputText id="ie" value="#{participanteBean.pessoaJuridica.ie}"
+							rendered="true" />
 					
 					CNAE:
 					<p:inputText id="cnae" value="" />
@@ -124,10 +130,10 @@
 					<p:inputText value="" />
 					
 					RG:
-					<p:inputText value=""/>
+					<p:inputText value="" />
 					
 					ANTT:
-					<p:inputText value=""/>
+					<p:inputText value="" />
 					</h:panelGrid>
 
 				</p:tab>
