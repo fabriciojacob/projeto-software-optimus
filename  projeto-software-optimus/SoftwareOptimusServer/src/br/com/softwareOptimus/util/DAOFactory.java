@@ -23,30 +23,43 @@ import br.com.softwareOptimus.entidades.dao.geral.RegimeDAO;
 import br.com.softwareOptimus.entidades.dao.geral.RegimeDAOHibernate;
 import br.com.softwareOptimus.entidades.dao.geral.TelefoneDAO;
 import br.com.softwareOptimus.entidades.dao.geral.TelefoneDAOHibernate;
+import br.com.softwareOptimus.entidades.dao.participantes.ParticipanteDAO;
+import br.com.softwareOptimus.entidades.dao.participantes.ParticipanteDAOHibernate;
 import br.com.softwareOptimus.entidades.dao.usuario.UsuarioDAO;
 import br.com.softwareOptimus.entidades.dao.usuario.UsuarioDAOHibernate;
 
 public class DAOFactory {
-	
+
 	private static EntityManager session = JpaUtil.getEntityManager();
-	
-	public static EmailDAO criaEmailDAO(){
+
+	public static EmailDAO criaEmailDAO() {
 		EmailDAOHibernate emailDAO = new EmailDAOHibernate();
 		emailDAO.setSession(session);
-		try{
+		try {
 			emailDAO.begin();
-		}catch (IOException | SQLException e){
+		} catch (IOException | SQLException e) {
 			e.printStackTrace();
 		}
 		return emailDAO;
 	}
-	
-	public static TelefoneDAO criaTelefoneDAO(){
-		TelefoneDAOHibernate telefoneDAO =  new TelefoneDAOHibernate();
+
+	public static ParticipanteDAO criaParticipanteDAO() {
+		ParticipanteDAOHibernate participanteDAO = new ParticipanteDAOHibernate();
+		participanteDAO.setSession(session);
+		try {
+			participanteDAO.begin();
+		} catch (IOException | SQLException e) {
+			e.printStackTrace();
+		}
+		return participanteDAO;
+	}
+
+	public static TelefoneDAO criaTelefoneDAO() {
+		TelefoneDAOHibernate telefoneDAO = new TelefoneDAOHibernate();
 		telefoneDAO.setSession(session);
-		try{
+		try {
 			telefoneDAO.begin();
-		}catch(IOException | SQLException e){
+		} catch (IOException | SQLException e) {
 			e.printStackTrace();
 		}
 		return telefoneDAO;
@@ -62,13 +75,13 @@ public class DAOFactory {
 		}
 		return usuarioDAO;
 	}
-	
-	public static RegimeDAO criaVigenciaRegDAO(){
+
+	public static RegimeDAO criaVigenciaRegDAO() {
 		RegimeDAOHibernate regimeDAO = new RegimeDAOHibernate();
 		regimeDAO.setSession(session);
-		try{
+		try {
 			regimeDAO.begin();
-		}catch (IOException | SQLException e){
+		} catch (IOException | SQLException e) {
 			e.printStackTrace();
 		}
 		return regimeDAO;
@@ -129,8 +142,8 @@ public class DAOFactory {
 		}
 		return prodDAO;
 	}
-	
-	public static UnidMedDAO criaUnidMedDAO(){
+
+	public static UnidMedDAO criaUnidMedDAO() {
 		UnidMedDAOHibernate unidDAO = new UnidMedDAOHibernate();
 		unidDAO.setSession(session);
 		try {
@@ -140,8 +153,8 @@ public class DAOFactory {
 		}
 		return unidDAO;
 	}
-	
-	public static AliquotaDAO criaAliquotaDao(){
+
+	public static AliquotaDAO criaAliquotaDao() {
 		AliquotaDAOHibernate aliqDAO = new AliquotaDAOHibernate();
 		aliqDAO.setSession(session);
 		try {
@@ -149,6 +162,6 @@ public class DAOFactory {
 		} catch (IOException | SQLException e) {
 			e.printStackTrace();
 		}
-		return aliqDAO;		
+		return aliqDAO;
 	}
 }
