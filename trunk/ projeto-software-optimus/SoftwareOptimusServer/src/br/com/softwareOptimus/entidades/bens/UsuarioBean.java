@@ -10,7 +10,6 @@ import br.com.softwareOptimus.entidades.RN.UsuarioRN;
 public class UsuarioBean {
 
 	private Usuario usuario = new Usuario();
-
 	private String confirmarSenha;
 
 	public Usuario getUsuario() {

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.softwareOptimus.entidades.Logradouro;
+import br.com.softwareOptimus.entidades.Pessoa;
 import br.com.softwareOptimus.entidades.PessoaFisica;
 import br.com.softwareOptimus.entidades.PessoaJuridica;
 import br.com.softwareOptimus.entidades.dao.geral.LogradouroDAO;
@@ -81,6 +82,15 @@ public class ParticipanteRN {
 		}
 		
 		return retorno;
+	}
+	
+	public void salvarPessoa(Pessoa pessoa) throws Exception{
+		Long codigo = pessoa.getIdPessoa();
+		if(codigo == null || codigo == 0){
+			this.participanteDAO.salvarPessoa(pessoa);
+		}else{
+			this.participanteDAO.atualizaPessoa(pessoa);
+		}
 	}
 	
 	public List<PessoaFisica> listaPFCPF(String CPF) throws Exception {
