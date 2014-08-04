@@ -14,8 +14,16 @@ public class AliquotaBean {
 	private List<Aliquota> aliqList = new ArrayList<Aliquota>();
 	private String busca, filtro, tipCst, tipTrib;
 	private int id;
-	private boolean sal = true, alt = true, rem = true;
+	private boolean sal = true, alt = true, rem = true, tipTri = true;
 	
+	public boolean isTipTri() {
+		return tipTri;
+	}
+
+	public void setTipTri(boolean tipTri) {
+		this.tipTri = tipTri;
+	}
+
 	public String getTipTrib() {
 		return tipTrib;
 	}
@@ -126,5 +134,9 @@ public class AliquotaBean {
 	
 	public void editAliq(){
 		
+	}
+	
+	public void evento(){
+		tipTri = false;
 	}
 }

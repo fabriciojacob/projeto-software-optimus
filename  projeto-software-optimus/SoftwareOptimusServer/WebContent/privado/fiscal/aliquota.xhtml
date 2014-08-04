@@ -69,6 +69,7 @@
 					<p:inputText id="texto" value="#{aliquotaBean.busca}" size="40" />
 
 					<p:selectOneMenu id="fConsult" value="#{aliquotaBean.filtro}">/>
+						<f:selectItem itemLabel="Selecione uma Opção" />
 						<f:selectItem itemLabel="Código" itemValue="id" />
 						<f:selectItem itemLabel="Alíquota" itemValue="aliq" />
 						<f:selectItem itemLabel="Redução" itemValue="red" />
@@ -108,14 +109,18 @@
 					Tipo CST
 					<p:selectOneMenu id="tipCst" value="#{aliquotaBean.tipCst}"
 						style="width:200px;">
+						<f:selectItem itemLabel="Selecione um Tipo de CST" />
 						<f:selectItem itemLabel="Icms" itemValue="icm" />
 						<f:selectItem itemLabel="Pis Cofins" itemValue="pc" />
 						<f:selectItem itemLabel="Ipi" itemValue="ipi" />
+						<p:ajax update="tipTrib" event="change"
+							listener="#{aliquotaBean.evento}" />
 					</p:selectOneMenu>
 					
 					Tipo Tributação Icms
 					<p:selectOneMenu id="tipTrib" value="#{aliquotaBean.tipTrib}"
-						style="width:250px;">
+						style="width:250px;" disabled="#{aliquotaBean.tipTri}">
+						<f:selectItem itemLabel="Selecione uma tributação" />
 						<f:selectItem itemLabel="Substituicao" itemValue="sub" />
 						<f:selectItem itemLabel="Tributado" itemValue="trib" />
 						<f:selectItem itemLabel="Isento" itemValue="ise" />
