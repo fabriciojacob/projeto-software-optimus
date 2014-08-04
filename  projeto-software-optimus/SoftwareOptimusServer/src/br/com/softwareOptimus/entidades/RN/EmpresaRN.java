@@ -1,6 +1,7 @@
 package br.com.softwareOptimus.entidades.RN;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import br.com.softwareOptimus.entidades.Logradouro;
@@ -33,21 +34,27 @@ public class EmpresaRN {
 			this.empresaDAO.atualizar(empresa);
 		}
 	}
-	
+
+	public List<VigenciaRegime> validaRegime(PessoaJuridica empresa, Date data)
+			throws Exception {
+		return this.empresaDAO.validaRegime(empresa, data);
+	}
+
 	public List<VigenciaRegime> getVigReg() {
 		return vigReg;
 	}
-	
+
 	public void setVigReg(List<VigenciaRegime> vigReg) {
 		this.vigReg = vigReg;
 	}
-	
-	public List<VigenciaRegime> listaReg(PessoaJuridica pessoaJuridica) throws Exception{
+
+	public List<VigenciaRegime> listaReg(PessoaJuridica pessoaJuridica)
+			throws Exception {
 		return this.vigReg = regDAO.listaRegime(pessoaJuridica);
 	}
-	
-	public List<Logradouro> listaLogr(PessoaJuridica pessoaJuridica){
-		 return this.lista = logrDAO.listar(pessoaJuridica);
+
+	public List<Logradouro> listaLogr(PessoaJuridica pessoaJuridica) {
+		return this.lista = logrDAO.listar(pessoaJuridica);
 	}
 
 	public void salvarRegime(VigenciaRegime regime) throws Exception {
@@ -65,8 +72,8 @@ public class EmpresaRN {
 	public PessoaJuridica pesquisaId(Long id) {
 		return this.empresaDAO.carregar(id);
 	}
-	
-	public void excluirVigReg(Long idVig) throws Exception{
+
+	public void excluirVigReg(Long idVig) throws Exception {
 		this.regDAO.excluirRegime(idVig);
 	}
 

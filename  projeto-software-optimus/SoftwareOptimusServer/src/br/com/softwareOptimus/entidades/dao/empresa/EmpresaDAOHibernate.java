@@ -2,7 +2,9 @@ package br.com.softwareOptimus.entidades.dao.empresa;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
@@ -112,6 +114,20 @@ public class EmpresaDAOHibernate implements EmpresaDAO {
 	@Override
 	public void atualizarRegime(VigenciaRegime regime) {
 		this.session.merge(regime);
+
+	}
+
+	@Override
+	public List<VigenciaRegime> validaRegime(PessoaJuridica empresa, Date data)
+			throws Exception {
+		String jpql = "Select vig From VigenciaRegime vig"
+				+ " where vig.pessoaJuridica = :parPessoa "
+				+ " and vig.dataInicio = :parVig";
+		TypedQuery<VigenciaRegime> consulta = this.session.createQuery(jpql,
+				VigenciaRegime.class);
+		consulta.setParameter("parPessoa", empresa);
+		consulta.setParameter("parVig", data);
+		return consulta.getResultList();
 
 	}
 
