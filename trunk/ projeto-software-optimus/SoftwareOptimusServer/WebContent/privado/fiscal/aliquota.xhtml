@@ -138,6 +138,8 @@
 								<f:selectItems value="#{aliquotaBean.cstList}"
 									var="listaCstIcms" itemValue="listaCstIcms"
 									itemLabel="#{listaCstIcms.cst} - #{listaCstIcms.descricao}" />
+								<p:ajax event="change" update="gridCsts"
+									listener="#{aliquotaBean.filtra}" />
 							</p:selectOneMenu>
 						</h:panelGrid>
 						
