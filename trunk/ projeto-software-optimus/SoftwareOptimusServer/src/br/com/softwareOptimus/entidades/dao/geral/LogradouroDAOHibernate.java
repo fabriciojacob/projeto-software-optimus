@@ -3,14 +3,11 @@ package br.com.softwareOptimus.entidades.dao.geral;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
-
 import br.com.softwareOptimus.entidades.Logradouro;
-import br.com.softwareOptimus.entidades.PessoaFisica;
-import br.com.softwareOptimus.entidades.PessoaJuridica;
+import br.com.softwareOptimus.entidades.Pessoa;
 
 public class LogradouroDAOHibernate implements LogradouroDAO {
 
@@ -91,20 +88,13 @@ public class LogradouroDAOHibernate implements LogradouroDAO {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Logradouro> listar(PessoaJuridica pessoaJuridica) {
+	public List<Logradouro> listar(Pessoa pessoa) {
 		String jpql = "Select l From Logradouro l inner join l.municipio c inner join c.uf "
 				+ " where l.pessoa = :parPessoa";
 		Query consulta = this.session.createQuery(jpql);
-		consulta.setParameter("parPessoa", pessoaJuridica);
+		consulta.setParameter("parPessoa", pessoa);
 		return consulta.getResultList();
 	}
 	
-	public List<Logradouro> listarPF(PessoaFisica pessoaJuridica) {
-		String jpql = "Select l From Logradouro l inner join l.municipio c inner join c.uf "
-				+ " where l.pessoa = :parPessoa";
-		Query consulta = this.session.createQuery(jpql);
-		consulta.setParameter("parPessoa", pessoaJuridica);
-		return consulta.getResultList();
-	}
 
 }
