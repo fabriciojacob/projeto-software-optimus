@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import javax.persistence.EntityManager;
 import br.com.softwareOptimus.dao.fiscal.AliquotaDAO;
 import br.com.softwareOptimus.dao.fiscal.AliquotaDAOHibernate;
+import br.com.softwareOptimus.dao.fiscal.CodigoSituacaoTributariaDAO;
+import br.com.softwareOptimus.dao.fiscal.CodigoSituacaoTributariaDAOHibernate;
 import br.com.softwareOptimus.dao.produto.ProdutoDAO;
 import br.com.softwareOptimus.dao.produto.ProdutoDAOHibernate;
 import br.com.softwareOptimus.dao.produto.UnidMedDAO;
@@ -154,7 +156,7 @@ public class DAOFactory {
 		return unidDAO;
 	}
 
-	public static AliquotaDAO criaAliquotaDao() {
+	public static AliquotaDAO criaAliquotaDAO() {
 		AliquotaDAOHibernate aliqDAO = new AliquotaDAOHibernate();
 		aliqDAO.setSession(session);
 		try {
@@ -163,5 +165,16 @@ public class DAOFactory {
 			e.printStackTrace();
 		}
 		return aliqDAO;
+	}
+	
+	public static CodigoSituacaoTributariaDAO criaCodigoSituacaoTributariaDAO(){
+		CodigoSituacaoTributariaDAOHibernate cstDAO = new CodigoSituacaoTributariaDAOHibernate();
+		cstDAO.setSession(session);
+		try {
+			cstDAO.begin();
+		} catch (IOException | SQLException e) {
+			e.printStackTrace();
+		}
+		return cstDAO;
 	}
 }

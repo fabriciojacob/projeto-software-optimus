@@ -103,30 +103,90 @@
 			</p:dialog>
 
 			<p:dialog id="dialog1" header="Vincular CST" widgetVar="dlg4"
-				modal="true" height="300" width="650">
+				modal="true" height="350" width="650">
 				<h:panelGrid id="gridSelect" columns="1"
 					columnClasses="label, value">
 					Tipo CST
 					<p:selectOneMenu id="tipCst" value="#{aliquotaBean.tipCst}"
 						style="width:200px;">
 						<f:selectItem itemLabel="Selecione um Tipo de CST" />
-						<f:selectItem itemLabel="Icms" itemValue="icm" />
-						<f:selectItem itemLabel="Pis Cofins" itemValue="pc" />
+						<f:selectItem itemLabel="Icms" itemValue="icms" />
+						<f:selectItem itemLabel="Pis Cofins" itemValue="pisCofins" />
 						<f:selectItem itemLabel="Ipi" itemValue="ipi" />
-						<p:ajax update="tipTrib" event="change"
-							listener="#{aliquotaBean.evento}" />
+						<p:ajax update="gridCsts" event="change"
+							listener="#{aliquotaBean.eventTipoCst}" />
 					</p:selectOneMenu>
 					
-					Tipo Tributação Icms
-					<p:selectOneMenu id="tipTrib" value="#{aliquotaBean.tipTrib}"
-						style="width:250px;" disabled="#{aliquotaBean.tipTri}">
-						<f:selectItem itemLabel="Selecione uma tributação" />
-						<f:selectItem itemLabel="Substituicao" itemValue="sub" />
-						<f:selectItem itemLabel="Tributado" itemValue="trib" />
-						<f:selectItem itemLabel="Isento" itemValue="ise" />
-						<f:selectItem itemLabel="Não Tributado" itemValue="nTrib" />
-					</p:selectOneMenu>
+					<h:panelGrid id="gridCsts" columns="1">
+						Tipo Tributação Icms
+						<p:selectOneMenu id="trib" value="#{aliquotaBean.tipTrib}"
+							style="width:250px;" disabled="#{aliquotaBean.tipTri}">
+							<f:selectItem itemLabel="Selecione uma tributação" />
+							<f:selectItem itemLabel="Substituicao" itemValue="sub" />
+							<f:selectItem itemLabel="Tributado" itemValue="trib" />
+							<f:selectItem itemLabel="Isento" itemValue="ise" />
+							<f:selectItem itemLabel="Não Tributado" itemValue="nTrib" />
+						</p:selectOneMenu>
+
+					
+						CST Icms
+						<h:panelGrid columns="2">
+							Ent/Sai
+							<p:selectOneMenu id="cstIcms" value="#{aliquotaBean.cst}"
+								disabled="#{aliquotaBean.chkIcm}" style="width:300px;">
+								<f:selectItem itemLabel="Selecione um CST de Icms" />
+								<f:selectItems value="#{aliquotaBean.cstList}"
+									var="listaCstIcms" itemValue="listaCstIcms"
+									itemLabel="#{listaCstIcms.cst} - #{listaCstIcms.descricao}" />
+							</p:selectOneMenu>
+						</h:panelGrid>
+						
+						CST Ipi						
+						<h:panelGrid columns="2">
+							Entrada
+							<p:selectOneMenu id="cstIpiEnt" value="#{aliquotaBean.cst}"
+								style="width:300px;" disabled="#{aliquotaBean.chkIpi}">
+								<f:selectItem itemLabel="Selecione um CST de Ipi para Entrada" />
+								<f:selectItems value="#{aliquotaBean.cstListEnt}"
+									var="listaCstIpiEnt" itemValue="listaCstIpiEnt"
+									itemLabel="#{listaCstIpiEnt.cst} - #{listaCstIpiEnt.descricao}" />
+							</p:selectOneMenu>
+						
+							Saída
+							<p:selectOneMenu id="cstIpiSai" value="#{aliquotaBean.cst}"
+								style="width:300px;" disabled="#{aliquotaBean.chkIpi}">
+								<f:selectItem itemLabel="Selecione um CST de Ipi para Saída" />
+								<f:selectItems value="#{aliquotaBean.cstListSai}"
+									var="listaCstIpiSai" itemValue="listaCstIpiSai"
+									itemLabel="#{listaCstIpiSai.cst} - #{listaCstIpiSai.descricao}" />
+							</p:selectOneMenu>
+						</h:panelGrid>
+
+						CST PisCofins
+						<h:panelGrid columns="2">
+							Entrada
+							<p:selectOneMenu id="cstPisCofinsEnt" value="#{aliquotaBean.cst}"
+								style="width:300px;" disabled="#{aliquotaBean.chkPisCofins}">
+								<f:selectItem
+									itemLabel="Selecione um CST de PisCofisn para Entrada" />
+								<f:selectItems value="#{aliquotaBean.cstListEnt}"
+									var="listaCstPisCofinsEnt" itemValue="listaCstPisCofinsEnt"
+									itemLabel="#{listaCstPisCofinsEnt.cst} - #{listaCstPisCofinsEnt.descricao}" />
+							</p:selectOneMenu>
+						
+							Saída
+							<p:selectOneMenu id="cstPisCofinsSai" value="#{aliquotaBean.cst}"
+								style="width:300px;" disabled="#{aliquotaBean.chkPisCofins}">
+								<f:selectItem
+									itemLabel="Selecione um CST de PisCofins para Saída" />
+								<f:selectItems value="#{aliquotaBean.cstListSai}"
+									var="listaCstPisCofinsSai" itemValue="listaCstPisCofinsSai"
+									itemLabel="#{listaCstPisCofinsSai.cst} - #{listaCstPisCofinsSai.descricao}" />
+							</p:selectOneMenu>
+						</h:panelGrid>
+					</h:panelGrid>
 				</h:panelGrid>
+				<p:commandButton value="OK" ajax="dialog1" />
 			</p:dialog>
 		</div>
 	</h:form>

@@ -11,13 +11,11 @@ public class CodigoFiscalOperacao extends CodigoFiscalGenerico  {
 	
 	@Override
 	public Long getId() {
-		// TODO Auto-generated method stub
 		return super.getId();
 	}
 	
 	@Override
 	public void setId(Long id) {
-		// TODO Auto-generated method stub
 		super.setId(id);
 	}
 	
