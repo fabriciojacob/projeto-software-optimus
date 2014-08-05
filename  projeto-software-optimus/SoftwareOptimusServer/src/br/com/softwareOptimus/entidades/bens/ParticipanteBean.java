@@ -14,6 +14,7 @@ import br.com.softwareOptimus.entidades.PessoaJuridica;
 import br.com.softwareOptimus.entidades.Telefone;
 import br.com.softwareOptimus.entidades.TipoLogradouro;
 import br.com.softwareOptimus.entidades.TipoPessoaJuridica;
+import br.com.softwareOptimus.entidades.RN.EmpresaRN;
 import br.com.softwareOptimus.entidades.RN.ParticipanteRN;
 import br.com.softwareOptimus.entidades.RN.geral.LogradouroRN;
 
@@ -22,14 +23,16 @@ public class ParticipanteBean {
 
 	private PessoaFisica pessoaFisica = new PessoaFisica();
 	private PessoaJuridica pessoaJuridica = new PessoaJuridica();
-	private Long idPF, idPJ, idLogr, idTel, idEmail;
+	private Long id, idLogr, idTel, idEmail;
 	private List<Email> listaEmail = new ArrayList<>();
 	private List<Logradouro> listaEnd = new ArrayList<>();
+	public List<PessoaFisica> listaPessoaFisica = new ArrayList<>();
 	private ParticipanteRN participanteRN;
 	private LogradouroRN logrRN;
 	private Logradouro logradouro = new Logradouro();
 	private String tipoLogrSelecionado = null, selecionadaPessoa = null,
-			tipoParticipante = null, tipoPJ = null;
+			tipoParticipante = null, tipoPJ = null, filtro = null,
+			textoConsulta = null;
 	private List<Telefone> listaTelefone = new ArrayList<>();
 	private boolean salvar = true, cancelar = true, enderecos = true,
 			salReg = true, email = true, telefone = true, padraoNFE,
@@ -41,25 +44,20 @@ public class ParticipanteBean {
 
 			if (tipoParticipante.equals(NaturezaPessoa.FORNECEDOR.toString())) {
 				this.pessoaFisica.setNaturezaPessoa(NaturezaPessoa.FORNECEDOR);
-			} else if (tipoParticipante.equals(NaturezaPessoa.CLIENTE.toString())) {
+			} else if (tipoParticipante.equals(NaturezaPessoa.CLIENTE
+					.toString())) {
 				this.pessoaFisica.setNaturezaPessoa(NaturezaPessoa.CLIENTE);
-			} else if (tipoParticipante.equals(NaturezaPessoa.TRANSPORTADORA.toString())) {
+			} else if (tipoParticipante.equals(NaturezaPessoa.TRANSPORTADORA
+					.toString())) {
 				this.pessoaFisica
 						.setNaturezaPessoa(NaturezaPessoa.TRANSPORTADORA);
 			} else {
 				this.pessoaFisica.setNaturezaPessoa(NaturezaPessoa.CONTADOR);
 			}
 			participanteRN.salvarPF(pessoaFisica);
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-							"Registro salvo com sucesso"));
-
+			msgAcerto("Registro salvo com sucesso");
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na gravacao" + e.getMessage()));
+			msgErro("Problemas ao salvar", e);
 		}
 	}
 
@@ -88,18 +86,11 @@ public class ParticipanteBean {
 
 			logradouro.setMunicipio(municipio);
 			logrRN.salvar(logradouro);
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-							"Endereço salvo com sucesso"));
+			msgAcerto("Logradouro salvo com sucesso");
 			listaLogradouro();
 			this.logradouro = new Logradouro();
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na gravacao do endereço "
-									+ e.getMessage()));
+			msgErro("Problemas na gravacao do endere�o", e);
 		}
 	}
 
@@ -116,16 +107,8 @@ public class ParticipanteBean {
 				this.listaEnd = participanteRN.listaLogrPF(pessoaFisica);
 			}
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na listagem dos logradouros"
-									+ e.getMessage()));
+			msgErro("Problemas na listagem dos logradouros", e);
 		}
-	}
-
-	public void consulta() {
-
 	}
 
 	public void novo() {
@@ -142,6 +125,53 @@ public class ParticipanteBean {
 		this.email = true;
 		this.telefone = true;
 
+	}
+
+	public void pesquisaPF() {
+		this.participanteRN = new ParticipanteRN();
+		String cpf = "cpf";
+		try {
+			if (filtro.equals(cpf)) {
+				if (this.listaPessoaFisica != null) {
+					this.listaPessoaFisica.clear();
+				}
+				this.listaPessoaFisica = this.participanteRN.listaPFCPF(textoConsulta);
+			} else {
+				if (this.pessoaFisica != null) {
+					this.listaPessoaFisica.clear();
+				}
+				this.listaPessoaFisica = this.participanteRN
+						.listaPFNome(textoConsulta);
+			}
+
+		} catch (Exception e) {
+			msgErro("Problemas na pesquisa", e);
+		}
+
+	}
+
+	public void msgAcerto(String msg) {
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", msg));
+	}
+
+	public void msgErro(String msg, Exception e) {
+		FacesContext.getCurrentInstance().addMessage(
+				null,
+				new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info", msg
+						+ e.getMessage()));
+	}
+
+	public void editar() {
+		EmpresaRN empresaRN = new EmpresaRN();
+		this.pessoaJuridica = empresaRN.pesquisaId(id);
+		// listaLogradouro();
+		this.salvar = false;
+		this.cancelar = false;
+		this.enderecos = false;
+		this.salReg = false;
+		this.email = false;
+		this.telefone = false;
 	}
 
 	public String getTipoPJ() {
@@ -288,20 +318,12 @@ public class ParticipanteBean {
 		this.pessoaJuridica = pessoaJuridica;
 	}
 
-	public Long getIdPF() {
-		return idPF;
+	public Long getId() {
+		return id;
 	}
 
-	public void setIdPF(Long idPF) {
-		this.idPF = idPF;
-	}
-
-	public Long getIdPJ() {
-		return idPJ;
-	}
-
-	public void setIdPJ(Long idPJ) {
-		this.idPJ = idPJ;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public Long getIdLogr() {
@@ -327,13 +349,37 @@ public class ParticipanteBean {
 	public void setIdEmail(Long idEmail) {
 		this.idEmail = idEmail;
 	}
-	
+
 	public String getTipoParticipante() {
 		return tipoParticipante;
 	}
-	
+
 	public void setTipoParticipante(String tipoParticipante) {
 		this.tipoParticipante = tipoParticipante;
+	}
+
+	public List<PessoaFisica> getListaPessoaFisica() {
+		return listaPessoaFisica;
+	}
+
+	public void setListaPessoaFisica(List<PessoaFisica> listaPessoaFisica) {
+		this.listaPessoaFisica = listaPessoaFisica;
+	}
+
+	public String getFiltro() {
+		return filtro;
+	}
+
+	public void setFiltro(String filtro) {
+		this.filtro = filtro;
+	}
+
+	public String getTextoConsulta() {
+		return textoConsulta;
+	}
+
+	public void setTextoConsulta(String textoConsulta) {
+		this.textoConsulta = textoConsulta;
 	}
 
 }
