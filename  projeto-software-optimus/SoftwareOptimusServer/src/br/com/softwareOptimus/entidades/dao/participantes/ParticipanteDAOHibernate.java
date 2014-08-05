@@ -118,16 +118,5 @@ public class ParticipanteDAOHibernate implements ParticipanteDAO {
 		return consulta.getResultList();
 	}
 
-	@Override
-	public void salvarPessoa(Pessoa pessoa) throws Exception {
-		this.session.persist(pessoa);
-		this.transaction.commit();
-	}
-
-	@Override
-	public void atualizaPessoa(Pessoa pessoa) throws Exception {
-		this.session.merge(pessoa);
-		this.transaction.commit();
-	}
 
 }

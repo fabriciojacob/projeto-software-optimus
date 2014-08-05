@@ -4,5 +4,6 @@ public enum NaturezaPessoa {
 	CLIENTE,
 	FORNECEDOR,
 	EMPRESA,
-	CONTADOR
+	CONTADOR, 
+	TRANSPORTADORA
 }
