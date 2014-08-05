@@ -21,10 +21,18 @@ public class AliquotaBean {
 	private List<CodigoSituacaoTributaria> cstList = new ArrayList<CodigoSituacaoTributaria>();
 	private List<CodigoSituacaoTributaria> cstListEnt = new ArrayList<CodigoSituacaoTributaria>();
 	private List<CodigoSituacaoTributaria> cstListSai = new ArrayList<CodigoSituacaoTributaria>();
-	private String busca, filtro, tipCst, tipTrib;
+	private String busca, filtro, tipCst, tipTrib, filtroCST;
 	private Long id;
 	private boolean sal = true, alt = true, rem = true, tipTri = true,
 			chkIcm = true, chkIpi = true, chkPisCofins = true;
+	
+	public String getFiltroCST() {
+		return filtroCST;
+	}
+	
+	public void setFiltroCST(String filtroCST) {
+		this.filtroCST = filtroCST;
+	}
 
 	public CodigoSituacaoTributaria getCstTeste() {
 		return cstTeste;
@@ -240,5 +248,9 @@ public class AliquotaBean {
 			this.cstListEnt = cstRN.cstListaOut(TipoCst.PISCOFINS, IO.ENTRADA);
 			this.cstListSai = cstRN.cstListaOut(TipoCst.PISCOFINS, IO.SAIDA);
 		}
+	}
+	
+	public void filtra(){
+		//this.cstTeste = cst;
 	}
 }
