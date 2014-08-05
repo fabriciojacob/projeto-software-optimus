@@ -22,6 +22,16 @@ public class PessoaJuridica extends Pessoa{
 	
 	private Integer regime;
 	
+	private String antt;
+	
+	public String getAntt() {
+		return antt;
+	}
+	
+	public void setAntt(String antt) {
+		this.antt = antt;
+	}
+	
 	public Integer getRegime() {
 		return regime;
 	}

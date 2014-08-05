@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+</h:head>
+<h:body>
+	<h:form id="frmCadParticipante">
+		<br />
+		<h3 style="margin-top: 0">CADASTRO DE PARTICIPANTE PESSOA FISICA</h3>
+		<div align="left">
+
+			<p:commandButton value="Novo"
+				actionListener="#{participanteBean.novo}" ajax="frmCadParticipante"
+				disabled="#{participanteBean.novo}" />
+
+			<p:commandButton value="Salvar"
+				actionListener="#{participanteBean.salvarPF}" />
+
+			<p:commandButton value="Consulta" />
+
+			<p:commandButton value="Cancelar" />
+
+			<p:messages id="messages" showDetail="true" autoUpdate="true"
+				closable="true" />
+
+
+			<p:tabView style="border: 0px">
+				<p:tab id="cadParticipante" title="Informações Gerais">
+
+					<p:selectOneRadio id="tipoParticipante"
+						value="#{participanteBean.tipoParticipante}">
+						<f:selectItem itemLabel="CLIENTE" itemValue="CLIENTE" />
+						<f:selectItem itemLabel="FORNECEDOR" itemValue="FORNECEDOR" />
+						<f:selectItem itemLabel="TRANSPORTADORA"
+							itemValue="TRANSPORTADORA" />
+						<f:selectItem itemLabel="CONTADOR" itemValue="CONTADOR" />
+					</p:selectOneRadio>
+
+					<h:panelGrid id="cadastroParticipante" columns="2"
+						columnClasses="label, value">
+						
+					Inativa:
+					<p:selectBooleanCheckbox id="inativaEmp"
+							value="#{participanteBean.pessoaFisica.status}" />
+			
+					Codigo Empresa:
+					<p:inputText id="idEmpresa" disabled="true"
+							value="#{participanteBean.pessoaFisica.idPessoa}" />
+		
+					Nome:
+					<p:inputText id="nomeFantasia"
+							value="#{participanteBean.pessoaFisica.fantasia}" size="40" />
+					
+				
+					CPF:
+					<p:inputText value="#{participanteBean.pessoaFisica.cpf}" />
+					
+					RG:
+					<p:inputText value="#{participanteBean.pessoaFisica.rg}" />
+
+
+					</h:panelGrid>
+
+				</p:tab>
+
+				<p:tab id="cadLogr" title="Lista de endereços">
+
+
+				</p:tab>
+
+				<p:tab id="emails" title="Cadastro de Email">
+
+				</p:tab>
+				<p:tab id="telefones" title="Cadastro de telefone">
+
+
+
+				</p:tab>
+
+			</p:tabView>
+		</div>
+	</h:form>
+</h:body>
+</html>

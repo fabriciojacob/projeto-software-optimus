@@ -19,9 +19,15 @@
 							url="/privado/usuario/cadastroUsuario.jsf" />
 						<p:menuitem value="Empresa"
 							url="/privado/empresa/cadastroEmpresa.jsf" />
-						<p:menuitem value="Participante"
-							url="/privado/participante/cadastroParticipante.jsf" />
-						<p:separator />
+						<p:submenu label="Participantes">
+							<p:menuitem value="Pessoa Física"
+								url="/privado/participante/cadastroPF.jsf" />
+							<p:menuitem value="Pessoa Jurídica"
+								url="/privado/participante/pesssoaJuridíca.jsf" />
+							<p:separator />
+
+						</p:submenu>
+
 					</p:submenu>
 
 					<p:submenu label="Cadastros Financeiros">

@@ -2,15 +2,13 @@ package br.com.softwareOptimus.entidades.bens;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
-
 import br.com.softwareOptimus.entidades.Email;
 import br.com.softwareOptimus.entidades.Logradouro;
 import br.com.softwareOptimus.entidades.Municipio;
-import br.com.softwareOptimus.entidades.Pessoa;
+import br.com.softwareOptimus.entidades.NaturezaPessoa;
 import br.com.softwareOptimus.entidades.PessoaFisica;
 import br.com.softwareOptimus.entidades.PessoaJuridica;
 import br.com.softwareOptimus.entidades.Telefone;
@@ -21,8 +19,7 @@ import br.com.softwareOptimus.entidades.RN.geral.LogradouroRN;
 
 @ManagedBean
 public class ParticipanteBean {
-	
-	private Pessoa pessoaGeral = new Pessoa();
+
 	private PessoaFisica pessoaFisica = new PessoaFisica();
 	private PessoaJuridica pessoaJuridica = new PessoaJuridica();
 	private Long idPF, idPJ, idLogr, idTel, idEmail;
@@ -31,41 +28,38 @@ public class ParticipanteBean {
 	private ParticipanteRN participanteRN;
 	private LogradouroRN logrRN;
 	private Logradouro logradouro = new Logradouro();
-	private String tipoPJ;
-	private String tipoLogrSelecionado = null, selecionadaPessoa = null;
+	private String tipoLogrSelecionado = null, selecionadaPessoa = null,
+			tipoParticipante = null, tipoPJ = null;
 	private List<Telefone> listaTelefone = new ArrayList<>();
 	private boolean salvar = true, cancelar = true, enderecos = true,
 			salReg = true, email = true, telefone = true, padraoNFE,
 			novo = false, consulta = false;
 
-	public void salvar(){
-		try{
+	public void salvarPF() {
+		try {
 			participanteRN = new ParticipanteRN();
-			if(selecionadaPessoa.equals("FISICA")){
-				this.pessoaFisica.setIdPessoa(pessoaGeral.getIdPessoa());
-				participanteRN.salvarPessoa(pessoaGeral);
-				participanteRN.salvarPF(pessoaFisica);
-			}else{
-				if(tipoPJ.equals(TipoPessoaJuridica.FABRICANTE)){
-					this.pessoaJuridica.setTipoPessoaJuridica(TipoPessoaJuridica.FABRICANTE);
-				}else if(tipoPJ.equals(TipoPessoaJuridica.DISTRIBUIDOR)){
-					this.pessoaJuridica.setTipoPessoaJuridica(TipoPessoaJuridica.DISTRIBUIDOR);
-				}else{
-					this.pessoaJuridica.setTipoPessoaJuridica(TipoPessoaJuridica.OUTROS);
-				}
-				participanteRN.salvarPessoa(pessoaGeral);
-				participanteRN.salvarPJ(pessoaJuridica);
+
+			if (tipoParticipante.equals(NaturezaPessoa.FORNECEDOR.toString())) {
+				this.pessoaFisica.setNaturezaPessoa(NaturezaPessoa.FORNECEDOR);
+			} else if (tipoParticipante.equals(NaturezaPessoa.CLIENTE.toString())) {
+				this.pessoaFisica.setNaturezaPessoa(NaturezaPessoa.CLIENTE);
+			} else if (tipoParticipante.equals(NaturezaPessoa.TRANSPORTADORA.toString())) {
+				this.pessoaFisica
+						.setNaturezaPessoa(NaturezaPessoa.TRANSPORTADORA);
+			} else {
+				this.pessoaFisica.setNaturezaPessoa(NaturezaPessoa.CONTADOR);
 			}
+			participanteRN.salvarPF(pessoaFisica);
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
 							"Registro salvo com sucesso"));
-			
-		}catch (Exception e){
+
+		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na gravacao"));
+							"Problemas na gravacao" + e.getMessage()));
 		}
 	}
 
@@ -128,6 +122,26 @@ public class ParticipanteBean {
 							"Problemas na listagem dos logradouros"
 									+ e.getMessage()));
 		}
+	}
+
+	public void consulta() {
+
+	}
+
+	public void novo() {
+		this.pessoaJuridica = new PessoaJuridica();
+		this.pessoaFisica = new PessoaFisica();
+		this.listaEnd = new ArrayList<>();
+		this.listaEmail = new ArrayList<>();
+		this.listaTelefone = new ArrayList<>();
+		this.salvar = false;
+		this.cancelar = false;
+		this.novo = true;
+		this.salReg = true;
+		this.enderecos = true;
+		this.email = true;
+		this.telefone = true;
+
 	}
 
 	public String getTipoPJ() {
@@ -313,15 +327,13 @@ public class ParticipanteBean {
 	public void setIdEmail(Long idEmail) {
 		this.idEmail = idEmail;
 	}
-
-	public Pessoa getPessoaGeral() {
-		return pessoaGeral;
-	}
-
-	public void setPessoaGeral(Pessoa pessoaGeral) {
-		this.pessoaGeral = pessoaGeral;
+	
+	public String getTipoParticipante() {
+		return tipoParticipante;
 	}
 	
-	
+	public void setTipoParticipante(String tipoParticipante) {
+		this.tipoParticipante = tipoParticipante;
+	}
 
 }
