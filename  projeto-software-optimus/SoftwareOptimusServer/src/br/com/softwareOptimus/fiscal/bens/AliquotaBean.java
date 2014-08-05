@@ -16,14 +16,23 @@ public class AliquotaBean {
 
 	private Aliquota aliquota = new Aliquota();
 	private CodigoSituacaoTributaria cst = new CodigoSituacaoTributaria();
+	private CodigoSituacaoTributaria cstTeste = new CodigoSituacaoTributaria();
 	private List<Aliquota> aliqList = new ArrayList<Aliquota>();
 	private List<CodigoSituacaoTributaria> cstList = new ArrayList<CodigoSituacaoTributaria>();
 	private List<CodigoSituacaoTributaria> cstListEnt = new ArrayList<CodigoSituacaoTributaria>();
 	private List<CodigoSituacaoTributaria> cstListSai = new ArrayList<CodigoSituacaoTributaria>();
 	private String busca, filtro, tipCst, tipTrib;
-	private int id;
+	private Long id;
 	private boolean sal = true, alt = true, rem = true, tipTri = true,
 			chkIcm = true, chkIpi = true, chkPisCofins = true;
+
+	public CodigoSituacaoTributaria getCstTeste() {
+		return cstTeste;
+	}
+
+	public void setCstTeste(CodigoSituacaoTributaria cstTeste) {
+		this.cstTeste = cstTeste;
+	}
 
 	public boolean isChkIcm() {
 		return chkIcm;
@@ -109,11 +118,11 @@ public class AliquotaBean {
 		this.tipCst = tipCst;
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
