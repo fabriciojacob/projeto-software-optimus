@@ -3,10 +3,8 @@ package br.com.softwareOptimus.entidades.dao.geral;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
-
 import br.com.softwareOptimus.entidades.Logradouro;
-import br.com.softwareOptimus.entidades.PessoaFisica;
-import br.com.softwareOptimus.entidades.PessoaJuridica;
+import br.com.softwareOptimus.entidades.Pessoa;
 
 
 public interface LogradouroDAO {
@@ -18,7 +16,6 @@ public interface LogradouroDAO {
 	public void close() throws Exception;
 	public void consultar() throws Exception;
 	public Logradouro carregar(Long codigo);
-	public List<Logradouro> listar(PessoaJuridica pessoaJuridica);
-	public List<Logradouro> listarPF(PessoaFisica pessoaJuridica);
+	public List<Logradouro> listar(Pessoa pessoa);
 
 }

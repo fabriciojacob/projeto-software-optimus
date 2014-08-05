@@ -3,6 +3,7 @@ package br.com.softwareOptimus.entidades.RN;
 import java.util.ArrayList;
 import java.util.List;
 import br.com.softwareOptimus.entidades.Logradouro;
+import br.com.softwareOptimus.entidades.Pessoa;
 import br.com.softwareOptimus.entidades.PessoaFisica;
 import br.com.softwareOptimus.entidades.PessoaJuridica;
 import br.com.softwareOptimus.entidades.dao.geral.LogradouroDAO;
@@ -12,29 +13,12 @@ import br.com.softwareOptimus.util.DAOFactory;
 public class ParticipanteRN {
 
 	private ParticipanteDAO participanteDAO;
-	private List<Logradouro> listaLogrPJ = new ArrayList<>();
-	private List<Logradouro> listaLogrPF = new ArrayList<>();
+	private List<Logradouro> listaLogr = new ArrayList<>();
 	private LogradouroDAO logrDAO;
 
 	public ParticipanteRN() {
 		this.participanteDAO = DAOFactory.criaParticipanteDAO();
 		this.logrDAO = DAOFactory.criaLogrDAO();
-	}
-
-	public List<Logradouro> getListaLogrPJ() {
-		return listaLogrPJ;
-	}
-
-	public void setListaLogrPJ(List<Logradouro> listaLogrPJ) {
-		this.listaLogrPJ = listaLogrPJ;
-	}
-
-	public List<Logradouro> getListaLogrPF() {
-		return listaLogrPF;
-	}
-
-	public void setListaLogrPF(List<Logradouro> listaLogrPF) {
-		this.listaLogrPF = listaLogrPF;
 	}
 
 	public void salvarPJ(PessoaJuridica pessoa) throws Exception {
@@ -87,14 +71,11 @@ public class ParticipanteRN {
 		return this.participanteDAO.buscaNomePF(nome);
 	}
 
-	public List<Logradouro> listaLogrPJ(PessoaJuridica pessoaJuridica)
+	public List<Logradouro> listaLogr(Pessoa pessoa)
 			throws Exception {
-		return this.listaLogrPJ = logrDAO.listar(pessoaJuridica);
+		return this.listaLogr = logrDAO.listar(pessoa);
 	}
 
-	public List<Logradouro> listaLogrPF(PessoaFisica pessoaFisica)
-			throws Exception {
-		return this.listaLogrPF = logrDAO.listarPF(pessoaFisica);
-	}
+
 
 }
