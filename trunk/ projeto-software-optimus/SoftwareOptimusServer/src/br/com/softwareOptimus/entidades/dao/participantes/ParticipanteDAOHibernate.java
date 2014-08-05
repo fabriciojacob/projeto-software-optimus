@@ -93,7 +93,7 @@ public class ParticipanteDAOHibernate implements ParticipanteDAO {
 				+ " where p.fantasia = :parNome" + " and p.naturezaPessoa = 1";
 		TypedQuery<PessoaJuridica> consulta = this.session.createQuery(jpql,
 				PessoaJuridica.class);
-		consulta.setParameter("parNome", nome);
+		consulta.setParameter("parNome","%" + nome + "%");
 		return consulta.getResultList();
 	}
 
@@ -103,7 +103,7 @@ public class ParticipanteDAOHibernate implements ParticipanteDAO {
 				+ " where p.cpf = :parCPF " + " and p.naturezaPessoa = 0";
 		TypedQuery<PessoaFisica> consulta = this.session.createQuery(jpql,
 				PessoaFisica.class);
-		consulta.setParameter("parCPF", CPF);
+		consulta.setParameter("parCPF",CPF);
 		return consulta.getResultList();
 	}
 
@@ -114,7 +114,7 @@ public class ParticipanteDAOHibernate implements ParticipanteDAO {
 				+ " and p.naturezaPessoa = 0";
 		TypedQuery<PessoaFisica> consulta = this.session.createQuery(jpql,
 				PessoaFisica.class);
-		consulta.setParameter("parPessoa", nome);
+		consulta.setParameter("parPessoa","%" + nome + "%");
 		return consulta.getResultList();
 	}
 

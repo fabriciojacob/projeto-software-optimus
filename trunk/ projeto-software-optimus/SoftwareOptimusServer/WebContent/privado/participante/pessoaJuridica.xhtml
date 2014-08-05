@@ -1,0 +1,402 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+</h:head>
+<h:body>
+	<h:form id="frmCadEmpresa">
+		<br />
+		<h3 style="margin-top: 0">CADASTRO DE PARTICIPANTE PESSOA JURÍDICA</h3>
+		<div align="left">
+
+			<p:commandButton value="Novo" actionListener="#{participanteBean.novo}"
+				ajax="frmCadEmpresa" disabled="#{participanteBean.novo}" />
+
+			<p:commandButton value="Salvar" disabled="#{participanteBean.salvar}"
+				actionListener="#{participanteBean.salvarEmp}" ajax="frmCadEmpresa" />
+
+			<p:commandButton value="Consulta" type="button"
+				onclick="PF('consulta').show();" disabled="#{participanteBean.consulta}"
+				 />
+
+			<p:commandButton value="Cancelar" ajax="cadEmpresa"
+				actionListener="#{participanteBean.novo}"
+				disabled="#{participanteBean.cancelar}" />
+
+			<p:messages id="messages" showDetail="true" autoUpdate="true"
+				closable="true" />
+
+			<p:dialog header="Consulta" widgetVar="consulta" modal="true"
+				height="300" width="400">
+
+				<div align="right">
+					<h:panelGrid columns="1">
+
+						<p:commandButton value="Pesquisar"
+							actionListener="#{participanteBean.pesquisa}" update="dataPesquisa" />
+					</h:panelGrid>
+				</div>
+
+				<h:panelGrid columns="2">
+
+					<p:inputText id="textoConsulta" size="40"
+						value="#{participanteBean.tipoConsulta}" />
+
+					<p:selectOneMenu id="fConsult" value="#{participanteBean.filtro}">/>
+						<f:selectItem itemLabel="CNPJ" itemValue="cnpj" />
+						<f:selectItem itemLabel="Nome Fantasia" itemValue="nomeFantasia" />
+					</p:selectOneMenu>
+
+				</h:panelGrid>
+				<p:dataTable id="dataPesquisa"
+					value="#{participanteBean.retornoListaPessoa}" var="pesEmpresa"
+					paginator="true" rows="6">
+
+					<p:column headerText="Codigo">
+						<h:outputText value="#{pesEmpresa.idPessoa}" />
+					</p:column>
+
+					<p:column headerText="Nome Fantasia">
+						<h:outputText value="#{pesEmpresa.fantasia}" />
+					</p:column>
+
+					<p:column headerText="CNPJ">
+						<h:outputText value="#{pesEmpresa.cnpj}" />
+					</p:column>
+
+					<p:column headerText="Selecionar">
+						<p:commandLink id="link" value="Editar" ajax="dialog,frmCadEmpresa"
+							action="#{participanteBean.editEmp}" >
+							<f:setPropertyActionListener value="#{pesEmpresa.idPessoa}"
+								target="#{participanteBean.id}" />
+						</p:commandLink>
+					</p:column>
+
+				</p:dataTable>
+
+			</p:dialog>
+
+			<p:tabView style="border: 0px">
+				<p:tab id="cadEmpresa" title="Informações Gerais">
+					<h:panelGrid id="cadastroEmpresa" columns="2"
+						columnClasses="label, value">
+					
+					Inativa:
+					<p:selectBooleanCheckbox id="inativaEmp"
+							value="#{participanteBean.pessoaJuridica.status}" />
+			
+					Codigo Empresa:
+					<p:inputText id="idEmpresa" disabled="true"
+							value="#{participanteBean.pessoaJuridica.idPessoa}" />
+		
+					Nome Fantasia:
+					<p:inputText id="nomeFantasia"
+							value="#{participanteBean.pessoaJuridica.fantasia}" size="40" />
+					
+					Razão Social:
+					<p:inputText id="razaoSocial"
+							value="#{participanteBean.pessoaJuridica.razaoSocial}" size="40" />
+			
+					CNPJ:
+					<p:inputText id="cnpj" value="#{participanteBean.pessoaJuridica.cnpj}" />
+					
+					Inscrição estadual:
+					<p:inputText id="ie" value="#{participanteBean.pessoaJuridica.ie}"
+							rendered="true" />
+					
+					CNAE:
+					<p:inputText id="cnae" value="#{participanteBean.pessoaJuridica.cnae}" />
+					</h:panelGrid>
+
+				</p:tab>
+
+				<p:tab id="cadLogr" title="Lista de endereços">
+
+					<p:commandButton value="Enderecos" type="button"
+						onclick="PF('dlg2').show();" disabled="#{participanteBean.enderecos}" />
+
+					<p:dialog header=" Enderecos" widgetVar="dlg2" modal="true"
+						height="300" width="400">
+
+
+						<h:panelGrid columns="2" columnClasses="label, value">
+						
+						Codigo logradouro
+						<p:inputText id="idLogradouro"
+								value="#{participanteBean.logradouro.idEndereco}" disabled="true" />
+								
+						Logradouro:
+						<p:inputText id="logradouro"
+								value="#{participanteBean.logradouro.endereco}" size="40" />
+								
+						Complemento:
+						<p:inputText id="complemento"
+								value="#{participanteBean.logradouro.complemento}" size="40" />							
+					
+						Bairro:
+						<p:inputText id="bairro" value="#{participanteBean.logradouro.bairro}"
+								size="40" />
+					
+						Numero:
+						<p:inputText id="numero" value="#{participanteBean.logradouro.numero}"
+								size="15" />		
+						
+						CEP:
+						<p:inputText id="cep" value="#{participanteBean.logradouro.cep}"
+								size="8" />							
+							
+						Tipo Endereco:
+					 	<p:selectOneMenu id="tipoLogr"
+								value="#{participanteBean.tipoSelecionado}">
+								<f:selectItem itemLabel="Selecione tipo endereço" />
+								<f:selectItem itemLabel="COMERCIAL" itemValue="COMERCIAL" />
+								<f:selectItem itemLabel="RESIDENCIAL" itemValue="RESIDENCIAL" />
+								<f:selectItem itemLabel="COBRANCA" itemValue="COBRANCA" />
+								<f:selectItem itemLabel="ENTREGA" itemValue="ENTREGA" />
+							</p:selectOneMenu>
+						
+						Estado:
+						<p:selectOneMenu id="uf" value="#{geralBean.uf}">
+								<f:selectItem itemLabel="Selecione um estado" />
+								<f:selectItems value="#{geralBean.estados}" var="listaEstados"
+									itemValue="#{listaEstados}"
+									itemLabel="#{listaEstados.descricao}" />
+								<p:ajax update="municipios" event="change"
+									listener="#{geralBean.filtraEstado}" />
+							</p:selectOneMenu>
+					
+						Município:
+					 	<p:selectOneMenu id="municipios" value="#{geralBean.municipio}">
+								<f:selectItem itemLabel="Selecione um municipio" />
+								<f:selectItems value="#{geralBean.municipios}" var="listaMun"
+									itemValue="#{listaMun}" itemLabel="#{listaMun.descricao}" />
+							</p:selectOneMenu>
+
+						</h:panelGrid>
+						<h:panelGrid columns="2">
+							<p:commandButton value="Incluir"
+								actionListener="#{participanteBean.salvarLogr(geralBean.municipio)}"
+								update="listaEndereco" />
+
+							<p:commandButton value="Cancelar" />
+						</h:panelGrid>
+
+					</p:dialog>
+					<br />
+					<br />
+					<p:dataTable id="listaEndereco" value="#{participanteBean.listaEnd}"
+						var="listaEnd" paginator="true" rows="6">
+
+						<p:column headerText="Codigo">
+							<h:outputText value="#{listaEnd.idEndereco}" />
+						</p:column>
+
+						<p:column headerText="Endereco">
+							<h:outputText value="#{listaEnd.endereco}" />
+						</p:column>
+
+						<p:column headerText="Número">
+							<h:outputText value="#{listaEnd.numero}" />
+						</p:column>
+
+						<p:column headerText="Complemento">
+							<h:outputText value="#{listaEnd.complemento}" />
+						</p:column>
+
+						<p:column headerText="Bairro">
+							<h:outputText value="#{listaEnd.bairro}" />
+						</p:column>
+
+						<p:column headerText="CEP">
+							<h:outputText value="#{listaEnd.cep}" />
+						</p:column>
+
+						<p:column headerText="Tipo">
+							<h:outputLabel value="#{listaEnd.tipoLogr}" />
+						</p:column>
+
+						<p:column headerText="Cidade">
+							<h:outputText value="#{listaEnd.municipio.descricao}" />
+						</p:column>
+
+						<p:column headerText="Estado">
+							<h:outputText value="#{listaEnd.municipio.uf.descricao}" />
+						</p:column>
+
+						<p:column headerText="Excluir">
+							<p:commandLink id="linkLogr" value="Excluir" ajax="dialog"
+								action="#{participanteBean.excluirLogr}" update="listaEndereco">
+								<f:setPropertyActionListener value="#{listaEnd.idEndereco}"
+									target="#{participanteBean.idLogr}" />
+							</p:commandLink>
+						</p:column>
+
+					</p:dataTable>
+
+				</p:tab>
+
+				<p:tab id="infFiscais" title="Dados Fiscais">
+					<h:panelGrid columns="2">
+						<h:panelGrid columns="2">
+
+							Data Inicio:
+							<p:calendar id="dataIni" value="#{participanteBean.regime.dataInicio}"
+								effect="fold" />
+							Regime:
+							<p:selectOneMenu id="fConsult" value="#{participanteBean.tipoRegime}">
+								<f:selectItem itemLabel="SIMPLES" itemValue="SIMPLES" />
+								<f:selectItem itemLabel="REAL" itemValue="LUCROREAL" />
+								<f:selectItem itemLabel="PRESUMIDO" itemValue="LUCROPRESUMIDO" />
+							</p:selectOneMenu>
+
+							<p:commandButton id="incluirReg" icon="ui-icon-disk"
+								disabled="#{participanteBean.salReg}"
+								actionListener="#{participanteBean.salvarRegime()}"
+								update="listaRegime" />
+
+						</h:panelGrid>
+					</h:panelGrid>
+
+					<p:dataTable id="listaRegime" value="#{participanteBean.listaReg}"
+						var="listaReg" paginator="true" rows="6">
+
+						<p:column headerText="Codigo">
+							<h:outputLabel value="#{listaReg.idVigReg}" />
+						</p:column>
+
+
+						<p:column headerText="Regime de Apuração">
+							<h:outputLabel value="#{listaReg.regime}" />
+						</p:column>
+
+						<p:column headerText="Início da Vigência">
+							<h:outputLabel value="#{listaReg.dataInicio}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputLabel>
+						</p:column>
+
+						<p:column headerText="Excluir">
+							<p:commandLink id="linkReg" value="Excluir" ajax="dialog"
+								action="#{participanteBean.excluirRegime}" update="listaRegime">
+								<f:setPropertyActionListener value="#{listaReg.idVigReg}"
+									target="#{participanteBean.idReg}" />
+							</p:commandLink>
+						</p:column>
+					</p:dataTable>
+
+				</p:tab>
+				<p:tab id="emails" title="Cadastro de Email">
+					<p:commandButton value="Emails" type="button"
+						onclick="PF('dlg3').show();" disabled="#{participanteBean.email}" />
+					<br />
+					<br />
+					<p:dialog header="Emails" widgetVar="dlg3" modal="true"
+						height="100" width="400">
+						<h:panelGrid columns="2">
+						Email:
+						<p:inputText value="#{participanteBean.emails.email}" size="50" />
+						
+						Padrão NF-e:
+						<p:selectBooleanCheckbox value="#{participanteBean.padraoNFE}" />
+
+							<p:commandButton id="incluirEmail" icon="ui-icon-disk"
+								disabled="#{participanteBean.email}"
+								actionListener="#{participanteBean.salvarEmail}" update="listaEmail" />
+
+						</h:panelGrid>
+
+					</p:dialog>
+					<p:dataTable id="listaEmail" value="#{participanteBean.listaEmail}"
+						var="emails" paginator="true" rows="6">
+
+						<p:column headerText="Codigo">
+							<h:outputLabel value="#{emails.idEmail}" />
+						</p:column>
+
+						<p:column headerText="Email">
+							<h:outputLabel value="#{emails.email}" />
+						</p:column>
+
+						<p:column headerText="NFE">
+							<h:outputLabel value="#{emails.padraoNFe}" />
+						</p:column>
+
+						<p:column headerText="Excluir">
+							<p:commandLink id="linkExcluirEmail" value="Excluir"
+								ajax="dialog" action="#{participanteBean.excluirEmail}"
+								update="listaEmail">
+								<f:setPropertyActionListener value="#{emails.idEmail}"
+									target="#{participanteBean.idEmail}" />
+							</p:commandLink>
+						</p:column>
+					</p:dataTable>
+
+				</p:tab>
+				<p:tab id="telefones" title="Cadastro de telefone">
+					<p:commandButton value="Telefones" type="button"
+						onclick="PF('dlg4').show();" disabled="#{participanteBean.telefone}" />
+					<br />
+					<br />
+					<p:dialog header="Telefones" widgetVar="dlg4" modal="true"
+						height="100" width="400">
+						<h:panelGrid columns="2">
+						Telefone:
+						<p:inputText value="#{participanteBean.tel.numero}" size="50" />
+						
+						Tipo telefone:
+						<p:selectOneMenu id="tipoTelefone"
+								value="#{participanteBean.tipoSelecionadoTel}">
+							<f:selectItem itemLabel="Selecione tipo de telefone" />
+							<f:selectItem itemLabel="COMERCIAL" itemValue="COMERCIAL" />
+							<f:selectItem itemLabel="RESIDENCIAL" itemValue="RESIDENCIAL" />
+							<f:selectItem itemLabel="CELULAR" itemValue="CELULAR" />
+						</p:selectOneMenu>
+
+						<p:commandButton id="incluirTelefone" icon="ui-icon-disk"
+								disabled="#{participanteBean.telefone}"
+								actionListener="#{participanteBean.salvarTelefone}"
+						update="listaTelefone" />
+
+						</h:panelGrid>
+
+					</p:dialog>
+					<p:dataTable id="listaTelefone" value="#{participanteBean.listaTelefone}"
+						paginator="true" rows="6" var="tels">
+
+						<p:column headerText="Codigo">
+							<h:outputLabel value="#{tels.idTelefone}" />
+						</p:column>
+
+						<p:column headerText="Numero">
+							<h:outputLabel value="#{tels.numero}" />
+						</p:column>
+
+						<p:column headerText="Tipo Fone">
+							<h:outputLabel value="#{tels.tipoFone}" />
+						</p:column>
+
+						<p:column headerText="Excluir">
+							<p:commandLink id="linkExcluirTelefone" value="Excluir"
+								ajax="dialog" action="#{participanteBean.excluirTelefone}"
+								update="listaTelefone">
+								<f:setPropertyActionListener value="#{tels.idTelefone}"
+									target="#{participanteBean.idTel}" />
+							</p:commandLink>
+						</p:column>
+
+					</p:dataTable>
+
+				</p:tab>
+
+			</p:tabView>
+		</div>
+	</h:form>
+</h:body>
+</html>
