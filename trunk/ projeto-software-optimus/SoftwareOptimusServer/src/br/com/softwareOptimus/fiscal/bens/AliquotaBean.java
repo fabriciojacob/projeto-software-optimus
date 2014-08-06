@@ -25,7 +25,7 @@ public class AliquotaBean {
 	private Long id;
 	private boolean sal = true, alt = true, rem = true, tipTri = true,
 			chkIcm = true, chkIpi = true, chkPisCofins = true;
-
+	
 	public String getSelecionado() {
 		return selecionado;
 	}
@@ -199,7 +199,8 @@ public class AliquotaBean {
 	}
 
 	public void alterar() {
-
+		CodigoSituacaoTributariaRN cstRN = new CodigoSituacaoTributariaRN();
+		cstRN.teste(cst);
 	}
 
 	public void remover() {
