@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import br.com.softwareOptimus.entidades.Email;
@@ -21,6 +22,7 @@ import br.com.softwareOptimus.entidades.RN.ParticipanteRN;
 import br.com.softwareOptimus.entidades.RN.geral.LogradouroRN;
 
 @ManagedBean
+@SessionScoped
 public class ParticipanteBean {
 
 	private PessoaFisica pessoaFisica = new PessoaFisica();
@@ -93,7 +95,7 @@ public class ParticipanteBean {
 			listaLogradouro();
 			this.logradouro = new Logradouro();
 		} catch (Exception e) {
-			msgErro("Problemas na gravacao do endere�o", e);
+			msgErro("Problemas na gravacao do endere�o", e);
 		}
 	}
 
@@ -167,8 +169,12 @@ public class ParticipanteBean {
 	}
 
 	public void editar() {
-		EmpresaRN empresaRN = new EmpresaRN();
-		this.pessoaJuridica = empresaRN.pesquisaId(id);
+		this.participanteRN = new ParticipanteRN();
+		try {
+			this.pessoaFisica = this.participanteRN.carregaIDPF(id);
+		} catch (Exception e) {
+			msgErro("Problemas na edição", e);
+		}
 		// listaLogradouro();
 		this.salvar = false;
 		this.cancelar = false;

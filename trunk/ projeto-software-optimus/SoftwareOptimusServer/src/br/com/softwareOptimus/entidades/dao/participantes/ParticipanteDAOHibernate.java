@@ -73,8 +73,8 @@ public class ParticipanteDAOHibernate implements ParticipanteDAO {
 	}
 
 	@Override
-	public Pessoa carregar(Long codigo) throws Exception {
-		return this.session.find(Pessoa.class, codigo);
+	public PessoaFisica carregarPF(Long codigo) throws Exception {
+		return this.session.find(PessoaFisica.class, codigo);
 	}
 
 	@Override
@@ -90,7 +90,7 @@ public class ParticipanteDAOHibernate implements ParticipanteDAO {
 	@Override
 	public List<PessoaJuridica> buscaNomePJ(String nome) throws Exception {
 		String jpql = "Select p From PessoaJuridica p "
-				+ " where p.fantasia = :parNome" + " and p.naturezaPessoa = 1";
+				+ " where p.fantasia LIKE :parNome" + " and p.naturezaPessoa = 0";
 		TypedQuery<PessoaJuridica> consulta = this.session.createQuery(jpql,
 				PessoaJuridica.class);
 		consulta.setParameter("parNome","%" + nome + "%");
@@ -110,7 +110,7 @@ public class ParticipanteDAOHibernate implements ParticipanteDAO {
 	@Override
 	public List<PessoaFisica> buscaNomePF(String nome) throws Exception {
 		String jpql = "Select p From PessoaFisica p"
-				+ " where p.fantasia = :parPessoa"
+				+ " where p.fantasia LIKE :parPessoa"
 				+ " and p.naturezaPessoa = 0";
 		TypedQuery<PessoaFisica> consulta = this.session.createQuery(jpql,
 				PessoaFisica.class);
