@@ -47,11 +47,11 @@ public class CodigoSituacaoTributariaDAOHibernate implements
 	}
 
 	@Override
-	public List<CodigoSituacaoTributaria> cstListaIcms(TipoCst icms) {
+	public List<CodigoSituacaoTributaria> cstListaIcms() {
 		String jpql = "Select u From CodigoSituacaoTributaria u Where u.tipoCst = :icms";
 		TypedQuery<CodigoSituacaoTributaria> listaCst = this.session
 				.createQuery(jpql, CodigoSituacaoTributaria.class);
-		listaCst.setParameter("icms", icms);
+		listaCst.setParameter("icms", TipoCst.ICMS);
 		return listaCst.getResultList();
 	}
 
