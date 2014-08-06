@@ -136,9 +136,7 @@
 								<f:selectItem itemLabel="Selecione um CST de Icms" />
 								<f:selectItems value="#{aliquotaBean.cstList}" var="cstIcmsList"
 									itemValue="#{cstIcmsList}"
-									itemLabel="#{cstIcmsList.cst} - #{cstIcmsList.descricao}" />
-								<p:ajax event="change"
-									listener="#{aliquotaBean.filtra}" />
+									itemLabel="#{cstIcmsList.cst}" />
 							</p:selectOneMenu>
 						</h:panelGrid>
 					</h:panelGrid>

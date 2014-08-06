@@ -17,8 +17,8 @@ public class CodigoSituacaoTributariaRN {
 		this.cstDAO = DAOFactory.criaCodigoSituacaoTributariaDAO();
 	}
 
-	public List<CodigoSituacaoTributaria> cstListaIcms(TipoCst icms) {
-		return cstDAO.cstListaIcms(icms);
+	public List<CodigoSituacaoTributaria> cstListaIcms() {
+		return cstDAO.cstListaIcms();
 	}
 
 	public List<CodigoSituacaoTributaria> cstListaOut(TipoCst tipo, IO entSai) {

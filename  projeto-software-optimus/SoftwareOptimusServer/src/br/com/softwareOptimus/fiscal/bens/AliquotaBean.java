@@ -232,7 +232,7 @@ public class AliquotaBean {
 			this.chkIcm = false;
 			this.chkIpi = true;
 			this.chkPisCofins = true;
-			this.cstList = cstRN.cstListaIcms(TipoCst.ICMS);
+			this.cstList = cstRN.cstListaIcms();
 		} else if (tipCst.equals("ipi")) {
 			this.tipTri = true;
 			this.chkIcm = true;

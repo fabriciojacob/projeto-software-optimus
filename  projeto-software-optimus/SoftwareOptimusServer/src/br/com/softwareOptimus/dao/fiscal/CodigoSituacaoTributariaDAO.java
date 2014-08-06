@@ -12,6 +12,6 @@ public interface CodigoSituacaoTributariaDAO {
 
 	public void begin() throws IOException, SQLException;
 	public void close() throws Exception;
-	public List<CodigoSituacaoTributaria> cstListaIcms(TipoCst icms);
+	public List<CodigoSituacaoTributaria> cstListaIcms();
 	public List<CodigoSituacaoTributaria> cstListaOut(TipoCst tipo, IO entSai);
 }
