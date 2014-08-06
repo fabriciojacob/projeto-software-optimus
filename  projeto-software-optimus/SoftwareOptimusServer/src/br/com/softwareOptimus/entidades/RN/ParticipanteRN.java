@@ -75,6 +75,10 @@ public class ParticipanteRN {
 			throws Exception {
 		return this.listaLogr = logrDAO.listar(pessoa);
 	}
+	
+	public PessoaFisica carregaIDPF(Long codigo) throws Exception{
+		return this.participanteDAO.carregarPF(codigo);
+	}
 
 
 
