@@ -3,6 +3,7 @@ package br.com.softwareOptimus.fiscal.RN;
 import java.util.List;
 
 import br.com.softwareOptimus.dao.fiscal.CodigoSituacaoTributariaDAO;
+import br.com.softwareOptimus.fiscal.CodigoFiscalGenerico;
 import br.com.softwareOptimus.fiscal.CodigoSituacaoTributaria;
 import br.com.softwareOptimus.fiscal.IO;
 import br.com.softwareOptimus.fiscal.TipoCst;
@@ -22,6 +23,10 @@ public class CodigoSituacaoTributariaRN {
 
 	public List<CodigoSituacaoTributaria> cstListaOut(TipoCst tipo, IO entSai) {
 		return cstDAO.cstListaOut(tipo, entSai);
+	}
+
+	public void teste(CodigoFiscalGenerico cst) {
+	
 	}
 
 }

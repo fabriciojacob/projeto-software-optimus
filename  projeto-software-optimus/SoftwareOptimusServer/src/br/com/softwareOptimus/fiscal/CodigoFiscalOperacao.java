@@ -7,6 +7,10 @@ import javax.persistence.Table;
 @Table(name="tbCFOP")
 public class CodigoFiscalOperacao extends CodigoFiscalGenerico  {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2164192404596076223L;
 	private String cfop;
 	
 	@Override
