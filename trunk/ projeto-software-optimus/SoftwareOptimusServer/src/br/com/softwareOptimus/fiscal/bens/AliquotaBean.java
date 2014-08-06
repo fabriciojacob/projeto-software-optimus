@@ -5,6 +5,7 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import br.com.softwareOptimus.fiscal.Aliquota;
+import br.com.softwareOptimus.fiscal.CodigoFiscalGenerico;
 import br.com.softwareOptimus.fiscal.CodigoSituacaoTributaria;
 import br.com.softwareOptimus.fiscal.IO;
 import br.com.softwareOptimus.fiscal.TipoCst;
@@ -15,23 +16,23 @@ import br.com.softwareOptimus.fiscal.RN.CodigoSituacaoTributariaRN;
 public class AliquotaBean {
 
 	private Aliquota aliquota = new Aliquota();
-	private CodigoSituacaoTributaria cst = new CodigoSituacaoTributaria();
+	private CodigoFiscalGenerico cst = new CodigoSituacaoTributaria();
 	private CodigoSituacaoTributaria cstTeste = new CodigoSituacaoTributaria();
 	private List<Aliquota> aliqList = new ArrayList<Aliquota>();
-	private List<CodigoSituacaoTributaria> cstList = new ArrayList<CodigoSituacaoTributaria>();
+	private List<CodigoSituacaoTributaria> cstList;
 	private List<CodigoSituacaoTributaria> cstListEnt = new ArrayList<CodigoSituacaoTributaria>();
 	private List<CodigoSituacaoTributaria> cstListSai = new ArrayList<CodigoSituacaoTributaria>();
-	private String busca, filtro, tipCst, tipTrib, filtroCST;
+	private String busca, filtro, tipCst, tipTrib, selecionado;
 	private Long id;
 	private boolean sal = true, alt = true, rem = true, tipTri = true,
 			chkIcm = true, chkIpi = true, chkPisCofins = true;
-	
-	public String getFiltroCST() {
-		return filtroCST;
+
+	public String getSelecionado() {
+		return selecionado;
 	}
-	
-	public void setFiltroCST(String filtroCST) {
-		this.filtroCST = filtroCST;
+
+	public void setSelecionado(String selecionado) {
+		this.selecionado = selecionado;
 	}
 
 	public CodigoSituacaoTributaria getCstTeste() {
@@ -251,6 +252,7 @@ public class AliquotaBean {
 	}
 	
 	public void filtra(){
-		//this.cstTeste = cst;
+		CodigoSituacaoTributariaRN cstRN = new CodigoSituacaoTributariaRN();
+		cstRN.teste(cst);
 	}
 }

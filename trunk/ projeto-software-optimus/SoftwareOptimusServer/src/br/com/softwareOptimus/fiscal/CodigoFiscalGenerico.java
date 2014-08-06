@@ -1,13 +1,25 @@
 package br.com.softwareOptimus.fiscal;
 
+import java.io.Serializable;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.convert.Converter;
+import javax.faces.convert.ConverterException;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
-public class CodigoFiscalGenerico {
+public class CodigoFiscalGenerico implements Serializable, Converter{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6551663029170042741L;
+
 	@Id
 	@GeneratedValue
 	private Long id;
@@ -64,6 +76,35 @@ public class CodigoFiscalGenerico {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+	
+	@Override
+	public Object getAsObject(FacesContext arg0, UIComponent arg1, String arg2) {
+		@SuppressWarnings("unused")
+		CodigoFiscalGenerico estado = new CodigoFiscalGenerico();
+		@SuppressWarnings("unused")
+		int ufId;
+
+		try {
+			ufId = Integer.parseInt(arg2);
+		} catch (NumberFormatException exception) {
+			throw new ConverterException(
+					new FacesMessage(
+							FacesMessage.SEVERITY_ERROR,
+							"Type the name of a Dog and select it (or use the dropdow)",
+							"Type the name of a Dog and select it (or use the dropdow)"));
+		}
+
+		return null;
+	}
+
+	@Override
+	public String getAsString(FacesContext arg0, UIComponent arg1, Object arg2) {
+		if (arg2 == null) {
+			return "";
+		}
+		CodigoFiscalGenerico estado = (CodigoFiscalGenerico) arg2;
+		return String.valueOf(estado.getId());
 	}
 	
 }
