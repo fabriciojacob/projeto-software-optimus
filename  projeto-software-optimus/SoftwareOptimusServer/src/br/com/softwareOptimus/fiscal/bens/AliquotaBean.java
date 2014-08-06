@@ -5,7 +5,6 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import br.com.softwareOptimus.fiscal.Aliquota;
-import br.com.softwareOptimus.fiscal.CodigoFiscalGenerico;
 import br.com.softwareOptimus.fiscal.CodigoSituacaoTributaria;
 import br.com.softwareOptimus.fiscal.IO;
 import br.com.softwareOptimus.fiscal.TipoCst;
@@ -16,7 +15,7 @@ import br.com.softwareOptimus.fiscal.RN.CodigoSituacaoTributariaRN;
 public class AliquotaBean {
 
 	private Aliquota aliquota = new Aliquota();
-	private CodigoFiscalGenerico cst = new CodigoSituacaoTributaria();
+	private CodigoSituacaoTributaria cst = new CodigoSituacaoTributaria();
 	private CodigoSituacaoTributaria cstTeste = new CodigoSituacaoTributaria();
 	private List<Aliquota> aliqList = new ArrayList<Aliquota>();
 	private List<CodigoSituacaoTributaria> cstList;
