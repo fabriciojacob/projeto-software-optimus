@@ -15,8 +15,11 @@ import br.com.softwareOptimus.entidades.PessoaFisica;
 import br.com.softwareOptimus.entidades.PessoaJuridica;
 import br.com.softwareOptimus.entidades.Telefone;
 import br.com.softwareOptimus.entidades.TipoLogradouro;
+import br.com.softwareOptimus.entidades.TipoTelefone;
 import br.com.softwareOptimus.entidades.RN.ParticipanteRN;
+import br.com.softwareOptimus.entidades.RN.geral.EmailRN;
 import br.com.softwareOptimus.entidades.RN.geral.LogradouroRN;
+import br.com.softwareOptimus.entidades.RN.geral.TelefoneRN;
 
 @ManagedBean
 @SessionScoped
@@ -33,11 +36,13 @@ public class ParticipanteBean {
 	private Logradouro logradouro = new Logradouro();
 	private String tipoLogrSelecionado = null, selecionadaPessoa = null,
 			tipoParticipante = null, tipoPJ = null, filtro = null,
-			textoConsulta = null;
+			textoConsulta = null, tipoSelecionadoTel = null;
 	private List<Telefone> listaTelefone = new ArrayList<>();
 	private boolean salvar = true, cancelar = true, enderecos = true,
 			salReg = true, email = true, telefone = true, padraoNFE,
 			novo = false, consulta = false;
+	private Telefone tel = new Telefone();
+	private Email emails = new Email();
 
 	public void salvarPF() {
 		try {
@@ -192,6 +197,110 @@ public class ParticipanteBean {
 			listaLogradouro();
 		} catch (Exception e) {
 			msgErro("Problemas na exclusao do logradouro", e);
+		}
+	}
+
+	public void listaEmail() {
+		EmailRN emailRN = new EmailRN();
+		try {
+			if (this.listaEmail != null) {
+				this.listaEmail.clear();
+			}
+			this.listaEmail = emailRN.listaEmail(pessoaJuridica);
+		} catch (Exception e) {
+			msgErro("Problemas na listagem dos emails", e);
+		}
+	}
+
+	public void excluirEmail() {
+		EmailRN emailRN = new EmailRN();
+		try {
+			emailRN.excluir(idEmail);
+			msgAcerto("Email excluido com sucesso");
+			listaEmail();
+		} catch (Exception e) {
+			msgErro("Problemas na exclusao do email", e);
+		}
+	}
+
+	public void salvarEmail() {
+		EmailRN emailRN = new EmailRN();
+		Integer pNfe = 0, checkNFe = 0;
+		try {
+			if (this.pessoaFisica.getIdPessoa() == 0) {
+				checkNFe = emailRN.validaEmailNFE(pessoaJuridica);
+			} else {
+				checkNFe = emailRN.validaEmailNFE(pessoaFisica);
+			}
+
+			if (padraoNFE && checkNFe == 1) {
+				msgErro("Ja existe um email como padrão NFE", null);
+			} else {
+				if (this.pessoaFisica.getIdPessoa() == 0) {
+					emails.setPessoa(pessoaJuridica);
+				} else {
+					emails.setPessoa(pessoaFisica);
+				}
+				if (padraoNFE) {
+					pNfe = 1;
+					emails.setPadraoNFe(pNfe);
+				} else {
+					emails.setPadraoNFe(pNfe);
+				}
+				emailRN.salvar(emails);
+				msgAcerto("Email salvo com sucesso");
+				this.emails = new Email();
+			}
+			listaEmail();
+		} catch (Exception e) {
+			msgErro("Problemas na exclusao do email", e);
+		}
+	}
+
+	public void excluirTelefone() {
+		TelefoneRN telefoneRN = new TelefoneRN();
+		try {
+			telefoneRN.excluir(idTel);
+			msgAcerto("Telefone excluido com sucesso");
+			listaTelefone();
+		} catch (Exception e) {
+			msgErro("Problemas na exclusao do telefone", e);
+		}
+	}
+
+	public void listaTelefone() {
+		TelefoneRN telefoneRN = new TelefoneRN();
+		try {
+			if (this.listaTelefone != null) {
+				this.listaTelefone.clear();
+			}
+			this.listaTelefone = telefoneRN.listaTelefone(pessoaJuridica);
+		} catch (Exception e) {
+			msgErro("Problemas em listar os telefones", e);
+		}
+	}
+
+	public void salvarTelefone() {
+		TelefoneRN telefoneRN = new TelefoneRN();
+
+		if (tipoSelecionadoTel.equals(TipoTelefone.CELULAR.toString())) {
+			this.tel.setTipoFone(TipoTelefone.CELULAR);
+		} else if (tipoSelecionadoTel.equals(TipoTelefone.COMERCIAL.toString())) {
+			this.tel.setTipoFone(TipoTelefone.COMERCIAL);
+		} else {
+			this.tel.setTipoFone(TipoTelefone.RESIDENCIAL);
+		}
+		try {
+			if (this.pessoaFisica.getIdPessoa() == 0) {
+				this.tel.setPessoa(pessoaJuridica);
+			} else {
+				this.tel.setPessoa(pessoaFisica);
+			}
+			telefoneRN.salvar(tel);
+			msgAcerto("Telefone salvo com sucesso");
+			listaTelefone();
+		} catch (Exception e) {
+			msgErro("Problemas em salvar o telefone", e);
 		}
 	}
 
@@ -401,6 +510,30 @@ public class ParticipanteBean {
 
 	public void setTextoConsulta(String textoConsulta) {
 		this.textoConsulta = textoConsulta;
+	}
+
+	public String getTipoSelecionadoTel() {
+		return tipoSelecionadoTel;
+	}
+
+	public void setTipoSelecionadoTel(String tipoSelecionadoTel) {
+		this.tipoSelecionadoTel = tipoSelecionadoTel;
+	}
+
+	public Telefone getTel() {
+		return tel;
+	}
+
+	public void setTel(Telefone tel) {
+		this.tel = tel;
+	}
+
+	public Email getEmails() {
+		return emails;
+	}
+
+	public void setEmails(Email emails) {
+		this.emails = emails;
 	}
 
 }
