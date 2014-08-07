@@ -113,35 +113,29 @@
 						<f:selectItem itemLabel="Icms" itemValue="icms" />
 						<f:selectItem itemLabel="Pis Cofins" itemValue="pisCofins" />
 						<f:selectItem itemLabel="Ipi" itemValue="ipi" />
-						<p:ajax update="gridCsts" event="change"
+						<p:ajax update="cstIcms" event="change"
 							listener="#{aliquotaBean.eventTipoCst}" />
 					</p:selectOneMenu>
-
-					<h:panelGrid id="gridCsts" columns="1">
-						Tipo Tributação Icms
+				
+					Tipo Tributação Icms
 						<p:selectOneMenu id="trib" value="#{aliquotaBean.tipTrib}"
-							style="width:250px;" disabled="#{aliquotaBean.tipTri}">
-							<f:selectItem itemLabel="Selecione uma tributação" />
-							<f:selectItem itemLabel="Substituicao" itemValue="sub" />
-							<f:selectItem itemLabel="Tributado" itemValue="trib" />
-							<f:selectItem itemLabel="Isento" itemValue="ise" />
-							<f:selectItem itemLabel="Não Tributado" itemValue="nTrib" />
-						</p:selectOneMenu>
-					
-						CST Icms
-						<h:panelGrid id="gridCstIcms" columns="2">
-							Ent/Sai
-							<p:selectOneMenu id="cstIcms" value="#{aliquotaBean.cst}"
-								disabled="#{aliquotaBean.chkIcm}" style="width:300px;">
-								<f:selectItem itemLabel="Selecione um CST de Icms" />
-								<f:selectItems value="#{aliquotaBean.cstList}" var="cstIcmsList"
-									itemValue="#{cstIcmsList}"
-									itemLabel="#{cstIcmsList.cst}" />
-							</p:selectOneMenu>
-						</h:panelGrid>
-					</h:panelGrid>
+						style="width:250px;" disabled="#{aliquotaBean.tipTri}">
+						<f:selectItem itemLabel="Selecione uma tributação" />
+						<f:selectItem itemLabel="Substituicao" itemValue="sub" />
+						<f:selectItem itemLabel="Tributado" itemValue="trib" />
+						<f:selectItem itemLabel="Isento" itemValue="ise" />
+						<f:selectItem itemLabel="Não Tributado" itemValue="nTrib" />
+					</p:selectOneMenu>
+
+					<p:selectOneMenu id="cstIcms" value="#{aliquotaBean.cst}">
+						<f:selectItem itemLabel="Selecione um CST de Icms" />
+						<f:selectItems value="#{aliquotaBean.cstList}" var="cstIcmsList"
+							itemValue="#{cstIcmsList}"
+							itemLabel="#{cstIcmsList.cst} - #{cstIcmsList.descricao}" />
+					</p:selectOneMenu>
+
 				</h:panelGrid>
-				<p:commandButton value="OK" />
+				<p:commandButton value="OK" onclick="PF('dlg4').Hide();" />
 			</p:dialog>
 		</div>
 	</h:form>

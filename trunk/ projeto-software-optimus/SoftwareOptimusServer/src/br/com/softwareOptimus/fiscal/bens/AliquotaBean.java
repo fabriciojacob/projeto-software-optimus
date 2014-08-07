@@ -16,54 +16,17 @@ public class AliquotaBean {
 
 	private Aliquota aliquota = new Aliquota();
 	private CodigoSituacaoTributaria cst = new CodigoSituacaoTributaria();
-	private CodigoSituacaoTributaria cstTeste = new CodigoSituacaoTributaria();
-	private List<Aliquota> aliqList = new ArrayList<Aliquota>();
 	private List<CodigoSituacaoTributaria> cstList;
-	private List<CodigoSituacaoTributaria> cstListEnt = new ArrayList<CodigoSituacaoTributaria>();
-	private List<CodigoSituacaoTributaria> cstListSai = new ArrayList<CodigoSituacaoTributaria>();
+	private List<CodigoSituacaoTributaria> cstListEnt;
+	private List<CodigoSituacaoTributaria> cstListSai;
+	private List<Aliquota> aliqList = new ArrayList<Aliquota>();
 	private String busca, filtro, tipCst, tipTrib, selecionado;
 	private Long id;
 	private boolean sal = true, alt = true, rem = true, tipTri = true,
 			chkIcm = true, chkIpi = true, chkPisCofins = true;
 	
-	public String getSelecionado() {
-		return selecionado;
-	}
-
-	public void setSelecionado(String selecionado) {
-		this.selecionado = selecionado;
-	}
-
-	public CodigoSituacaoTributaria getCstTeste() {
-		return cstTeste;
-	}
-
-	public void setCstTeste(CodigoSituacaoTributaria cstTeste) {
-		this.cstTeste = cstTeste;
-	}
-
-	public boolean isChkIcm() {
-		return chkIcm;
-	}
-
-	public void setChkIcm(boolean chkIcm) {
-		this.chkIcm = chkIcm;
-	}
-
-	public boolean isChkIpi() {
-		return chkIpi;
-	}
-
-	public void setChkIpi(boolean chkIpi) {
-		this.chkIpi = chkIpi;
-	}
-
-	public boolean isChkPisCofins() {
-		return chkPisCofins;
-	}
-
-	public void setChkPisCofins(boolean chkPisCofins) {
-		this.chkPisCofins = chkPisCofins;
+	public CodigoSituacaoTributaria getCst() {
+		return cst;
 	}
 
 	public void setCst(CodigoSituacaoTributaria cst) {
@@ -94,12 +57,36 @@ public class AliquotaBean {
 		this.cstListSai = cstListSai;
 	}
 
-	public List<CodigoSituacaoTributaria> getCst() {
-		return cstList;
+	public String getSelecionado() {
+		return selecionado;
 	}
 
-	public void setCst(List<CodigoSituacaoTributaria> cstList) {
-		this.cstList = cstList;
+	public void setSelecionado(String selecionado) {
+		this.selecionado = selecionado;
+	}
+
+	public boolean isChkIcm() {
+		return chkIcm;
+	}
+
+	public void setChkIcm(boolean chkIcm) {
+		this.chkIcm = chkIcm;
+	}
+
+	public boolean isChkIpi() {
+		return chkIpi;
+	}
+
+	public void setChkIpi(boolean chkIpi) {
+		this.chkIpi = chkIpi;
+	}
+
+	public boolean isChkPisCofins() {
+		return chkPisCofins;
+	}
+
+	public void setChkPisCofins(boolean chkPisCofins) {
+		this.chkPisCofins = chkPisCofins;
 	}
 
 	public boolean isTipTri() {
@@ -225,9 +212,6 @@ public class AliquotaBean {
 
 	public void eventTipoCst() {
 		CodigoSituacaoTributariaRN cstRN = new CodigoSituacaoTributariaRN();
-		this.cstList = new ArrayList<CodigoSituacaoTributaria>();
-		this.cstListEnt = new ArrayList<CodigoSituacaoTributaria>();
-		this.cstListSai = new ArrayList<CodigoSituacaoTributaria>();
 		if (tipCst.equals("icms")) {
 			this.tipTri = false;
 			this.chkIcm = false;
