@@ -16,15 +16,42 @@ public class AliquotaBean {
 
 	private Aliquota aliquota = new Aliquota();
 	private CodigoSituacaoTributaria cst = new CodigoSituacaoTributaria();
+	private CodigoSituacaoTributaria cstEnt = new CodigoSituacaoTributaria();
+	private CodigoSituacaoTributaria cstSai = new CodigoSituacaoTributaria();
 	private List<CodigoSituacaoTributaria> cstList;
 	private List<CodigoSituacaoTributaria> cstListEnt;
 	private List<CodigoSituacaoTributaria> cstListSai;
 	private List<Aliquota> aliqList = new ArrayList<Aliquota>();
 	private String busca, filtro, tipCst, tipTrib, selecionado;
+	CodigoSituacaoTributariaRN cstRN = new CodigoSituacaoTributariaRN();
 	private Long id;
 	private boolean sal = true, alt = true, rem = true, tipTri = true,
-			chkIcm = true, chkIpi = true, chkPisCofins = true;
-	
+			vinculo = true, chkIcm = true, chkIpi = true, chkPisCofins = true;
+
+	public boolean isVinculo() {
+		return vinculo;
+	}
+
+	public void setVinculo(boolean vinculo) {
+		this.vinculo = vinculo;
+	}
+
+	public CodigoSituacaoTributaria getCstEnt() {
+		return cstEnt;
+	}
+
+	public void setCstEnt(CodigoSituacaoTributaria cstEnt) {
+		this.cstEnt = cstEnt;
+	}
+
+	public CodigoSituacaoTributaria getCstSai() {
+		return cstSai;
+	}
+
+	public void setCstSai(CodigoSituacaoTributaria cstSai) {
+		this.cstSai = cstSai;
+	}
+
 	public CodigoSituacaoTributaria getCst() {
 		return cst;
 	}
@@ -178,7 +205,11 @@ public class AliquotaBean {
 	}
 
 	public void novo() {
-
+		this.sal = false;
+		this.vinculo = false;
+		this.alt = true;
+		this.rem = true;
+		limpa();
 	}
 
 	public void salvar() {
@@ -186,8 +217,6 @@ public class AliquotaBean {
 	}
 
 	public void alterar() {
-		CodigoSituacaoTributariaRN cstRN = new CodigoSituacaoTributariaRN();
-		cstRN.teste(cst);
 	}
 
 	public void remover() {
@@ -199,7 +228,11 @@ public class AliquotaBean {
 	}
 
 	public void cancelar() {
-
+		this.sal = true;
+		this.alt = true;
+		this.rem = true;
+		this.vinculo = true;
+		limpa();
 	}
 
 	public void buscaAliq() {
@@ -211,7 +244,6 @@ public class AliquotaBean {
 	}
 
 	public void eventTipoCst() {
-		CodigoSituacaoTributariaRN cstRN = new CodigoSituacaoTributariaRN();
 		if (tipCst.equals("icms")) {
 			this.tipTri = false;
 			this.chkIcm = false;
@@ -234,9 +266,19 @@ public class AliquotaBean {
 			this.cstListSai = cstRN.cstListaOut(TipoCst.PISCOFINS, IO.SAIDA);
 		}
 	}
-	
-	public void filtra(){
-		CodigoSituacaoTributariaRN cstRN = new CodigoSituacaoTributariaRN();
+
+	public void filtra() {
 		cstRN.teste(cst);
+	}
+
+	public void limpa() {
+		this.aliquota = new Aliquota();
+		this.cst = new CodigoSituacaoTributaria();
+		this.cstEnt = new CodigoSituacaoTributaria();
+		this.cstSai = new CodigoSituacaoTributaria();
+		this.cstList = new ArrayList<CodigoSituacaoTributaria>();
+		this.cstListEnt = new ArrayList<CodigoSituacaoTributaria>();
+		this.cstListSai = new ArrayList<CodigoSituacaoTributaria>();
+		this.aliqList = new ArrayList<Aliquota>();
 	}
 }
