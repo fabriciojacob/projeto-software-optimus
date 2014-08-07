@@ -1,13 +1,20 @@
 package br.com.softwareOptimus.fiscal.bens;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+
 import br.com.softwareOptimus.fiscal.Aliquota;
 import br.com.softwareOptimus.fiscal.CodigoSituacaoTributaria;
 import br.com.softwareOptimus.fiscal.IO;
 import br.com.softwareOptimus.fiscal.TipoCst;
+import br.com.softwareOptimus.fiscal.TipoTrib;
+import br.com.softwareOptimus.fiscal.RN.AliquotaRN;
 import br.com.softwareOptimus.fiscal.RN.CodigoSituacaoTributariaRN;
 
 @ManagedBean(name = "aliquotaBean")
@@ -22,8 +29,9 @@ public class AliquotaBean {
 	private List<CodigoSituacaoTributaria> cstListEnt;
 	private List<CodigoSituacaoTributaria> cstListSai;
 	private List<Aliquota> aliqList = new ArrayList<Aliquota>();
-	private String busca, filtro, tipCst, tipTrib, selecionado;
-	CodigoSituacaoTributariaRN cstRN = new CodigoSituacaoTributariaRN();
+	private String busca, filtro, tipCst, tipTrib;
+	private CodigoSituacaoTributariaRN cstRN = new CodigoSituacaoTributariaRN();
+	private AliquotaRN aliqRN = new AliquotaRN();
 	private Long id;
 	private boolean sal = true, alt = true, rem = true, tipTri = true,
 			vinculo = true, chkIcm = true, chkIpi = true, chkPisCofins = true;
@@ -82,14 +90,6 @@ public class AliquotaBean {
 
 	public void setCstListSai(List<CodigoSituacaoTributaria> cstListSai) {
 		this.cstListSai = cstListSai;
-	}
-
-	public String getSelecionado() {
-		return selecionado;
-	}
-
-	public void setSelecionado(String selecionado) {
-		this.selecionado = selecionado;
 	}
 
 	public boolean isChkIcm() {
@@ -212,8 +212,44 @@ public class AliquotaBean {
 		limpa();
 	}
 
+	@SuppressWarnings("unchecked")
 	public void salvar() {
-
+		try {
+			this.aliquota.setIdAliq(null);
+			if (tipCst.equals("icms")) {
+				this.aliquota
+						.setCst((Collection<CodigoSituacaoTributaria>) cst);
+				if (this.tipTrib.equals(TipoTrib.ISENTO.toString())) {
+					this.aliquota.setTipo(TipoTrib.ISENTO);
+				} else if (this.tipTrib.equals(TipoTrib.NTRIB.toString())) {
+					this.aliquota.setTipo(TipoTrib.NTRIB);
+				} else if (this.tipTrib
+						.equals(TipoTrib.SUBSTITUICAO.toString())) {
+					this.aliquota.setTipo(TipoTrib.SUBSTITUICAO);
+				} else if (this.tipTrib.equals(TipoTrib.TRIBUTADO.toString())) {
+					this.aliquota.setTipo(TipoTrib.TRIBUTADO);
+				}
+			} else if (tipCst.equals("pisCofins") || tipCst.equals("ipi")) {
+				this.aliquota
+						.setCst((Collection<CodigoSituacaoTributaria>) cstEnt);
+				this.aliquota
+						.setCst((Collection<CodigoSituacaoTributaria>) cstSai);
+			}
+			aliqRN.salva(aliquota);
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
+							"Alíquota salva com sucesso"));
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+							"Problemas na gravacao da Alíquota "
+									+ e.getMessage()));
+		}
+		this.sal = true;
+		this.vinculo = true;
+		limpa();
 	}
 
 	public void alterar() {

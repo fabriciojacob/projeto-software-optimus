@@ -15,4 +15,5 @@ public interface AliquotaDAO {
 	public void salvar(Aliquota aliq);
 	public void begin() throws IOException, SQLException;
 	public void close() throws Exception;
+	public void salva(Aliquota aliquota);
 }
