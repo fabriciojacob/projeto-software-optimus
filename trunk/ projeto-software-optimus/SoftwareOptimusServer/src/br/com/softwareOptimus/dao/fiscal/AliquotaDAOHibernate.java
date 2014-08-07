@@ -72,4 +72,10 @@ public class AliquotaDAOHibernate implements AliquotaDAO {
 	public void close() throws Exception {
 		this.session.close();
 	}
+
+	@Override
+	public void salva(Aliquota aliquota) {
+		this.session.persist(aliquota);
+		this.transaction.commit();
+	}
 }
