@@ -100,7 +100,11 @@ public class ParticipanteBean {
 			this.listaEnd.clear();
 		}
 		try {
-			this.listaEnd = participanteRN.listaLogr(this.pessoaFisica);
+			if (this.pessoaFisica.getIdPessoa() == null) {
+				this.listaEnd = participanteRN.listaLogr(this.pessoaJuridica);
+			} else {
+				this.listaEnd = participanteRN.listaLogr(this.pessoaFisica);
+			}
 		} catch (Exception e) {
 			msgErro("Problemas na listagem dos logradouros", e);
 		}
@@ -164,7 +168,7 @@ public class ParticipanteBean {
 						+ e.getMessage()));
 	}
 
-	public void editar(Pessoa pessoa) {
+	public void editar() {
 		this.participanteRN = new ParticipanteRN();
 		try {
 			this.pessoaFisica = this.participanteRN.carregaIDPF(id);
