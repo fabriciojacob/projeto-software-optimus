@@ -3,7 +3,6 @@ package br.com.softwareOptimus.entidades.dao.participantes;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
-import br.com.softwareOptimus.entidades.Pessoa;
 import br.com.softwareOptimus.entidades.PessoaFisica;
 import br.com.softwareOptimus.entidades.PessoaJuridica;
 

@@ -10,7 +10,6 @@ import br.com.softwareOptimus.entidades.Email;
 import br.com.softwareOptimus.entidades.Logradouro;
 import br.com.softwareOptimus.entidades.Municipio;
 import br.com.softwareOptimus.entidades.NaturezaPessoa;
-import br.com.softwareOptimus.entidades.Pessoa;
 import br.com.softwareOptimus.entidades.PessoaFisica;
 import br.com.softwareOptimus.entidades.PessoaJuridica;
 import br.com.softwareOptimus.entidades.Telefone;
