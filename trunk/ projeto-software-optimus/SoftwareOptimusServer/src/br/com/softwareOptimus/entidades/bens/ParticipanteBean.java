@@ -2,12 +2,10 @@ package br.com.softwareOptimus.entidades.bens;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-
 import br.com.softwareOptimus.entidades.Email;
 import br.com.softwareOptimus.entidades.Logradouro;
 import br.com.softwareOptimus.entidades.Municipio;
@@ -17,7 +15,6 @@ import br.com.softwareOptimus.entidades.PessoaFisica;
 import br.com.softwareOptimus.entidades.PessoaJuridica;
 import br.com.softwareOptimus.entidades.Telefone;
 import br.com.softwareOptimus.entidades.TipoLogradouro;
-import br.com.softwareOptimus.entidades.RN.EmpresaRN;
 import br.com.softwareOptimus.entidades.RN.ParticipanteRN;
 import br.com.softwareOptimus.entidades.RN.geral.LogradouroRN;
 
@@ -66,8 +63,7 @@ public class ParticipanteBean {
 		}
 	}
 
-	public void salvarLogr(Municipio municipio, Pessoa pessoa) {
-		logradouro = new Logradouro();
+	public void salvarLogr(Municipio municipio) {
 		logradouro.setIdEndereco(null);
 		if (tipoLogrSelecionado.equals(TipoLogradouro.COBRANCA.toString())) {
 			logradouro.setTipoLogr(TipoLogradouro.COBRANCA);
@@ -83,19 +79,18 @@ public class ParticipanteBean {
 
 		try {
 			logrRN = new LogradouroRN();
-			if (selecionadaPessoa.equals("FISICA")) {
-				logradouro.setPessoa(pessoaFisica);
+			if (this.pessoaFisica.getIdPessoa() == null) {
+				logradouro.setPessoa(this.pessoaJuridica);
 			} else {
-				logradouro.setPessoa(pessoaJuridica);
+				logradouro.setPessoa(this.pessoaFisica);
 			}
-
 			logradouro.setMunicipio(municipio);
 			logrRN.salvar(logradouro);
 			msgAcerto("Logradouro salvo com sucesso");
 			listaLogradouro();
 			this.logradouro = new Logradouro();
 		} catch (Exception e) {
-			msgErro("Problemas na gravacao do endere�o", e);
+			msgErro("Problemas na gravacao do endereco", e);
 		}
 	}
 
@@ -105,12 +100,7 @@ public class ParticipanteBean {
 			this.listaEnd.clear();
 		}
 		try {
-
-			if (selecionadaPessoa.equals("FISICA")) {
-				this.listaEnd = participanteRN.listaLogr(pessoaFisica);
-			} else {
-				this.listaEnd = participanteRN.listaLogr(pessoaJuridica);
-			}
+			this.listaEnd = participanteRN.listaLogr(this.pessoaFisica);
 		} catch (Exception e) {
 			msgErro("Problemas na listagem dos logradouros", e);
 		}
@@ -143,13 +133,19 @@ public class ParticipanteBean {
 				this.listaPessoaFisica = this.participanteRN
 						.listaPFCPF(textoConsulta);
 			} else {
-				if (this.pessoaFisica != null) {
+				if (this.listaPessoaFisica != null) {
 					this.listaPessoaFisica.clear();
 				}
 				this.listaPessoaFisica = this.participanteRN
 						.listaPFNome(textoConsulta);
 			}
 			this.selecionadaPessoa = "FISICA";
+			this.salvar = false;
+			this.cancelar = false;
+			this.enderecos = false;
+			this.salReg = false;
+			this.email = false;
+			this.telefone = false;
 		} catch (Exception e) {
 			msgErro("Problemas na pesquisa", e);
 		}
@@ -168,20 +164,31 @@ public class ParticipanteBean {
 						+ e.getMessage()));
 	}
 
-	public void editar() {
+	public void editar(Pessoa pessoa) {
 		this.participanteRN = new ParticipanteRN();
 		try {
 			this.pessoaFisica = this.participanteRN.carregaIDPF(id);
 		} catch (Exception e) {
 			msgErro("Problemas na edição", e);
 		}
-		// listaLogradouro();
+		listaLogradouro();
 		this.salvar = false;
 		this.cancelar = false;
 		this.enderecos = false;
 		this.salReg = false;
 		this.email = false;
 		this.telefone = false;
+	}
+
+	public void excluirLogr() {
+		LogradouroRN logrRN = new LogradouroRN();
+		try {
+			logrRN.excluirLogr(idLogr);
+			msgAcerto("Logradouro excluido com sucesso");
+			listaLogradouro();
+		} catch (Exception e) {
+			msgErro("Problemas na exclusao do logradouro", e);
+		}
 	}
 
 	public String getTipoPJ() {

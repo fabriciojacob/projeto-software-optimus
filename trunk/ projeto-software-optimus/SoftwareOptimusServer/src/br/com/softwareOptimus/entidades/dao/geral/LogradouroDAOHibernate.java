@@ -33,6 +33,9 @@ public class LogradouroDAOHibernate implements LogradouroDAO {
 	@Override
 	public void salvar(Logradouro logradouro) {
 		this.session.persist(logradouro);
+		if(!this.transaction.isActive()){
+			this.transaction.begin();
+		}
 		this.transaction.commit();
 
 	}
