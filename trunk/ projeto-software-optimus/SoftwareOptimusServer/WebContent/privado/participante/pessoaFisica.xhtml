@@ -68,7 +68,7 @@
 					<p:column headerText="Selecionar">
 						<p:commandLink id="link" value="Editar"
 							ajax="dialog,frmCadParticipante"
-							action="#{participanteBean.editar(pesPF)}">
+							action="#{participanteBean.editar}">
 							<f:setPropertyActionListener value="#{pesPF.idPessoa}"
 								target="#{participanteBean.id}" />
 						</p:commandLink>
