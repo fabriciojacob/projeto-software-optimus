@@ -3,12 +3,10 @@ package br.com.softwareOptimus.fiscal.bens;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-
 import br.com.softwareOptimus.fiscal.Aliquota;
 import br.com.softwareOptimus.fiscal.CodigoSituacaoTributaria;
 import br.com.softwareOptimus.fiscal.IO;
@@ -25,13 +23,12 @@ public class AliquotaBean {
 	private CodigoSituacaoTributaria cst = new CodigoSituacaoTributaria();
 	private CodigoSituacaoTributaria cstEnt = new CodigoSituacaoTributaria();
 	private CodigoSituacaoTributaria cstSai = new CodigoSituacaoTributaria();
+	private Collection<CodigoSituacaoTributaria> colCst = new ArrayList<CodigoSituacaoTributaria>();
 	private List<CodigoSituacaoTributaria> cstList;
 	private List<CodigoSituacaoTributaria> cstListEnt;
 	private List<CodigoSituacaoTributaria> cstListSai;
 	private List<Aliquota> aliqList = new ArrayList<Aliquota>();
 	private String busca, filtro, tipCst, tipTrib;
-	private CodigoSituacaoTributariaRN cstRN = new CodigoSituacaoTributariaRN();
-	private AliquotaRN aliqRN = new AliquotaRN();
 	private Long id;
 	private boolean sal = true, alt = true, rem = true, tipTri = true,
 			vinculo = true, chkIcm = true, chkIpi = true, chkPisCofins = true;
@@ -212,13 +209,13 @@ public class AliquotaBean {
 		limpa();
 	}
 
-	@SuppressWarnings("unchecked")
 	public void salvar() {
 		try {
+			AliquotaRN aliqRN = new AliquotaRN();
 			this.aliquota.setIdAliq(null);
 			if (tipCst.equals("icms")) {
-				this.aliquota
-						.setCst((Collection<CodigoSituacaoTributaria>) cst);
+				this.colCst.add(cst);
+				this.aliquota.setCst(this.colCst);
 				if (this.tipTrib.equals(TipoTrib.ISENTO.toString())) {
 					this.aliquota.setTipo(TipoTrib.ISENTO);
 				} else if (this.tipTrib.equals(TipoTrib.NTRIB.toString())) {
@@ -230,21 +227,20 @@ public class AliquotaBean {
 					this.aliquota.setTipo(TipoTrib.TRIBUTADO);
 				}
 			} else if (tipCst.equals("pisCofins") || tipCst.equals("ipi")) {
-				this.aliquota
-						.setCst((Collection<CodigoSituacaoTributaria>) cstEnt);
-				this.aliquota
-						.setCst((Collection<CodigoSituacaoTributaria>) cstSai);
+				this.colCst.add(cstEnt);
+				this.colCst.add(cstSai);
+				this.aliquota.setCst(this.colCst);
 			}
 			aliqRN.salva(aliquota);
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-							"Alíquota salva com sucesso"));
+							"Alï¿½quota salva com sucesso"));
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na gravacao da Alíquota "
+							"Problemas na gravacao da Alï¿½quota "
 									+ e.getMessage()));
 		}
 		this.sal = true;
@@ -259,10 +255,6 @@ public class AliquotaBean {
 
 	}
 
-	public void consultar() {
-
-	}
-
 	public void cancelar() {
 		this.sal = true;
 		this.alt = true;
@@ -272,14 +264,32 @@ public class AliquotaBean {
 	}
 
 	public void buscaAliq() {
-
+		limpa();
+		AliquotaRN aliqRN = new AliquotaRN();
+		if (!busca.equals("")) {
+			if (filtro.equals("id")) {
+				this.aliqList = aliqRN.consultaId(Long.parseLong(busca));
+			} else if (filtro.equals("aliq")) {
+				this.aliqList = aliqRN.consultaAliq(Double.parseDouble(busca));
+			} else if (filtro.equals("red")) {
+				this.aliqList = aliqRN.consultaRed(Double.parseDouble(busca));
+			}
+		} else {
+			this.aliqList = aliqRN.lista();
+		}
 	}
 
 	public void editAliq() {
-
+		AliquotaRN aliqRN = new AliquotaRN();
+		this.aliquota = aliqRN.editUnid(id);
+		this.alt = false;
+		this.rem = false;
+		this.sal = true;
+		this.vinculo = false;
 	}
 
 	public void eventTipoCst() {
+		CodigoSituacaoTributariaRN cstRN = new CodigoSituacaoTributariaRN();
 		if (tipCst.equals("icms")) {
 			this.tipTri = false;
 			this.chkIcm = false;
@@ -303,10 +313,6 @@ public class AliquotaBean {
 		}
 	}
 
-	public void filtra() {
-		cstRN.teste(cst);
-	}
-
 	public void limpa() {
 		this.aliquota = new Aliquota();
 		this.cst = new CodigoSituacaoTributaria();
@@ -316,5 +322,6 @@ public class AliquotaBean {
 		this.cstListEnt = new ArrayList<CodigoSituacaoTributaria>();
 		this.cstListSai = new ArrayList<CodigoSituacaoTributaria>();
 		this.aliqList = new ArrayList<Aliquota>();
+		this.colCst = new ArrayList<CodigoSituacaoTributaria>();
 	}
 }

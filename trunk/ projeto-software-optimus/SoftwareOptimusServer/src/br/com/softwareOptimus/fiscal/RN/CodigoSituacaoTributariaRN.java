@@ -22,9 +22,4 @@ public class CodigoSituacaoTributariaRN {
 	public List<CodigoSituacaoTributaria> cstListaOut(TipoCst tipo, IO entSai) {
 		return cstDAO.cstListaOut(tipo, entSai);
 	}
-
-	public void teste(CodigoSituacaoTributaria cst) {
-	
-	}
-
 }

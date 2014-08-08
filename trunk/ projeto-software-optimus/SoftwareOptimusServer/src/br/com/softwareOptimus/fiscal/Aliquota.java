@@ -2,7 +2,6 @@ package br.com.softwareOptimus.fiscal;
 
 import java.io.Serializable;
 import java.util.Collection;
-
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;

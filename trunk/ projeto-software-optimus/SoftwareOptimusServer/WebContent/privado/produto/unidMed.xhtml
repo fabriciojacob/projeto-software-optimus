@@ -62,8 +62,7 @@
 					</h:panelGrid>
 				</div>
 				<h:panelGrid columns="3" columnClasses="label" cellspacing="3">
-				
-				    Dados da Busca:
+
 					<p:inputText id="texto" value="#{unidMedBean.busca}" size="40" />
 
 					<p:selectOneMenu id="fConsult" value="#{unidMedBean.filtro}">/>
@@ -74,8 +73,9 @@
 
 				</h:panelGrid>
 				<h:panelGrid id="gridData" columns="1" columnClasses="label, value">
-					<p:dataTable id="data" value="#{unidMedBean.unidMedLis}" paginator="true" rows="6"
-						var="unidades" rowKey="unidades.idUnidMed">
+					<p:dataTable id="data" value="#{unidMedBean.unidMedLis}"
+						paginator="true" rows="6" var="unidades"
+						rowKey="unidades.idUnidMed">
 						<p:column headerText="Codigo da Unidade">
 							<h:outputText value="#{unidades.idUnidMed}" />
 						</p:column>

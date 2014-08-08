@@ -23,7 +23,7 @@
 			<p:commandButton value="Alterar" disabled="#{aliquotaBean.alt}"
 				actionListener="#{aliquotaBean.alterar}" ajax="grid" />
 
-			<p:commandButton value="Remover" disabled="#{aliquotaBean.rem}"
+			<p:commandButton value="Excluir" disabled="#{aliquotaBean.rem}"
 				actionListener="#{aliquotaBean.remover}" ajax="grid" />
 
 			<p:commandButton value="Consultar" type="button" ajax="dialog, grid"
@@ -49,10 +49,10 @@
 					<p:inputText id="red" value="#{aliquotaBean.aliquota.reducao}"
 					size="40" />
 
-			</h:panelGrid>
+				<p:commandButton value="Vincular CST" type="button"
+					disabled="#{aliquotaBean.vinculo}" onclick="PF('dlg4').show();" />
 
-			<p:commandButton value="Vincular CST" type="button" disabled="#{aliquotaBean.vinculo}"
-				onclick="PF('dlg4').show();" />
+			</h:panelGrid>
 
 			<p:dialog id="dialog" header="Consulta" widgetVar="dlg3" modal="true"
 				height="300" width="650">
@@ -65,7 +65,6 @@
 					</h:panelGrid>
 				</div>
 				<h:panelGrid columns="3" columnClasses="label" cellspacing="3">
-				    Dados da Busca:
 					<p:inputText id="texto" value="#{aliquotaBean.busca}" size="40" />
 
 					<p:selectOneMenu id="fConsult" value="#{aliquotaBean.filtro}">/>
@@ -78,9 +77,8 @@
 				</h:panelGrid>
 				<h:panelGrid id="gridData" columns="1" columnClasses="label, value">
 					<p:dataTable id="data" value="#{aliquotaBean.aliqList}"
-						paginator="true" rows="6" var="aliquota"
-						rowKey="unidades.idUnidMed">
-						<p:column headerText="Codigo da Aliquota">
+						paginator="true" rows="6" var="aliquota" rowKey="aliquota.idAliq">
+						<p:column headerText="Código da Alíquota">
 							<h:outputText value="#{aliquota.idAliq}" />
 						</p:column>
 
@@ -90,6 +88,10 @@
 
 						<p:column headerText="Redução">
 							<h:outputText value="#{aliquota.reducao}" />
+						</p:column>
+
+						<p:column headerText="Tipo Tributação">
+							<h:outputText value="#{aliquota.tipo}" />
 						</p:column>
 						<p:column headerText="Selecionar">
 							<p:commandLink id="link" value="Editar" ajax="data"
@@ -122,10 +124,10 @@
 					<p:selectOneMenu id="trib" value="#{aliquotaBean.tipTrib}"
 							style="width:250px;" disabled="#{aliquotaBean.tipTri}">
 							<f:selectItem itemLabel="Selecione uma tributação" />
-							<f:selectItem itemLabel="Substituicao" itemValue="sub" />
-							<f:selectItem itemLabel="Tributado" itemValue="trib" />
-							<f:selectItem itemLabel="Isento" itemValue="ise" />
-							<f:selectItem itemLabel="Não Tributado" itemValue="nTrib" />
+							<f:selectItem itemLabel="Substituicao" itemValue="SUBSTITUICAO" />
+							<f:selectItem itemLabel="Tributado" itemValue="TRIBUTADO" />
+							<f:selectItem itemLabel="Isento" itemValue="ISENTO" />
+							<f:selectItem itemLabel="Não Tributado" itemValue="NTRIB" />
 						</p:selectOneMenu>
 
 					Cst Icms
@@ -158,12 +160,13 @@
 									var="listaCstIpiSai" itemValue="#{listaCstIpiSai}"
 									itemLabel="#{listaCstIpiSai.cst} - #{listaCstIpiSai.descricao}" />
 							</p:selectOneMenu>
-					</h:panelGrid>
+						</h:panelGrid>
 					CST PisCofins
 					<h:panelGrid columns="2">
 						Entrada
-							<p:selectOneMenu id="cstPisCofinsEnt" value="#{aliquotaBean.cstEnt}"
-								style="width:350px;" disabled="#{aliquotaBean.chkPisCofins}">
+							<p:selectOneMenu id="cstPisCofinsEnt"
+								value="#{aliquotaBean.cstEnt}" style="width:350px;"
+								disabled="#{aliquotaBean.chkPisCofins}">
 								<f:selectItem
 									itemLabel="Selecione um CST de PisCofisn para Entrada" />
 								<f:selectItems value="#{aliquotaBean.cstListEnt}"
@@ -172,8 +175,9 @@
 							</p:selectOneMenu>
 						
 						Saída
-							<p:selectOneMenu id="cstPisCofinsSai" value="#{aliquotaBean.cstSai}"
-								style="width:350px;" disabled="#{aliquotaBean.chkPisCofins}">
+							<p:selectOneMenu id="cstPisCofinsSai"
+								value="#{aliquotaBean.cstSai}" style="width:350px;"
+								disabled="#{aliquotaBean.chkPisCofins}">
 								<f:selectItem
 									itemLabel="Selecione um CST de PisCofins para Saída" />
 								<f:selectItems value="#{aliquotaBean.cstListSai}"
