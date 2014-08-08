@@ -7,7 +7,6 @@ import br.com.softwareOptimus.fiscal.Aliquota;
 
 public interface AliquotaDAO {
 
-	public List<Aliquota> consultar(Long id);
 	public void altUnid(Aliquota aliquota) throws Exception;
 	public Aliquota editBusc(Long id);
 	public void remover(Long id) throws Exception;
@@ -16,4 +15,7 @@ public interface AliquotaDAO {
 	public void begin() throws IOException, SQLException;
 	public void close() throws Exception;
 	public void salva(Aliquota aliquota);
+	public List<Aliquota> consultaId(long parseLong);
+	public List<Aliquota> consultaAliq(Double busca);
+	public List<Aliquota> consultaRed(Double busca);
 }

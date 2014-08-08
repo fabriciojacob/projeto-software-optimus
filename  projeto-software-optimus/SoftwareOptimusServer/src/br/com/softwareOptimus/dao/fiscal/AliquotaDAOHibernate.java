@@ -3,17 +3,16 @@ package br.com.softwareOptimus.dao.fiscal;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
-
+import javax.persistence.TypedQuery;
 import br.com.softwareOptimus.fiscal.Aliquota;
 
 public class AliquotaDAOHibernate implements AliquotaDAO {
 
 	private EntityManager session;
 	private EntityTransaction transaction;
-	
+
 	public EntityManager getSession() {
 		return session;
 	}
@@ -31,33 +30,35 @@ public class AliquotaDAOHibernate implements AliquotaDAO {
 	}
 
 	@Override
-	public List<Aliquota> consultar(Long id) {
-		return null;
-	}
-
-	@Override
 	public void altUnid(Aliquota aliquota) throws Exception {
-		
+
 	}
 
 	@Override
 	public Aliquota editBusc(Long id) {
-		return null;
+		String jpql = "Select a From Aliquota a Where a.idAliq = :id ";
+		TypedQuery<Aliquota> listaAliquota = this.session.createQuery(jpql,
+				Aliquota.class);
+		listaAliquota.setParameter("id", id);
+		return listaAliquota.getSingleResult();
 	}
 
 	@Override
 	public void remover(Long id) throws Exception {
-	
+
 	}
 
 	@Override
 	public List<Aliquota> lista() {
-		return null;
+		String jpql = "Select a From Aliquota a";
+		TypedQuery<Aliquota> listaAliquota = this.session.createQuery(jpql,
+				Aliquota.class);
+		return listaAliquota.getResultList();
 	}
 
 	@Override
 	public void salvar(Aliquota aliq) {
-		
+
 	}
 
 	@Override
@@ -77,5 +78,40 @@ public class AliquotaDAOHibernate implements AliquotaDAO {
 	public void salva(Aliquota aliquota) {
 		this.session.persist(aliquota);
 		this.transaction.commit();
+	}
+
+	@Override
+	public List<Aliquota> consultaId(long id) {
+		String jpql = "Select a From Aliquota a Where a.idAliq = :id ";
+		TypedQuery<Aliquota> listaUnidade = this.session.createQuery(jpql,
+				Aliquota.class);
+		listaUnidade.setParameter("id", id);
+		return listaUnidade.getResultList();
+	}
+
+	@Override
+	public List<Aliquota> consultaAliq(Double aliquota) {
+		Double minimo, maximo;
+		minimo = aliquota - 2;
+		maximo = aliquota + 2;
+		String jpql = "Select a From Aliquota a Where a.aliquota BETWEEN :minimo And :maximo";
+		TypedQuery<Aliquota> listaAliquota = this.session.createQuery(jpql,
+				Aliquota.class);
+		listaAliquota.setParameter("minimo", minimo);
+		listaAliquota.setParameter("maximo", maximo);
+		return listaAliquota.getResultList();
+	}
+
+	@Override
+	public List<Aliquota> consultaRed(Double reducao) {
+		Double minimo, maximo;
+		minimo = reducao - 10;
+		maximo = reducao + 10;
+		String jpql = "Select a From Aliquota a Where a.reducao BETWEEN :minimo And :maximo";
+		TypedQuery<Aliquota> listaAliquota = this.session.createQuery(jpql,
+				Aliquota.class);
+		listaAliquota.setParameter("minimo", minimo);
+		listaAliquota.setParameter("maximo", maximo);
+		return listaAliquota.getResultList();
 	}
 }
