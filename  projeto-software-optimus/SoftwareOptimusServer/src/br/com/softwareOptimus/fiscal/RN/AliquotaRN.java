@@ -37,4 +37,12 @@ public class AliquotaRN {
 	public Aliquota editUnid(Long id) {
 		return aliquotaDAO.editBusc(id);
 	}
+
+	public void remove(Long idAliq) throws Exception {
+		this.aliquotaDAO.remover(idAliq);
+	}
+
+	public void altUnid(Aliquota aliquota) {
+		this.aliquotaDAO.salva(aliquota);
+	}
 }
