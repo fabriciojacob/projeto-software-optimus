@@ -31,7 +31,8 @@ public class AliquotaDAOHibernate implements AliquotaDAO {
 
 	@Override
 	public void altUnid(Aliquota aliquota) throws Exception {
-
+		this.session.merge(aliquota);
+		this.transaction.commit();
 	}
 
 	@Override
@@ -45,7 +46,9 @@ public class AliquotaDAOHibernate implements AliquotaDAO {
 
 	@Override
 	public void remover(Long id) throws Exception {
-
+		Aliquota aliq = this.session.find(Aliquota.class, id);
+		this.session.remove(aliq);
+		this.transaction.commit();
 	}
 
 	@Override
@@ -54,11 +57,6 @@ public class AliquotaDAOHibernate implements AliquotaDAO {
 		TypedQuery<Aliquota> listaAliquota = this.session.createQuery(jpql,
 				Aliquota.class);
 		return listaAliquota.getResultList();
-	}
-
-	@Override
-	public void salvar(Aliquota aliq) {
-
 	}
 
 	@Override

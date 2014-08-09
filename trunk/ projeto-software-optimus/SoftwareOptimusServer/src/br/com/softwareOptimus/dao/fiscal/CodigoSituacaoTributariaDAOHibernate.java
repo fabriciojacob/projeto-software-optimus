@@ -10,7 +10,6 @@ import br.com.softwareOptimus.fiscal.CodigoSituacaoTributaria;
 import br.com.softwareOptimus.fiscal.IO;
 import br.com.softwareOptimus.fiscal.TipoCst;
 
-
 public class CodigoSituacaoTributariaDAOHibernate implements
 		CodigoSituacaoTributariaDAO {
 

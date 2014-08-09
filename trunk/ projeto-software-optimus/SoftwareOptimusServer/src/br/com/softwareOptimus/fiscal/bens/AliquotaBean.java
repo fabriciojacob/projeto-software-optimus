@@ -213,7 +213,7 @@ public class AliquotaBean {
 		try {
 			AliquotaRN aliqRN = new AliquotaRN();
 			this.aliquota.setIdAliq(null);
-			if (tipCst.equals("icms")) {
+			if (tipCst.equals("ICMS")) {
 				this.colCst.add(cst);
 				this.aliquota.setCst(this.colCst);
 				if (this.tipTrib.equals(TipoTrib.ISENTO.toString())) {
@@ -226,7 +226,7 @@ public class AliquotaBean {
 				} else if (this.tipTrib.equals(TipoTrib.TRIBUTADO.toString())) {
 					this.aliquota.setTipo(TipoTrib.TRIBUTADO);
 				}
-			} else if (tipCst.equals("pisCofins") || tipCst.equals("ipi")) {
+			} else if (tipCst.equals("PISCOFINS") || tipCst.equals("IPI")) {
 				this.colCst.add(cstEnt);
 				this.colCst.add(cstSai);
 				this.aliquota.setCst(this.colCst);
@@ -249,10 +249,44 @@ public class AliquotaBean {
 	}
 
 	public void alterar() {
+			try {
+				AliquotaRN aliqRN = new AliquotaRN();
+				aliqRN.altUnid(aliquota);
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
+								"Alíquota alterada com sucesso"));
+			} catch (Exception e) {
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+								"Problemas na alteração da Alíquota "
+										+ e.getMessage()));
+			}
+			this.alt = true;
+			this.rem = true;
+			limpa();
 	}
 
 	public void remover() {
-
+		AliquotaRN aliqRN = new AliquotaRN();
+		try {
+			aliqRN.remove(aliquota.getIdAliq());
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
+							"Alíquota removida com sucesso"));
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+							"Problemas na remoção da Aliquota "
+									+ e.getMessage()));
+		}
+		this.alt = true;
+		this.rem = true;
+		this.vinculo = true;
+		limpa();
 	}
 
 	public void cancelar() {
@@ -281,7 +315,57 @@ public class AliquotaBean {
 
 	public void editAliq() {
 		AliquotaRN aliqRN = new AliquotaRN();
+		CodigoSituacaoTributariaRN cstRN = new CodigoSituacaoTributariaRN();
 		this.aliquota = aliqRN.editUnid(id);
+		this.colCst = this.aliquota.getCst();
+		if (this.aliquota.getTipo() != null) {
+			for (CodigoSituacaoTributaria Cst : colCst) {
+				cst = Cst;
+			}
+			if (this.aliquota.getTipo().equals(TipoTrib.ISENTO)) {
+				this.tipTrib = TipoTrib.ISENTO.toString();
+			} else if (this.aliquota.getTipo().equals(TipoTrib.NTRIB)) {
+				this.tipTrib = TipoTrib.NTRIB.toString();
+			} else if (this.aliquota.getTipo().equals(TipoTrib.SUBSTITUICAO)) {
+				this.tipTrib = TipoTrib.SUBSTITUICAO.toString();
+			} else if (this.aliquota.getTipo().equals(TipoTrib.TRIBUTADO)) {
+				this.tipTrib = TipoTrib.TRIBUTADO.toString();
+			}
+			this.tipCst = TipoCst.ICMS.toString();
+			this.cstList = cstRN.cstListaIcms();
+			this.chkIcm = false;
+			this.tipTri = false;
+			this.chkIpi = true;
+			this.chkPisCofins = true;
+		} else {
+			this.tipTrib = null;
+			for (CodigoSituacaoTributaria Cst : colCst) {
+				if (Cst.getIo().equals(IO.ENTRADA)) {
+					this.cstEnt = Cst;
+				} else {
+					this.cstSai = Cst;
+				}
+			}
+			if (cstEnt.getTipoCst().equals(TipoCst.PISCOFINS)) {
+				this.chkIcm = true;
+				this.tipTri = true;
+				this.chkIpi = true;
+				this.chkPisCofins = false;
+				this.cstListEnt = cstRN.cstListaOut(TipoCst.PISCOFINS,
+						IO.ENTRADA);
+				this.cstListSai = cstRN
+						.cstListaOut(TipoCst.PISCOFINS, IO.SAIDA);
+				this.tipCst = TipoCst.PISCOFINS.toString();
+			} else {
+				this.chkIcm = true;
+				this.tipTri = true;
+				this.chkIpi = false;
+				this.chkPisCofins = true;
+				this.cstListEnt = cstRN.cstListaOut(TipoCst.IPI, IO.ENTRADA);
+				this.cstListSai = cstRN.cstListaOut(TipoCst.IPI, IO.SAIDA);
+				this.tipCst = TipoCst.IPI.toString();
+			}
+		}
 		this.alt = false;
 		this.rem = false;
 		this.sal = true;
@@ -290,20 +374,20 @@ public class AliquotaBean {
 
 	public void eventTipoCst() {
 		CodigoSituacaoTributariaRN cstRN = new CodigoSituacaoTributariaRN();
-		if (tipCst.equals("icms")) {
+		if (tipCst.equals("ICMS")) {
 			this.tipTri = false;
 			this.chkIcm = false;
 			this.chkIpi = true;
 			this.chkPisCofins = true;
 			this.cstList = cstRN.cstListaIcms();
-		} else if (tipCst.equals("ipi")) {
+		} else if (tipCst.equals("IPI")) {
 			this.tipTri = true;
 			this.chkIcm = true;
 			this.chkIpi = false;
 			this.chkPisCofins = true;
 			this.cstListEnt = cstRN.cstListaOut(TipoCst.IPI, IO.ENTRADA);
 			this.cstListSai = cstRN.cstListaOut(TipoCst.IPI, IO.SAIDA);
-		} else if (tipCst.equals("pisCofins")) {
+		} else if (tipCst.equals("PISCOFINS")) {
 			this.tipTri = true;
 			this.chkIcm = true;
 			this.chkIpi = true;
@@ -314,6 +398,12 @@ public class AliquotaBean {
 	}
 
 	public void limpa() {
+		this.tipCst = null;
+		this.tipTrib = null;
+		this.chkIcm = true;
+		this.chkIpi = true;
+		this.chkPisCofins = true;
+		this.tipTri = true;
 		this.aliquota = new Aliquota();
 		this.cst = new CodigoSituacaoTributaria();
 		this.cstEnt = new CodigoSituacaoTributaria();
