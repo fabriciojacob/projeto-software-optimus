@@ -7,14 +7,14 @@ import br.com.softwareOptimus.fiscal.Aliquota;
 import br.com.softwareOptimus.util.DAOFactory;
 
 public class AliquotaRN {
-	
+
 	private AliquotaDAO aliquotaDAO;
-	
-	public AliquotaRN(){
+
+	public AliquotaRN() {
 		this.aliquotaDAO = DAOFactory.criaAliquotaDAO();
 	}
-	
-	public void salva(Aliquota aliquota){
+
+	public void salva(Aliquota aliquota) {
 		this.aliquotaDAO.salva(aliquota);
 	}
 
@@ -44,5 +44,15 @@ public class AliquotaRN {
 
 	public void altUnid(Aliquota aliquota) {
 		this.aliquotaDAO.salva(aliquota);
+	}
+
+	public Integer validaCampoNulo(Aliquota aliquota) {
+		Integer retorno = 0;
+		if (aliquota.getAliquota().equals(null)
+				|| aliquota.getReducao().equals(null)
+				|| aliquota.getCst().equals(null)) {
+			retorno = 1;
+		}
+		return retorno;
 	}
 }
