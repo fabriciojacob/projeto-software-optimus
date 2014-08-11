@@ -212,26 +212,35 @@ public class AliquotaBean {
 	public void salvar() {
 		try {
 			AliquotaRN aliqRN = new AliquotaRN();
-			this.aliquota.setIdAliq(null);
-			if (tipCst.equals("ICMS")) {
-				this.colCst.add(cst);
-				this.aliquota.setCst(this.colCst);
-				if (this.tipTrib.equals(TipoTrib.ISENTO.toString())) {
-					this.aliquota.setTipo(TipoTrib.ISENTO);
-				} else if (this.tipTrib.equals(TipoTrib.NTRIB.toString())) {
-					this.aliquota.setTipo(TipoTrib.NTRIB);
-				} else if (this.tipTrib
-						.equals(TipoTrib.SUBSTITUICAO.toString())) {
-					this.aliquota.setTipo(TipoTrib.SUBSTITUICAO);
-				} else if (this.tipTrib.equals(TipoTrib.TRIBUTADO.toString())) {
-					this.aliquota.setTipo(TipoTrib.TRIBUTADO);
+			Integer retorno = aliqRN.validaCampoNulo(aliquota);
+			if (retorno == 0) {
+				this.aliquota.setIdAliq(null);
+				if (tipCst.equals("ICMS")) {
+					this.colCst.add(cst);
+					this.aliquota.setCst(this.colCst);
+					if (this.tipTrib.equals(TipoTrib.ISENTO.toString())) {
+						this.aliquota.setTipo(TipoTrib.ISENTO);
+					} else if (this.tipTrib.equals(TipoTrib.NTRIB.toString())) {
+						this.aliquota.setTipo(TipoTrib.NTRIB);
+					} else if (this.tipTrib.equals(TipoTrib.SUBSTITUICAO
+							.toString())) {
+						this.aliquota.setTipo(TipoTrib.SUBSTITUICAO);
+					} else if (this.tipTrib.equals(TipoTrib.TRIBUTADO
+							.toString())) {
+						this.aliquota.setTipo(TipoTrib.TRIBUTADO);
+					}
+				} else if (tipCst.equals("PISCOFINS") || tipCst.equals("IPI")) {
+					this.colCst.add(cstEnt);
+					this.colCst.add(cstSai);
+					this.aliquota.setCst(this.colCst);
 				}
-			} else if (tipCst.equals("PISCOFINS") || tipCst.equals("IPI")) {
-				this.colCst.add(cstEnt);
-				this.colCst.add(cstSai);
-				this.aliquota.setCst(this.colCst);
+				aliqRN.salva(aliquota);
+			} else {
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+								"Existem campos nulos no formulário"));
 			}
-			aliqRN.salva(aliquota);
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
@@ -249,23 +258,44 @@ public class AliquotaBean {
 	}
 
 	public void alterar() {
-			try {
-				AliquotaRN aliqRN = new AliquotaRN();
-				aliqRN.altUnid(aliquota);
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-								"Alíquota alterada com sucesso"));
-			} catch (Exception e) {
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-								"Problemas na alteração da Alíquota "
-										+ e.getMessage()));
+		try {
+			this.aliquota.setCst(null);
+			this.colCst = new ArrayList<>();
+			AliquotaRN aliqRN = new AliquotaRN();
+			if (this.tipCst.equals(TipoCst.ICMS.toString())) {
+				if (this.tipTrib.equals(TipoTrib.ISENTO.toString())) {
+					this.aliquota.setTipo(TipoTrib.ISENTO);
+				} else if (this.tipTrib.equals(TipoTrib.NTRIB.toString())) {
+					this.aliquota.setTipo(TipoTrib.NTRIB);
+				} else if (this.tipTrib
+						.equals(TipoTrib.SUBSTITUICAO.toString())) {
+					this.aliquota.setTipo(TipoTrib.SUBSTITUICAO);
+				} else if (this.tipTrib.equals(TipoTrib.TRIBUTADO.toString())) {
+					this.aliquota.setTipo(TipoTrib.TRIBUTADO);
+				}
+				this.colCst.add(cst);
+				this.aliquota.setCst(this.colCst);
+			} else {
+				this.aliquota.setTipo(null);
+				this.colCst.add(cstEnt);
+				this.colCst.add(cstSai);
+				this.aliquota.setCst(this.colCst);
 			}
-			this.alt = true;
-			this.rem = true;
-			limpa();
+			aliqRN.altUnid(aliquota);
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
+							"Alíquota alterada com sucesso"));
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+							"Problemas na alteração da Alíquota "
+									+ e.getMessage()));
+		}
+		this.alt = true;
+		this.rem = true;
+		limpa();
 	}
 
 	public void remover() {
