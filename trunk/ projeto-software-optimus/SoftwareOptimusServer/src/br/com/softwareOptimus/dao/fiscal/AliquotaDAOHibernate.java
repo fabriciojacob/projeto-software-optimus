@@ -30,7 +30,7 @@ public class AliquotaDAOHibernate implements AliquotaDAO {
 	}
 
 	@Override
-	public void altUnid(Aliquota aliquota) throws Exception {
+	public void altAliq(Aliquota aliquota) throws Exception {
 		this.session.merge(aliquota);
 		this.transaction.commit();
 	}
@@ -73,7 +73,7 @@ public class AliquotaDAOHibernate implements AliquotaDAO {
 	}
 
 	@Override
-	public void salva(Aliquota aliquota) {
+	public void salva(Aliquota aliquota) throws Exception {
 		this.session.persist(aliquota);
 		this.transaction.commit();
 	}
