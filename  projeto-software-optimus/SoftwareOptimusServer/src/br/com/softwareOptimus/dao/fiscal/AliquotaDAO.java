@@ -7,11 +7,11 @@ import br.com.softwareOptimus.fiscal.Aliquota;
 
 public interface AliquotaDAO {
 
-	public void altUnid(Aliquota aliquota) throws Exception;
+	public void altAliq(Aliquota aliquota) throws Exception;
 	public Aliquota editBusc(Long id);
 	public void remover(Long id) throws Exception;
 	public List<Aliquota> lista();
-	public void salva(Aliquota aliq);
+	public void salva(Aliquota aliq) throws Exception;
 	public void begin() throws IOException, SQLException;
 	public void close() throws Exception;
 	public List<Aliquota> consultaId(long parseLong);

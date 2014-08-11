@@ -212,39 +212,34 @@ public class AliquotaBean {
 	public void salvar() {
 		try {
 			AliquotaRN aliqRN = new AliquotaRN();
-			Integer retorno = aliqRN.validaCampoNulo(aliquota);
-			if (retorno == 0) {
-				this.aliquota.setIdAliq(null);
-				if (tipCst.equals("ICMS")) {
-					this.colCst.add(cst);
-					this.aliquota.setCst(this.colCst);
-					if (this.tipTrib.equals(TipoTrib.ISENTO.toString())) {
-						this.aliquota.setTipo(TipoTrib.ISENTO);
-					} else if (this.tipTrib.equals(TipoTrib.NTRIB.toString())) {
-						this.aliquota.setTipo(TipoTrib.NTRIB);
-					} else if (this.tipTrib.equals(TipoTrib.SUBSTITUICAO
-							.toString())) {
-						this.aliquota.setTipo(TipoTrib.SUBSTITUICAO);
-					} else if (this.tipTrib.equals(TipoTrib.TRIBUTADO
-							.toString())) {
-						this.aliquota.setTipo(TipoTrib.TRIBUTADO);
-					}
-				} else if (tipCst.equals("PISCOFINS") || tipCst.equals("IPI")) {
-					this.colCst.add(cstEnt);
-					this.colCst.add(cstSai);
-					this.aliquota.setCst(this.colCst);
+			this.colCst = new ArrayList<>();
+			this.aliquota.setIdAliq(null);
+			if (tipCst.equals("ICMS")) {
+				this.colCst.add(cst);
+				this.aliquota.setCst(this.colCst);
+				if (this.tipTrib.equals(TipoTrib.ISENTO.toString())) {
+					this.aliquota.setTipo(TipoTrib.ISENTO);
+				} else if (this.tipTrib.equals(TipoTrib.NTRIB.toString())) {
+					this.aliquota.setTipo(TipoTrib.NTRIB);
+				} else if (this.tipTrib
+						.equals(TipoTrib.SUBSTITUICAO.toString())) {
+					this.aliquota.setTipo(TipoTrib.SUBSTITUICAO);
+				} else if (this.tipTrib.equals(TipoTrib.TRIBUTADO.toString())) {
+					this.aliquota.setTipo(TipoTrib.TRIBUTADO);
 				}
-				aliqRN.salva(aliquota);
-			} else {
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-								"Existem campos nulos no formulário"));
+			} else if (tipCst.equals("PISCOFINS") || tipCst.equals("IPI")) {
+				this.colCst.add(cstEnt);
+				this.colCst.add(cstSai);
+				this.aliquota.setCst(this.colCst);
 			}
+			aliqRN.salva(aliquota);
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-							"Al�quota salva com sucesso"));
+							"Aliquota salva com sucesso"));
+			this.sal = true;
+			this.vinculo = true;
+			limpa();
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
@@ -252,9 +247,6 @@ public class AliquotaBean {
 							"Problemas na gravacao da Al�quota "
 									+ e.getMessage()));
 		}
-		this.sal = true;
-		this.vinculo = true;
-		limpa();
 	}
 
 	public void alterar() {
@@ -281,11 +273,14 @@ public class AliquotaBean {
 				this.colCst.add(cstSai);
 				this.aliquota.setCst(this.colCst);
 			}
-			aliqRN.altUnid(aliquota);
+			aliqRN.altAliq(aliquota);
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
 							"Alíquota alterada com sucesso"));
+			this.alt = true;
+			this.rem = true;
+			limpa();
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
@@ -293,9 +288,6 @@ public class AliquotaBean {
 							"Problemas na alteração da Alíquota "
 									+ e.getMessage()));
 		}
-		this.alt = true;
-		this.rem = true;
-		limpa();
 	}
 
 	public void remover() {
@@ -306,6 +298,10 @@ public class AliquotaBean {
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
 							"Alíquota removida com sucesso"));
+			this.alt = true;
+			this.rem = true;
+			this.vinculo = true;
+			limpa();
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
@@ -313,10 +309,6 @@ public class AliquotaBean {
 							"Problemas na remoção da Aliquota "
 									+ e.getMessage()));
 		}
-		this.alt = true;
-		this.rem = true;
-		this.vinculo = true;
-		limpa();
 	}
 
 	public void cancelar() {
