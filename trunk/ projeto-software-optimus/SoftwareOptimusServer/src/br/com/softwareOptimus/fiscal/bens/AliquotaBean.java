@@ -7,6 +7,9 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+
+import org.hibernate.validator.constraints.NotBlank;
+
 import br.com.softwareOptimus.fiscal.Aliquota;
 import br.com.softwareOptimus.fiscal.CodigoSituacaoTributaria;
 import br.com.softwareOptimus.fiscal.IO;
@@ -18,7 +21,7 @@ import br.com.softwareOptimus.fiscal.RN.CodigoSituacaoTributariaRN;
 @ManagedBean(name = "aliquotaBean")
 @SessionScoped
 public class AliquotaBean {
-
+	@NotBlank
 	private Aliquota aliquota = new Aliquota();
 	private CodigoSituacaoTributaria cst = new CodigoSituacaoTributaria();
 	private CodigoSituacaoTributaria cstEnt = new CodigoSituacaoTributaria();

@@ -114,7 +114,7 @@
 				modal="true" height="400" width="650">
 				<h:panelGrid id="gridSelect" columns="1"
 					columnClasses="label, value">
-					Tipo CST
+					Tipo CST:
 					<p:selectOneMenu id="tipCst" value="#{aliquotaBean.tipCst}"
 						style="width:200px;">
 						<f:selectItem itemLabel="Selecione um Tipo de CST" />
@@ -126,7 +126,7 @@
 					</p:selectOneMenu>
 					<h:panelGrid id="gridCsts">
 					
-					Tipo Tributação Icms
+					Tipo Tributação Icms:
 					<p:selectOneMenu id="trib" value="#{aliquotaBean.tipTrib}"
 							style="width:250px;" disabled="#{aliquotaBean.tipTri}">
 							<f:selectItem itemLabel="Selecione uma tributação" />
@@ -136,9 +136,9 @@
 							<f:selectItem itemLabel="Não Tributado" itemValue="NTRIB" />
 						</p:selectOneMenu>
 
-					Cst Icms
+					Cst Icms:
 					<h:panelGrid columns="2">
-						Ent/Sai
+						Ent/Sai:
 						<p:selectOneMenu id="cstIcms" value="#{aliquotaBean.cst}"
 								style="width:350px;" disabled="#{aliquotaBean.chkIcm}">
 								<f:selectItem itemLabel="Selecione um CST de Icms" />
@@ -147,9 +147,9 @@
 									itemLabel="#{cstIcmsList.cst} - #{cstIcmsList.descricao}" />
 							</p:selectOneMenu>
 						</h:panelGrid>
-					CST Ipi						
+					CST Ipi:				
 					<h:panelGrid columns="2">
-						Entrada
+						Entrada:
 						<p:selectOneMenu id="cstIpiEnt" value="#{aliquotaBean.cstEnt}"
 								style="width:350px;" disabled="#{aliquotaBean.chkIpi}">
 								<f:selectItem itemLabel="Selecione um CST de Ipi para Entrada" />
@@ -158,7 +158,7 @@
 									itemLabel="#{listaCstIpiEnt.cst} - #{listaCstIpiEnt.descricao}" />
 							</p:selectOneMenu>
 						
-						Saída
+						Saída:
 						<p:selectOneMenu id="cstIpiSai" value="#{aliquotaBean.cstSai}"
 								style="width:350px;" disabled="#{aliquotaBean.chkIpi}">
 								<f:selectItem itemLabel="Selecione um CST de Ipi para Saída" />
@@ -167,9 +167,9 @@
 									itemLabel="#{listaCstIpiSai.cst} - #{listaCstIpiSai.descricao}" />
 							</p:selectOneMenu>
 						</h:panelGrid>
-					CST PisCofins
+					CST PisCofins:
 					<h:panelGrid columns="2">
-						Entrada
+						Entrada:
 							<p:selectOneMenu id="cstPisCofinsEnt"
 								value="#{aliquotaBean.cstEnt}" style="width:350px;"
 								disabled="#{aliquotaBean.chkPisCofins}">
@@ -180,7 +180,7 @@
 									itemLabel="#{listaCstPisCofinsEnt.cst} - #{listaCstPisCofinsEnt.descricao}" />
 							</p:selectOneMenu>
 						
-						Saída
+						Saída:
 							<p:selectOneMenu id="cstPisCofinsSai"
 								value="#{aliquotaBean.cstSai}" style="width:350px;"
 								disabled="#{aliquotaBean.chkPisCofins}">
