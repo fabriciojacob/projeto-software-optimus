@@ -46,22 +46,29 @@ public class ParticipanteBean {
 	public void salvarPF() {
 		try {
 			participanteRN = new ParticipanteRN();
-
-			if (tipoParticipante.equals(NaturezaPessoa.FORNECEDOR.toString())) {
-				this.pessoaFisica.setNaturezaPessoa(NaturezaPessoa.FORNECEDOR);
-			} else if (tipoParticipante.equals(NaturezaPessoa.CLIENTE
-					.toString())) {
-				this.pessoaFisica.setNaturezaPessoa(NaturezaPessoa.CLIENTE);
-			} else if (tipoParticipante.equals(NaturezaPessoa.TRANSPORTADORA
-					.toString())) {
-				this.pessoaFisica
-						.setNaturezaPessoa(NaturezaPessoa.TRANSPORTADORA);
+			Integer retorno = this.participanteRN
+					.validaCampoNuloPF(this.pessoaFisica);
+			if (retorno == 0) {
+				if (tipoParticipante.equals(NaturezaPessoa.FORNECEDOR
+						.toString())) {
+					this.pessoaFisica
+							.setNaturezaPessoa(NaturezaPessoa.FORNECEDOR);
+				} else if (tipoParticipante.equals(NaturezaPessoa.CLIENTE
+						.toString())) {
+					this.pessoaFisica.setNaturezaPessoa(NaturezaPessoa.CLIENTE);
+				} else if (tipoParticipante
+						.equals(NaturezaPessoa.TRANSPORTADORA.toString())) {
+					this.pessoaFisica
+							.setNaturezaPessoa(NaturezaPessoa.TRANSPORTADORA);
+				} else {
+					this.pessoaFisica
+							.setNaturezaPessoa(NaturezaPessoa.CONTADOR);
+				}
+				participanteRN.salvarPF(pessoaFisica);
+				msgAcerto("Registro salvo com sucesso");
 			} else {
-				this.pessoaFisica.setNaturezaPessoa(NaturezaPessoa.CONTADOR);
+				msgErro("Existem campos não preenchidos", null);
 			}
-			participanteRN.salvarPF(pessoaFisica);
-			msgAcerto("Registro salvo com sucesso");
-			this.selecionadaPessoa = "FISICA";
 		} catch (Exception e) {
 			msgErro("Problemas ao salvar", e);
 		}
@@ -147,7 +154,6 @@ public class ParticipanteBean {
 				this.listaPessoaFisica = this.participanteRN
 						.listaPFNome(textoConsulta);
 			}
-			this.selecionadaPessoa = "FISICA";
 			this.salvar = false;
 			this.cancelar = false;
 			this.enderecos = false;
@@ -176,10 +182,13 @@ public class ParticipanteBean {
 		this.participanteRN = new ParticipanteRN();
 		try {
 			this.pessoaFisica = this.participanteRN.carregaIDPF(id);
+			this.tipoParticipante = this.pessoaFisica.getNaturezaPessoa()
+					.toString();
 		} catch (Exception e) {
 			msgErro("Problemas na edição", e);
 		}
 		listaLogradouro();
+		listaEmail();
 		this.salvar = false;
 		this.cancelar = false;
 		this.enderecos = false;
@@ -205,7 +214,11 @@ public class ParticipanteBean {
 			if (this.listaEmail != null) {
 				this.listaEmail.clear();
 			}
-			this.listaEmail = emailRN.listaEmail(pessoaJuridica);
+			if (this.pessoaFisica.getIdPessoa() == null) {
+				this.listaEmail = emailRN.listaEmail(pessoaJuridica);
+			} else {
+				this.listaEmail = emailRN.listaEmail(pessoaFisica);
+			}
 		} catch (Exception e) {
 			msgErro("Problemas na listagem dos emails", e);
 		}
@@ -233,7 +246,7 @@ public class ParticipanteBean {
 			}
 
 			if (padraoNFE && checkNFe == 1) {
-				msgErro("Ja existe um email como padr�o NFE", null);
+				msgErro("Ja existe um email como padr�o NFE", null);
 			} else {
 				if (this.pessoaFisica.getIdPessoa() == 0) {
 					emails.setPessoa(pessoaJuridica);
@@ -534,5 +547,7 @@ public class ParticipanteBean {
 	public void setEmails(Email emails) {
 		this.emails = emails;
 	}
+	
+	
 
 }
