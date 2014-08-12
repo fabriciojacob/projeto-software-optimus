@@ -235,14 +235,22 @@ public class AliquotaBean {
 				this.colCst.add(cstSai);
 				this.aliquota.setCst(this.colCst);
 			}
-			aliqRN.salva(aliquota);
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-							"Aliquota salva com sucesso"));
-			this.sal = true;
-			this.vinculo = true;
-			limpa();
+			Integer retorno = aliqRN.validaCampoNulo(this.aliquota, this.colCst, this.tipTrib);
+			if (retorno == 0) {
+				aliqRN.salva(this.aliquota);
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
+								"Aliquota salva com sucesso"));
+				this.sal = true;
+				this.vinculo = true;
+				limpa();
+			} else {
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+								"Existem campos nulos no formulário"));
+			}
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
 					null,

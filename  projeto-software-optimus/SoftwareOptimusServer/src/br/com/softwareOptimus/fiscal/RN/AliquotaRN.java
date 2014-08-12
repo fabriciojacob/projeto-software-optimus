@@ -1,8 +1,10 @@
 package br.com.softwareOptimus.fiscal.RN;
 
+import java.util.Collection;
 import java.util.List;
 import br.com.softwareOptimus.dao.fiscal.AliquotaDAO;
 import br.com.softwareOptimus.fiscal.Aliquota;
+import br.com.softwareOptimus.fiscal.CodigoSituacaoTributaria;
 import br.com.softwareOptimus.util.DAOFactory;
 
 public class AliquotaRN {
@@ -43,5 +45,13 @@ public class AliquotaRN {
 
 	public void altAliq(Aliquota aliquota) throws Exception {
 		this.aliquotaDAO.altAliq(aliquota);
+	}
+
+	public Integer validaCampoNulo(Aliquota aliquota, Collection<CodigoSituacaoTributaria> colCst, String tipTrib) {
+		Integer retorno = 0;
+		if(aliquota.getAliquota() == null || aliquota.getReducao() == null || colCst.size() == 0){
+			retorno = 1;
+		}
+		return retorno;
 	}
 }
