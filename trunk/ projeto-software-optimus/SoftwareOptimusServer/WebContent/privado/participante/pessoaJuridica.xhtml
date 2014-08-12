@@ -11,16 +11,16 @@
 
 </h:head>
 <h:body>
-	<h:form id="frmCadEmpresa">
+	<h:form id="frmCadParticipante">
 		<br />
 		<h3 style="margin-top: 0">CADASTRO DE PARTICIPANTE PESSOA JURÍDICA</h3>
 		<div align="left">
 
 			<p:commandButton value="Novo" actionListener="#{participanteBean.novo}"
-				ajax="frmCadEmpresa" disabled="#{participanteBean.novo}" />
+				ajax="frmCadParticipante" disabled="#{participanteBean.novo}" />
 
 			<p:commandButton value="Salvar" disabled="#{participanteBean.salvar}"
-				actionListener="#{participanteBean.salvarEmp}" ajax="frmCadEmpresa" />
+				actionListener="#{participanteBean.salvarEmp}" ajax="frmCadParticipante" />
 
 			<p:commandButton value="Consulta" type="button"
 				onclick="PF('consulta').show();" disabled="#{participanteBean.consulta}"
@@ -72,7 +72,7 @@
 					</p:column>
 
 					<p:column headerText="Selecionar">
-						<p:commandLink id="link" value="Editar" ajax="dialog,frmCadEmpresa"
+						<p:commandLink id="link" value="Editar" ajax="dialog,frmCadParticipante"
 							action="#{participanteBean.editEmp}" >
 							<f:setPropertyActionListener value="#{pesEmpresa.idPessoa}"
 								target="#{participanteBean.id}" />
@@ -242,56 +242,7 @@
 
 				</p:tab>
 
-				<p:tab id="infFiscais" title="Dados Fiscais">
-					<h:panelGrid columns="2">
-						<h:panelGrid columns="2">
-
-							Data Inicio:
-							<p:calendar id="dataIni" value="#{participanteBean.regime.dataInicio}"
-								effect="fold" />
-							Regime:
-							<p:selectOneMenu id="fConsult" value="#{participanteBean.tipoRegime}">
-								<f:selectItem itemLabel="SIMPLES" itemValue="SIMPLES" />
-								<f:selectItem itemLabel="REAL" itemValue="LUCROREAL" />
-								<f:selectItem itemLabel="PRESUMIDO" itemValue="LUCROPRESUMIDO" />
-							</p:selectOneMenu>
-
-							<p:commandButton id="incluirReg" icon="ui-icon-disk"
-								disabled="#{participanteBean.salReg}"
-								actionListener="#{participanteBean.salvarRegime()}"
-								update="listaRegime" />
-
-						</h:panelGrid>
-					</h:panelGrid>
-
-					<p:dataTable id="listaRegime" value="#{participanteBean.listaReg}"
-						var="listaReg" paginator="true" rows="6">
-
-						<p:column headerText="Codigo">
-							<h:outputLabel value="#{listaReg.idVigReg}" />
-						</p:column>
-
-
-						<p:column headerText="Regime de Apuração">
-							<h:outputLabel value="#{listaReg.regime}" />
-						</p:column>
-
-						<p:column headerText="Início da Vigência">
-							<h:outputLabel value="#{listaReg.dataInicio}">
-								<f:convertDateTime pattern="dd/MM/yyyy" />
-							</h:outputLabel>
-						</p:column>
-
-						<p:column headerText="Excluir">
-							<p:commandLink id="linkReg" value="Excluir" ajax="dialog"
-								action="#{participanteBean.excluirRegime}" update="listaRegime">
-								<f:setPropertyActionListener value="#{listaReg.idVigReg}"
-									target="#{participanteBean.idReg}" />
-							</p:commandLink>
-						</p:column>
-					</p:dataTable>
-
-				</p:tab>
+				
 				<p:tab id="emails" title="Cadastro de Email">
 					<p:commandButton value="Emails" type="button"
 						onclick="PF('dlg3').show();" disabled="#{participanteBean.email}" />
