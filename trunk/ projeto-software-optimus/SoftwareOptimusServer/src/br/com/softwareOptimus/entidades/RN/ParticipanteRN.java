@@ -35,8 +35,8 @@ public class ParticipanteRN {
 		this.participanteDAO.salvarPessoaFisica(pessoa);
 
 	}
-	
-	public void atualizarPF(PessoaFisica pessoa) throws Exception{
+
+	public void atualizarPF(PessoaFisica pessoa) throws Exception {
 		this.participanteDAO.atualizarPessoaFisica(pessoa);
 	}
 
@@ -55,8 +55,8 @@ public class ParticipanteRN {
 	public Integer validaCampoNuloPF(PessoaFisica pessoa) {
 		Integer retorno = 0;
 
-		if (pessoa.getFantasia().isEmpty() || pessoa.getRazaoSocial().isEmpty()
-				|| pessoa.getRg().isEmpty() || pessoa.getCpf().isEmpty()) {
+		if (pessoa.getFantasia().isEmpty() || pessoa.getRg().isEmpty()
+				|| pessoa.getCpf().isEmpty()) {
 			retorno = 1;
 		}
 
@@ -71,15 +71,12 @@ public class ParticipanteRN {
 		return this.participanteDAO.buscaNomePF(nome);
 	}
 
-	public List<Logradouro> listaLogr(Pessoa pessoa)
-			throws Exception {
+	public List<Logradouro> listaLogr(Pessoa pessoa) throws Exception {
 		return this.listaLogr = logrDAO.listar(pessoa);
 	}
-	
-	public PessoaFisica carregaIDPF(Long codigo) throws Exception{
+
+	public PessoaFisica carregaIDPF(Long codigo) throws Exception {
 		return this.participanteDAO.carregarPF(codigo);
 	}
-
-
 
 }

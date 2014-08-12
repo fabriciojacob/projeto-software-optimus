@@ -21,18 +21,22 @@
 				disabled="#{participanteBean.novo}" />
 
 			<p:commandButton value="Salvar"
-				actionListener="#{participanteBean.salvarPF}" />
+				actionListener="#{participanteBean.salvarPF}"
+				disabled="#{participanteBean.salvar}" />
 
 			<p:commandButton value="Consulta" type="button"
 				onclick="PF('consulta').show();"
 				disabled="#{participanteBean.consulta}" />
-			<p:commandButton value="Cancelar" />
+
+			<p:commandButton value="Cancelar" ajax="cadParticipante"
+				disabled="#{participanteBean.cancelar}"
+				actionListener="#{participanteBean.novo}" />
 
 			<p:messages id="messages" showDetail="true" autoUpdate="true"
 				closable="true" />
 
 			<p:dialog header="Consulta" widgetVar="consulta" modal="true"
-				height="300" width="400">
+				height="300" width="450">
 
 				<h:panelGrid columns="3">
 
@@ -99,7 +103,7 @@
 					<p:selectBooleanCheckbox id="inativaEmp"
 							value="#{participanteBean.pessoaFisica.status}" />
 			
-					Codigo Empresa:
+					Codigo:
 					<p:inputText id="idEmpresa" disabled="true"
 							value="#{participanteBean.pessoaFisica.idPessoa}" />
 		
@@ -124,7 +128,7 @@
 						disabled="#{participanteBean.enderecos}" />
 
 					<p:dialog header=" Enderecos" widgetVar="dlg2" modal="true"
-						height="300" width="400">
+						height="300" width="450">
 
 
 						<h:panelGrid columns="2" columnClasses="label, value">
@@ -194,8 +198,8 @@
 					<br />
 					<br />
 					<p:dataTable id="listaEndereco"
-						value="#{participanteBean.listaEnd}"
-						var="listaEnd" paginator="true" rows="6">
+						value="#{participanteBean.listaEnd}" var="listaEnd"
+						paginator="true" rows="6">
 
 						<p:column headerText="Codigo">
 							<h:outputText value="#{listaEnd.idEndereco}" />
@@ -235,8 +239,7 @@
 
 						<p:column headerText="Excluir">
 							<p:commandLink id="linkLogr" value="Excluir" ajax="dialog"
-								action="#{participanteBean.excluirLogr}"
-								update="listaEndereco">
+								action="#{participanteBean.excluirLogr}" update="listaEndereco">
 								<f:setPropertyActionListener value="#{listaEnd.idEndereco}"
 									target="#{participanteBean.idLogr}" />
 							</p:commandLink>
@@ -247,6 +250,53 @@
 				</p:tab>
 
 				<p:tab id="emails" title="Cadastro de Email">
+					<p:commandButton value="Emails" type="button"
+						onclick="PF('dlg3').show();" disabled="#{participanteBean.email}" />
+					<br />
+					<br />
+					<p:dialog header="Emails" widgetVar="dlg3" modal="true"
+						height="100" width="400">
+						<h:panelGrid columns="2">
+						Email:
+						<p:inputText value="#{participanteBean.emails.email}" size="50" />
+						
+						Padrão NF-e:
+						<p:selectBooleanCheckbox value="#{participanteBean.padraoNFE}" />
+
+							<p:commandButton id="incluirEmail" icon="ui-icon-disk"
+								disabled="#{participanteBean.email}"
+								actionListener="#{participanteBean.salvarEmail}"
+								update="listaEmail" />
+
+						</h:panelGrid>
+
+					</p:dialog>
+					<p:dataTable id="listaEmail" value="#{participanteBean.listaEmail}"
+						var="emails" paginator="true" rows="6">
+
+						<p:column headerText="Codigo">
+							<h:outputLabel value="#{emails.idEmail}" />
+						</p:column>
+
+						<p:column headerText="Email">
+							<h:outputLabel value="#{emails.email}" />
+						</p:column>
+
+						<p:column headerText="NFE">
+							<h:outputLabel value="#{emails.padraoNFe}" />
+						</p:column>
+
+						<p:column headerText="Excluir">
+							<p:commandLink id="linkExcluirEmail" value="Excluir"
+								ajax="dialog" action="#{participanteBean.excluirEmail}"
+								update="listaEmail">
+								<f:setPropertyActionListener value="#{emails.idEmail}"
+									target="#{participanteBean.idEmail}" />
+							</p:commandLink>
+						</p:column>
+
+
+					</p:dataTable>
 
 				</p:tab>
 				<p:tab id="telefones" title="Cadastro de telefone">

@@ -76,7 +76,7 @@ public class ParticipanteDAOHibernate implements ParticipanteDAO {
 	@Override
 	public List<PessoaJuridica> buscaCNPJ(String cnpj) throws Exception {
 		String jpql = "Select p From PessoaJuridica p "
-				+ " where p.fantasia = :parCnpj " + " and p.naturezaPessoa = 1";
+				+ " where p.fantasia = :parCnpj " + " and p.naturezaPessoa <> 2";
 		TypedQuery<PessoaJuridica> consulta = this.session.createQuery(jpql,
 				PessoaJuridica.class);
 		consulta.setParameter("parCnpj", cnpj);
@@ -86,7 +86,7 @@ public class ParticipanteDAOHibernate implements ParticipanteDAO {
 	@Override
 	public List<PessoaJuridica> buscaNomePJ(String nome) throws Exception {
 		String jpql = "Select p From PessoaJuridica p "
-				+ " where p.fantasia LIKE :parNome" + " and p.naturezaPessoa = 0";
+				+ " where p.fantasia LIKE :parNome" + " and p.naturezaPessoa <> 2";
 		TypedQuery<PessoaJuridica> consulta = this.session.createQuery(jpql,
 				PessoaJuridica.class);
 		consulta.setParameter("parNome","%" + nome + "%");
@@ -96,7 +96,7 @@ public class ParticipanteDAOHibernate implements ParticipanteDAO {
 	@Override
 	public List<PessoaFisica> buscaCPF(String CPF) throws Exception {
 		String jpql = "Select p From PessoaFisica p "
-				+ " where p.cpf = :parCPF " + " and p.naturezaPessoa = 0";
+				+ " where p.cpf = :parCPF " + " and p.naturezaPessoa <> 2";
 		TypedQuery<PessoaFisica> consulta = this.session.createQuery(jpql,
 				PessoaFisica.class);
 		consulta.setParameter("parCPF",CPF);
@@ -107,7 +107,7 @@ public class ParticipanteDAOHibernate implements ParticipanteDAO {
 	public List<PessoaFisica> buscaNomePF(String nome) throws Exception {
 		String jpql = "Select p From PessoaFisica p"
 				+ " where p.fantasia LIKE :parPessoa"
-				+ " and p.naturezaPessoa = 0";
+				+ " and p.naturezaPessoa <> 2";
 		TypedQuery<PessoaFisica> consulta = this.session.createQuery(jpql,
 				PessoaFisica.class);
 		consulta.setParameter("parPessoa","%" + nome + "%");
