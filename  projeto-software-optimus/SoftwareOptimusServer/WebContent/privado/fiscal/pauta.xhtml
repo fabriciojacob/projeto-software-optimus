@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+</h:head>
+<body>
+	<h:form id="frmCadPauta">
+		<br />
+		<h3 style="margin-top: 0">CADASTRO DA PAUTA</h3>
+		<div align="left">
+			<p:commandButton value="Novo" actionListener="#{pautaBean.novo}"
+				ajax="grid" />
+
+			<p:commandButton value="Salvar" disabled="#{pautaBean.sal}"
+				actionListener="#{pautaBean.salvar}" ajax="grid" />
+
+			<p:commandButton value="Alterar" disabled="#{pautaBean.alt}"
+				actionListener="#{pautaBean.alterar}" ajax="grid" />
+
+			<p:commandButton value="Excluir" disabled="#{pautaBean.rem}"
+				actionListener="#{pautaBean.remover}" ajax="grid" />
+
+			<p:commandButton id="consulta" value="Consultar" type="button"
+				ajax="dialog, grid" onclick="PF('dlg4').show();"
+				actionListener="#{pautaBean.cancelar}" />
+
+			<p:commandButton value="Cancelar"
+				actionListener="#{pautaBean.cancelar}" ajax="grid" />
+			<p:messages id="messages" showDetail="true" autoUpdate="true"
+				closable="true" />
+
+			<h:panelGrid id="grid" columns="2" columnClasses="label, value">
+				
+					Codigo da Pauta:
+					<p:inputText id="idPauta" disabled="true"
+					value="#{pautaBean.pauta.idPautaMVA}" />
+		
+					Descrição:
+					<p:inputText id="desc" value="#{pautaBean.pauta.descricao}"
+					size="40" />
+					
+					Valor Pauta:
+					<p:inputText id="valorPauta" value="#{pautaBean.pauta.valorPauta}"
+					size="20" />
+					
+					Valor MVA:
+					<p:inputText id="valorMva" value="#{pautaBean.pauta.valorMVa}"
+					size="20" />
+					
+					Vigência:
+					<p:calendar id="vigencia" value="#{pautaBean.pauta.vigencia}"
+					effect="fold" />
+	
+					Incide Desconto:
+					<p:selectBooleanCheckbox id="Desc"
+					value="#{pautaBean.pauta.nincideDesconto}" />
+					
+					Incide IPI:
+					<p:selectBooleanCheckbox id="Ipi"
+					value="#{pautaBean.pauta.incideIPI}" />
+							
+					MVA Ajustada:
+					<p:selectBooleanCheckbox id="mvaAjustada"
+					value="#{pautaBean.pauta.mvaAjustada}" />
+
+			</h:panelGrid>
+
+			<p:dialog id="dialog1" header="Consulta" widgetVar="dlg4"
+				modal="true" height="400" width="950">
+
+				<div align="right">
+					<h:panelGrid columns="1">
+						<p:commandButton value="Pesquisar"
+							actionListener="#{pautaBean.buscaPauta}" update="gridData">
+						</p:commandButton>
+					</h:panelGrid>
+				</div>
+				<h:panelGrid columns="3" columnClasses="label" cellspacing="3">
+					<p:inputText id="texto" value="#{pautaBean.busca}" size="40" />
+
+					<p:selectOneMenu id="fConsult" value="#{pautaBean.filtro}">/>
+						<f:selectItem itemLabel="Selecione uma Opção" />
+						<f:selectItem itemLabel="Código" itemValue="id" />
+						<f:selectItem itemLabel="Descrição" itemValue="desc" />
+						<f:selectItem itemLabel="Valor Pauta" itemValue="valP" />
+						<f:selectItem itemLabel="Valor MVA" itemValue="valMva" />
+						<f:selectItem itemLabel="Vigencia" itemValue="vig" />
+					</p:selectOneMenu>
+
+				</h:panelGrid>
+				<h:panelGrid id="gridData" columns="1" columnClasses="label, value">
+					<p:blockUI block="gridData" trigger="consulta" />
+					<p:dataTable id="data" value="#{pautaBean.pautaList}"
+						paginator="true" rows="8" var="pauta" rowKey="pauta.idPautaMVA">
+
+						<p:column headerText="Código da Pauta">
+							<h:outputText value="#{pauta.idPautaMva}" />
+						</p:column>
+
+						<p:column headerText="Descrição">
+							<h:outputText value="#{pauta.descricao}" />
+						</p:column>
+
+						<p:column headerText="Valor Pauta">
+							<h:outputText value="#{pauta.valorPauta}" />
+						</p:column>
+
+						<p:column headerText="Valor MVA">
+							<h:outputText value="#{pauta.valotMVA}" />
+						</p:column>
+
+						<p:column headerText="Vigência">
+							<h:outputText value="#{pauta.vigencia}" />
+						</p:column>
+
+						<p:column headerText="Incide Desconto">
+							<h:outputText value="#{pauta.nincideDesconto}" />
+						</p:column>
+
+						<p:column headerText="Incide IPI">
+							<h:outputText value="#{pauta.incideIPI}" />
+						</p:column>
+
+						<p:column headerText="MVA Ajustada">
+							<h:outputText value="#{pauta.mvaAjustada}" />
+						</p:column>
+
+						<p:column headerText="Selecionar">
+							<p:commandLink id="link" value="Editar" ajax="grid, dialog1"
+								action="#{pautaBean.editPauta}">
+								<f:setPropertyActionListener value="#{pauta.idPautaMva}"
+									target="#{pautaBean.id}" />
+							</p:commandLink>
+						</p:column>
+					</p:dataTable>
+					<p:blockUI block="data" trigger="data">
+        				LOADING<br />
+						<p:graphicImage name="ajaxloader.gif" />
+					</p:blockUI>
+				</h:panelGrid>
+			</p:dialog>
+		</div>
+	</h:form>
+</body>
+</html>

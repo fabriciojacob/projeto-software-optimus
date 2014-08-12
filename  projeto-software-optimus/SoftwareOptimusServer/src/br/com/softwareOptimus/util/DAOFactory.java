@@ -7,6 +7,8 @@ import br.com.softwareOptimus.dao.fiscal.AliquotaDAO;
 import br.com.softwareOptimus.dao.fiscal.AliquotaDAOHibernate;
 import br.com.softwareOptimus.dao.fiscal.CodigoSituacaoTributariaDAO;
 import br.com.softwareOptimus.dao.fiscal.CodigoSituacaoTributariaDAOHibernate;
+import br.com.softwareOptimus.dao.fiscal.PautaMVADAO;
+import br.com.softwareOptimus.dao.fiscal.PautaMVADAOHibernate;
 import br.com.softwareOptimus.dao.produto.ProdutoDAO;
 import br.com.softwareOptimus.dao.produto.ProdutoDAOHibernate;
 import br.com.softwareOptimus.dao.produto.UnidMedDAO;
@@ -176,5 +178,16 @@ public class DAOFactory {
 			e.printStackTrace();
 		}
 		return cstDAO;
+	}
+	
+	public static PautaMVADAO criaPautaMVADAO(){
+		PautaMVADAOHibernate pautaDAO = new PautaMVADAOHibernate();
+		pautaDAO.setSession(session);
+		try {
+			pautaDAO.begin();
+		} catch (IOException | SQLException e) {
+			e.printStackTrace();
+		}
+		return pautaDAO;
 	}
 }
