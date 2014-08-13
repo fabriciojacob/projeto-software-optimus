@@ -241,7 +241,7 @@ public class AliquotaBean {
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-								"Aliquota salva com sucesso"));
+								"Alíquota salva com sucesso"));
 				this.sal = true;
 				this.vinculo = true;
 				limpa();
@@ -255,7 +255,7 @@ public class AliquotaBean {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na gravacao da Alï¿½quota "
+							"Problemas na gravacao da Alíquota "
 									+ e.getMessage()));
 		}
 	}
@@ -288,7 +288,7 @@ public class AliquotaBean {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-							"AlÃ­quota alterada com sucesso"));
+							"Alíquota alterada com sucesso"));
 			this.alt = true;
 			this.rem = true;
 			limpa();
@@ -296,7 +296,7 @@ public class AliquotaBean {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na alteraÃ§Ã£o da AlÃ­quota "
+							"Problemas na alteração da Alíquota "
 									+ e.getMessage()));
 		}
 	}
@@ -308,7 +308,7 @@ public class AliquotaBean {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-							"AlÃ­quota removida com sucesso"));
+							"Alíquota removida com sucesso"));
 			this.alt = true;
 			this.rem = true;
 			this.vinculo = true;
@@ -317,7 +317,7 @@ public class AliquotaBean {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na remoÃ§Ã£o da Aliquota "
+							"Problemas na remoção da Alíquota "
 									+ e.getMessage()));
 		}
 	}
