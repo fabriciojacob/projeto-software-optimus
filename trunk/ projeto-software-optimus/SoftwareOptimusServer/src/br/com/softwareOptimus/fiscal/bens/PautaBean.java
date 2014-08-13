@@ -2,20 +2,133 @@ package br.com.softwareOptimus.fiscal.bens;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+
 import br.com.softwareOptimus.fiscal.PautaMVA;
+import br.com.softwareOptimus.fiscal.RN.PautaMVARN;
 
 @ManagedBean(name = "pautaBean")
 @SessionScoped
 public class PautaBean {
-	
+
 	private PautaMVA pauta = new PautaMVA();
 	private Boolean sal = true, alt = true, rem = true;
 	private String busca, filtro;
 	private List<PautaMVA> pautaList = new ArrayList<PautaMVA>();
 	private Long id;
-	
+
+	public void novo() {
+		this.sal = false;
+		this.alt = true;
+		this.rem = true;
+		limpar();
+	}
+
+	public void alterar() {
+		try {
+			PautaMVARN pautaRN = new PautaMVARN();
+			Integer retorno = pautaRN.validaCampoNulo(this.pauta);
+			if (retorno == 0) {
+				pautaRN.altPauta(this.pauta);
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
+								"Pauta alterada com sucesso"));
+				this.alt = true;
+				this.rem = true;
+				limpar();
+			} else {
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+								"Existem campos nulos no formulário"));
+			}
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance()
+					.addMessage(
+							null,
+							new FacesMessage(FacesMessage.SEVERITY_ERROR,
+									"Info", "Problemas na alteração da Pauta "
+											+ e.getMessage()));
+		}
+	}
+
+	public void remover() {
+		try {
+			PautaMVARN pautaRN = new PautaMVARN();
+			pautaRN.remover(this.pauta);
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
+							"Alíquota removida com sucesso"));
+			this.alt = true;
+			this.rem = true;
+			limpar();
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+							"Problemas na remoção da Pauta "
+									+ e.getMessage()));
+		}
+	}
+
+	public void cancelar() {
+		this.sal = true;
+		this.alt = true;
+		this.rem = true;
+		limpar();
+	}
+
+	public void salvar() {
+		try {
+			PautaMVARN pautaRN = new PautaMVARN();
+			this.pauta.setIdPautaMVA(null);
+			Integer retorno = pautaRN.validaCampoNulo(this.pauta);
+			if (retorno == 0) {
+				pautaRN.salva(this.pauta);
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
+								"Pauta salva com sucesso"));
+				this.sal = true;
+				limpar();
+			} else {
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+								"Existem campos nulos no formulário"));
+			}
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance()
+					.addMessage(
+							null,
+							new FacesMessage(FacesMessage.SEVERITY_ERROR,
+									"Info", "Problemas na gravacao da Pauta "
+											+ e.getMessage()));
+		}
+	}
+
+	public void limpar() {
+		this.busca = null;
+		this.filtro = null;
+		this.pautaList = new ArrayList<PautaMVA>();
+		this.pauta = new PautaMVA();
+		this.id = null;
+	}
+
+	public void buscaPauta() {
+
+	}
+
+	public void editPauta() {
+
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -86,37 +199,5 @@ public class PautaBean {
 
 	public void setRem(Boolean rem) {
 		this.rem = rem;
-	}
-
-	public void novo(){
-		
-	}
-	
-	public void alterar() {
-		
-	}
-	
-	public void remover() {
-
-	}
-	
-	public void cancelar() {
-		
-	}
-
-	public void salvar(){
-		
-	}
-	
-	public void limpar(){
-		
-	}
-	
-	public void buscaPauta(){
-		
-	}
-	
-	public void editPauta(){
-		
 	}
 }
