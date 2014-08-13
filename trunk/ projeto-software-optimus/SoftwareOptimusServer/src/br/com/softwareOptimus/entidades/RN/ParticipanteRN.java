@@ -22,12 +22,7 @@ public class ParticipanteRN {
 	}
 
 	public void salvarPJ(PessoaJuridica pessoa) throws Exception {
-		Long codigo = pessoa.getIdPessoa();
-		if (codigo == 0 || codigo == null) {
-			this.participanteDAO.salvarPessoaJuridica(pessoa);
-		} else {
-			this.participanteDAO.atualizarPessoaJuridica(pessoa);
-		}
+		this.participanteDAO.salvarPessoaJuridica(pessoa);
 
 	}
 
