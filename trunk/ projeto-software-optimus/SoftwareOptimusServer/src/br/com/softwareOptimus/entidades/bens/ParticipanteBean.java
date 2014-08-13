@@ -286,7 +286,11 @@ public class ParticipanteBean {
 			if (this.listaTelefone != null) {
 				this.listaTelefone.clear();
 			}
-			this.listaTelefone = telefoneRN.listaTelefone(pessoaJuridica);
+			if (this.pessoaFisica.getIdPessoa() == 0) {
+				this.listaTelefone = telefoneRN.listaTelefone(pessoaJuridica);
+			} else {
+				this.listaTelefone = telefoneRN.listaTelefone(pessoaFisica);
+			}
 		} catch (Exception e) {
 			msgErro("Problemas em listar os telefones", e);
 		}
@@ -547,7 +551,5 @@ public class ParticipanteBean {
 	public void setEmails(Email emails) {
 		this.emails = emails;
 	}
-	
-	
 
 }
