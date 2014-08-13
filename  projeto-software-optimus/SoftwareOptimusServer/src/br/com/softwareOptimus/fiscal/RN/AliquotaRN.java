@@ -47,9 +47,12 @@ public class AliquotaRN {
 		this.aliquotaDAO.altAliq(aliquota);
 	}
 
-	public Integer validaCampoNulo(Aliquota aliquota, Collection<CodigoSituacaoTributaria> colCst, String tipTrib) {
+	public Integer validaCampoNulo(Aliquota aliquota, Collection<CodigoSituacaoTributaria> colCst, String tipTrib, String tipCst) {
 		Integer retorno = 0;
 		if(aliquota.getAliquota() == null || aliquota.getReducao() == null || colCst.size() == 0){
+			retorno = 1;
+		}
+		if(tipCst.equals("ICMS") && aliquota.getTipo() == null){
 			retorno = 1;
 		}
 		return retorno;
