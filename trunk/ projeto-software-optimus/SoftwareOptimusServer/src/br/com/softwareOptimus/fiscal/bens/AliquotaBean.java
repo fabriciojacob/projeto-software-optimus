@@ -218,7 +218,9 @@ public class AliquotaBean {
 			this.colCst = new ArrayList<>();
 			this.aliquota.setIdAliq(null);
 			if (tipCst.equals("ICMS")) {
-				this.colCst.add(cst);
+				if (this.cst != null) {
+					this.colCst.add(cst);
+				}
 				this.aliquota.setCst(this.colCst);
 				if (this.tipTrib.equals(TipoTrib.ISENTO.toString())) {
 					this.aliquota.setTipo(TipoTrib.ISENTO);
@@ -231,11 +233,14 @@ public class AliquotaBean {
 					this.aliquota.setTipo(TipoTrib.TRIBUTADO);
 				}
 			} else if (tipCst.equals("PISCOFINS") || tipCst.equals("IPI")) {
-				this.colCst.add(cstEnt);
-				this.colCst.add(cstSai);
+				if (cstEnt != null && cstSai != null) {
+					this.colCst.add(cstEnt);
+					this.colCst.add(cstSai);
+				}
 				this.aliquota.setCst(this.colCst);
 			}
-			Integer retorno = aliqRN.validaCampoNulo(this.aliquota, this.colCst, this.tipTrib);
+			Integer retorno = aliqRN.validaCampoNulo(this.aliquota,
+					this.colCst, this.tipTrib, this.tipCst);
 			if (retorno == 0) {
 				aliqRN.salva(this.aliquota);
 				FacesContext.getCurrentInstance().addMessage(
@@ -276,22 +281,35 @@ public class AliquotaBean {
 				} else if (this.tipTrib.equals(TipoTrib.TRIBUTADO.toString())) {
 					this.aliquota.setTipo(TipoTrib.TRIBUTADO);
 				}
-				this.colCst.add(cst);
+				if(cst != null){
+					this.colCst.add(cst);
+				}
 				this.aliquota.setCst(this.colCst);
 			} else {
 				this.aliquota.setTipo(null);
-				this.colCst.add(cstEnt);
-				this.colCst.add(cstSai);
+				if(cstEnt != null && cstSai != null){
+					this.colCst.add(cstEnt);
+					this.colCst.add(cstSai);
+				}
 				this.aliquota.setCst(this.colCst);
 			}
-			aliqRN.altAliq(aliquota);
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-							"Alíquota alterada com sucesso"));
-			this.alt = true;
-			this.rem = true;
-			limpa();
+			Integer retorno = aliqRN.validaCampoNulo(this.aliquota,
+					this.colCst, this.tipTrib, this.tipCst);
+			if (retorno == 0) {
+				aliqRN.altAliq(aliquota);
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
+								"Alíquota alterada com sucesso"));
+				this.alt = true;
+				this.rem = true;
+				limpa();
+			} else {
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+								"Existem campos nulos no formulário"));
+			}
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
