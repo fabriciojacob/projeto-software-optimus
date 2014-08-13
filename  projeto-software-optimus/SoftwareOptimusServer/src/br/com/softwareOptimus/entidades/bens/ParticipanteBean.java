@@ -30,6 +30,7 @@ public class ParticipanteBean {
 	private List<Email> listaEmail = new ArrayList<>();
 	private List<Logradouro> listaEnd = new ArrayList<>();
 	public List<PessoaFisica> listaPessoaFisica = new ArrayList<>();
+	public List<PessoaJuridica> listaPessoaJuridica = new ArrayList<>();
 	private ParticipanteRN participanteRN;
 	private LogradouroRN logrRN;
 	private Logradouro logradouro = new Logradouro();
@@ -42,6 +43,37 @@ public class ParticipanteBean {
 			novo = false, consulta = false;
 	private Telefone tel = new Telefone();
 	private Email emails = new Email();
+
+	public void salvarPJ() {
+		this.participanteRN = new ParticipanteRN();
+		Integer retorno = this.participanteRN.validaCampoNuloPJ(pessoaJuridica);
+		if (retorno == 0) {
+			try {
+				if (tipoParticipante.equals(NaturezaPessoa.FORNECEDOR
+						.toString())) {
+					this.pessoaJuridica
+							.setNaturezaPessoa(NaturezaPessoa.FORNECEDOR);
+				} else if (tipoParticipante.equals(NaturezaPessoa.CLIENTE
+						.toString())) {
+					this.pessoaJuridica
+							.setNaturezaPessoa(NaturezaPessoa.CLIENTE);
+				} else if (tipoParticipante
+						.equals(NaturezaPessoa.TRANSPORTADORA.toString())) {
+					this.pessoaJuridica.equals(NaturezaPessoa.TRANSPORTADORA);
+				} else {
+					this.pessoaJuridica.equals(NaturezaPessoa.CONTADOR);
+				}
+
+				participanteRN.salvarPJ(pessoaJuridica);
+				msgAcerto("Registro salvo com sucesso");
+			} catch (Exception e) {
+				msgErro("Problemas na gravacao ", e);
+			}
+
+		} else {
+			msgErro("Existem campos ", null);
+		}
+	}
 
 	public void salvarPF() {
 		try {
@@ -134,6 +166,10 @@ public class ParticipanteBean {
 		this.enderecos = true;
 		this.email = true;
 		this.telefone = true;
+
+	}
+
+	public void pesquisaPJ() {
 
 	}
 
@@ -550,6 +586,14 @@ public class ParticipanteBean {
 
 	public void setEmails(Email emails) {
 		this.emails = emails;
+	}
+
+	public List<PessoaJuridica> getListaPessoaJuridica() {
+		return listaPessoaJuridica;
+	}
+
+	public void setListaPessoaJuridica(List<PessoaJuridica> listaPessoaJuridica) {
+		this.listaPessoaJuridica = listaPessoaJuridica;
 	}
 
 }
