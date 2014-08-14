@@ -7,6 +7,8 @@ import br.com.softwareOptimus.dao.fiscal.AliquotaDAO;
 import br.com.softwareOptimus.dao.fiscal.AliquotaDAOHibernate;
 import br.com.softwareOptimus.dao.fiscal.CodigoSituacaoTributariaDAO;
 import br.com.softwareOptimus.dao.fiscal.CodigoSituacaoTributariaDAOHibernate;
+import br.com.softwareOptimus.dao.fiscal.GradeTributariaDAO;
+import br.com.softwareOptimus.dao.fiscal.GradeTributariaDAOHibernate;
 import br.com.softwareOptimus.dao.fiscal.PautaMVADAO;
 import br.com.softwareOptimus.dao.fiscal.PautaMVADAOHibernate;
 import br.com.softwareOptimus.dao.produto.ProdutoDAO;
@@ -189,5 +191,15 @@ public class DAOFactory {
 			e.printStackTrace();
 		}
 		return pautaDAO;
+	}
+	
+	public static GradeTributariaDAO criaGradeTribDAO(){
+		GradeTributariaDAOHibernate gradeDAO = new GradeTributariaDAOHibernate();
+		try {
+			gradeDAO.begin();
+		} catch (IOException | SQLException e) {
+			e.printStackTrace();
+		}
+		return gradeDAO;
 	}
 }
