@@ -45,17 +45,6 @@ public class ParticipanteBean {
 	private Telefone tel = new Telefone();
 	private Email emails = new Email();
 
-	public ParticipanteBean() {
-		salvar = true;
-		cancelar = true;
-		enderecos = true;
-		salReg = true;
-		email = true;
-		telefone = true;
-		novo = false;
-		consulta = false;
-	}
-
 	public void salvarPJ() {
 		this.participanteRN = new ParticipanteRN();
 		Integer retorno = this.participanteRN.validaCampoNuloPJ(pessoaJuridica);
@@ -78,6 +67,11 @@ public class ParticipanteBean {
 
 				participanteRN.salvarPJ(pessoaJuridica);
 				msgAcerto("Registro salvo com sucesso");
+				this.novo = false;
+				this.enderecos = false;
+				this.salReg = false;
+				this.email = false;
+				this.telefone = false;
 			} catch (Exception e) {
 				msgErro("Problemas na gravacao ", e);
 			}
@@ -110,6 +104,11 @@ public class ParticipanteBean {
 				}
 				participanteRN.salvarPF(pessoaFisica);
 				msgAcerto("Registro salvo com sucesso");
+				this.novo = false;
+				this.enderecos = false;
+				this.salReg = false;
+				this.email = false;
+				this.telefone = false;
 			} else {
 				msgErro("Existem campos não preenchidos", null);
 			}
