@@ -5,6 +5,7 @@ import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import br.com.softwareOptimus.entidades.Email;
 import br.com.softwareOptimus.entidades.Logradouro;
@@ -21,7 +22,7 @@ import br.com.softwareOptimus.entidades.RN.geral.LogradouroRN;
 import br.com.softwareOptimus.entidades.RN.geral.TelefoneRN;
 
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class ParticipanteBean {
 
 	private PessoaFisica pessoaFisica = new PessoaFisica();
@@ -158,10 +159,15 @@ public class ParticipanteBean {
 			this.listaEnd.clear();
 		}
 		try {
-			if (this.pessoaFisica.getIdPessoa() == null) {
+			try {
+				if (this.pessoaFisica.getIdPessoa() == 0) {
+					this.listaEnd = participanteRN
+							.listaLogr(this.pessoaJuridica);
+				} else {
+					this.listaEnd = participanteRN.listaLogr(this.pessoaFisica);
+				}
+			} catch (NullPointerException e) {
 				this.listaEnd = participanteRN.listaLogr(this.pessoaJuridica);
-			} else {
-				this.listaEnd = participanteRN.listaLogr(this.pessoaFisica);
 			}
 		} catch (Exception e) {
 			msgErro("Problemas na listagem dos logradouros", e);

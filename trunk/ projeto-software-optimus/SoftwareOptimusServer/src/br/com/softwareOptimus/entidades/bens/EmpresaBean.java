@@ -7,6 +7,7 @@ import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import br.com.softwareOptimus.entidades.Email;
@@ -25,7 +26,7 @@ import br.com.softwareOptimus.fiscal.Regime;
 import br.com.softwareOptimus.fiscal.VigenciaRegime;
 
 @ManagedBean(name = "empresaBean")
-@SessionScoped
+@ViewScoped
 public class EmpresaBean {
 
 	private PessoaJuridica pessoaJuridica = new PessoaJuridica();
@@ -314,7 +315,7 @@ public class EmpresaBean {
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-								"Existem campos nulos no formulário"));
+								"Existem campos nulos no formulï¿½rio"));
 			}
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
@@ -442,7 +443,7 @@ public class EmpresaBean {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na verificação do regime"
+							"Problemas na verificaï¿½ï¿½o do regime"
 									+ e.getMessage()));
 			retorno = 1;
 		}
@@ -585,7 +586,7 @@ public class EmpresaBean {
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-								"Ja existe um email como padrão NFE"));
+								"Ja existe um email como padrï¿½o NFE"));
 			} else {
 				emails.setPessoa(pessoaJuridica);
 				if (padraoNFE) {
