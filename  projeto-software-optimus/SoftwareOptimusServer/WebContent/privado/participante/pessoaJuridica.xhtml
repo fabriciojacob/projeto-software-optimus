@@ -78,8 +78,8 @@
 					<p:column headerText="Selecionar">
 						<p:commandLink id="link" value="Editar"
 							ajax="dialog,frmCadParticipante"
-							action="#{participanteBean.editar}">
-							<f:setPropertyActionListener value="#{pesEmpresa.idPessoa}"
+							action="#{participanteBean.editarPJ}">
+							<f:setPropertyActionListener value="#{pesPJ.idPessoa}"
 								target="#{participanteBean.id}" />
 						</p:commandLink>
 					</p:column>
@@ -107,7 +107,7 @@
 					<p:selectBooleanCheckbox id="inativaEmp"
 							value="#{participanteBean.pessoaJuridica.status}" />
 			
-					Codigo Empresa:
+					Codigo:
 					<p:inputText id="idEmpresa" disabled="true"
 							value="#{participanteBean.pessoaJuridica.idPessoa}" />
 		

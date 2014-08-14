@@ -21,6 +21,8 @@ public interface ParticipanteDAO {
 	public void close() throws Exception;
 
 	public PessoaFisica carregarPF(Long codigo) throws Exception;
+	
+	public PessoaJuridica carregarPJ(Long codigo) throws Exception;
 
 	public List<PessoaFisica> buscaCPF(String CPF) throws Exception;
 	

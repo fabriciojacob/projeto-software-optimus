@@ -57,6 +57,14 @@ public class ParticipanteRN {
 
 		return retorno;
 	}
+	
+	public List<PessoaJuridica> listaPJCNPJ(String CNPJ) throws Exception {
+		return this.participanteDAO.buscaCNPJ(CNPJ);
+	}
+	
+	public List<PessoaJuridica> listaPJNome(String nome) throws Exception {
+		return this.participanteDAO.buscaNomePJ(nome);
+	}
 
 	public List<PessoaFisica> listaPFCPF(String CPF) throws Exception {
 		return this.participanteDAO.buscaCPF(CPF);
@@ -72,6 +80,10 @@ public class ParticipanteRN {
 
 	public PessoaFisica carregaIDPF(Long codigo) throws Exception {
 		return this.participanteDAO.carregarPF(codigo);
+	}
+	
+	public PessoaJuridica carregaIDPJ(Long codigo) throws Exception {
+		return this.participanteDAO.carregarPJ(codigo);
 	}
 
 }

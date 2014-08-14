@@ -44,6 +44,17 @@ public class ParticipanteBean {
 	private Telefone tel = new Telefone();
 	private Email emails = new Email();
 
+	public ParticipanteBean() {
+		salvar = true;
+		cancelar = true;
+		enderecos = true;
+		salReg = true;
+		email = true;
+		telefone = true;
+		novo = false;
+		consulta = false;
+	}
+
 	public void salvarPJ() {
 		this.participanteRN = new ParticipanteRN();
 		Integer retorno = this.participanteRN.validaCampoNuloPJ(pessoaJuridica);
@@ -122,10 +133,14 @@ public class ParticipanteBean {
 
 		try {
 			logrRN = new LogradouroRN();
-			if (this.pessoaFisica.getIdPessoa() == null) {
+			try {
+				if (this.pessoaFisica.getIdPessoa() == null) {
+					logradouro.setPessoa(this.pessoaJuridica);
+				} else {
+					logradouro.setPessoa(this.pessoaFisica);
+				}
+			} catch (NullPointerException e) {
 				logradouro.setPessoa(this.pessoaJuridica);
-			} else {
-				logradouro.setPessoa(this.pessoaFisica);
 			}
 			logradouro.setMunicipio(municipio);
 			logrRN.salvar(logradouro);
@@ -170,6 +185,28 @@ public class ParticipanteBean {
 	}
 
 	public void pesquisaPJ() {
+		this.participanteRN = new ParticipanteRN();
+		String cnpj = "cnpj";
+		try {
+			if (filtro.equals(cnpj)) {
+				if (this.listaPessoaJuridica != null) {
+					this.listaPessoaJuridica.clear();
+				}
+				this.listaPessoaJuridica = this.participanteRN
+						.listaPJCNPJ(textoConsulta);
+			} else {
+				this.listaPessoaJuridica = this.participanteRN
+						.listaPJNome(textoConsulta);
+			}
+			this.salvar = false;
+			this.cancelar = false;
+			this.enderecos = false;
+			this.salReg = false;
+			this.email = false;
+			this.telefone = false;
+		} catch (Exception e) {
+			msgErro("Problemas na pesquisa", e);
+		}
 
 	}
 
@@ -233,6 +270,25 @@ public class ParticipanteBean {
 		this.telefone = false;
 	}
 
+	public void editarPJ() {
+		this.participanteRN = new ParticipanteRN();
+		try {
+			this.pessoaJuridica = this.participanteRN.carregaIDPJ(id);
+			this.tipoParticipante = this.pessoaJuridica.getNaturezaPessoa()
+					.toString();
+		} catch (Exception e) {
+			msgErro("Problemas na edição", e);
+		}
+		listaLogradouro();
+		listaEmail();
+		this.salvar = false;
+		this.cancelar = false;
+		this.enderecos = false;
+		this.salReg = false;
+		this.email = false;
+		this.telefone = false;
+	}
+
 	public void excluirLogr() {
 		LogradouroRN logrRN = new LogradouroRN();
 		try {
@@ -275,19 +331,27 @@ public class ParticipanteBean {
 		EmailRN emailRN = new EmailRN();
 		Integer pNfe = 0, checkNFe = 0;
 		try {
-			if (this.pessoaFisica.getIdPessoa() == 0) {
+			try {
+				if (this.pessoaFisica.getIdPessoa() == 0) {
+					checkNFe = emailRN.validaEmailNFE(pessoaJuridica);
+				} else {
+					checkNFe = emailRN.validaEmailNFE(pessoaFisica);
+				}
+			} catch (NullPointerException e) {
 				checkNFe = emailRN.validaEmailNFE(pessoaJuridica);
-			} else {
-				checkNFe = emailRN.validaEmailNFE(pessoaFisica);
 			}
 
 			if (padraoNFE && checkNFe == 1) {
 				msgErro("Ja existe um email como padr�o NFE", null);
 			} else {
-				if (this.pessoaFisica.getIdPessoa() == 0) {
+				try {
+					if (this.pessoaFisica.getIdPessoa() == 0) {
+						emails.setPessoa(pessoaJuridica);
+					} else {
+						emails.setPessoa(pessoaFisica);
+					}
+				} catch (NullPointerException e) {
 					emails.setPessoa(pessoaJuridica);
-				} else {
-					emails.setPessoa(pessoaFisica);
 				}
 				if (padraoNFE) {
 					pNfe = 1;
@@ -322,10 +386,15 @@ public class ParticipanteBean {
 			if (this.listaTelefone != null) {
 				this.listaTelefone.clear();
 			}
-			if (this.pessoaFisica.getIdPessoa() == 0) {
+			try {
+				if (this.pessoaFisica.getIdPessoa() == 0) {
+					this.listaTelefone = telefoneRN
+							.listaTelefone(pessoaJuridica);
+				} else {
+					this.listaTelefone = telefoneRN.listaTelefone(pessoaFisica);
+				}
+			} catch (NullPointerException e) {
 				this.listaTelefone = telefoneRN.listaTelefone(pessoaJuridica);
-			} else {
-				this.listaTelefone = telefoneRN.listaTelefone(pessoaFisica);
 			}
 		} catch (Exception e) {
 			msgErro("Problemas em listar os telefones", e);
@@ -343,10 +412,14 @@ public class ParticipanteBean {
 			this.tel.setTipoFone(TipoTelefone.RESIDENCIAL);
 		}
 		try {
-			if (this.pessoaFisica.getIdPessoa() == 0) {
+			try {
+				if (this.pessoaFisica.getIdPessoa() == 0) {
+					this.tel.setPessoa(pessoaJuridica);
+				} else {
+					this.tel.setPessoa(pessoaFisica);
+				}
+			} catch (NullPointerException e) {
 				this.tel.setPessoa(pessoaJuridica);
-			} else {
-				this.tel.setPessoa(pessoaFisica);
 			}
 			telefoneRN.salvar(tel);
 			msgAcerto("Telefone salvo com sucesso");
