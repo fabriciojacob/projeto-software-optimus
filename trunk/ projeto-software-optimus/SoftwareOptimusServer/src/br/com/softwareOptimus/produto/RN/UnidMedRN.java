@@ -45,4 +45,12 @@ public class UnidMedRN {
 	public void remove(Long idUnid) throws Exception {
 		this.unidMedDAO.remover(idUnid);		
 	}
+
+	public Integer validaCampoNulo(UnidMed unidMed) {
+		Integer retorno =0;
+		if (unidMed.getDescUnid().equals("") || unidMed.getUnid().equals("")){
+			retorno = 1;
+		}
+		return retorno;
+	}
 }

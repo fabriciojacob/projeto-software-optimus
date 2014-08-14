@@ -56,7 +56,8 @@
 					Vigência:
 					<p:calendar id="vigencia" value="#{pautaBean.pauta.vigencia}"
 					effect="fold" />
-	
+			</h:panelGrid>
+			<h:panelGrid columns="6" columnClasses="label, value">
 					Incide Desconto:
 					<p:selectBooleanCheckbox id="Desc"
 					value="#{pautaBean.pauta.nincideDesconto}" />
@@ -68,7 +69,6 @@
 					MVA Ajustada:
 					<p:selectBooleanCheckbox id="mvaAjustada"
 					value="#{pautaBean.pauta.mvaAjustada}" />
-
 			</h:panelGrid>
 
 			<p:dialog id="dialog1" header="Consulta" widgetVar="dlg4"
@@ -90,7 +90,6 @@
 						<f:selectItem itemLabel="Descrição" itemValue="desc" />
 						<f:selectItem itemLabel="Valor Pauta" itemValue="valP" />
 						<f:selectItem itemLabel="Valor MVA" itemValue="valMva" />
-						<f:selectItem itemLabel="Vigencia" itemValue="vig" />
 					</p:selectOneMenu>
 
 				</h:panelGrid>
@@ -100,7 +99,7 @@
 						paginator="true" rows="8" var="pauta" rowKey="pauta.idPautaMVA">
 
 						<p:column headerText="Código da Pauta">
-							<h:outputText value="#{pauta.idPautaMva}" />
+							<h:outputText value="#{pauta.idPautaMVA}" />
 						</p:column>
 
 						<p:column headerText="Descrição">
@@ -112,11 +111,13 @@
 						</p:column>
 
 						<p:column headerText="Valor MVA">
-							<h:outputText value="#{pauta.valotMVA}" />
+							<h:outputText value="#{pauta.valorMVa}" />
 						</p:column>
 
 						<p:column headerText="Vigência">
-							<h:outputText value="#{pauta.vigencia}" />
+							<h:outputText value="#{pauta.vigencia}">
+							<f:convertDateTime type="date" dateStyle="medium"/>
+							</h:outputText>
 						</p:column>
 
 						<p:column headerText="Incide Desconto">
@@ -134,7 +135,7 @@
 						<p:column headerText="Selecionar">
 							<p:commandLink id="link" value="Editar" ajax="grid, dialog1"
 								action="#{pautaBean.editPauta}">
-								<f:setPropertyActionListener value="#{pauta.idPautaMva}"
+								<f:setPropertyActionListener value="#{pauta.idPautaMVA}"
 									target="#{pautaBean.id}" />
 							</p:commandLink>
 						</p:column>

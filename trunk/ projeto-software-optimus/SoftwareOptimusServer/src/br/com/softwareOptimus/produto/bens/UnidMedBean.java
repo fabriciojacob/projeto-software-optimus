@@ -98,11 +98,21 @@ public class UnidMedBean {
 		try {
 			UnidMedRN unidRN = new UnidMedRN();
 			this.unidMed.setIdUnidMed(null);
-			unidRN.salvar(unidMed);
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-							"Unidade salva com sucesso"));
+			Integer retorno = unidRN.validaCampoNulo(this.unidMed);
+			if (retorno == 0) {
+				unidRN.salvar(unidMed);
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
+								"Unidade salva com sucesso"));
+				this.sal = true;
+				limpa();
+			} else {
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+								"Existem campos nulos no formulário"));
+			}
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
@@ -110,8 +120,6 @@ public class UnidMedBean {
 							"Problemas na gravacao da Unidade "
 									+ e.getMessage()));
 		}
-		this.sal = true;
-		limpa();
 	}
 
 	public void buscaUnid() {
@@ -152,11 +160,22 @@ public class UnidMedBean {
 	public void altUnid() {
 		try {
 			UnidMedRN unidRN = new UnidMedRN();
-			unidRN.altUnid(unidMed);
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-							"Unidade alterada com sucesso"));
+			Integer retorno = unidRN.validaCampoNulo(this.unidMed);
+			if (retorno == 0) {
+				unidRN.altUnid(unidMed);
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
+								"Unidade alterada com sucesso"));
+				this.alt = true;
+				this.rem = true;
+				limpa();
+			} else {
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+								"Existem campos nulos no formulário"));
+			}
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
@@ -164,9 +183,6 @@ public class UnidMedBean {
 							"Problemas na alteraÃ§Ã£o da Unidade "
 									+ e.getMessage()));
 		}
-		this.alt = true;
-		this.rem = true;
-		limpa();
 	}
 
 	public void editUnid() {
@@ -185,16 +201,16 @@ public class UnidMedBean {
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
 							"Unidade removida com sucesso"));
+			this.alt = true;
+			this.rem = true;
+			limpa();
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance()
-					.addMessage(
-							null,
-							new FacesMessage(FacesMessage.SEVERITY_ERROR,
-									"Info", "Problemas na remoï¿½ï¿½o da Unidade "
-											+ e.getMessage()));
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+							"Problemas na remoï¿½ï¿½o da Unidade "
+									+ e.getMessage()));
 		}
-		this.alt = true;
-		this.rem = true;
-		limpa();
+
 	}
 }
