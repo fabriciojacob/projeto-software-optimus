@@ -36,174 +36,6 @@ public class AliquotaBean {
 	private boolean sal = true, alt = true, rem = true, tipTri = true,
 			vinculo = true, chkIcm = true, chkIpi = true, chkPisCofins = true;
 
-	public boolean isVinculo() {
-		return vinculo;
-	}
-
-	public void setVinculo(boolean vinculo) {
-		this.vinculo = vinculo;
-	}
-
-	public CodigoSituacaoTributaria getCstEnt() {
-		return cstEnt;
-	}
-
-	public void setCstEnt(CodigoSituacaoTributaria cstEnt) {
-		this.cstEnt = cstEnt;
-	}
-
-	public CodigoSituacaoTributaria getCstSai() {
-		return cstSai;
-	}
-
-	public void setCstSai(CodigoSituacaoTributaria cstSai) {
-		this.cstSai = cstSai;
-	}
-
-	public CodigoSituacaoTributaria getCst() {
-		return cst;
-	}
-
-	public void setCst(CodigoSituacaoTributaria cst) {
-		this.cst = cst;
-	}
-
-	public List<CodigoSituacaoTributaria> getCstList() {
-		return cstList;
-	}
-
-	public void setCstList(List<CodigoSituacaoTributaria> cstList) {
-		this.cstList = cstList;
-	}
-
-	public List<CodigoSituacaoTributaria> getCstListEnt() {
-		return cstListEnt;
-	}
-
-	public void setCstListEnt(List<CodigoSituacaoTributaria> cstListEnt) {
-		this.cstListEnt = cstListEnt;
-	}
-
-	public List<CodigoSituacaoTributaria> getCstListSai() {
-		return cstListSai;
-	}
-
-	public void setCstListSai(List<CodigoSituacaoTributaria> cstListSai) {
-		this.cstListSai = cstListSai;
-	}
-
-	public boolean isChkIcm() {
-		return chkIcm;
-	}
-
-	public void setChkIcm(boolean chkIcm) {
-		this.chkIcm = chkIcm;
-	}
-
-	public boolean isChkIpi() {
-		return chkIpi;
-	}
-
-	public void setChkIpi(boolean chkIpi) {
-		this.chkIpi = chkIpi;
-	}
-
-	public boolean isChkPisCofins() {
-		return chkPisCofins;
-	}
-
-	public void setChkPisCofins(boolean chkPisCofins) {
-		this.chkPisCofins = chkPisCofins;
-	}
-
-	public boolean isTipTri() {
-		return tipTri;
-	}
-
-	public void setTipTri(boolean tipTri) {
-		this.tipTri = tipTri;
-	}
-
-	public String getTipTrib() {
-		return tipTrib;
-	}
-
-	public void setTipTrib(String tipTrib) {
-		this.tipTrib = tipTrib;
-	}
-
-	public String getTipCst() {
-		return tipCst;
-	}
-
-	public void setTipCst(String tipCst) {
-		this.tipCst = tipCst;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public List<Aliquota> getAliqList() {
-		return aliqList;
-	}
-
-	public void setAliqList(List<Aliquota> aliqList) {
-		this.aliqList = aliqList;
-	}
-
-	public String getFiltro() {
-		return filtro;
-	}
-
-	public void setFiltro(String filtro) {
-		this.filtro = filtro;
-	}
-
-	public String getBusca() {
-		return busca;
-	}
-
-	public void setBusca(String busca) {
-		this.busca = busca;
-	}
-
-	public boolean isSal() {
-		return sal;
-	}
-
-	public void setSal(boolean sal) {
-		this.sal = sal;
-	}
-
-	public boolean isAlt() {
-		return alt;
-	}
-
-	public void setAlt(boolean alt) {
-		this.alt = alt;
-	}
-
-	public boolean isRem() {
-		return rem;
-	}
-
-	public void setRem(boolean rem) {
-		this.rem = rem;
-	}
-
-	public Aliquota getAliquota() {
-		return aliquota;
-	}
-
-	public void setAliquota(Aliquota aliquota) {
-		this.aliquota = aliquota;
-	}
-
 	public void novo() {
 		this.sal = false;
 		this.vinculo = false;
@@ -233,7 +65,7 @@ public class AliquotaBean {
 					this.aliquota.setTipo(TipoTrib.TRIBUTADO);
 				}
 			} else if (tipCst.equals("PISCOFINS") || tipCst.equals("IPI")) {
-				if (cstEnt != null && cstSai != null) {
+				if (this.cstEnt != null && this.cstSai != null) {
 					this.colCst.add(cstEnt);
 					this.colCst.add(cstSai);
 				}
@@ -281,13 +113,13 @@ public class AliquotaBean {
 				} else if (this.tipTrib.equals(TipoTrib.TRIBUTADO.toString())) {
 					this.aliquota.setTipo(TipoTrib.TRIBUTADO);
 				}
-				if(cst != null){
+				if (this.cst != null) {
 					this.colCst.add(cst);
 				}
 				this.aliquota.setCst(this.colCst);
 			} else {
 				this.aliquota.setTipo(null);
-				if(cstEnt != null && cstSai != null){
+				if (this.cstEnt != null && this.cstSai != null) {
 					this.colCst.add(cstEnt);
 					this.colCst.add(cstSai);
 				}
@@ -465,4 +297,173 @@ public class AliquotaBean {
 		this.aliqList = new ArrayList<Aliquota>();
 		this.colCst = new ArrayList<CodigoSituacaoTributaria>();
 	}
+
+	public boolean isVinculo() {
+		return vinculo;
+	}
+
+	public void setVinculo(boolean vinculo) {
+		this.vinculo = vinculo;
+	}
+
+	public CodigoSituacaoTributaria getCstEnt() {
+		return cstEnt;
+	}
+
+	public void setCstEnt(CodigoSituacaoTributaria cstEnt) {
+		this.cstEnt = cstEnt;
+	}
+
+	public CodigoSituacaoTributaria getCstSai() {
+		return cstSai;
+	}
+
+	public void setCstSai(CodigoSituacaoTributaria cstSai) {
+		this.cstSai = cstSai;
+	}
+
+	public CodigoSituacaoTributaria getCst() {
+		return cst;
+	}
+
+	public void setCst(CodigoSituacaoTributaria cst) {
+		this.cst = cst;
+	}
+
+	public List<CodigoSituacaoTributaria> getCstList() {
+		return cstList;
+	}
+
+	public void setCstList(List<CodigoSituacaoTributaria> cstList) {
+		this.cstList = cstList;
+	}
+
+	public List<CodigoSituacaoTributaria> getCstListEnt() {
+		return cstListEnt;
+	}
+
+	public void setCstListEnt(List<CodigoSituacaoTributaria> cstListEnt) {
+		this.cstListEnt = cstListEnt;
+	}
+
+	public List<CodigoSituacaoTributaria> getCstListSai() {
+		return cstListSai;
+	}
+
+	public void setCstListSai(List<CodigoSituacaoTributaria> cstListSai) {
+		this.cstListSai = cstListSai;
+	}
+
+	public boolean isChkIcm() {
+		return chkIcm;
+	}
+
+	public void setChkIcm(boolean chkIcm) {
+		this.chkIcm = chkIcm;
+	}
+
+	public boolean isChkIpi() {
+		return chkIpi;
+	}
+
+	public void setChkIpi(boolean chkIpi) {
+		this.chkIpi = chkIpi;
+	}
+
+	public boolean isChkPisCofins() {
+		return chkPisCofins;
+	}
+
+	public void setChkPisCofins(boolean chkPisCofins) {
+		this.chkPisCofins = chkPisCofins;
+	}
+
+	public boolean isTipTri() {
+		return tipTri;
+	}
+
+	public void setTipTri(boolean tipTri) {
+		this.tipTri = tipTri;
+	}
+
+	public String getTipTrib() {
+		return tipTrib;
+	}
+
+	public void setTipTrib(String tipTrib) {
+		this.tipTrib = tipTrib;
+	}
+
+	public String getTipCst() {
+		return tipCst;
+	}
+
+	public void setTipCst(String tipCst) {
+		this.tipCst = tipCst;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public List<Aliquota> getAliqList() {
+		return aliqList;
+	}
+
+	public void setAliqList(List<Aliquota> aliqList) {
+		this.aliqList = aliqList;
+	}
+
+	public String getFiltro() {
+		return filtro;
+	}
+
+	public void setFiltro(String filtro) {
+		this.filtro = filtro;
+	}
+
+	public String getBusca() {
+		return busca;
+	}
+
+	public void setBusca(String busca) {
+		this.busca = busca;
+	}
+
+	public boolean isSal() {
+		return sal;
+	}
+
+	public void setSal(boolean sal) {
+		this.sal = sal;
+	}
+
+	public boolean isAlt() {
+		return alt;
+	}
+
+	public void setAlt(boolean alt) {
+		this.alt = alt;
+	}
+
+	public boolean isRem() {
+		return rem;
+	}
+
+	public void setRem(boolean rem) {
+		this.rem = rem;
+	}
+
+	public Aliquota getAliquota() {
+		return aliquota;
+	}
+
+	public void setAliquota(Aliquota aliquota) {
+		this.aliquota = aliquota;
+	}
+
 }

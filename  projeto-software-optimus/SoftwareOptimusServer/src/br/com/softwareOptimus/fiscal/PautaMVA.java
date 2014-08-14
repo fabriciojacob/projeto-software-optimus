@@ -2,37 +2,39 @@ package br.com.softwareOptimus.fiscal;
 
 import java.io.Serializable;
 import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
-@Table(name="tbPautaMVA")
+@Table(name = "tbPautaMVA")
 public class PautaMVA implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -2344969112674156548L;
-	
+
 	@Id
 	@GeneratedValue
 	private Long idPautaMVA;
-	
+
 	private String descricao;
-	
+
 	private Double valorPauta;
-	
+
 	private Double valorMVa;
-	
+
+	@Temporal(TemporalType.DATE)
 	private Date vigencia;
-	
+
 	private boolean nincideDesconto;
-	
+
 	private boolean incideIPI;
-	
+
 	private boolean mvaAjustada;
 
 	public Long getIdPautaMVA() {

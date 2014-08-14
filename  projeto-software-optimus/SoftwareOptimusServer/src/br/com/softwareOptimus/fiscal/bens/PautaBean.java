@@ -2,12 +2,10 @@ package br.com.softwareOptimus.fiscal.bens;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-
 import br.com.softwareOptimus.fiscal.PautaMVA;
 import br.com.softwareOptimus.fiscal.RN.PautaMVARN;
 
@@ -72,8 +70,7 @@ public class PautaBean {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na remoção da Pauta "
-									+ e.getMessage()));
+							"Problemas na remoção da Pauta " + e.getMessage()));
 		}
 	}
 
@@ -114,19 +111,37 @@ public class PautaBean {
 	}
 
 	public void limpar() {
-		this.busca = null;
-		this.filtro = null;
 		this.pautaList = new ArrayList<PautaMVA>();
 		this.pauta = new PautaMVA();
 		this.id = null;
 	}
 
 	public void buscaPauta() {
-
+		limpar();
+		PautaMVARN pautaRN = new PautaMVARN();
+		if (!busca.equals("")) {
+			if (filtro.equals("id")) {
+				this.pautaList = pautaRN.consultaId(Long.parseLong(busca));
+			} else if (filtro.equals("desc")) {
+				this.pautaList = pautaRN.consultaDesc(busca);
+			} else if (filtro.equals("valP")) {
+				this.pautaList = pautaRN
+						.consultaValP(Double.parseDouble(busca));
+			} else if (filtro.equals("valMva")) {
+				this.pautaList = pautaRN.consultaValMva(Double
+						.parseDouble(busca));
+			}
+		} else {
+			this.pautaList = pautaRN.lista();
+		}
 	}
 
 	public void editPauta() {
-
+		PautaMVARN pautaRN = new PautaMVARN();
+		this.pauta = pautaRN.editPauta(id);
+		this.alt = false;
+		this.rem = false;
+		this.sal = true;
 	}
 
 	public Long getId() {
