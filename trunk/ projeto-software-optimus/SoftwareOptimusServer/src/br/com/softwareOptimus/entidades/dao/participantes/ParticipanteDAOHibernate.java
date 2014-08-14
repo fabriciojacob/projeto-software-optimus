@@ -72,6 +72,11 @@ public class ParticipanteDAOHibernate implements ParticipanteDAO {
 	public PessoaFisica carregarPF(Long codigo) throws Exception {
 		return this.session.find(PessoaFisica.class, codigo);
 	}
+	
+	@Override
+	public PessoaJuridica carregarPJ(Long codigo) throws Exception {
+		return this.session.find(PessoaJuridica.class,codigo);
+	}
 
 	@Override
 	public List<PessoaJuridica> buscaCNPJ(String cnpj) throws Exception {
