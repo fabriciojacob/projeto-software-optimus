@@ -22,7 +22,8 @@
 
 			<p:commandButton value="Salvar"
 				actionListener="#{participanteBean.salvarPF}"
-				disabled="#{participanteBean.salvar}" />
+				disabled="#{participanteBean.salvar}"
+				update="frmCadParticipante" />
 
 			<p:commandButton value="Consulta" type="button"
 				onclick="PF('consulta').show();"
