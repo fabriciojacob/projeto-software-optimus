@@ -58,6 +58,13 @@ public class AliquotaDAOHibernate implements AliquotaDAO {
 				Aliquota.class);
 		return listaAliquota.getResultList();
 	}
+	
+	public List<Aliquota> listaAliqIcms() {
+		String jpql = "Select a From Aliquota a Where a.tipo Is Not Null";
+		TypedQuery<Aliquota> listaAliquota = this.session.createQuery(jpql,
+				Aliquota.class);
+		return listaAliquota.getResultList();
+	}
 
 	@Override
 	public void begin() throws IOException, SQLException {

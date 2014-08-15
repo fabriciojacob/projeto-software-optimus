@@ -17,4 +17,5 @@ public interface AliquotaDAO {
 	public List<Aliquota> consultaId(long parseLong);
 	public List<Aliquota> consultaAliq(Double busca);
 	public List<Aliquota> consultaRed(Double busca);
+	public List<Aliquota> listaAliqIcms();
 }
