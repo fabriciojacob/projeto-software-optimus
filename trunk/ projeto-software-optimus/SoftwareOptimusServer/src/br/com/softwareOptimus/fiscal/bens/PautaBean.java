@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import br.com.softwareOptimus.fiscal.PautaMVA;
 import br.com.softwareOptimus.fiscal.RN.PautaMVARN;
 
 @ManagedBean(name = "pautaBean")
-@SessionScoped
+@ViewScoped
 public class PautaBean {
 
 	private PautaMVA pauta = new PautaMVA();

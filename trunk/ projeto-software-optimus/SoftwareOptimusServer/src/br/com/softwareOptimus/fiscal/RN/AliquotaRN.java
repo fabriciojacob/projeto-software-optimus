@@ -46,6 +46,10 @@ public class AliquotaRN {
 	public void altAliq(Aliquota aliquota) throws Exception {
 		this.aliquotaDAO.altAliq(aliquota);
 	}
+	
+	public List<Aliquota> listaAliqIcms(){
+		return this.aliquotaDAO.listaAliqIcms();
+	}
 
 	public Integer validaCampoNulo(Aliquota aliquota, Collection<CodigoSituacaoTributaria> colCst, String tipTrib, String tipCst) {
 		Integer retorno = 0;

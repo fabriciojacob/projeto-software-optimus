@@ -5,13 +5,13 @@ import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import br.com.softwareOptimus.produto.UnidMed;
 import br.com.softwareOptimus.produto.RN.UnidMedRN;
 
 @ManagedBean(name = "unidMedBean")
-@SessionScoped
+@ViewScoped
 public class UnidMedBean {
 
 	private UnidMed unidMed = new UnidMed();

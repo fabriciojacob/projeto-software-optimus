@@ -3,7 +3,7 @@ package br.com.softwareOptimus.produto.bens;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import br.com.softwareOptimus.fiscal.FiguraFiscal;
 import br.com.softwareOptimus.fiscal.Ncm;
@@ -11,7 +11,7 @@ import br.com.softwareOptimus.produto.Produto;
 import br.com.softwareOptimus.produto.RN.ProdutoRN;
 
 @ManagedBean(name = "produtoBean")
-@SessionScoped
+@ViewScoped
 public class ProdutoBean {
 
 	private Produto produto = new Produto();
