@@ -7,8 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
 import br.com.softwareOptimus.entidades.Estado;
+import br.com.softwareOptimus.entidades.TipoPessoaJuridica;
 
 @Entity
 @Table(name="tbGradeTributaria")
@@ -34,9 +34,19 @@ public class GradeTributaria implements Serializable{
 	
 	private IO io;
 	
+	private TipoPessoaJuridica tipoGrade;
+	
 	@ManyToOne
 	private PautaMVA pautaMva;
 	
+	public TipoPessoaJuridica getTipoGrade() {
+		return tipoGrade;
+	}
+	
+	public void setTipoGrade(TipoPessoaJuridica tipoGrade) {
+		this.tipoGrade = tipoGrade;
+	}
+
 	public PautaMVA getPautaMva() {
 		return pautaMva;
 	}
