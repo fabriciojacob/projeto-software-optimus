@@ -1,9 +1,12 @@
 package br.com.softwareOptimus.fiscal;
 
 import java.io.Serializable;
+import java.util.Collection;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -38,6 +41,9 @@ public class GradeTributaria implements Serializable{
 	
 	@ManyToOne
 	private PautaMVA pautaMva;
+	
+	@ManyToMany
+	private Collection<FiguraFiscal> figura;
 	
 	public TipoPessoaJuridica getTipoGrade() {
 		return tipoGrade;
