@@ -59,6 +59,16 @@ public class Titulo implements Serializable{
 	@ManyToOne
 	private Conta conta;
 	
+	private Rubrica rubrica;
+	
+	public Rubrica getRubrica() {
+		return rubrica;
+	}
+	
+	public void setRubrica(Rubrica rubrica) {
+		this.rubrica = rubrica;
+	}
+	
 	public MovCaixa getCaixa() {
 		return caixa;
 	}
