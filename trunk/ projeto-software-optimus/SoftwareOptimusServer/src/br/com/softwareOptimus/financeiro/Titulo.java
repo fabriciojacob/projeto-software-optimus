@@ -54,16 +54,16 @@ public class Titulo implements Serializable{
 	private TipoBaixa tipoBaixa;
 	
 	@ManyToOne
-	private Caixa caixa;
+	private MovCaixa caixa;
 	
 	@ManyToOne
 	private Conta conta;
 	
-	public Caixa getCaixa() {
+	public MovCaixa getCaixa() {
 		return caixa;
 	}
 	
-	public void setCaixa(Caixa caixa) {
+	public void setCaixa(MovCaixa caixa) {
 		this.caixa = caixa;
 	}
 	
