@@ -207,6 +207,7 @@ public class DAOFactory {
 	
 	public static FiguraFiscalDAO criaFiguraDAO(){
 		FiguralFiscalDAOHibernate figuraDAO = new FiguralFiscalDAOHibernate();
+		figuraDAO.setSession(session);
 		try {
 			figuraDAO.begin();
 		} catch (IOException | SQLException e) {

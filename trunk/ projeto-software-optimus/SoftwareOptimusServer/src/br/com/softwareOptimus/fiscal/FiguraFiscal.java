@@ -6,7 +6,6 @@ import java.util.Collection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -29,9 +28,6 @@ public class FiguraFiscal implements Serializable {
 	
 	private String descricao;
 	
-	@ManyToMany
-	private Collection<GradeTributaria> grades;
-	
 	@OneToMany(mappedBy = "figura")
 	private Collection<Produto> produtos;
 	
@@ -41,14 +37,6 @@ public class FiguraFiscal implements Serializable {
 	
 	public void setProdutos(Collection<Produto> produtos) {
 		this.produtos = produtos;
-	}
-	
-	public Collection<GradeTributaria> getGrades() {
-		return grades;
-	}
-	
-	public void setGrades(Collection<GradeTributaria> grades) {
-		this.grades = grades;
 	}
 	
 	public Long getIdFigura() {
