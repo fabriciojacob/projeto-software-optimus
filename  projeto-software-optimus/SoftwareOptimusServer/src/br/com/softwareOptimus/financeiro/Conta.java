@@ -21,10 +21,20 @@ public class Conta implements Serializable {
 	
 	private TipoMov tipo;
 	
+	private TipoMov tipoMov;
+	
 	private String descricao;
 	
 	@OneToMany(mappedBy = "conta")
 	private Collection<Titulo> titulos;
+	
+	public TipoMov getTipoMov() {
+		return tipoMov;
+	}
+	
+	public void setTipoMov(TipoMov tipoMov) {
+		this.tipoMov = tipoMov;
+	}
 
 	public Long getCodigo() {
 		return idConta;
