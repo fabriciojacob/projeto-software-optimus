@@ -6,6 +6,7 @@ import java.util.Collection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -26,7 +27,7 @@ public class ExtratoContaCorrente implements Serializable {
 	@ManyToOne
 	private ContaCorrente contaCorrente;
 	
-	@OneToMany
+	@ManyToMany
 	private Collection<Titulo> titulo;
 	
 	private String descricao;
