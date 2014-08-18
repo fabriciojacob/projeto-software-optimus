@@ -3,80 +3,34 @@ package br.com.softwareOptimus.fiscal.bens;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 
-import br.com.softwareOptimus.entidades.TipoPessoaJuridica;
-import br.com.softwareOptimus.fiscal.Aliquota;
 import br.com.softwareOptimus.fiscal.FiguraFiscal;
-import br.com.softwareOptimus.fiscal.GradeTributaria;
-import br.com.softwareOptimus.fiscal.IO;
-import br.com.softwareOptimus.fiscal.PautaMVA;
-import br.com.softwareOptimus.fiscal.RN.AliquotaRN;
-import br.com.softwareOptimus.fiscal.RN.FiguraFiscalRN;
-import br.com.softwareOptimus.fiscal.RN.GradeTributariaRN;
-import br.com.softwareOptimus.fiscal.RN.PautaMVARN;
+import br.com.softwareOptimus.fiscal.GradeTributariaVigencia;
 
 @ManagedBean(name = "figuraFiscalBean")
 @ViewScoped
 public class FiguraFiscalBean {
 
 	private FiguraFiscal figura = new FiguraFiscal();
-	private GradeTributaria grade = new GradeTributaria();
-	private PautaMVARN pautaRN = new PautaMVARN();
-	private AliquotaRN aliqRN = new AliquotaRN();
+	private GradeTributariaVigencia grade = new GradeTributariaVigencia();
 	private List<FiguraFiscal> listaFigura = new ArrayList<FiguraFiscal>();
-	private List<GradeTributaria> listaGrade = new ArrayList<GradeTributaria>();
-	private List<PautaMVA> listaPauta = new ArrayList<PautaMVA>();
-	private List<Aliquota> listaAliquota = new ArrayList<Aliquota>();
-	private Boolean sal = true, alt = true, rem = true, inc = true,
-			outInc = true;
-	private String busca, filtro, tipoGrade, entSai;
+	private List<GradeTributariaVigencia> listaGrade = new ArrayList<GradeTributariaVigencia>();
+	private Boolean sal = true, alt = true, rem = true;
+	private String busca, filtro, tipoGrade;
 	private Long id;
-
-	public FiguraFiscalBean() {
-		setListaAliquota(this.aliqRN.listaAliqIcms());
-		setListaPauta(this.pautaRN.lista());
+	
+	public FiguraFiscalBean(){
+		
 	}
 
 	public void novo() {
-		this.sal = false;
-		this.alt = true;
-		this.rem = true;
-		this.inc = true;
-		this.outInc = true;
 		limpar();
 	}
 
 	public void salvar() {
-		try {
-			FiguraFiscalRN figRN = new FiguraFiscalRN();
-			this.figura.setIdFigura(null);
-			Integer retorno = figRN.validaCampoNulo(this.figura);
-			if (retorno == 0) {
-				figRN.salvar(this.figura);
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-								"Figura salva com sucesso"));
-				this.inc = false;
-				this.outInc = false;
-			} else {
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-								"Existem campos nulos no formulário"));
-			}
-		} catch (Exception e) {
-			FacesContext.getCurrentInstance()
-					.addMessage(
-							null,
-							new FacesMessage(FacesMessage.SEVERITY_ERROR,
-									"Info", "Problemas na gravacao da Figura "
-											+ e.getMessage()));
-		}
+
 	}
 
 	public void alterar() {
@@ -101,87 +55,21 @@ public class FiguraFiscalBean {
 	public void editFigura() {
 
 	}
-
-	public void editGrade() {
-
+	
+	public void editGrade(){
+		
 	}
-
-	public void excluirGrade() {
-
+	
+	public void excluirGrade(){
+		
 	}
-
-	public void buscar() {
-
+	
+	public void buscar(){
+		
 	}
-
-	public void incluirGrade() {
-		GradeTributariaRN gradeRN = new GradeTributariaRN();
-		this.listaFigura = new ArrayList<FiguraFiscal>();
-		try {
-			listaFigura.add(figura);
-			grade.setId(null);
-			grade.setFigura(listaFigura);
-			if (this.tipoGrade.equals(TipoPessoaJuridica.DISTRIBUIDOR
-					.toString())) {
-				this.grade.setTipoGrade(TipoPessoaJuridica.DISTRIBUIDOR);
-			} else if (this.tipoGrade.equals(TipoPessoaJuridica.FABRICANTE
-					.toString())) {
-				this.grade.setTipoGrade(TipoPessoaJuridica.FABRICANTE);
-			} else if (this.tipoGrade.equals(TipoPessoaJuridica.OUTROS
-					.toString())) {
-				this.grade.setTipoGrade(TipoPessoaJuridica.OUTROS);
-			}
-			if (this.entSai.equals(IO.ENTRADA.toString())) {
-				this.grade.setIo(IO.ENTRADA);
-			} else if (this.entSai.equals(IO.SAIDA.toString())) {
-				this.grade.setIo(IO.SAIDA);
-			}
-			Integer retorno = gradeRN.validaCampoNulo(grade);
-			if (retorno == 0) {
-				gradeRN.salva(grade);
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-								"Grade salva com sucesso"));
-			} else {
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-								"Existem campos nulos no formulário"));
-			}
-		} catch (Exception e) {
-			FacesContext.getCurrentInstance()
-					.addMessage(
-							null,
-							new FacesMessage(FacesMessage.SEVERITY_ERROR,
-									"Info", "Problemas na gravacao da Grade "
-											+ e.getMessage()));
-		}
-
-	}
-
-	public String getEntSai() {
-		return entSai;
-	}
-
-	public void setEntSai(String entSai) {
-		this.entSai = entSai;
-	}
-
-	public Boolean getInc() {
-		return inc;
-	}
-
-	public void setInc(Boolean inc) {
-		this.inc = inc;
-	}
-
-	public Boolean getOutInc() {
-		return outInc;
-	}
-
-	public void setOutInc(Boolean outInc) {
-		this.outInc = outInc;
+	
+	public void incluirGrade(){
+		
 	}
 
 	public FiguraFiscal getFigura() {
@@ -248,19 +136,19 @@ public class FiguraFiscalBean {
 		this.listaFigura = listaFigura;
 	}
 
-	public List<GradeTributaria> getListaGrade() {
+	public List<GradeTributariaVigencia> getListaGrade() {
 		return listaGrade;
 	}
 
-	public void setListaGrade(List<GradeTributaria> listaGrade) {
+	public void setListaGrade(List<GradeTributariaVigencia> listaGrade) {
 		this.listaGrade = listaGrade;
 	}
 
-	public GradeTributaria getGrade() {
+	public GradeTributariaVigencia getGrade() {
 		return grade;
 	}
 
-	public void setGrade(GradeTributaria grade) {
+	public void setGrade(GradeTributariaVigencia grade) {
 		this.grade = grade;
 	}
 
@@ -270,21 +158,5 @@ public class FiguraFiscalBean {
 
 	public void setTipoGrade(String tipoGrade) {
 		this.tipoGrade = tipoGrade;
-	}
-
-	public List<PautaMVA> getListaPauta() {
-		return listaPauta;
-	}
-
-	public void setListaPauta(List<PautaMVA> listaPauta) {
-		this.listaPauta = listaPauta;
-	}
-
-	public List<Aliquota> getListaAliquota() {
-		return listaAliquota;
-	}
-
-	public void setListaAliquota(List<Aliquota> listaAliquota) {
-		this.listaAliquota = listaAliquota;
 	}
 }
