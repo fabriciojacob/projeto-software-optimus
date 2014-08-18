@@ -15,7 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import br.com.softwareOptimus.fiscal.GradeTributaria;
+import br.com.softwareOptimus.fiscal.GradeTributariaVigencia;
 
 @Entity
 @Table(name = "tbEstado")
@@ -38,10 +38,10 @@ public class Estado implements Serializable, Converter {
 	private Pais pais;
 
 	@OneToMany(mappedBy = "origem")
-	private Collection<GradeTributaria> grades1;
+	private Collection<GradeTributariaVigencia> grades1;
 	
 	@OneToMany(mappedBy = "destino")
-	private Collection<GradeTributaria> grades2;
+	private Collection<GradeTributariaVigencia> grades2;
 	
 
 	@OneToMany(mappedBy = "uf")
@@ -55,19 +55,19 @@ public class Estado implements Serializable, Converter {
 		this.municipio = municipio;
 	}
 
-	public Collection<GradeTributaria> getGrades1() {
+	public Collection<GradeTributariaVigencia> getGrades1() {
 		return grades1;
 	}
 
-	public void setGrades1(Collection<GradeTributaria> grades1) {
+	public void setGrades1(Collection<GradeTributariaVigencia> grades1) {
 		this.grades1 = grades1;
 	}
 
-	public Collection<GradeTributaria> getGrades2() {
+	public Collection<GradeTributariaVigencia> getGrades2() {
 		return grades2;
 	}
 
-	public void setGrades2(Collection<GradeTributaria> grades2) {
+	public void setGrades2(Collection<GradeTributariaVigencia> grades2) {
 		this.grades2 = grades2;
 	}
 
