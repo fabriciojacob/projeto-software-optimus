@@ -57,6 +57,12 @@
 					<p:inputText id="idGrade" disabled="true"
 						value="#{figuraFiscalBean.grade.id}" />
 
+					<p:selectOneRadio id="entraSai"
+						value="#{figuraFiscalBean.entSai}">
+						<f:selectItem itemLabel="Entrada" itemValue="ENTRADA" />
+						<f:selectItem itemLabel="Saida" itemValue="SAIDA" />
+					</p:selectOneRadio>
+
 					Estado Origem:
 					<p:selectOneMenu id="ufOr" value="#{figuraFiscalBean.grade.origem}"
 						style="width:200px;">
@@ -77,7 +83,7 @@
 					<p:selectOneMenu id="pauta"
 						value="#{figuraFiscalBean.grade.pautaMva}" style="width:200px;">
 						<f:selectItem itemLabel="Selecione uma Pauta" />
-						<f:selectItems value="#{gradeTributariaBean.listaPauta}"
+						<f:selectItems value="#{figuraFiscalBean.listaPauta}"
 							var="pautaList" itemValue="#{pautaList}"
 							itemLabel="#{pautaList.idPautaMVA} - #{pautaList.descricao}" />
 					</p:selectOneMenu>
@@ -86,7 +92,7 @@
 					<p:selectOneMenu id="aliquota"
 						value="#{figuraFiscalBean.grade.aliquota}" style="width:200px;">
 						<f:selectItem itemLabel="Selecione uma Alíquota" />
-						<f:selectItems value="#{gradeTributariaBean.listaAliquota}"
+						<f:selectItems value="#{figuraFiscalBean.listaAliquota}"
 							var="pautaList" itemValue="#{pautaList}"
 							itemLabel="#{pautaList.idAliq} - #{pautaList.aliquota}" />
 					</p:selectOneMenu>
@@ -94,7 +100,7 @@
 					Tipo Grade
 					<p:selectOneMenu id="tipoGrade"
 						value="#{figuraFiscalBean.tipoGrade}" style="width:200px;">
-						<f:selectItem itemLabel="Selecione uma Opção" />
+						<f:selectItem itemLabel="Selecione um Tipo" />
 						<f:selectItem itemLabel="Dristribuidor" itemValue="DISTRIBUIDOR" />
 						<f:selectItem itemLabel="Fabricante" itemValue="FABRICANTE" />
 						<f:selectItem itemLabel="Outros" itemValue="OUTROS" />

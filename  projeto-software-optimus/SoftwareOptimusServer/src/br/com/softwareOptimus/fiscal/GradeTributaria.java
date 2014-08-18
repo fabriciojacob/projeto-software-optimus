@@ -45,6 +45,14 @@ public class GradeTributaria implements Serializable{
 	@ManyToMany
 	private Collection<FiguraFiscal> figura;
 	
+	public Collection<FiguraFiscal> getFigura() {
+		return figura;
+	}
+
+	public void setFigura(Collection<FiguraFiscal> figura) {
+		this.figura = figura;
+	}
+
 	public TipoPessoaJuridica getTipoGrade() {
 		return tipoGrade;
 	}

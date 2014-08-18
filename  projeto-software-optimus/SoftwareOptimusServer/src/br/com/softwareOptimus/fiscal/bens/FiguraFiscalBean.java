@@ -8,9 +8,11 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import br.com.softwareOptimus.entidades.TipoPessoaJuridica;
 import br.com.softwareOptimus.fiscal.Aliquota;
 import br.com.softwareOptimus.fiscal.FiguraFiscal;
 import br.com.softwareOptimus.fiscal.GradeTributaria;
+import br.com.softwareOptimus.fiscal.IO;
 import br.com.softwareOptimus.fiscal.PautaMVA;
 import br.com.softwareOptimus.fiscal.RN.AliquotaRN;
 import br.com.softwareOptimus.fiscal.RN.FiguraFiscalRN;
@@ -29,11 +31,12 @@ public class FiguraFiscalBean {
 	private List<GradeTributaria> listaGrade = new ArrayList<GradeTributaria>();
 	private List<PautaMVA> listaPauta = new ArrayList<PautaMVA>();
 	private List<Aliquota> listaAliquota = new ArrayList<Aliquota>();
-	private Boolean sal = true, alt = true, rem = true, inc = true, outInc = true;
-	private String busca, filtro, tipoGrade;
+	private Boolean sal = true, alt = true, rem = true, inc = true,
+			outInc = true;
+	private String busca, filtro, tipoGrade, entSai;
 	private Long id;
-	
-	public FiguraFiscalBean(){
+
+	public FiguraFiscalBean() {
 		setListaAliquota(this.aliqRN.listaAliqIcms());
 		setListaPauta(this.pautaRN.lista());
 	}
@@ -60,18 +63,19 @@ public class FiguraFiscalBean {
 								"Figura salva com sucesso"));
 				this.inc = false;
 				this.outInc = false;
-			}else{
+			} else {
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
 								"Existem campos nulos no formulário"));
 			}
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na gravacao da Figura "
-									+ e.getMessage()));
+			FacesContext.getCurrentInstance()
+					.addMessage(
+							null,
+							new FacesMessage(FacesMessage.SEVERITY_ERROR,
+									"Info", "Problemas na gravacao da Figura "
+											+ e.getMessage()));
 		}
 	}
 
@@ -97,22 +101,71 @@ public class FiguraFiscalBean {
 	public void editFigura() {
 
 	}
-	
-	public void editGrade(){
-		
+
+	public void editGrade() {
+
 	}
-	
-	public void excluirGrade(){
-		
+
+	public void excluirGrade() {
+
 	}
-	
-	public void buscar(){
-		
+
+	public void buscar() {
+
 	}
-	
-	public void incluirGrade(){
+
+	public void incluirGrade() {
 		GradeTributariaRN gradeRN = new GradeTributariaRN();
-		
+		this.listaFigura = new ArrayList<FiguraFiscal>();
+		try {
+			listaFigura.add(figura);
+			grade.setId(null);
+			grade.setFigura(listaFigura);
+			if (this.tipoGrade.equals(TipoPessoaJuridica.DISTRIBUIDOR
+					.toString())) {
+				this.grade.setTipoGrade(TipoPessoaJuridica.DISTRIBUIDOR);
+			} else if (this.tipoGrade.equals(TipoPessoaJuridica.FABRICANTE
+					.toString())) {
+				this.grade.setTipoGrade(TipoPessoaJuridica.FABRICANTE);
+			} else if (this.tipoGrade.equals(TipoPessoaJuridica.OUTROS
+					.toString())) {
+				this.grade.setTipoGrade(TipoPessoaJuridica.OUTROS);
+			}
+			if (this.entSai.equals(IO.ENTRADA.toString())) {
+				this.grade.setIo(IO.ENTRADA);
+			} else if (this.entSai.equals(IO.SAIDA.toString())) {
+				this.grade.setIo(IO.SAIDA);
+			}
+			Integer retorno = gradeRN.validaCampoNulo(grade);
+			if (retorno == 0) {
+				gradeRN.salva(grade);
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
+								"Grade salva com sucesso"));
+			} else {
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+								"Existem campos nulos no formulário"));
+			}
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance()
+					.addMessage(
+							null,
+							new FacesMessage(FacesMessage.SEVERITY_ERROR,
+									"Info", "Problemas na gravacao da Grade "
+											+ e.getMessage()));
+		}
+
+	}
+
+	public String getEntSai() {
+		return entSai;
+	}
+
+	public void setEntSai(String entSai) {
+		this.entSai = entSai;
 	}
 
 	public Boolean getInc() {
