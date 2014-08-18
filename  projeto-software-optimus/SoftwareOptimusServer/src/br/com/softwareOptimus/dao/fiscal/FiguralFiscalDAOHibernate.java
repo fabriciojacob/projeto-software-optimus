@@ -6,8 +6,6 @@ import java.sql.SQLException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
-import br.com.softwareOptimus.fiscal.FiguraFiscal;
-
 public class FiguralFiscalDAOHibernate implements FiguraFiscalDAO {
 	
 	private EntityManager session;
@@ -40,12 +38,6 @@ public class FiguralFiscalDAOHibernate implements FiguraFiscalDAO {
 
 	public void setTransaction(EntityTransaction transaction) {
 		this.transaction = transaction;
-	}
-
-	@Override
-	public void salva(FiguraFiscal figura) {
-		this.session.persist(figura);
-		this.transaction.commit();
 	}
 	
 	
