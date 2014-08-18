@@ -17,13 +17,15 @@
 			<p:commandButton value="Novo"
 				actionListener="#{figuraFiscalBean.novo}" ajax="grid" />
 
-			<p:commandButton value="Salvar" disabled="#{figuraFiscalBean.sal}"
+			<p:commandButton value="Salvar" disabled="#{gradeTributariaBean.sal}"
 				actionListener="#{figuraFiscalBean.salvar}" ajax="grid" />
 
-			<p:commandButton value="Alterar" disabled="#{figuraFiscalBean.alt}"
+			<p:commandButton value="Alterar"
+				disabled="#{gradeTributariaBean.alt}"
 				actionListener="#{figuraFiscalBean.alterar}" ajax="grid" />
 
-			<p:commandButton value="Excluir" disabled="#{figuraFiscalBean.rem}"
+			<p:commandButton value="Excluir"
+				disabled="#{gradeTributariaBean.rem}"
 				actionListener="#{figuraFiscalBean.remover}" ajax="grid" />
 
 			<p:commandButton id="consulta" value="Consultar" type="button"
@@ -44,10 +46,7 @@
 					<p:inputText id="desc" value="#{figuraFiscalBean.figura.descricao}" />
 			</h:panelGrid>
 			<p:commandButton id="diGrade" value="Grade" type="button"
-				disabled="#{figuraFiscalBean.inc}" onclick="PF('dlg2').show();" />
-
-			<p:commandButton id="outGrade" value="Outras Grades" type="button"
-				disabled="#{figuraFiscalBean.outInc}" onclick="PF('dlg2').show();" />
+				onclick="PF('dlg2').show();" />
 
 			<p:dialog header="Grade Tributária" widgetVar="dlg2" modal="true"
 				height="200" width="330">
@@ -55,17 +54,11 @@
 				<h:panelGrid columns="2" columnClasses="label, value">
 					Codigo da Grade:
 					<p:inputText id="idGrade" disabled="true"
-						value="#{figuraFiscalBean.grade.id}" />
-
-					<p:selectOneRadio id="entraSai"
-						value="#{figuraFiscalBean.entSai}">
-						<f:selectItem itemLabel="Entrada" itemValue="ENTRADA" />
-						<f:selectItem itemLabel="Saida" itemValue="SAIDA" />
-					</p:selectOneRadio>
+						value="#{gradeTributariaBean.grade.id}" />
 
 					Estado Origem:
-					<p:selectOneMenu id="ufOr" value="#{figuraFiscalBean.grade.origem}"
-						style="width:200px;">
+					<p:selectOneMenu id="ufOr"
+						value="#{gradeTributariaBean.grade.origem}" style="width:200px;">
 						<f:selectItem itemLabel="Selecione um Estado origem" />
 						<f:selectItems value="#{geralBean.estados}" var="listaEstados"
 							itemValue="#{listaEstados}" itemLabel="#{listaEstados.descricao}" />
@@ -73,7 +66,7 @@
 				
 					Estado Destino:
 					<p:selectOneMenu id="ufDe"
-						value="#{figuraFiscalBean.grade.destino}" style="width:200px;">
+						value="#{gradeTributariaBean.grade.destino}" style="width:200px;">
 						<f:selectItem itemLabel="Selecione um Estado Destino" />
 						<f:selectItems value="#{geralBean.estados}" var="listaEstados"
 							itemValue="#{listaEstados}" itemLabel="#{listaEstados.descricao}" />
@@ -81,18 +74,18 @@
 
 					Pauta:
 					<p:selectOneMenu id="pauta"
-						value="#{figuraFiscalBean.grade.pautaMva}" style="width:200px;">
+						value="#{gradeTributariaBean.grade.pautaMva}" style="width:200px;">
 						<f:selectItem itemLabel="Selecione uma Pauta" />
-						<f:selectItems value="#{figuraFiscalBean.listaPauta}"
+						<f:selectItems value="#{gradeTributariaBean.listaPauta}"
 							var="pautaList" itemValue="#{pautaList}"
 							itemLabel="#{pautaList.idPautaMVA} - #{pautaList.descricao}" />
 					</p:selectOneMenu>
 
 					Alíquota:
 					<p:selectOneMenu id="aliquota"
-						value="#{figuraFiscalBean.grade.aliquota}" style="width:200px;">
+						value="#{gradeTributariaBean.grade.aliquota}" style="width:200px;">
 						<f:selectItem itemLabel="Selecione uma Alíquota" />
-						<f:selectItems value="#{figuraFiscalBean.listaAliquota}"
+						<f:selectItems value="#{gradeTributariaBean.listaAliquota}"
 							var="pautaList" itemValue="#{pautaList}"
 							itemLabel="#{pautaList.idAliq} - #{pautaList.aliquota}" />
 					</p:selectOneMenu>
@@ -100,7 +93,7 @@
 					Tipo Grade
 					<p:selectOneMenu id="tipoGrade"
 						value="#{figuraFiscalBean.tipoGrade}" style="width:200px;">
-						<f:selectItem itemLabel="Selecione um Tipo" />
+						<f:selectItem itemLabel="Selecione uma Opção" />
 						<f:selectItem itemLabel="Dristribuidor" itemValue="DISTRIBUIDOR" />
 						<f:selectItem itemLabel="Fabricante" itemValue="FABRICANTE" />
 						<f:selectItem itemLabel="Outros" itemValue="OUTROS" />
