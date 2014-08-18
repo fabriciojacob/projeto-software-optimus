@@ -5,15 +5,22 @@ import br.com.softwareOptimus.fiscal.GradeTributaria;
 import br.com.softwareOptimus.util.DAOFactory;
 
 public class GradeTributariaRN {
-	
+
 	private GradeTributariaDAO gradeTribDAO;
-	
-	public GradeTributariaRN(){
+
+	public GradeTributariaRN() {
 		this.gradeTribDAO = DAOFactory.criaGradeTribDAO();
 	}
 
 	public Integer validaCampoNulo(GradeTributaria grade) {
-		return null;
+		Integer retorno = 0;
+		if (grade.getAliquota() == null || grade.getDescricao().equals("")
+				|| grade.getDestino().equals("")
+				|| grade.getOrigem().equals("") || grade.getIo().equals("")
+				|| grade.getTipoGrade().equals("")) {
+			retorno = 1;
+		}
+		return retorno;
 	}
 
 	public void altGrade(GradeTributaria grade) {
