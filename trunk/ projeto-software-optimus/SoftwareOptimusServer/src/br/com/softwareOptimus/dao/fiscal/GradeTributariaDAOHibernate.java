@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
-import br.com.softwareOptimus.fiscal.GradeTributaria;
+import br.com.softwareOptimus.fiscal.GradeTributariaVigencia;
 
 public class GradeTributariaDAOHibernate implements GradeTributariaDAO {
 
@@ -43,19 +43,19 @@ public class GradeTributariaDAOHibernate implements GradeTributariaDAO {
 	}
 
 	@Override
-	public void altGrade(GradeTributaria grade) {
+	public void altGrade(GradeTributariaVigencia grade) {
 		this.session.merge(grade);
 		this.transaction.commit();
 	}
 
 	@Override
-	public void salva(GradeTributaria grade) {
+	public void salva(GradeTributariaVigencia grade) {
 		this.session.persist(grade);
 		this.transaction.commit();
 	}
 
 	@Override
-	public void remover(GradeTributaria grade) {
+	public void remover(GradeTributariaVigencia grade) {
 		this.session.remove(grade);
 		this.transaction.commit();
 	}
