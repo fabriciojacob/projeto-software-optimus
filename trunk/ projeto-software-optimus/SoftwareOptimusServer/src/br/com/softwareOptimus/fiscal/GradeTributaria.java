@@ -1,17 +1,11 @@
 package br.com.softwareOptimus.fiscal;
 
 import java.io.Serializable;
-import java.util.Collection;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import br.com.softwareOptimus.entidades.Estado;
-import br.com.softwareOptimus.entidades.TipoPessoaJuridica;
 
 @Entity
 @Table(name="tbGradeTributaria")
@@ -20,95 +14,20 @@ public class GradeTributaria implements Serializable{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 8394772242132907486L;
-
+	private static final long serialVersionUID = 260554637064890437L;
+	
 	@Id
 	@GeneratedValue
-	private Long id;
-	
-	@ManyToOne
-	private Estado origem;
-	
-	@ManyToOne
-	private Estado destino;
-	
-	@OneToOne
-	private Aliquota aliquota;
-	
-	private IO io;
-	
-	private TipoPessoaJuridica tipoGrade;
-	
-	@ManyToOne
-	private PautaMVA pautaMva;
-	
-	@ManyToMany
-	private Collection<FiguraFiscal> figura;
-	
-	public Collection<FiguraFiscal> getFigura() {
-		return figura;
-	}
-
-	public void setFigura(Collection<FiguraFiscal> figura) {
-		this.figura = figura;
-	}
-
-	public TipoPessoaJuridica getTipoGrade() {
-		return tipoGrade;
-	}
-	
-	public void setTipoGrade(TipoPessoaJuridica tipoGrade) {
-		this.tipoGrade = tipoGrade;
-	}
-
-	public PautaMVA getPautaMva() {
-		return pautaMva;
-	}
-	
-	public void setPautaMva(PautaMVA pautaMva) {
-		this.pautaMva = pautaMva;
-	}
-	
-	public Estado getOrigem() {
-		return origem;
-	}
-
-	public void setOrigem(Estado origem) {
-		this.origem = origem;
-	}
-
-	public Estado getDestino() {
-		return destino;
-	}
-
-	public void setDestino(Estado destino) {
-		this.destino = destino;
-	}
-	
-	public IO getIo() {
-		return io;
-	}
-	
-	public void setIo(IO io) {
-		this.io = io;
-	}
+	private Long idGradeTrib;
 	
 	private String descricao;
 
-	public Long getId() {
-		return id;
+	public Long getIdGradeTrib() {
+		return idGradeTrib;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Aliquota getAliquota() {
-		return aliquota;
-	}
-
-	public void setAliquota(Aliquota aliquota) {
-		this.aliquota = aliquota;
+	public void setIdGradeTrib(Long idGradeTrib) {
+		this.idGradeTrib = idGradeTrib;
 	}
 
 	public String getDescricao() {
@@ -123,7 +42,8 @@ public class GradeTributaria implements Serializable{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result
+				+ ((idGradeTrib == null) ? 0 : idGradeTrib.hashCode());
 		return result;
 	}
 
@@ -136,11 +56,12 @@ public class GradeTributaria implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		GradeTributaria other = (GradeTributaria) obj;
-		if (id == null) {
-			if (other.id != null)
+		if (idGradeTrib == null) {
+			if (other.idGradeTrib != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!idGradeTrib.equals(other.idGradeTrib))
 			return false;
 		return true;
 	}
+	
 }
