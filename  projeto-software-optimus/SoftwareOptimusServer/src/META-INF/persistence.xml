@@ -32,7 +32,7 @@
 		<class>br.com.softwareOptimus.estoque.Inventario</class>
 		<class>br.com.softwareOptimus.estoque.ProdutoEstoque</class>
 		<class>br.com.softwareOptimus.financeiro.Banco</class>
-		<class>br.com.softwareOptimus.financeiro.Caixa</class>
+		<class>br.com.softwareOptimus.financeiro.MovCaixa</class>
 		<class>br.com.softwareOptimus.financeiro.CondPgto</class>
 		<class>br.com.softwareOptimus.financeiro.Conta</class>
 		<class>br.com.softwareOptimus.financeiro.ContaCorrente</class>
@@ -46,9 +46,8 @@
 		<class>br.com.softwareOptimus.fiscal.CodigoSituacaoTributaria</class>
 		<class>br.com.softwareOptimus.fiscal.CodTabelaGov</class>
 		<class>br.com.softwareOptimus.fiscal.FiguraFiscal</class>
-		<class>br.com.softwareOptimus.fiscal.GradeTributaria</class>
+		<class>br.com.softwareOptimus.fiscal.GradeTributariaVigencia</class>
 		<class>br.com.softwareOptimus.fiscal.Ncm</class>
-		<class>br.com.softwareOptimus.fiscal.Vigencia</class>
 		<class>br.com.softwareOptimus.producao.Fases</class>
 		<class>br.com.softwareOptimus.producao.Impedimento</class>
 		<class>br.com.softwareOptimus.producao.ProdutoFilho</class>
@@ -56,6 +55,13 @@
 		<class>br.com.softwareOptimus.produto.Produto</class>
 		<class>br.com.softwareOptimus.produto.UnidMed</class>
 		<class>br.com.softwareOptimus.entidades.Pessoa</class>
+		<class>br.com.softwareOptimus.fiscal.VigenciaRegime</class>
+		<class>br.com.softwareOptimus.fiscal.PautaMVA</class>
+		<class>br.com.softwareOptimus.financeiro.Caixa</class>
+		<class>br.com.softwareOptimus.financeiro.ContaFilha</class>
+		<class>br.com.softwareOptimus.fiscal.Pauta</class>
+		<class>br.com.softwareOptimus.fiscal.GradeTributaria</class>
+		<class>br.com.softwareOptimus.fiscal.TipoProduto</class>
 		<properties>
 			<property name=" javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
 			<property name=" javax.persistence.jdbc.user" value="root"/>
