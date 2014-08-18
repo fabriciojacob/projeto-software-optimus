@@ -12,7 +12,7 @@ public class GradeTributariaRN {
 		this.gradeTribDAO = DAOFactory.criaGradeTribDAO();
 	}
 
-	public Integer validaCampoNulo(GradeTributaria grade) {
+	/*public Integer validaCampoNulo(GradeTributaria grade) {
 		Integer retorno = 0;
 		if (grade.getAliquota() == null || grade.getDescricao().equals("")
 				|| grade.getDestino().equals("")
@@ -33,6 +33,6 @@ public class GradeTributariaRN {
 
 	public void remover(GradeTributaria grade) {
 		this.gradeTribDAO.remover(grade);
-	}
+	}*/
 
 }

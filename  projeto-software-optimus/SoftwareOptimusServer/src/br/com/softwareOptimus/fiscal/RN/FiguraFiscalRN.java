@@ -21,7 +21,7 @@ public class FiguraFiscalRN {
 	}
 
 	public void salvar(FiguraFiscal figura) {
-		this.figuraDAO.salva(figura);
+		//this.figuraDAO.salva(figura);
 	}
 
 }
