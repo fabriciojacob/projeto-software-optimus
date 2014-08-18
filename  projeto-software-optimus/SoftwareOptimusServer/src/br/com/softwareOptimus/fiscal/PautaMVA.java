@@ -5,12 +5,13 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "tbPautaMVA")
+@Table(name = "tbPautaMVAVig")
 public class PautaMVA implements Serializable {
 
 	/**
@@ -36,6 +37,9 @@ public class PautaMVA implements Serializable {
 	private boolean incideIPI;
 
 	private boolean mvaAjustada;
+	
+	@ManyToOne
+	private Pauta pauta;
 
 	public Long getIdPautaMVA() {
 		return idPautaMVA;

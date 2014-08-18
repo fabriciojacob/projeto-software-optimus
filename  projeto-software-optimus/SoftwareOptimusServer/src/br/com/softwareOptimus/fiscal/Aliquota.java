@@ -36,26 +36,15 @@ public class Aliquota implements Serializable, Converter{
 	
 	private TipoTrib tipo;
 	
-	@OneToMany(mappedBy = "aliquota")
-	private Collection<Vigencia> vigencias;
-	
 	@OneToOne(mappedBy = "aliquota")
-	private GradeTributaria grade;
+	private GradeTributariaVigencia grade;
 	
-	public GradeTributaria getGrade() {
+	public GradeTributariaVigencia getGrade() {
 		return grade;
 	}
 	
-	public void setGrade(GradeTributaria grade) {
+	public void setGrade(GradeTributariaVigencia grade) {
 		this.grade = grade;
-	}
-	
-	public Collection<Vigencia> getVigencias() {
-		return vigencias;
-	}
-	
-	public void setVigencias(Collection<Vigencia> vigencias) {
-		this.vigencias = vigencias;
 	}
 	
 	public TipoTrib getTipo() {

@@ -21,17 +21,6 @@ public class Ncm {
 	@Column ( length = 85 , nullable = true , unique = false)
 	private String descricao;
 	
-	@ManyToMany
-	private Collection<Vigencia> vigencia;
-	
-	public Collection<Vigencia> getVigencia() {
-		return vigencia;
-	}
-	
-	public void setVigencia(Collection<Vigencia> vigencia) {
-		this.vigencia = vigencia;
-	}
-	
 	public Long getIdNcm() {
 		return idNcm;
 	}
