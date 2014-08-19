@@ -20,7 +20,7 @@
 				disabled="#{contaBean.novo}" update="frmCadConta" />
 
 			<p:commandButton value="Salvar" actionListener="#{contaBean.gravar}"
-				 update="frmCadConta"/>
+				 update="frmCadConta" disabled="#{contaBean.desabilitarGravar}"/>
 
 			<p:commandButton value="Consulta" type="button"
 				onclick="PF('consulta').show();" disabled="consulta" />
