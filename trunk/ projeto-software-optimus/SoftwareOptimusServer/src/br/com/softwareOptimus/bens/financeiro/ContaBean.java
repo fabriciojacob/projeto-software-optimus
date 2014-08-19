@@ -18,10 +18,19 @@ public class ContaBean {
 	private String descricaoPesquisa;
 	private List<Conta> listaConta = new ArrayList<>();
 	private List<ContaFilha> listaContaFilha = new ArrayList<>();
-	private boolean inativa, desabilitarGravar = false, novo = false, cancelar = true, alterar = true,
-			acumulada = false, consulta = true;
+	private boolean inativa, desabilitarGravar, novo, cancelar, alterar,
+			acumulada, consulta;
 	private ContaRN contaRN;
 	private Long id;
+
+	public ContaBean() {
+		desabilitarGravar = true;
+		novo = false;
+		cancelar = true;
+		alterar = true;
+		acumulada = false;
+		consulta = true;
+	}
 
 	public void gravar() {
 		try {
@@ -38,6 +47,7 @@ public class ContaBean {
 		this.consulta = false;
 		this.cancelar = false;
 		this.alterar = false;
+		this.conta = new Conta();
 	}
 
 	public void editar() {

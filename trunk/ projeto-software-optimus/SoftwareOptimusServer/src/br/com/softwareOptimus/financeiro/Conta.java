@@ -75,14 +75,6 @@ public class Conta implements Serializable {
 		this.tipoMov = tipoMov;
 	}
 
-	public Long getCodigo() {
-		return idConta;
-	}
-
-	public void setCodigo(Long codigo) {
-		this.idConta = codigo;
-	}
-
 	public TipoMov getTipo() {
 		return tipo;
 	}
