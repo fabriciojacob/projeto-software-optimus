@@ -6,6 +6,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+
+import br.com.softwareOptimus.fiscal.Pauta;
 import br.com.softwareOptimus.fiscal.PautaMVA;
 import br.com.softwareOptimus.fiscal.RN.PautaMVARN;
 
@@ -13,11 +15,13 @@ import br.com.softwareOptimus.fiscal.RN.PautaMVARN;
 @ViewScoped
 public class PautaBean {
 
-	private PautaMVA pauta = new PautaMVA();
+	private Pauta pauta = new Pauta();
+	private PautaMVA pautaMVA = new PautaMVA();
 	private Boolean sal = true, alt = true, rem = true;
 	private String busca, filtro;
-	private List<PautaMVA> pautaList = new ArrayList<PautaMVA>();
-	private Long id;
+	private List<PautaMVA> listaPautaMVA = new ArrayList<PautaMVA>();
+	private List<Pauta> listaPauta = new ArrayList<Pauta>();
+	private Long id, idPautaMVA;
 
 	public void novo() {
 		this.sal = false;
@@ -29,9 +33,9 @@ public class PautaBean {
 	public void alterar() {
 		try {
 			PautaMVARN pautaRN = new PautaMVARN();
-			Integer retorno = pautaRN.validaCampoNulo(this.pauta);
+			Integer retorno = pautaRN.validaCampoNulo(this.pautaMVA);
 			if (retorno == 0) {
-				pautaRN.altPauta(this.pauta);
+				pautaRN.altPauta(this.pautaMVA);
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
@@ -58,7 +62,7 @@ public class PautaBean {
 	public void remover() {
 		try {
 			PautaMVARN pautaRN = new PautaMVARN();
-			pautaRN.remover(this.pauta);
+			pautaRN.remover(this.pautaMVA);
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
@@ -84,10 +88,10 @@ public class PautaBean {
 	public void salvar() {
 		try {
 			PautaMVARN pautaRN = new PautaMVARN();
-			this.pauta.setIdPautaMVA(null);
-			Integer retorno = pautaRN.validaCampoNulo(this.pauta);
+			this.pautaMVA.setIdPautaMVA(null);
+			Integer retorno = pautaRN.validaCampoNulo(this.pautaMVA);
 			if (retorno == 0) {
-				pautaRN.salva(this.pauta);
+				pautaRN.salva(this.pautaMVA);
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
@@ -111,8 +115,8 @@ public class PautaBean {
 	}
 
 	public void limpar() {
-		this.pautaList = new ArrayList<PautaMVA>();
-		this.pauta = new PautaMVA();
+		this.listaPautaMVA = new ArrayList<PautaMVA>();
+		this.pautaMVA = new PautaMVA();
 		this.id = null;
 	}
 
@@ -121,27 +125,71 @@ public class PautaBean {
 		PautaMVARN pautaRN = new PautaMVARN();
 		if (!busca.equals("")) {
 			if (filtro.equals("id")) {
-				this.pautaList = pautaRN.consultaId(Long.parseLong(busca));
+				this.listaPautaMVA = pautaRN.consultaId(Long.parseLong(busca));
 			} else if (filtro.equals("desc")) {
-				this.pautaList = pautaRN.consultaDesc(busca);
+				this.listaPautaMVA = pautaRN.consultaDesc(busca);
 			} else if (filtro.equals("valP")) {
-				this.pautaList = pautaRN
+				this.listaPautaMVA = pautaRN
 						.consultaValP(Double.parseDouble(busca));
 			} else if (filtro.equals("valMva")) {
-				this.pautaList = pautaRN.consultaValMva(Double
+				this.listaPautaMVA = pautaRN.consultaValMva(Double
 						.parseDouble(busca));
 			}
 		} else {
-			this.pautaList = pautaRN.lista();
+			this.listaPautaMVA = pautaRN.lista();
 		}
 	}
 
 	public void editPauta() {
 		PautaMVARN pautaRN = new PautaMVARN();
-		this.pauta = pautaRN.editPauta(id);
+		this.pautaMVA = pautaRN.editPauta(id);
 		this.alt = false;
 		this.rem = false;
 		this.sal = true;
+	}
+	
+	public void excluirPautaMVA(){
+		
+	}
+	
+	public void incluirPautaMVA(){
+		
+	}
+
+	public List<Pauta> getListaPauta() {
+		return listaPauta;
+	}
+
+	public void setListaPauta(List<Pauta> listaPauta) {
+		this.listaPauta = listaPauta;
+	}
+
+	public List<PautaMVA> getListaPautaMVA() {
+		return listaPautaMVA;
+	}
+
+	public void setListaPautaMVA(List<PautaMVA> listaPautaMVA) {
+		this.listaPautaMVA = listaPautaMVA;
+	}
+
+	public Long getIdPautaMVA() {
+		return idPautaMVA;
+	}
+
+	public void setIdPautaMVA(Long idPautaMVA) {
+		this.idPautaMVA = idPautaMVA;
+	}
+
+	public void setPauta(Pauta pauta) {
+		this.pauta = pauta;
+	}
+
+	public PautaMVA getPautaMVA() {
+		return pautaMVA;
+	}
+
+	public void setPautaMVA(PautaMVA pautaMVA) {
+		this.pautaMVA = pautaMVA;
 	}
 
 	public Long getId() {
@@ -153,11 +201,11 @@ public class PautaBean {
 	}
 
 	public List<PautaMVA> getPautaList() {
-		return pautaList;
+		return listaPautaMVA;
 	}
 
 	public void setPautaList(List<PautaMVA> pautaList) {
-		this.pautaList = pautaList;
+		this.listaPautaMVA = pautaList;
 	}
 
 	public String getBusca() {
@@ -184,12 +232,12 @@ public class PautaBean {
 		this.busca = buscaPauta;
 	}
 
-	public PautaMVA getPauta() {
+	public Pauta getPauta() {
 		return pauta;
 	}
 
 	public void setPauta(PautaMVA pauta) {
-		this.pauta = pauta;
+		this.pautaMVA = pauta;
 	}
 
 	public Boolean getSal() {
