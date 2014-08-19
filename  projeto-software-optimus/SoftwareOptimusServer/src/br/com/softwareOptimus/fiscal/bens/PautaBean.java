@@ -129,6 +129,7 @@ public class PautaBean {
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
 								"Vigência salva com sucesso"));
+				this.pautaMVA = new PautaMVA();
 			}else{
 				FacesContext.getCurrentInstance().addMessage(
 						null,
