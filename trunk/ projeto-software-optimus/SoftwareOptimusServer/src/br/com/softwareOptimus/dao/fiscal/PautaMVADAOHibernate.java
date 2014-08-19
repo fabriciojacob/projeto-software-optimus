@@ -6,7 +6,11 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
+
+import br.com.softwareOptimus.entidades.PessoaJuridica;
+import br.com.softwareOptimus.fiscal.Pauta;
 import br.com.softwareOptimus.fiscal.PautaMVA;
+import br.com.softwareOptimus.fiscal.VigenciaRegime;
 
 public class PautaMVADAOHibernate implements PautaMVADAO {
 
@@ -122,7 +126,11 @@ public class PautaMVADAOHibernate implements PautaMVADAO {
 	}
 
 	@Override
-	public List<PautaMVA> listar(Long idPauta) {
-		return null;
+	public List<PautaMVA> listar(Pauta pauta) throws Exception {
+		String jpql = "Select p from PautaMVA p where p.pauta :parPauta";
+		TypedQuery<PautaMVA> consulta = this.session.createQuery(jpql,
+				PautaMVA.class);
+		consulta.setParameter("parPauta", pauta);
+		return consulta.getResultList();
 	}
 }

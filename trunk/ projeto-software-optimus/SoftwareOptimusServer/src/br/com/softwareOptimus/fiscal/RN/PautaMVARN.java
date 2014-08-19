@@ -2,6 +2,7 @@ package br.com.softwareOptimus.fiscal.RN;
 
 import java.util.List;
 import br.com.softwareOptimus.dao.fiscal.PautaMVADAO;
+import br.com.softwareOptimus.fiscal.Pauta;
 import br.com.softwareOptimus.fiscal.PautaMVA;
 import br.com.softwareOptimus.util.DAOFactory;
 
@@ -58,7 +59,7 @@ public class PautaMVARN {
 		return retorno;
 	}
 
-	public List<PautaMVA> listar(Long idPauta) {
-		return this.pautaMVADAO.listar(idPauta);
+	public List<PautaMVA> listar(Pauta pauta) throws Exception {
+		return this.pautaMVADAO.listar(pauta);
 	}
 }

@@ -42,13 +42,13 @@
 					value="#{pautaBean.pauta.idPauta}" />
 		
 					Descrição da Pauta:
-					<p:inputText id="descPauta"
-					value="#{pautaBean.pauta.descricao}" size="40" />
+					<p:inputText id="descPauta" value="#{pautaBean.pauta.descricao}"
+					size="40" />
 
 			</h:panelGrid>
 
-			<p:commandButton id="vincPauta" value="Vigência Pauta" type="button" disabled="#{pautaBean.vig}"
-				onclick="PF('dlg2').show();" />
+			<p:commandButton id="vincPauta" value="Vigência Pauta" type="button"
+				disabled="#{pautaBean.vig}" onclick="PF('dlg2').show();" />
 
 			<h:panelGrid id="gridPautaMVA" columns="1">
 				<p:blockUI block="gridPautaMVA" trigger="vincPauta" />
@@ -72,8 +72,9 @@
 					</p:column>
 
 					<p:column headerText="Vigência">
-						<h:outputText value="#{listaPautaMVA.vigencia}" />
-						<f:convertDateTime pattern="dd/MM/yyyy" />
+						<h:outputText value="#{listaPautaMVA.vigencia}">
+							<f:convertDateTime type="date" dateStyle="medium" />
+						</h:outputText>
 					</p:column>
 
 					<p:column headerText="Incide Desconto">

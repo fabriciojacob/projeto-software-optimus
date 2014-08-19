@@ -3,6 +3,8 @@ package br.com.softwareOptimus.dao.fiscal;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+
+import br.com.softwareOptimus.fiscal.Pauta;
 import br.com.softwareOptimus.fiscal.PautaMVA;
 
 public interface PautaMVADAO {
@@ -18,5 +20,5 @@ public interface PautaMVADAO {
 	public List<PautaMVA> consultaMva(double parseDouble);
 	public PautaMVA editPauta(Long id);
 	public void salva(PautaMVA pauta);
-	public List<PautaMVA> listar(Long idPauta);
+	public List<PautaMVA> listar(Pauta pauta) throws Exception;
 }
