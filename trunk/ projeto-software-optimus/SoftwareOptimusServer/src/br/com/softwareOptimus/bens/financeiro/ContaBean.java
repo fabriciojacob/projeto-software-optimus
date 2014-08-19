@@ -18,7 +18,7 @@ public class ContaBean {
 	private String descricaoPesquisa;
 	private List<Conta> listaConta = new ArrayList<>();
 	private List<ContaFilha> listaContaFilha = new ArrayList<>();
-	private boolean inativa, desabilitarGravar = true, novo = false, cancelar = true, alterar = true,
+	private boolean inativa, desabilitarGravar = false, novo = false, cancelar = true, alterar = true,
 			acumulada = false, consulta = true;
 	private ContaRN contaRN;
 	private Long id;
