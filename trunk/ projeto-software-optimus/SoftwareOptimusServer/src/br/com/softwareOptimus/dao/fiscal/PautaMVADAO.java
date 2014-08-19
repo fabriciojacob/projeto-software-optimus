@@ -13,12 +13,8 @@ public interface PautaMVADAO {
 	public void close() throws Exception;
 	public void alterar(PautaMVA pauta);
 	public void remover(PautaMVA pauta);
-	public List<PautaMVA> lista();
-	public List<PautaMVA> consultaId(long parseLong);
-	public List<PautaMVA> consultaDesc(String busca);
-	public List<PautaMVA> consultaValP(double parseDouble);
-	public List<PautaMVA> consultaMva(double parseDouble);
-	public PautaMVA editPauta(Long id);
 	public void salva(PautaMVA pauta);
+	public PautaMVA editPauta(Long id);
 	public List<PautaMVA> listar(Pauta pauta) throws Exception;
+	public List<PautaMVA> consultaDesc(String busca);
 }

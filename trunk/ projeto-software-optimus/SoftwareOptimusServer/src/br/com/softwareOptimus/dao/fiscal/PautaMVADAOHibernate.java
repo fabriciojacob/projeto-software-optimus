@@ -62,54 +62,11 @@ public class PautaMVADAOHibernate implements PautaMVADAO {
 	}
 
 	@Override
-	public List<PautaMVA> lista() {
-		String jpql = "Select p From PautaMVA p";
-		TypedQuery<PautaMVA> listaPauta = this.session.createQuery(jpql,
-				PautaMVA.class);
-		return listaPauta.getResultList();
-	}
-
-	@Override
-	public List<PautaMVA> consultaId(long id) {
-		String jpql = "Select p From PautaMVA p Where p.idPautaMVA = :id ";
-		TypedQuery<PautaMVA> listaPauta = this.session.createQuery(jpql,
-				PautaMVA.class);
-		listaPauta.setParameter("id", id);
-		return listaPauta.getResultList();
-	}
-
-	@Override
 	public List<PautaMVA> consultaDesc(String desc) {
 		String jpql = "Select p From PautaMVA p Where p.descricao LIKE :desc";
 		TypedQuery<PautaMVA> listaPauta = this.session.createQuery(jpql,
 				PautaMVA.class);
 		listaPauta.setParameter("desc", "%" + desc + "%");
-		return listaPauta.getResultList();
-	}
-
-	@Override
-	public List<PautaMVA> consultaValP(double valP) {
-		Double minimo, maximo;
-		minimo = valP - 0.5;
-		maximo = valP + 0.5;
-		String jpql = "Select p From PautaMVA p Where p.valorPauta BETWEEN :minimo And :maximo";
-		TypedQuery<PautaMVA> listaPauta = this.session.createQuery(jpql,
-				PautaMVA.class);
-		listaPauta.setParameter("minimo", minimo);
-		listaPauta.setParameter("maximo", maximo);
-		return listaPauta.getResultList();
-	}
-
-	@Override
-	public List<PautaMVA> consultaMva(double valMva) {
-		Double minimo, maximo;
-		minimo = valMva - 0.5;
-		maximo = valMva + 0.5;
-		String jpql = "Select p From PautaMVA p Where p.valorMVa BETWEEN :minimo And :maximo";
-		TypedQuery<PautaMVA> listaPauta = this.session.createQuery(jpql,
-				PautaMVA.class);
-		listaPauta.setParameter("minimo", minimo);
-		listaPauta.setParameter("maximo", maximo);
 		return listaPauta.getResultList();
 	}
 

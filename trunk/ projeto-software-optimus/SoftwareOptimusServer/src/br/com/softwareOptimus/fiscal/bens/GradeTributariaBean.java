@@ -13,7 +13,6 @@ import br.com.softwareOptimus.fiscal.GradeTributariaVigencia;
 import br.com.softwareOptimus.fiscal.PautaMVA;
 import br.com.softwareOptimus.fiscal.RN.AliquotaRN;
 import br.com.softwareOptimus.fiscal.RN.GradeTributariaRN;
-import br.com.softwareOptimus.fiscal.RN.PautaMVARN;
 
 @ManagedBean
 @ViewScoped
@@ -21,7 +20,7 @@ public class GradeTributariaBean {
 
 	private GradeTributariaVigencia grade = new GradeTributariaVigencia();
 	private List<GradeTributariaVigencia> listaGrade = new ArrayList<GradeTributariaVigencia>();
-	private PautaMVARN pautaRN = new PautaMVARN();
+	//private PautaMVARN pautaRN = new PautaMVARN();
 	private AliquotaRN aliqRN = new AliquotaRN();
 	private List<PautaMVA> listaPauta = new ArrayList<PautaMVA>();
 	private List<Aliquota> listaAliquota = new ArrayList<Aliquota>();
@@ -31,7 +30,7 @@ public class GradeTributariaBean {
 	
 	public GradeTributariaBean(){
 		setListaAliquota(this.aliqRN.listaAliqIcms());
-		setListaPauta(this.pautaRN.lista());
+		//setListaPauta(this.pautaRN.lista());
 	}
 	
 	public void novo() {

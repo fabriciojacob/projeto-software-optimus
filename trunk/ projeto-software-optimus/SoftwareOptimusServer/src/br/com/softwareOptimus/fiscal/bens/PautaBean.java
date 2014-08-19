@@ -8,7 +8,6 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import br.com.softwareOptimus.fiscal.Pauta;
 import br.com.softwareOptimus.fiscal.PautaMVA;
-import br.com.softwareOptimus.fiscal.RN.PautaMVARN;
 import br.com.softwareOptimus.fiscal.RN.PautaRN;
 
 @ManagedBean(name = "pautaBean")
@@ -31,7 +30,7 @@ public class PautaBean {
 	}
 
 	public void alterar() {
-		try {
+		/*try {
 			PautaMVARN pautaRN = new PautaMVARN();
 			Integer retorno = pautaRN.validaCampoNulo(this.pautaMVA);
 			if (retorno == 0) {
@@ -56,11 +55,11 @@ public class PautaBean {
 							new FacesMessage(FacesMessage.SEVERITY_ERROR,
 									"Info", "Problemas na alteração da Pauta "
 											+ e.getMessage()));
-		}
+		}*/
 	}
 
 	public void remover() {
-		try {
+		/*try {
 			PautaMVARN pautaRN = new PautaMVARN();
 			pautaRN.remover(this.pautaMVA);
 			FacesContext.getCurrentInstance().addMessage(
@@ -75,7 +74,7 @@ public class PautaBean {
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
 							"Problemas na remoção da Pauta " + e.getMessage()));
-		}
+		}*/
 	}
 
 	public void cancelar() {
@@ -118,12 +117,12 @@ public class PautaBean {
 	
 	public void incluirPautaMVA() {
 		try {
-			PautaMVARN pautaMVARN = new PautaMVARN();
+			PautaRN pautaRN = new PautaRN();
 			this.pautaMVA.setIdPautaMVA(null);
 			this.pautaMVA.setPauta(this.pauta);
-			Integer retorno = pautaMVARN.validaCampoNulo(this.pautaMVA);
+			Integer retorno = pautaRN.validaCampoNuloVig(this.pautaMVA);
 			if (retorno == 0) {
-				pautaMVARN.salva(this.pautaMVA);
+				pautaRN.salvaVig(this.pautaMVA);
 				listaVigencia();
 				FacesContext.getCurrentInstance().addMessage(
 						null,
@@ -148,11 +147,11 @@ public class PautaBean {
 	
 	public void listaVigencia() {
 		try {
-			PautaMVARN pautaMVARN = new PautaMVARN();
+			PautaRN pautaRN = new PautaRN();
 			if (this.listaPautaMVA != null) {
 				this.listaPautaMVA.clear();
 			}
-			this.listaPautaMVA = pautaMVARN.listar(this.pauta);
+			this.listaPautaMVA = pautaRN.listar(this.pauta);
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance()
 			.addMessage(
@@ -171,7 +170,7 @@ public class PautaBean {
 	}
 
 	public void buscaPauta() {
-		limpar();
+		/*limpar();
 		PautaMVARN pautaRN = new PautaMVARN();
 		if (!busca.equals("")) {
 			if (filtro.equals("id")) {
@@ -187,12 +186,12 @@ public class PautaBean {
 			}
 		} else {
 			this.listaPautaMVA = pautaRN.lista();
-		}
+		}*/
 	}
 
 	public void editPauta() {
-		PautaMVARN pautaRN = new PautaMVARN();
-		this.pautaMVA = pautaRN.editPauta(id);
+		/*PautaMVARN pautaRN = new PautaMVARN();
+		this.pautaMVA = pautaRN.editPauta(id);*/
 		this.alt = false;
 		this.rem = false;
 		this.sal = true;
