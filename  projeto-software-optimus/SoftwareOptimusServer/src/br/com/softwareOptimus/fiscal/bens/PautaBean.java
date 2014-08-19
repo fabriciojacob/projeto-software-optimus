@@ -10,6 +10,7 @@ import javax.faces.context.FacesContext;
 import br.com.softwareOptimus.fiscal.Pauta;
 import br.com.softwareOptimus.fiscal.PautaMVA;
 import br.com.softwareOptimus.fiscal.RN.PautaMVARN;
+import br.com.softwareOptimus.fiscal.RN.PautaRN;
 
 @ManagedBean(name = "pautaBean")
 @ViewScoped
@@ -17,7 +18,7 @@ public class PautaBean {
 
 	private Pauta pauta = new Pauta();
 	private PautaMVA pautaMVA = new PautaMVA();
-	private Boolean sal = true, alt = true, rem = true;
+	private Boolean sal = true, alt = true, rem = true, vig = true;
 	private String busca, filtro;
 	private List<PautaMVA> listaPautaMVA = new ArrayList<PautaMVA>();
 	private List<Pauta> listaPauta = new ArrayList<Pauta>();
@@ -66,7 +67,7 @@ public class PautaBean {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-							"Alíquota removida com sucesso"));
+							"Pauta removida com sucesso"));
 			this.alt = true;
 			this.rem = true;
 			limpar();
@@ -87,17 +88,19 @@ public class PautaBean {
 
 	public void salvar() {
 		try {
-			PautaMVARN pautaRN = new PautaMVARN();
-			this.pautaMVA.setIdPautaMVA(null);
-			Integer retorno = pautaRN.validaCampoNulo(this.pautaMVA);
+			PautaRN pautaRN = new PautaRN();
+			this.pauta.setIdPauta(null);
+			Integer retorno = pautaRN.validaCampoNulo(this.pauta);
 			if (retorno == 0) {
-				pautaRN.salva(this.pautaMVA);
+				pautaRN.salvar(this.pauta);
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
 								"Pauta salva com sucesso"));
+				this.vig = false;
 				this.sal = true;
-				limpar();
+				this.alt = true;
+				this.rem = true;
 			} else {
 				FacesContext.getCurrentInstance().addMessage(
 						null,
@@ -111,6 +114,36 @@ public class PautaBean {
 							new FacesMessage(FacesMessage.SEVERITY_ERROR,
 									"Info", "Problemas na gravacao da Pauta "
 											+ e.getMessage()));
+		}
+	}
+	
+	public void incluirPautaMVA() {
+		try {
+			PautaMVARN pautaMVARN = new PautaMVARN();
+			this.pautaMVA.setIdPautaMVA(null);
+			this.pautaMVA.setPauta(pauta);
+			Integer retorno = pautaMVARN.validaCampoNulo(this.pautaMVA);
+			if (retorno == 0) {
+				pautaMVARN.salva(this.pautaMVA);
+				this.listaPautaMVA.add(this.pautaMVA);
+				//this.listaPautaMVA = pautaMVARN.listar(pauta.getIdPauta());
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
+								"Vigência salva com sucesso"));
+			}else{
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+								"Existem campos nulos no formulário"));
+			}
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance()
+			.addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR,
+							"Info", "Problemas na gravacao da Vigência "
+									+ e.getMessage()));
 		}
 	}
 
@@ -129,8 +162,8 @@ public class PautaBean {
 			} else if (filtro.equals("desc")) {
 				this.listaPautaMVA = pautaRN.consultaDesc(busca);
 			} else if (filtro.equals("valP")) {
-				this.listaPautaMVA = pautaRN
-						.consultaValP(Double.parseDouble(busca));
+				this.listaPautaMVA = pautaRN.consultaValP(Double
+						.parseDouble(busca));
 			} else if (filtro.equals("valMva")) {
 				this.listaPautaMVA = pautaRN.consultaValMva(Double
 						.parseDouble(busca));
@@ -147,13 +180,19 @@ public class PautaBean {
 		this.rem = false;
 		this.sal = true;
 	}
-	
-	public void excluirPautaMVA(){
-		
+
+	public void excluirPautaMVA() {
+
 	}
-	
-	public void incluirPautaMVA(){
-		
+
+
+
+	public Boolean getVig() {
+		return vig;
+	}
+
+	public void setVig(Boolean vig) {
+		this.vig = vig;
 	}
 
 	public List<Pauta> getListaPauta() {

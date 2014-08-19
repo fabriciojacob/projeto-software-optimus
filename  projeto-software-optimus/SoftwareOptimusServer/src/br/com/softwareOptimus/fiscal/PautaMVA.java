@@ -41,6 +41,14 @@ public class PautaMVA implements Serializable {
 	@ManyToOne
 	private Pauta pauta;
 
+	public Pauta getPauta() {
+		return pauta;
+	}
+
+	public void setPauta(Pauta pauta) {
+		this.pauta = pauta;
+	}
+
 	public Long getIdPautaMVA() {
 		return idPautaMVA;
 	}
