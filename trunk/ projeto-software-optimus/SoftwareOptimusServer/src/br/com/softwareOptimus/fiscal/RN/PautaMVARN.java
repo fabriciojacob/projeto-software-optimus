@@ -1,7 +1,6 @@
 package br.com.softwareOptimus.fiscal.RN;
 
 import java.util.List;
-
 import br.com.softwareOptimus.dao.fiscal.PautaMVADAO;
 import br.com.softwareOptimus.fiscal.PautaMVA;
 import br.com.softwareOptimus.util.DAOFactory;
@@ -45,7 +44,7 @@ public class PautaMVARN {
 	public List<PautaMVA> consultaValMva(double parseDouble) {
 		return this.pautaMVADAO.consultaMva(parseDouble);
 	}
-	
+
 	public PautaMVA editPauta(Long id) {
 		return this.pautaMVADAO.editPauta(id);
 	}
@@ -53,10 +52,13 @@ public class PautaMVARN {
 	public Integer validaCampoNulo(PautaMVA pauta) {
 		Integer retorno = 0;
 		if (pauta.getDescricao().equals("") || pauta.getValorMVa() == null
-				|| pauta.getVigencia() == null || pauta.getValorPauta() == null
-				|| pauta.getVigencia() == null) {
+				|| pauta.getVigencia() == null || pauta.getValorPauta() == null) {
 			retorno = 1;
 		}
 		return retorno;
+	}
+
+	public List<PautaMVA> listar(Long idPauta) {
+		return this.pautaMVADAO.listar(idPauta);
 	}
 }

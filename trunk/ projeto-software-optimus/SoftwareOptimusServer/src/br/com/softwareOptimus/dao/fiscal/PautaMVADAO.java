@@ -18,4 +18,5 @@ public interface PautaMVADAO {
 	public List<PautaMVA> consultaMva(double parseDouble);
 	public PautaMVA editPauta(Long id);
 	public void salva(PautaMVA pauta);
+	public List<PautaMVA> listar(Long idPauta);
 }

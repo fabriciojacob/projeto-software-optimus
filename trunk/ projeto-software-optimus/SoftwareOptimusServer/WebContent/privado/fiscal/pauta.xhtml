@@ -39,15 +39,15 @@
 				
 					Código da Pauta:
 					<p:inputText id="idPauta" disabled="true"
-					value="#{aliquotaBean.aliquota.idAliq}" />
+					value="#{pautaBean.pauta.idPauta}" />
 		
 					Descrição da Pauta:
 					<p:inputText id="descPauta"
-					value="#{aliquotaBean.aliquota.aliquota}" size="40" />
+					value="#{pautaBean.pauta.descricao}" size="40" />
 
 			</h:panelGrid>
 
-			<p:commandButton id="vincPauta" value="Vigência Pauta" type="button"
+			<p:commandButton id="vincPauta" value="Vigência Pauta" type="button" disabled="#{pautaBean.vig}"
 				onclick="PF('dlg2').show();" />
 
 			<h:panelGrid id="gridPautaMVA" columns="1">
@@ -73,6 +73,7 @@
 
 					<p:column headerText="Vigência">
 						<h:outputText value="#{listaPautaMVA.vigencia}" />
+						<f:convertDateTime pattern="dd/MM/yyyy" />
 					</p:column>
 
 					<p:column headerText="Incide Desconto">

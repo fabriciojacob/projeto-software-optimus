@@ -120,4 +120,9 @@ public class PautaMVADAOHibernate implements PautaMVADAO {
 		Pauta.setParameter("id", id);
 		return Pauta.getSingleResult();
 	}
+
+	@Override
+	public List<PautaMVA> listar(Long idPauta) {
+		return null;
+	}
 }
