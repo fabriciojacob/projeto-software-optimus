@@ -45,21 +45,21 @@ public class GradeTributariaBean {
 		try {
 			GradeTributariaRN gradeRN = new GradeTributariaRN();
 			this.grade.setId(null);
-			Integer retorno = gradeRN.validaCampoNulo(this.grade);
-			if (retorno == 0) {
-				gradeRN.salva(this.grade);
+			//Integer retorno = gradeRN.validaCampoNulo(this.grade);
+			//if (retorno == 0) {
+				//gradeRN.salva(this.grade);
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
 								"Grade salva com sucesso"));
 				this.sal = true;
 				limpar();
-			} else {
+			//} else {
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
 								"Existem campos nulos no formulário"));
-			}
+			//}
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance()
 					.addMessage(
@@ -73,9 +73,9 @@ public class GradeTributariaBean {
 	public void alterar(){
 		try {
 			GradeTributariaRN gradeRN = new GradeTributariaRN();
-			Integer retorno = gradeRN.validaCampoNulo(this.grade);
-			if (retorno == 0) {
-				gradeRN.altGrade(this.grade);
+			//Integer retorno = gradeRN.validaCampoNulo(this.grade);
+			//if (retorno == 0) {
+				//gradeRN.altGrade(this.grade);
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
@@ -83,12 +83,12 @@ public class GradeTributariaBean {
 				this.alt = true;
 				this.rem = true;
 				limpar();
-			} else {
+			//} else {
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
 								"Existem campos nulos no formulário"));
-			}
+			//}
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance()
 					.addMessage(
@@ -102,7 +102,7 @@ public class GradeTributariaBean {
 	public void remover(){
 		try {
 			GradeTributariaRN gradeRN = new GradeTributariaRN();
-			gradeRN.remover(this.grade);
+			//gradeRN.remover(this.grade);
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
