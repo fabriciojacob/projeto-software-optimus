@@ -6,7 +6,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-
 import br.com.softwareOptimus.fiscal.Pauta;
 import br.com.softwareOptimus.fiscal.PautaMVA;
 import br.com.softwareOptimus.fiscal.RN.PautaMVARN;
@@ -121,12 +120,11 @@ public class PautaBean {
 		try {
 			PautaMVARN pautaMVARN = new PautaMVARN();
 			this.pautaMVA.setIdPautaMVA(null);
-			this.pautaMVA.setPauta(pauta);
+			this.pautaMVA.setPauta(this.pauta);
 			Integer retorno = pautaMVARN.validaCampoNulo(this.pautaMVA);
 			if (retorno == 0) {
 				pautaMVARN.salva(this.pautaMVA);
-				this.listaPautaMVA.add(this.pautaMVA);
-				//this.listaPautaMVA = pautaMVARN.listar(pauta.getIdPauta());
+				listaVigencia();
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
@@ -145,6 +143,24 @@ public class PautaBean {
 							"Info", "Problemas na gravacao da Vigência "
 									+ e.getMessage()));
 		}
+	}
+	
+	public void listaVigencia() {
+		try {
+			PautaMVARN pautaMVARN = new PautaMVARN();
+			if (this.listaPautaMVA != null) {
+				this.listaPautaMVA.clear();
+			}
+			this.listaPautaMVA = pautaMVARN.listar(this.pauta);
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance()
+			.addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR,
+							"Info", "Problemas ao listar as Vigências "
+									+ e.getMessage()));
+		}
+
 	}
 
 	public void limpar() {
