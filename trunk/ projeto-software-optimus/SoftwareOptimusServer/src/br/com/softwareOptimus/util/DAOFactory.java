@@ -3,6 +3,9 @@ package br.com.softwareOptimus.util;
 import java.io.IOException;
 import java.sql.SQLException;
 import javax.persistence.EntityManager;
+
+import br.com.softwareOptimus.com.dao.financeiro.ContaDAO;
+import br.com.softwareOptimus.com.dao.financeiro.ContaDAOHibernate;
 import br.com.softwareOptimus.dao.fiscal.AliquotaDAO;
 import br.com.softwareOptimus.dao.fiscal.AliquotaDAOHibernate;
 import br.com.softwareOptimus.dao.fiscal.CodigoSituacaoTributariaDAO;
@@ -39,6 +42,17 @@ import br.com.softwareOptimus.entidades.dao.usuario.UsuarioDAOHibernate;
 public class DAOFactory {
 
 	private static EntityManager session = JpaUtil.getEntityManager();
+
+	public static ContaDAO criaContaDAO() {
+		ContaDAOHibernate contaDAO = new ContaDAOHibernate();
+		contaDAO.setSession(session);
+		try {
+			contaDAO.begin();
+		} catch (IOException | SQLException e) {
+			e.printStackTrace();
+		}
+		return contaDAO;
+	}
 
 	public static EmailDAO criaEmailDAO() {
 		EmailDAOHibernate emailDAO = new EmailDAOHibernate();
@@ -172,8 +186,8 @@ public class DAOFactory {
 		}
 		return aliqDAO;
 	}
-	
-	public static CodigoSituacaoTributariaDAO criaCodigoSituacaoTributariaDAO(){
+
+	public static CodigoSituacaoTributariaDAO criaCodigoSituacaoTributariaDAO() {
 		CodigoSituacaoTributariaDAOHibernate cstDAO = new CodigoSituacaoTributariaDAOHibernate();
 		cstDAO.setSession(session);
 		try {
@@ -183,8 +197,8 @@ public class DAOFactory {
 		}
 		return cstDAO;
 	}
-	
-	public static PautaMVADAO criaPautaMVADAO(){
+
+	public static PautaMVADAO criaPautaMVADAO() {
 		PautaMVADAOHibernate pautaDAO = new PautaMVADAOHibernate();
 		pautaDAO.setSession(session);
 		try {
@@ -194,8 +208,8 @@ public class DAOFactory {
 		}
 		return pautaDAO;
 	}
-	
-	public static GradeTributariaDAO criaGradeTribDAO(){
+
+	public static GradeTributariaDAO criaGradeTribDAO() {
 		GradeTributariaDAOHibernate gradeDAO = new GradeTributariaDAOHibernate();
 		try {
 			gradeDAO.begin();
@@ -204,8 +218,8 @@ public class DAOFactory {
 		}
 		return gradeDAO;
 	}
-	
-	public static FiguraFiscalDAO criaFiguraDAO(){
+
+	public static FiguraFiscalDAO criaFiguraDAO() {
 		FiguralFiscalDAOHibernate figuraDAO = new FiguralFiscalDAOHibernate();
 		figuraDAO.setSession(session);
 		try {
