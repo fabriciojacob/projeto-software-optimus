@@ -3,6 +3,7 @@ package br.com.softwareOptimus.financeiro;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -17,6 +18,7 @@ public class Conta implements Serializable {
 	private static final long serialVersionUID = 6555942808769494213L;
 
 	@Id
+	@GeneratedValue
 	private Long idConta;
 	
 	private TipoMov tipo;
@@ -28,6 +30,43 @@ public class Conta implements Serializable {
 	@OneToMany(mappedBy = "conta")
 	private Collection<Titulo> titulos;
 	
+	private boolean desmembrada;
+	
+	private boolean inativa;
+	
+	
+	public Long getIdConta() {
+		return idConta;
+	}
+
+	public void setIdConta(Long idConta) {
+		this.idConta = idConta;
+	}
+
+	public Collection<Titulo> getTitulos() {
+		return titulos;
+	}
+
+	public void setTitulos(Collection<Titulo> titulos) {
+		this.titulos = titulos;
+	}
+
+	public boolean isDesmembrada() {
+		return desmembrada;
+	}
+
+	public void setDesmembrada(boolean desmembrada) {
+		this.desmembrada = desmembrada;
+	}
+
+	public boolean isInativa() {
+		return inativa;
+	}
+
+	public void setInativa(boolean inativa) {
+		this.inativa = inativa;
+	}
+
 	public TipoMov getTipoMov() {
 		return tipoMov;
 	}

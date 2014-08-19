@@ -282,7 +282,7 @@ public class ParticipanteBean {
 			this.tipoParticipante = this.pessoaJuridica.getNaturezaPessoa()
 					.toString();
 		} catch (Exception e) {
-			msgErro("Problemas na ediÃ§Ã£o", e);
+			msgErro("Problemas na edição", e);
 		}
 		listaLogradouro();
 		listaEmail();
