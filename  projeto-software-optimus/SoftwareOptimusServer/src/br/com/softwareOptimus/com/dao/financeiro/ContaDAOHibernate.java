@@ -42,7 +42,6 @@ public class ContaDAOHibernate implements ContaDAO{
 	public void salvarContaFilha(ContaFilha contaFilha) throws Exception {
 		this.session.persist(contaFilha);
 		this.transacao.commit();
-		this.session.flush();
 	}
 
 	@Override
@@ -93,6 +92,11 @@ public class ContaDAOHibernate implements ContaDAO{
 	@Override
 	public Conta pesquisaConta(Long id) throws Exception {
 		return this.session.find(Conta.class,id);
+	}
+
+	@Override
+	public ContaFilha localizaContaFilha(Long id) throws Exception {
+		return this.session.find(ContaFilha.class, id);
 	}
 	
 	

@@ -7,7 +7,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-
 import br.com.softwareOptimus.RN.financeiro.ContaRN;
 import br.com.softwareOptimus.financeiro.Conta;
 import br.com.softwareOptimus.financeiro.ContaFilha;
@@ -17,13 +16,14 @@ import br.com.softwareOptimus.financeiro.ContaFilha;
 public class ContaBean {
 
 	private Conta conta = new Conta();
+	private ContaFilha contaFilha = new ContaFilha();
 	private String descricaoPesquisa;
 	private List<Conta> listaConta = new ArrayList<>();
 	private List<ContaFilha> listaContaFilha = new ArrayList<>();
 	private boolean inativa, desabilitarGravar, novo, cancelar, alterar,
 			acumulada, consulta;
 	private ContaRN contaRN;
-	private Long id;
+	private Long id, idContaFilha;
 
 	public ContaBean() {
 		desabilitarGravar = true;
@@ -40,8 +40,22 @@ public class ContaBean {
 			this.conta.setIdConta(null);
 			this.contaRN.salvarConta(this.conta);
 			msgAcerto("Conta salva com sucesso");
+			this.desabilitarGravar = true;
+			this.alterar = false;
 		} catch (Exception e) {
 			msgErro("Problemas na gravação da conta", e);
+		}
+	}
+	
+	public void salvarContaFilha(){
+		this.contaRN = new ContaRN();
+		try{
+			this.contaFilha.setConta(conta);
+			this.contaRN.salvarContaFilha(contaFilha);
+			msgAcerto("Conta filha salva com sucesso");
+			listaContaFilha();
+		}catch (Exception e){
+			msgErro("Problemas ao salvar a conta filha ", e);
 		}
 	}
 
@@ -49,18 +63,45 @@ public class ContaBean {
 		this.desabilitarGravar = false;
 		this.consulta = false;
 		this.cancelar = false;
-		this.alterar = false;
+		this.alterar = true;
 		this.conta = new Conta();
+	}
+	
+	public void selecionar(){
+		this.contaRN = new ContaRN();
+		try {
+			this.conta = this.contaRN.pesquisaConta(id);
+			this.desabilitarGravar = true;
+			this.cancelar = false;
+			listaContaFilha();
+		} catch (Exception e) {
+			msgErro("Problemas na seleção da conta", e);
+		}
 	}
 
 	public void editar() {
 		this.contaRN = new ContaRN();
 		try {
 			this.conta = this.contaRN.pesquisaConta(id);
+			this.desabilitarGravar = true;
+			this.cancelar = false;
+			msgAcerto("Dado editado com sucesso");
 		} catch (Exception e) {
 			msgErro("Problemas na pesquisa da conta", e);
 		}
 	}
+	
+	public void excluirContaFilha(){
+		this.contaRN = new ContaRN();
+		try{
+			this.contaFilha = this.contaRN.localizaContaFilha(idContaFilha);
+			this.contaRN.excluirContaFilha(contaFilha);
+			msgAcerto("Conta excluída com sucesso");
+		}catch (Exception e){
+			msgErro("Problemas na exclusão", e);
+		}
+	}
+
 
 	public void pesquisaConta() {
 		this.contaRN = new ContaRN();
@@ -68,6 +109,15 @@ public class ContaBean {
 			this.listaConta = this.contaRN.pesquisaConta(descricaoPesquisa);
 		} catch (Exception e) {
 			msgErro("Problemas na pesquisa da conta", e);
+		}
+	}
+	
+	public void listaContaFilha(){
+		this.contaRN = new ContaRN();
+		try{
+			this.listaContaFilha = this.contaRN.listaContaFilha(this.conta);
+		}catch (Exception e){
+			msgErro("Problemas ao listar as contas filhas ", e);
 		}
 	}
 
@@ -177,6 +227,22 @@ public class ContaBean {
 
 	public void setAlterar(boolean alterar) {
 		this.alterar = alterar;
+	}
+
+	public ContaFilha getContaFilha() {
+		return contaFilha;
+	}
+
+	public void setContaFilha(ContaFilha contaFilha) {
+		this.contaFilha = contaFilha;
+	}
+
+	public Long getIdContaFilha() {
+		return idContaFilha;
+	}
+
+	public void setIdContaFilha(Long idContaFilha) {
+		this.idContaFilha = idContaFilha;
 	}
 
 }

@@ -17,17 +17,19 @@
 		<div align="left">
 
 			<p:commandButton value="Novo" actionListener="#{contaBean.novo}"
-				disabled="#{contaBean.novo}" update="frmCadConta" />
+				disabled="#{contaBean.novo}" ajax="frmCadConta" />
 
 			<p:commandButton value="Salvar" actionListener="#{contaBean.gravar}"
-				 update="frmCadConta" disabled="#{contaBean.desabilitarGravar}"/>
+				update="frmCadConta" disabled="#{contaBean.desabilitarGravar}" />
+
+			<p:commandButton value="Editar" actionListener="#{contaBean.editar}"
+				update="frmCadConta" disabled="#{contaBean.alterar}" />
 
 			<p:commandButton value="Consulta" type="button"
 				onclick="PF('consulta').show();" disabled="consulta" />
 
-			<p:commandButton value="Cancelar" disabled="#{contaBean.cancelar}" action="reset" />
-			
-			<p:commandButton value="Alterar" disabled="#{contaBean.alterar}" />
+			<p:commandButton value="Cancelar" disabled="#{contaBean.cancelar}"
+				actionListener="#{contaBean.novo}" />
 
 			<p:messages id="messages" showDetail="true" autoUpdate="true"
 				closable="true" />
@@ -63,7 +65,8 @@
 
 					<p:column headerText="Selecionar">
 						<p:commandLink id="link" value="Selecionar"
-							ajax="dialog,frmCadConta" action="#{contaBean.editar}">
+							ajax="dialog,frmCadConta" action="#{contaBean.selecionar}"
+							update="listaCFilha">
 							<f:setPropertyActionListener value="#{contas.idConta}"
 								target="#{contaBean.id}" />
 						</p:commandLink>
@@ -73,7 +76,10 @@
 
 			</p:dialog>
 
+
+
 			<p:tabView style="border: 0px">
+
 				<p:tab id="dadosConta" title="Cadastro">
 					<h:panelGrid columns="4">
 					Desmembrada:
@@ -90,6 +96,54 @@
 					
 					Descrição:
 					<p:inputText id="contaDesc" value="#{contaBean.conta.descricao}" />
+
+					</h:panelGrid>
+					<br />
+					<br />
+					<p:commandButton value="Cadastro Conta Filha" type="button"
+						onclick="PF('cadFilhaConta').show();" />
+
+					<p:dialog header="Cadastro Conta Filha" widgetVar="cadFilhaConta"
+						modal="true" height="100" width="300">
+						<h:panelGrid columns="2">
+						Codigo:
+						 <p:inputText value="#{contaBean.contaFilha.idContaFilha}"
+								disabled="true" />
+				 
+						Descrição:
+						<p:inputText value="#{contaBean.contaFilha.descricao}" />
+
+							<p:commandButton value="Salvar"
+								actionListener="#{contaBean.salvarContaFilha}"
+								update="listaCFilha" />
+
+						</h:panelGrid>
+
+					</p:dialog>
+
+					<h:panelGrid id="dadosCFilha">
+						<p:dataTable id="listaCFilha" value="#{contaBean.listaContaFilha}"
+							paginator="true" rows="6" var="contaFilha">
+
+							<p:column headerText="Codigo">
+								<h:outputLabel value="#{contaFilha.idContaFilha}" />
+							</p:column>
+
+							<p:column headerText="Descrição">
+								<h:outputLabel value="#{contaFilha.descricao}" />
+							</p:column>
+
+
+							<p:column headerText="Excluir">
+								<p:commandLink id="excluirContaFilha" value="Excluir"
+									ajax="dialog" action="#{contaBean.excluirContaFilha}"
+									update="listaCFilha">
+									<f:setPropertyActionListener value="#{contaFilha.idContaFilha}"
+										target="#{contaBean.idContaFilha}" />
+								</p:commandLink>
+							</p:column>
+
+						</p:dataTable>
 
 					</h:panelGrid>
 
