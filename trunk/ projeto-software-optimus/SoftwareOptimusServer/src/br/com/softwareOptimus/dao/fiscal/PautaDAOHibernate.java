@@ -67,6 +67,16 @@ public class PautaDAOHibernate implements PautaDAO {
 		Pauta.setParameter("id", id);
 		return Pauta.getSingleResult();
 	}
+	
+	@Override
+	public List<Pauta> listaConsultaId(Long id) {
+		String jpql = "Select p From Pauta p Where p.idPauta = :id ";
+		TypedQuery<Pauta> listaPauta = this.session.createQuery(jpql,
+				Pauta.class);
+		listaPauta.setParameter("id", id);
+		return listaPauta.getResultList();
+	}
+	
 	@Override
 	public void alterar(Pauta pauta) {
 		this.session.merge(pauta);
@@ -74,7 +84,7 @@ public class PautaDAOHibernate implements PautaDAO {
 	}
 	@Override
 	public void remover(Pauta pauta) {
-		//this.session.c
+		this.session.remove(pauta);
 		this.transaction.commit();
 	}
 }

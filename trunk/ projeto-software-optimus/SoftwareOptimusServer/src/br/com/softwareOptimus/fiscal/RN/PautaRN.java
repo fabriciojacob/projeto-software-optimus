@@ -52,8 +52,8 @@ public class PautaRN {
 		this.pautaMVADAO.remover(idPautaMVA);
 	}
 
-	public Pauta consultaId(Long id) {
-		return this.pautaDAO.consultaId(id);
+	public List<Pauta> consultaId(Long id) {
+		return this.pautaDAO.listaConsultaId(id);
 	}
 
 	public List<Pauta> consultaDesc(String desc) {
