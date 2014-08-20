@@ -1,6 +1,7 @@
 package br.com.softwareOptimus.RN.financeiro;
 
 import java.util.List;
+
 import br.com.softwareOptimus.com.dao.financeiro.ContaDAO;
 import br.com.softwareOptimus.financeiro.Conta;
 import br.com.softwareOptimus.financeiro.ContaFilha;
@@ -17,7 +18,7 @@ public class ContaRN {
 	public void salvarConta(Conta conta) throws Exception {
 		contaDAO.salvar(conta);
 	}
-	
+
 	public void alterar(Conta conta) throws Exception {
 		contaDAO.alterarConta(conta);
 	}
@@ -37,5 +38,14 @@ public class ContaRN {
 	public void excluirContaFilha(ContaFilha conta) throws Exception {
 		contaDAO.excluirContaFilha(conta);
 	}
+	
+	public ContaFilha localizaContaFilha(Long id) throws Exception {
+		return contaDAO.localizaContaFilha(id);
+	}
+	
+	public void salvarContaFilha(ContaFilha conta) throws Exception {
+		contaDAO.salvarContaFilha(conta);
+	}
+	
 
 }

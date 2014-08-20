@@ -23,6 +23,8 @@ public interface ContaDAO {
 
 	public List<ContaFilha> listaContaFilha(Conta conta) throws Exception;
 	
+	public ContaFilha localizaContaFilha(Long id) throws Exception;
+	
 	public void alterarConta(Conta conta) throws Exception;
 	
 	public Conta pesquisaConta(Long id) throws Exception;
