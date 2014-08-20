@@ -12,7 +12,7 @@ public interface PautaMVADAO {
 	public void begin() throws IOException, SQLException;
 	public void close() throws Exception;
 	public void alterar(PautaMVA pauta);
-	public void remover(PautaMVA pauta);
+	public void remover(Long idPautaMVA);
 	public void salva(PautaMVA pauta);
 	public PautaMVA editPauta(Long id);
 	public List<PautaMVA> listar(Pauta pauta) throws Exception;

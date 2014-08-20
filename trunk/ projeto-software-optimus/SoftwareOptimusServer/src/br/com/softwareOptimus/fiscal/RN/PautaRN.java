@@ -47,4 +47,32 @@ public class PautaRN {
 		}
 		return retorno;
 	}
+
+	public void removerVig(Long idPautaMVA) {
+		this.pautaMVADAO.remover(idPautaMVA);
+	}
+
+	public Pauta consultaId(Long id) {
+		return this.pautaDAO.consultaId(id);
+	}
+
+	public List<Pauta> consultaDesc(String desc) {
+		return this.pautaDAO.consultaDesc(desc);
+	}
+
+	public List<Pauta> listar() {
+		return this.pautaDAO.consulta();
+	}
+
+	public Pauta editPauta(Long id) {
+		return this.pautaDAO.consultaId(id);
+	}
+
+	public void altPauta(Pauta pauta) {
+		this.pautaDAO.alterar(pauta);
+	}
+
+	public void remover(Pauta pauta) {
+		this.pautaDAO.remover(pauta);
+	}
 }

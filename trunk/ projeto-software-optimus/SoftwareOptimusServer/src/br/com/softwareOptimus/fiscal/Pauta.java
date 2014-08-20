@@ -7,8 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Entity
-@Table(name="tbPauta")
+@Entity 
+@Table(name="tbPauta" )
 public class Pauta implements Serializable {
 
 	/**

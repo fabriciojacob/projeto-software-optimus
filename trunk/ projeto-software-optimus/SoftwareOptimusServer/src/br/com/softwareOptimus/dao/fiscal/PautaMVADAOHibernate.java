@@ -56,8 +56,9 @@ public class PautaMVADAOHibernate implements PautaMVADAO {
 	}
 
 	@Override
-	public void remover(PautaMVA pauta) {
-		this.session.remove(pauta);
+	public void remover(Long idPautaMVA) {
+		PautaMVA paut = this.session.find(PautaMVA.class, idPautaMVA);
+		this.session.remove(paut);
 		this.transaction.commit();
 	}
 

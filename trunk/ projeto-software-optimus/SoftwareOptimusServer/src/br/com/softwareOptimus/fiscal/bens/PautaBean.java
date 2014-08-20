@@ -30,11 +30,11 @@ public class PautaBean {
 	}
 
 	public void alterar() {
-		/*try {
-			PautaMVARN pautaRN = new PautaMVARN();
-			Integer retorno = pautaRN.validaCampoNulo(this.pautaMVA);
+		try {
+			PautaRN pautaRN = new PautaRN();
+			Integer retorno = pautaRN.validaCampoNulo(this.pauta);
 			if (retorno == 0) {
-				pautaRN.altPauta(this.pautaMVA);
+				pautaRN.altPauta(this.pauta);
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
@@ -55,13 +55,13 @@ public class PautaBean {
 							new FacesMessage(FacesMessage.SEVERITY_ERROR,
 									"Info", "Problemas na alteração da Pauta "
 											+ e.getMessage()));
-		}*/
+		}
 	}
 
 	public void remover() {
-		/*try {
-			PautaMVARN pautaRN = new PautaMVARN();
-			pautaRN.remover(this.pautaMVA);
+		try {
+			PautaRN pautaRN = new PautaRN();
+			pautaRN.remover(this.pauta);
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
@@ -74,13 +74,14 @@ public class PautaBean {
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
 							"Problemas na remoção da Pauta " + e.getMessage()));
-		}*/
+		}
 	}
 
 	public void cancelar() {
 		this.sal = true;
 		this.alt = true;
 		this.rem = true;
+		this.vig = true;
 		limpar();
 	}
 
@@ -165,43 +166,54 @@ public class PautaBean {
 
 	public void limpar() {
 		this.listaPautaMVA = new ArrayList<PautaMVA>();
+		this.listaPauta = new ArrayList<Pauta>();
 		this.pautaMVA = new PautaMVA();
+		this.pauta = new Pauta();
 		this.id = null;
+		this.idPautaMVA = null;
 	}
 
+	@SuppressWarnings("unchecked")
 	public void buscaPauta() {
-		/*limpar();
-		PautaMVARN pautaRN = new PautaMVARN();
+		limpar();
+		PautaRN pautaRN = new PautaRN();
 		if (!busca.equals("")) {
 			if (filtro.equals("id")) {
-				this.listaPautaMVA = pautaRN.consultaId(Long.parseLong(busca));
+				this.listaPauta = (List<Pauta>) pautaRN.consultaId(Long.parseLong(busca));
 			} else if (filtro.equals("desc")) {
-				this.listaPautaMVA = pautaRN.consultaDesc(busca);
-			} else if (filtro.equals("valP")) {
-				this.listaPautaMVA = pautaRN.consultaValP(Double
-						.parseDouble(busca));
-			} else if (filtro.equals("valMva")) {
-				this.listaPautaMVA = pautaRN.consultaValMva(Double
-						.parseDouble(busca));
+				this.listaPauta = pautaRN.consultaDesc(busca);
 			}
 		} else {
-			this.listaPautaMVA = pautaRN.lista();
-		}*/
+			this.listaPauta = pautaRN.listar();
+		}
 	}
 
 	public void editPauta() {
-		/*PautaMVARN pautaRN = new PautaMVARN();
-		this.pautaMVA = pautaRN.editPauta(id);*/
+		PautaRN pautaRN = new PautaRN();
+		this.pauta = pautaRN.editPauta(id);
+		listaVigencia();
 		this.alt = false;
+		this.vig = false;
 		this.rem = false;
 		this.sal = true;
 	}
 
 	public void excluirPautaMVA() {
-
+		try {
+			PautaRN pautaRN = new PautaRN();
+			pautaRN.removerVig(this.idPautaMVA);
+			listaVigencia();
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
+							"Vigência da Pauta removida com sucesso"));
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+							"Problemas na remoção da vigência da Pauta " + e.getMessage()));
+		}
 	}
-
-
 
 	public Boolean getVig() {
 		return vig;
