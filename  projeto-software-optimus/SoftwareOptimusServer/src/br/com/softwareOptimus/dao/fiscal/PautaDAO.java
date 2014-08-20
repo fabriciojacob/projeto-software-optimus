@@ -15,4 +15,5 @@ public interface PautaDAO {
 	public List<Pauta> consulta();
 	public void alterar(Pauta pauta);
 	public void remover(Pauta pauta);
+	public List<Pauta> listaConsultaId(Long id);
 }

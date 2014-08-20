@@ -1,14 +1,17 @@
 package br.com.softwareOptimus.fiscal;
 
 import java.io.Serializable;
+import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity 
-@Table(name="tbPauta" )
+@Table(name="tbPauta")
 public class Pauta implements Serializable {
 
 	/**
@@ -21,6 +24,9 @@ public class Pauta implements Serializable {
 	private Long idPauta;
 	
 	private String descricao;
+	
+	@OneToMany(mappedBy = "pauta", targetEntity = PautaMVA.class, cascade = CascadeType.ALL, orphanRemoval=true)
+	private Collection<PautaMVA> pauta;;
 
 	public Long getIdPauta() {
 		return idPauta;

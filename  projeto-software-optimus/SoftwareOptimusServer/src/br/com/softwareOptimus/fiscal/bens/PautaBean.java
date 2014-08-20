@@ -173,13 +173,12 @@ public class PautaBean {
 		this.idPautaMVA = null;
 	}
 
-	@SuppressWarnings("unchecked")
 	public void buscaPauta() {
 		limpar();
 		PautaRN pautaRN = new PautaRN();
-		if (!busca.equals("")) {
+		if (!busca.equals("") && (!filtro.equals(""))) {
 			if (filtro.equals("id")) {
-				this.listaPauta = (List<Pauta>) pautaRN.consultaId(Long.parseLong(busca));
+				this.listaPauta = pautaRN.consultaId(Long.parseLong(busca));
 			} else if (filtro.equals("desc")) {
 				this.listaPauta = pautaRN.consultaDesc(busca);
 			}
