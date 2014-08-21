@@ -49,9 +49,11 @@ public class ContaBean {
 	
 	public void salvarContaFilha(){
 		this.contaRN = new ContaRN();
+		ContaFilha contaTemp = new ContaFilha();
 		try{
-			this.contaFilha.setConta(conta);
-			this.contaRN.salvarContaFilha(contaFilha);
+			contaTemp.setDescricao(this.contaFilha.getDescricao());
+			contaTemp.setConta(conta);
+			this.contaRN.salvarContaFilha(contaTemp);
 			msgAcerto("Conta filha salva com sucesso");
 			listaContaFilha();
 		}catch (Exception e){
@@ -96,6 +98,7 @@ public class ContaBean {
 		try{
 			this.contaFilha = this.contaRN.localizaContaFilha(idContaFilha);
 			this.contaRN.excluirContaFilha(contaFilha);
+			listaContaFilha();
 			msgAcerto("Conta excluída com sucesso");
 		}catch (Exception e){
 			msgErro("Problemas na exclusão", e);
@@ -106,6 +109,9 @@ public class ContaBean {
 	public void pesquisaConta() {
 		this.contaRN = new ContaRN();
 		try {
+			if(this.listaConta != null){
+				this.listaConta.clear();
+			}
 			this.listaConta = this.contaRN.pesquisaConta(descricaoPesquisa);
 		} catch (Exception e) {
 			msgErro("Problemas na pesquisa da conta", e);
@@ -115,6 +121,9 @@ public class ContaBean {
 	public void listaContaFilha(){
 		this.contaRN = new ContaRN();
 		try{
+			if(this.listaContaFilha != null){
+				this.listaContaFilha.clear();
+			}
 			this.listaContaFilha = this.contaRN.listaContaFilha(this.conta);
 		}catch (Exception e){
 			msgErro("Problemas ao listar as contas filhas ", e);
