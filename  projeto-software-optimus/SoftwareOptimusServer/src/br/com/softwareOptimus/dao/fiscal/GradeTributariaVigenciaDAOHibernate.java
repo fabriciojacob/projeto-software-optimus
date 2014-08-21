@@ -2,9 +2,12 @@ package br.com.softwareOptimus.dao.fiscal;
 
 import java.io.IOException;
 import java.sql.SQLException;
-
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
+import br.com.softwareOptimus.fiscal.GradeTributaria;
+import br.com.softwareOptimus.fiscal.GradeTributariaVigencia;
 
 public class GradeTributariaVigenciaDAOHibernate implements
 		GradeTributariaVigenciaDAO {
@@ -39,6 +42,15 @@ public class GradeTributariaVigenciaDAOHibernate implements
 	@Override
 	public void close() throws Exception {
 		this.session.close();
+	}
+
+	@Override
+	public List<GradeTributariaVigencia> listaVig(GradeTributaria grade) {
+		String jpql = "Select g from GradeTributaria g where g.grade = :parGrade";
+		TypedQuery<GradeTributariaVigencia> consulta = this.session.createQuery(jpql,
+				GradeTributariaVigencia.class);
+		consulta.setParameter("parPauta", grade);
+		return consulta.getResultList();
 	}
 
 }
