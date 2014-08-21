@@ -12,6 +12,7 @@ public class PautaDAOHibernate implements PautaDAO {
 	
 	private EntityManager session;
 	private EntityTransaction transaction;
+	
 	public EntityManager getSession() {
 		return session;
 	}
@@ -37,6 +38,7 @@ public class PautaDAOHibernate implements PautaDAO {
 	public void close() throws Exception {
 		this.session.close();
 	}
+	
 	@Override
 	public void salvar(Pauta pauta) {
 		this.session.persist(pauta);

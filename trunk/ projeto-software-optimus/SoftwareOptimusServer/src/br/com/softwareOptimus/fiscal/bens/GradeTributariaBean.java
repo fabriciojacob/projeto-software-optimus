@@ -9,24 +9,26 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import br.com.softwareOptimus.fiscal.Aliquota;
+import br.com.softwareOptimus.fiscal.GradeTributaria;
 import br.com.softwareOptimus.fiscal.GradeTributariaVigencia;
 import br.com.softwareOptimus.fiscal.PautaMVA;
 import br.com.softwareOptimus.fiscal.RN.AliquotaRN;
 import br.com.softwareOptimus.fiscal.RN.GradeTributariaRN;
 
-@ManagedBean
+@ManagedBean(name= "gradeTributariaBean")
 @ViewScoped
 public class GradeTributariaBean {
 
-	private GradeTributariaVigencia grade = new GradeTributariaVigencia();
-	private List<GradeTributariaVigencia> listaGrade = new ArrayList<GradeTributariaVigencia>();
-	//private PautaMVARN pautaRN = new PautaMVARN();
+	private GradeTributaria grade = new GradeTributaria();
+	private GradeTributariaVigencia gradeVig = new GradeTributariaVigencia();
+	private List<GradeTributaria> listaGrade = new ArrayList<GradeTributaria>();
+	private List<GradeTributariaVigencia> listaGradeVig = new ArrayList<GradeTributariaVigencia>();
 	private AliquotaRN aliqRN = new AliquotaRN();
 	private List<PautaMVA> listaPauta = new ArrayList<PautaMVA>();
 	private List<Aliquota> listaAliquota = new ArrayList<Aliquota>();
 	private String busca, filtro, tipoEntSai;
-	private Long id;
-	private boolean sal = true, alt = true, rem = true;
+	private Long id, idGradeVig;
+	private boolean sal = true, alt = true, rem = true, vig = true;
 	
 	public GradeTributariaBean(){
 		setListaAliquota(this.aliqRN.listaAliqIcms());
@@ -43,7 +45,7 @@ public class GradeTributariaBean {
 	public void salvar(){
 		try {
 			GradeTributariaRN gradeRN = new GradeTributariaRN();
-			this.grade.setId(null);
+			//this.grade.setId(null);
 			//Integer retorno = gradeRN.validaCampoNulo(this.grade);
 			//if (retorno == 0) {
 				//gradeRN.salva(this.grade);
@@ -117,7 +119,7 @@ public class GradeTributariaBean {
 		}
 	}
 	
-	public void buscar(){
+	public void buscarGrade(){
 		
 	}
 	
@@ -126,8 +128,8 @@ public class GradeTributariaBean {
 	}
 	
 	public void limpar(){
-		this.grade = new GradeTributariaVigencia();
-		this.listaGrade = new ArrayList<GradeTributariaVigencia>();
+		this.grade = new GradeTributaria();
+		this.listaGrade = new ArrayList<GradeTributaria>();
 		this.listaAliquota = new ArrayList<Aliquota>();
 		this.listaPauta = new ArrayList<PautaMVA>();
 	}
@@ -137,6 +139,38 @@ public class GradeTributariaBean {
 		this.alt = true;
 		this.rem = true;
 		limpar();
+	}
+	
+	public void excluirGradeVig(){
+		
+	}
+	
+	public void incluirGradeVig(){
+		
+	}
+	
+	public Long getIdGradeVig() {
+		return idGradeVig;
+	}
+	
+	public void setIdGradeVig(Long idGradeVig) {
+		this.idGradeVig = idGradeVig;
+	}
+	
+	public boolean isVig() {
+		return vig;
+	}
+	
+	public void setVig(boolean vig) {
+		this.vig = vig;
+	}
+	
+	public GradeTributariaVigencia getGradeVig() {
+		return gradeVig;
+	}
+	
+	public void setGradeVig(GradeTributariaVigencia gradeVig) {
+		this.gradeVig = gradeVig;
 	}
 
 	public List<Aliquota> getListaAliquota() {
@@ -163,19 +197,27 @@ public class GradeTributariaBean {
 		this.tipoEntSai = tipoEntSai;
 	}
 
-	public GradeTributariaVigencia getGrade() {
+	public GradeTributaria getGrade() {
 		return grade;
 	}
 
-	public void setGrade(GradeTributariaVigencia grade) {
+	public void setGrade(GradeTributaria grade) {
 		this.grade = grade;
 	}
+	
+	public List<GradeTributariaVigencia> getListaGradeVig() {
+		return listaGradeVig;
+	}
+	
+	public void setListaGradeVig(List<GradeTributariaVigencia> listaGradeVig) {
+		this.listaGradeVig = listaGradeVig;
+	}
 
-	public List<GradeTributariaVigencia> getListaGrade() {
+	public List<GradeTributaria> getListaGrade() {
 		return listaGrade;
 	}
 
-	public void setListaGrade(List<GradeTributariaVigencia> listaGrade) {
+	public void setListaGrade(List<GradeTributaria> listaGrade) {
 		this.listaGrade = listaGrade;
 	}
 
