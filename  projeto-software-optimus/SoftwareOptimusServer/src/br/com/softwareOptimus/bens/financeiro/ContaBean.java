@@ -21,7 +21,7 @@ public class ContaBean {
 	private List<Conta> listaConta = new ArrayList<>();
 	private List<ContaFilha> listaContaFilha = new ArrayList<>();
 	private boolean inativa, desabilitarGravar, novo, cancelar, alterar,
-			acumulada, consulta;
+			acumulada, consulta, cadastroContaFilha;
 	private ContaRN contaRN;
 	private Long id, idContaFilha;
 
@@ -32,6 +32,7 @@ public class ContaBean {
 		alterar = true;
 		acumulada = false;
 		consulta = true;
+		cadastroContaFilha = true;
 	}
 
 	public void gravar() {
@@ -42,6 +43,9 @@ public class ContaBean {
 			msgAcerto("Conta salva com sucesso");
 			this.desabilitarGravar = true;
 			this.alterar = false;
+			if(conta.isDesmembrada()){
+				cadastroContaFilha = false;
+			}
 		} catch (Exception e) {
 			msgErro("Problemas na gravação da conta", e);
 		}
@@ -67,6 +71,9 @@ public class ContaBean {
 		this.cancelar = false;
 		this.alterar = true;
 		this.conta = new Conta();
+		if(this.listaContaFilha != null){
+			this.listaContaFilha.clear();
+		}
 	}
 	
 	public void selecionar(){
@@ -75,6 +82,9 @@ public class ContaBean {
 			this.conta = this.contaRN.pesquisaConta(id);
 			this.desabilitarGravar = true;
 			this.cancelar = false;
+			if(this.conta.isDesmembrada()){
+				this.cadastroContaFilha = false;
+			}
 			listaContaFilha();
 		} catch (Exception e) {
 			msgErro("Problemas na seleção da conta", e);
@@ -87,6 +97,11 @@ public class ContaBean {
 			this.conta = this.contaRN.pesquisaConta(id);
 			this.desabilitarGravar = true;
 			this.cancelar = false;
+			if(!this.conta.isDesmembrada()){
+				this.cadastroContaFilha = true;
+			}else{
+				this.cadastroContaFilha = false;
+			}
 			msgAcerto("Dado editado com sucesso");
 		} catch (Exception e) {
 			msgErro("Problemas na pesquisa da conta", e);
@@ -113,6 +128,7 @@ public class ContaBean {
 				this.listaConta.clear();
 			}
 			this.listaConta = this.contaRN.pesquisaConta(descricaoPesquisa);
+			this.alterar = false;
 		} catch (Exception e) {
 			msgErro("Problemas na pesquisa da conta", e);
 		}
@@ -253,5 +269,15 @@ public class ContaBean {
 	public void setIdContaFilha(Long idContaFilha) {
 		this.idContaFilha = idContaFilha;
 	}
+
+	public boolean isCadastroContaFilha() {
+		return cadastroContaFilha;
+	}
+
+	public void setCadastroContaFilha(boolean cadastroContaFilha) {
+		this.cadastroContaFilha = cadastroContaFilha;
+	}
+	
+	
 
 }
