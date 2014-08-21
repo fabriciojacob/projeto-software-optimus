@@ -2,18 +2,17 @@ package br.com.softwareOptimus.fiscal.bens;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-
 import br.com.softwareOptimus.fiscal.Aliquota;
 import br.com.softwareOptimus.fiscal.GradeTributaria;
 import br.com.softwareOptimus.fiscal.GradeTributariaVigencia;
-import br.com.softwareOptimus.fiscal.PautaMVA;
+import br.com.softwareOptimus.fiscal.Pauta;
 import br.com.softwareOptimus.fiscal.RN.AliquotaRN;
 import br.com.softwareOptimus.fiscal.RN.GradeTributariaRN;
+import br.com.softwareOptimus.fiscal.RN.PautaRN;
 
 @ManagedBean(name= "gradeTributariaBean")
 @ViewScoped
@@ -24,15 +23,16 @@ public class GradeTributariaBean {
 	private List<GradeTributaria> listaGrade = new ArrayList<GradeTributaria>();
 	private List<GradeTributariaVigencia> listaGradeVig = new ArrayList<GradeTributariaVigencia>();
 	private AliquotaRN aliqRN = new AliquotaRN();
-	private List<PautaMVA> listaPauta = new ArrayList<PautaMVA>();
+	private PautaRN pautaRN = new PautaRN();
+	private List<Pauta> listaPauta = new ArrayList<Pauta>();
 	private List<Aliquota> listaAliquota = new ArrayList<Aliquota>();
-	private String busca, filtro, tipoEntSai;
+	private String busca, filtro, tipoEntSai, tipoGrade;
 	private Long id, idGradeVig;
 	private boolean sal = true, alt = true, rem = true, vig = true;
 	
 	public GradeTributariaBean(){
 		setListaAliquota(this.aliqRN.listaAliqIcms());
-		//setListaPauta(this.pautaRN.lista());
+		setListaPauta(this.pautaRN.listar());
 	}
 	
 	public void novo() {
@@ -45,22 +45,24 @@ public class GradeTributariaBean {
 	public void salvar(){
 		try {
 			GradeTributariaRN gradeRN = new GradeTributariaRN();
-			//this.grade.setId(null);
-			//Integer retorno = gradeRN.validaCampoNulo(this.grade);
-			//if (retorno == 0) {
-				//gradeRN.salva(this.grade);
+			this.grade.setIdGradeTrib(null);
+			Integer retorno = gradeRN.validaCampoNulo(this.grade);
+			if (retorno == 0) {
+				gradeRN.salvar(this.grade);
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
 								"Grade salva com sucesso"));
+				this.vig = false;
 				this.sal = true;
-				limpar();
-			//} else {
+				this.alt = true;
+				this.rem = true;
+			} else {
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
 								"Existem campos nulos no formulário"));
-			//}
+			}
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance()
 					.addMessage(
@@ -74,9 +76,9 @@ public class GradeTributariaBean {
 	public void alterar(){
 		try {
 			GradeTributariaRN gradeRN = new GradeTributariaRN();
-			//Integer retorno = gradeRN.validaCampoNulo(this.grade);
-			//if (retorno == 0) {
-				//gradeRN.altGrade(this.grade);
+			Integer retorno = gradeRN.validaCampoNulo(this.grade);
+			if (retorno == 0) {
+				gradeRN.altGrade(this.grade);
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
@@ -84,12 +86,12 @@ public class GradeTributariaBean {
 				this.alt = true;
 				this.rem = true;
 				limpar();
-			//} else {
+			} else {
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
 								"Existem campos nulos no formulário"));
-			//}
+			}
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance()
 					.addMessage(
@@ -103,7 +105,7 @@ public class GradeTributariaBean {
 	public void remover(){
 		try {
 			GradeTributariaRN gradeRN = new GradeTributariaRN();
-			//gradeRN.remover(this.grade);
+			gradeRN.remover(this.grade);
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
@@ -129,15 +131,20 @@ public class GradeTributariaBean {
 	
 	public void limpar(){
 		this.grade = new GradeTributaria();
+		this.gradeVig = new GradeTributariaVigencia();
 		this.listaGrade = new ArrayList<GradeTributaria>();
+		this.listaGradeVig = new ArrayList<GradeTributariaVigencia>();
+		setListaAliquota(this.aliqRN.listaAliqIcms());
+		setListaPauta(this.pautaRN.listar());
 		this.listaAliquota = new ArrayList<Aliquota>();
-		this.listaPauta = new ArrayList<PautaMVA>();
+		this.listaPauta = new ArrayList<Pauta>();
 	}
 	
 	public void cancelar(){
 		this.sal = true;
 		this.alt = true;
 		this.rem = true;
+		this.vig = true;
 		limpar();
 	}
 	
@@ -147,6 +154,32 @@ public class GradeTributariaBean {
 	
 	public void incluirGradeVig(){
 		
+	}
+	
+	public void listaVigencia() {
+		try {
+			GradeTributariaRN gradeRN = new GradeTributariaRN();
+			if (this.listaGradeVig != null) {
+				this.listaGradeVig.clear();
+			}
+			this.listaGradeVig = gradeRN.listarVig(this.grade);
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance()
+			.addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR,
+							"Info", "Problemas ao listar as Vigências "
+									+ e.getMessage()));
+		}
+
+	}
+	
+	public String getTipoGrade() {
+		return tipoGrade;
+	}
+	
+	public void setTipoGrade(String tipoGrade) {
+		this.tipoGrade = tipoGrade;
 	}
 	
 	public Long getIdGradeVig() {
@@ -181,11 +214,11 @@ public class GradeTributariaBean {
 		this.listaAliquota = listaAliquota;
 	}
 
-	public List<PautaMVA> getListaPauta() {
+	public List<Pauta> getListaPauta() {
 		return listaPauta;
 	}
 
-	public void setListaPauta(List<PautaMVA> listaPauta) {
+	public void setListaPauta(List<Pauta> listaPauta) {
 		this.listaPauta = listaPauta;
 	}
 

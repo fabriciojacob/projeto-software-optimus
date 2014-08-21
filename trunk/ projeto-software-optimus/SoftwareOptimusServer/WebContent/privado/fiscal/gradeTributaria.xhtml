@@ -10,7 +10,7 @@
 
 </h:head>
 <body>
-	<h:form id="frmCadPauta">
+	<h:form id="frmCadGrade">
 		<br />
 		<h3 style="margin-top: 0">CADASTRO DA GRADE TRIBUTÁRIA</h3>
 		<div align="left">
@@ -43,7 +43,7 @@
 					<p:inputText id="idGrade" disabled="true"
 					value="#{gradeTributariaBean.grade.idGradeTrib}" />
 		
-					Descrição da Pauta:
+					Descrição da Grade:
 					<p:inputText id="descGrade"
 					value="#{gradeTributariaBean.grade.descricao}" size="40" />
 
@@ -164,44 +164,72 @@
 				<h:panelGrid id="gridincEdi2" columns="1">
 					<h:panelGrid id="gridIncEdi" columns="2"
 						columnClasses="label, value">
-						
-					Entrada saida
+
+						<p:selectOneRadio id="entSai"
+							value="#{gradeTributariaBean.tipoEntSai}">
+							<f:selectItem itemLabel="Entrada" itemValue="ENTRADA" />
+							<f:selectItem itemLabel="Saida" itemValue="SAIDA" />
+						</p:selectOneRadio>
 				
 					Código da Vigência:
 					<p:inputText id="idPautaMVA" disabled="true"
 							value="#{gradeTributariaBean.gradeVig.id}" />
 		
 					Estado Origem:
-					<p:inputText id="descPautaMVA"
-							value="#{gradeTributariaBean.pautaMVA.descricao}" size="40" />
+						<p:selectOneMenu id="ufOr"
+							value="#{gradeTributariaBean.gradeVig.origem}">
+							<f:selectItem itemLabel="Selecione um estado origem" />
+							<f:selectItems value="#{geralBean.estados}" var="listaEstados"
+								itemValue="#{listaEstados}"
+								itemLabel="#{listaEstados.descricao}" />
+						</p:selectOneMenu>
 					
 					Estado Destino:
-					<p:inputText id="valorPautaPautaMVA"
-							value="#{gradeTributariaBean.pautaMVA.valorPauta}" size="20" />
+						<p:selectOneMenu id="ufDe"
+							value="#{gradeTributariaBean.gradeVig.destino}">
+							<f:selectItem itemLabel="Selecione um estado destino" />
+							<f:selectItems value="#{geralBean.estados}" var="listaEstados"
+								itemValue="#{listaEstados}"
+								itemLabel="#{listaEstados.descricao}" />
+						</p:selectOneMenu>
 					
 					Alíquota:
-					<p:inputText id="pautaValorMva"
-							value="#{gradeTributariaBean.pautaMVA.valorMVa}" size="20" />
+						<p:selectOneMenu id="aliq"
+							value="#{gradeTributariaBean.gradeVig.aliquota}">
+							<f:selectItem itemLabel="Selecione uma alíquota" />
+							<f:selectItems value="#{gradeTributariaBean.listaAliquota}"
+								var="listaAliquota" itemValue="#{listaAliquota}"
+								itemLabel="#{listaAliquota.id - listaAliquota.aliquota}" />
+						</p:selectOneMenu>
 					
 					Vigência:
 					<p:calendar id="pautavigencia"
 							value="#{gradeTributariaBean.gradeVig.vigencia}" effect="fold" />
 					</h:panelGrid>
-					<h:panelGrid columns="6" columnClasses="label, value">
 	
 					Tipo da Grade:
-					<p:selectBooleanCheckbox id="IpiPauta"
-							value="#{gradeTributariaBean.pautaMVA.incideIPI}" />
-							
-					Pauta:
-					<p:selectBooleanCheckbox id="pautaMvaAjustada"
-							value="#{gradeTributariaBean.pautaMVA.mvaAjustada}" />
-					</h:panelGrid>
 					
+					<p:selectOneMenu id="tipGrade"
+						value="#{gradeTributariaBean.tipoGrade}">/>
+						<f:selectItem itemLabel="Selecione uma Opção" />
+						<f:selectItem itemLabel="Distribuidor" itemValue="DISTRIBUIDOR" />
+						<f:selectItem itemLabel="Fabricante" itemValue="FABRICANTE" />
+						<f:selectItem itemLabel="Outros" itemValue="OUTROS" />
+					</p:selectOneMenu>
+
+					Pauta:
+					<p:selectOneMenu id="pauta"
+						value="#{gradeTributariaBean.gradeVig.pauta}" style="width:350px;">
+						<f:selectItem itemLabel="Selecione uma Pauta" />
+						<f:selectItems value="#{gradeTributariaBean.listaPauta}"
+							var="pautaList" itemValue="#{pautaList}"
+							itemLabel="#{pautaList.idPauta} - #{pautaList.descricao}" />
+					</p:selectOneMenu>
+
 				</h:panelGrid>
 				<p:commandButton value="Incluir"
 					actionListener="#{gradeTributariaBean.incluirGradeVig}"
-					update="listaPautaMVA, gridincEdi2" />
+					update="listaGradeVig gridincEdi2" />
 			</p:dialog>
 		</div>
 	</h:form>

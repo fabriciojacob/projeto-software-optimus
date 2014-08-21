@@ -2,14 +2,13 @@ package br.com.softwareOptimus.dao.fiscal;
 
 import java.io.IOException;
 import java.sql.SQLException;
-
-import br.com.softwareOptimus.fiscal.GradeTributariaVigencia;
+import br.com.softwareOptimus.fiscal.GradeTributaria;
 
 public interface GradeTributariaDAO {
 	
 	public void begin() throws IOException, SQLException;
 	public void close() throws Exception;
-	public void altGrade(GradeTributariaVigencia grade);
-	public void salva(GradeTributariaVigencia grade);
-	public void remover(GradeTributariaVigencia grade);
+	public void salvar(GradeTributaria grade);
+	public void altGrade(GradeTributaria grade);
+	public void remover(GradeTributaria grade);
 }

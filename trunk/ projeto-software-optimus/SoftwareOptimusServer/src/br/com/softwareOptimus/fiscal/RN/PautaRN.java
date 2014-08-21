@@ -1,7 +1,6 @@
 package br.com.softwareOptimus.fiscal.RN;
 
 import java.util.List;
-
 import br.com.softwareOptimus.dao.fiscal.PautaDAO;
 import br.com.softwareOptimus.dao.fiscal.PautaMVADAO;
 import br.com.softwareOptimus.fiscal.Pauta;
