@@ -1,0 +1,209 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+</h:head>
+<body>
+	<h:form id="frmCadPauta">
+		<br />
+		<h3 style="margin-top: 0">CADASTRO DA GRADE TRIBUTÁRIA</h3>
+		<div align="left">
+			<p:commandButton value="Novo"
+				actionListener="#{gradeTributariaBean.novo}" ajax="grid" />
+
+			<p:commandButton value="Salvar" disabled="#{gradeTributariaBean.sal}"
+				actionListener="#{gradeTributariaBean.salvar}" ajax="grid" />
+
+			<p:commandButton value="Alterar"
+				disabled="#{gradeTributariaBean.alt}"
+				actionListener="#{gradeTributariaBean.alterar}" ajax="grid" />
+
+			<p:commandButton value="Excluir"
+				disabled="#{gradeTributariaBean.rem}"
+				actionListener="#{gradeTributariaBean.remover}" ajax="grid" />
+
+			<p:commandButton id="consulta" value="Consultar" type="button"
+				ajax="dialog, grid" onclick="PF('dlg1').show();"
+				actionListener="#{gradeTributariaBean.cancelar}" />
+
+			<p:commandButton value="Cancelar"
+				actionListener="#{gradeTributariaBean.cancelar}" ajax="grid" />
+			<p:messages id="messages" showDetail="true" autoUpdate="true"
+				closable="true" />
+
+			<h:panelGrid id="grid" columns="2" columnClasses="label, value">
+				
+					Código da Grade:
+					<p:inputText id="idGrade" disabled="true"
+					value="#{gradeTributariaBean.grade.idGradeTrib}" />
+		
+					Descrição da Pauta:
+					<p:inputText id="descGrade"
+					value="#{gradeTributariaBean.grade.descricao}" size="40" />
+
+			</h:panelGrid>
+
+			<p:commandButton id="vincGrade" value="Vigência Grade" type="button"
+				disabled="#{gradeTributariaBean.vig}" onclick="PF('dlg2').show();" />
+
+			<h:panelGrid id="gridGradeVig" columns="1">
+				<p:blockUI block="gridGradeVig" trigger="vincGrade" />
+				<p:dataTable id="listaGradeVig"
+					value="#{gradeTributariaBean.listaGradeVig}" var="listaGradeVig"
+					paginator="true" rows="6">
+
+					<p:column headerText="Código da Vigência">
+						<h:outputText value="#{listaGradeVig.id}" />
+					</p:column>
+
+					<p:column headerText="Estado Origem">
+						<h:outputText value="#{listaGradeVig.origem}" />
+					</p:column>
+
+					<p:column headerText="Estado Destino">
+						<h:outputText value="#{listaGradeVig.destino}" />
+					</p:column>
+
+					<p:column headerText="Alíquota">
+						<h:outputText value="#{listaGradeVig.aliquota}" />
+					</p:column>
+
+					<p:column headerText="Vigência">
+						<h:outputText value="#{listaGradeVig.vigencia}">
+							<f:convertDateTime type="date" dateStyle="medium" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Ent/Sai">
+						<h:outputText value="#{listaGradeVig}" />
+					</p:column>
+
+					<p:column headerText="Tipo da Grade">
+						<h:outputLabel value="#{listaGradeVig.tipoGrade}" />
+					</p:column>
+
+					<p:column headerText="Pauta">
+						<h:outputLabel value="#{listaGradeVig.pauta}" />
+					</p:column>
+
+					<p:column headerText="Excluir">
+						<p:commandLink id="linkExcluiGradeVig" value="Excluir"
+							ajax="dialog" action="#{gradeTributariaBean.excluirGradeVig}"
+							update="listaGradeVig">
+							<f:setPropertyActionListener value="#{listaGradeVig.id}"
+								target="#{gradeTributariaBean.idGradeVig}" />
+						</p:commandLink>
+					</p:column>
+
+				</p:dataTable>
+				<p:blockUI block="listaGradeVig" trigger="listaGradeVig">
+        				LOADING<br />
+					<p:graphicImage name="ajaxloader.gif" />
+				</p:blockUI>
+			</h:panelGrid>
+
+			<p:dialog id="dialog1" header="Consulta" widgetVar="dlg1"
+				modal="true" height="300" width="430">
+
+				<div align="right">
+					<h:panelGrid columns="1">
+						<p:commandButton value="Pesquisar"
+							actionListener="#{gradeTributariaBean.buscarGrade}"
+							update="gridData">
+						</p:commandButton>
+					</h:panelGrid>
+				</div>
+				<h:panelGrid columns="3" columnClasses="label" cellspacing="3">
+					<p:inputText id="texto" value="#{gradeTributariaBean.busca}"
+						size="40" />
+
+					<p:selectOneMenu id="fConsult"
+						value="#{gradeTributariaBean.filtro}">/>
+						<f:selectItem itemLabel="Selecione uma Opção" />
+						<f:selectItem itemLabel="Código" itemValue="id" />
+						<f:selectItem itemLabel="Descrição" itemValue="desc" />
+					</p:selectOneMenu>
+
+				</h:panelGrid>
+				<h:panelGrid id="gridData" columns="1" columnClasses="label, value">
+					<p:blockUI block="gridData" trigger="consulta" />
+					<p:dataTable id="data" value="#{gradeTributariaBean.listaGrade}"
+						paginator="true" rows="6" var="grade" rowKey="pauta.idGradeTrib">
+
+						<p:column headerText="Código da Grade">
+							<h:outputText value="#{grade.idGradTrib}" />
+						</p:column>
+
+						<p:column headerText="Descrição">
+							<h:outputText value="#{grade.descricao}" />
+						</p:column>
+
+						<p:column headerText="Selecionar">
+							<p:commandLink id="link" value="Editar" ajax="grid, dialog1"
+								action="#{gradeTributariaBean.editGrade}">
+								<f:setPropertyActionListener value="#{grade.idGradeTrib}"
+									target="#{gradeTributariaBean.id}" />
+							</p:commandLink>
+						</p:column>
+					</p:dataTable>
+					<p:blockUI block="data" trigger="data">
+        				LOADING<br />
+						<p:graphicImage name="ajaxloader.gif" />
+					</p:blockUI>
+				</h:panelGrid>
+			</p:dialog>
+
+			<p:dialog id="dialog2" header="Inclusão e Edição da Vigência"
+				widgetVar="dlg2" modal="true" height="250" width="380">
+				<h:panelGrid id="gridincEdi2" columns="1">
+					<h:panelGrid id="gridIncEdi" columns="2"
+						columnClasses="label, value">
+						
+					Entrada saida
+				
+					Código da Vigência:
+					<p:inputText id="idPautaMVA" disabled="true"
+							value="#{gradeTributariaBean.gradeVig.id}" />
+		
+					Estado Origem:
+					<p:inputText id="descPautaMVA"
+							value="#{gradeTributariaBean.pautaMVA.descricao}" size="40" />
+					
+					Estado Destino:
+					<p:inputText id="valorPautaPautaMVA"
+							value="#{gradeTributariaBean.pautaMVA.valorPauta}" size="20" />
+					
+					Alíquota:
+					<p:inputText id="pautaValorMva"
+							value="#{gradeTributariaBean.pautaMVA.valorMVa}" size="20" />
+					
+					Vigência:
+					<p:calendar id="pautavigencia"
+							value="#{gradeTributariaBean.gradeVig.vigencia}" effect="fold" />
+					</h:panelGrid>
+					<h:panelGrid columns="6" columnClasses="label, value">
+	
+					Tipo da Grade:
+					<p:selectBooleanCheckbox id="IpiPauta"
+							value="#{gradeTributariaBean.pautaMVA.incideIPI}" />
+							
+					Pauta:
+					<p:selectBooleanCheckbox id="pautaMvaAjustada"
+							value="#{gradeTributariaBean.pautaMVA.mvaAjustada}" />
+					</h:panelGrid>
+					
+				</h:panelGrid>
+				<p:commandButton value="Incluir"
+					actionListener="#{gradeTributariaBean.incluirGradeVig}"
+					update="listaPautaMVA, gridincEdi2" />
+			</p:dialog>
+		</div>
+	</h:form>
+</body>
+</html>
