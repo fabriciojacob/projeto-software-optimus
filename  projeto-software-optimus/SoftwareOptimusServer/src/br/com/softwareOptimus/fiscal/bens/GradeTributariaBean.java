@@ -33,10 +33,10 @@ public class GradeTributariaBean {
 	private boolean sal = true, alt = true, rem = true, vig = true;
 	
 	public GradeTributariaBean(){
-		//this.listaAliquota = this.aliqRN.listaAliqIcms();
-		//this.listaPauta = this.pautaRN.listar();
-		setListaAliquota(this.aliqRN.listaAliqIcms());
-		setListaPauta(this.pautaRN.listar());
+		this.listaAliquota = this.aliqRN.listaAliqIcms();
+		this.listaPauta = this.pautaRN.listar();
+		//setListaAliquota(this.aliqRN.listaAliqIcms());
+		//setListaPauta(this.pautaRN.listar());
 	}
 	
 	public void novo() {
