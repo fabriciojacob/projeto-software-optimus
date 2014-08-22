@@ -26,7 +26,7 @@ public class Pauta implements Serializable {
 	private String descricao;
 	
 	@OneToMany(mappedBy = "pauta", targetEntity = PautaMVA.class, cascade = CascadeType.ALL, orphanRemoval=true)
-	private Collection<PautaMVA> pauta;;
+	private Collection<PautaMVA> pauta;
 
 	public Long getIdPauta() {
 		return idPauta;

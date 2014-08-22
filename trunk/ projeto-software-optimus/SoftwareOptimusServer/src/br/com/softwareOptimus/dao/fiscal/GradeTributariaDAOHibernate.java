@@ -2,8 +2,10 @@ package br.com.softwareOptimus.dao.fiscal;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
 import br.com.softwareOptimus.fiscal.GradeTributaria;
 
 public class GradeTributariaDAOHibernate implements GradeTributariaDAO {
@@ -74,5 +76,40 @@ public class GradeTributariaDAOHibernate implements GradeTributariaDAO {
 	public void remover(GradeTributaria grade) {
 		this.session.remove(grade);
 		this.transaction.commit();
+	}
+
+	@Override
+	public List<GradeTributaria> listaConsultaId(long id) {
+		String jpql = "Select g From GradeTributaria g Where g.idGradeTrib = :id ";
+		TypedQuery<GradeTributaria> Grade = this.session.createQuery(jpql,
+				GradeTributaria.class);
+		Grade.setParameter("id", id);
+		return Grade.getResultList();
+	}
+
+	@Override
+	public List<GradeTributaria> listaConsultaDesc(String desc) {
+		String jpql = "Select g From GradeTributaria g Where g.descricao LIKE :desc";
+		TypedQuery<GradeTributaria> listaGrade = this.session.createQuery(jpql,
+				GradeTributaria.class);
+		listaGrade.setParameter("desc", "%" + desc + "%");
+		return listaGrade.getResultList();
+	}
+
+	@Override
+	public List<GradeTributaria> listar() {
+		String jpql = "Select g From GradeTributaria g";
+		TypedQuery<GradeTributaria> listaGrade = this.session.createQuery(jpql,
+				GradeTributaria.class);
+		return listaGrade.getResultList();
+	}
+
+	@Override
+	public GradeTributaria consultaId(Long id) {
+		String jpql = "Select g From GradeTributaria g Where g.idGradeTrib = :id ";
+		TypedQuery<GradeTributaria> Grade = this.session.createQuery(jpql,
+				GradeTributaria.class);
+		Grade.setParameter("id", id);
+		return Grade.getSingleResult();
 	}
 }

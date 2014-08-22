@@ -12,4 +12,6 @@ public interface GradeTributariaVigenciaDAO {
 	public void begin() throws IOException, SQLException;
 	public void close() throws Exception;
 	public List<GradeTributariaVigencia> listaVig(GradeTributaria grade);
+	public void remover(Long idGradeVig);
+	public void salvaVig(GradeTributariaVigencia gradeVig);
 }

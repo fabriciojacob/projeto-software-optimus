@@ -26,6 +26,20 @@ public class GradeTributariaRN {
 		return retorno;
 	}
 
+	public Integer validaCampoNuloVig(GradeTributariaVigencia gradeVig) {
+		Integer retorno = 0;
+		if (gradeVig.getDescricao().equals("")
+				|| gradeVig.getAliquota().equals("")
+				|| gradeVig.getDestino().equals("")
+				|| gradeVig.getOrigem().equals("")
+				|| gradeVig.getIo().equals("")
+				|| gradeVig.getTipoGrade().equals("")
+				|| gradeVig.getVigencia().equals("")) {
+			retorno = 1;
+		}
+		return retorno;
+	}
+
 	public void salvar(GradeTributaria grade) {
 		this.gradeTribDAO.salvar(grade);
 	}
@@ -40,5 +54,29 @@ public class GradeTributariaRN {
 
 	public List<GradeTributariaVigencia> listarVig(GradeTributaria grade) {
 		return this.gradeTribVigDAO.listaVig(grade);
+	}
+
+	public List<GradeTributaria> consultaId(long id) {
+		return this.gradeTribDAO.listaConsultaId(id);
+	}
+
+	public List<GradeTributaria> consultaDesc(String busca) {
+		return this.gradeTribDAO.listaConsultaDesc(busca);
+	}
+
+	public List<GradeTributaria> listar() {
+		return this.gradeTribDAO.listar();
+	}
+
+	public GradeTributaria editPauta(Long id) {
+		return this.gradeTribDAO.consultaId(id);
+	}
+
+	public void removerVig(Long idGradeVig) {
+		this.gradeTribVigDAO.remover(idGradeVig);
+	}
+
+	public void salvaVig(GradeTributariaVigencia gradeVig) {
+		this.gradeTribVigDAO.salvaVig(gradeVig);
 	}
 }

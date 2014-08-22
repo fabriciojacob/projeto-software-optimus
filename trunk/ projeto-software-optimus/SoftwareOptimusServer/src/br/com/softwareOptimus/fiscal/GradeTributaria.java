@@ -1,10 +1,13 @@
 package br.com.softwareOptimus.fiscal;
 
 import java.io.Serializable;
+import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -21,6 +24,9 @@ public class GradeTributaria implements Serializable{
 	private Long idGradeTrib;
 	
 	private String descricao;
+	
+	@OneToMany(mappedBy = "grade", targetEntity = GradeTributariaVigencia.class, cascade = CascadeType.ALL, orphanRemoval=true)
+	private Collection<GradeTributariaVigencia> grade;
 
 	public Long getIdGradeTrib() {
 		return idGradeTrib;
