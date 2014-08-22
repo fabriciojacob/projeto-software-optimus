@@ -6,9 +6,11 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import br.com.softwareOptimus.entidades.TipoPessoaJuridica;
 import br.com.softwareOptimus.fiscal.Aliquota;
 import br.com.softwareOptimus.fiscal.GradeTributaria;
 import br.com.softwareOptimus.fiscal.GradeTributariaVigencia;
+import br.com.softwareOptimus.fiscal.IO;
 import br.com.softwareOptimus.fiscal.Pauta;
 import br.com.softwareOptimus.fiscal.RN.AliquotaRN;
 import br.com.softwareOptimus.fiscal.RN.GradeTributariaRN;
@@ -122,11 +124,27 @@ public class GradeTributariaBean {
 	}
 	
 	public void buscarGrade(){
-		
+		limpar();
+		GradeTributariaRN gradeRN = new GradeTributariaRN();
+		if (!busca.equals("") && (!filtro.equals(""))) {
+			if (filtro.equals("id")) {
+				this.listaGrade = gradeRN.consultaId(Long.parseLong(busca));
+			} else if (filtro.equals("desc")) {
+				this.listaGrade = gradeRN.consultaDesc(busca);
+			}
+		} else {
+			this.listaGrade = gradeRN.listar();
+		}
 	}
 	
 	public void editGrade(){
-		
+		GradeTributariaRN gradeRN = new GradeTributariaRN();
+		this.grade = gradeRN.editPauta(id);
+		listaVigencia();
+		this.alt = false;
+		this.vig = false;
+		this.rem = false;
+		this.sal = true;
 	}
 	
 	public void limpar(){
@@ -149,11 +167,62 @@ public class GradeTributariaBean {
 	}
 	
 	public void excluirGradeVig(){
-		
+		try {
+			GradeTributariaRN gradeRN = new GradeTributariaRN();
+			gradeRN.removerVig(this.idGradeVig);
+			listaVigencia();
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
+							"Vigência da Grade removida com sucesso"));
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+							"Problemas na remoção da vigência da Grade " + e.getMessage()));
+		}
 	}
 	
 	public void incluirGradeVig(){
-		
+		try {
+			GradeTributariaRN gradeRN = new GradeTributariaRN();
+			this.gradeVig.setId(null);
+			this.gradeVig.setGrade(this.grade);
+			if(this.tipoEntSai.equals(IO.ENTRADA.toString())){
+				this.gradeVig.setIo(IO.ENTRADA);
+			}else if(this.tipoEntSai.equals(IO.SAIDA.toString())){
+				this.gradeVig.setIo(IO.SAIDA);
+			}
+			if(this.tipoGrade.equals(TipoPessoaJuridica.DISTRIBUIDOR.toString())){
+				this.gradeVig.setTipoGrade(TipoPessoaJuridica.DISTRIBUIDOR);
+			}else if (this.tipoGrade.equals(TipoPessoaJuridica.FABRICANTE.toString())) {
+				this.gradeVig.setTipoGrade(TipoPessoaJuridica.FABRICANTE);
+			}else if (this.tipoGrade.equals(TipoPessoaJuridica.OUTROS)) {
+				this.gradeVig.setTipoGrade(TipoPessoaJuridica.OUTROS);
+			}
+			Integer retorno = gradeRN.validaCampoNuloVig(this.gradeVig);
+			if (retorno == 0) {
+				gradeRN.salvaVig(this.gradeVig);
+				listaVigencia();
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
+								"Vigência salva com sucesso"));
+				this.gradeVig = new GradeTributariaVigencia();
+			}else{
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+								"Existem campos nulos no formulário"));
+			}
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance()
+			.addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR,
+							"Info", "Problemas na gravacao da Vigência "
+									+ e.getMessage()));
+		}
 	}
 	
 	public void listaVigencia() {

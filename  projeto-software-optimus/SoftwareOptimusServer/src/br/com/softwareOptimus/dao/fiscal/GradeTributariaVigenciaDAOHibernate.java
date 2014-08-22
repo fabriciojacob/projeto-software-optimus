@@ -53,4 +53,16 @@ public class GradeTributariaVigenciaDAOHibernate implements
 		return consulta.getResultList();
 	}
 
+	@Override
+	public void remover(Long idGradeVig) {
+		GradeTributariaVigencia gradeVig = this.session.find(GradeTributariaVigencia.class, idGradeVig);
+		this.session.remove(gradeVig);
+		this.transaction.commit();
+	}
+
+	@Override
+	public void salvaVig(GradeTributariaVigencia gradeVig) {
+		this.session.persist(gradeVig);
+		this.transaction.commit();
+	}
 }
