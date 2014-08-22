@@ -18,7 +18,7 @@
 				actionListener="#{gradeTributariaBean.novo}" ajax="grid" />
 
 			<p:commandButton value="Salvar" disabled="#{gradeTributariaBean.sal}"
-				actionListener="#{gradeTributariaBean.salvar}" ajax="grid" />
+				actionListener="#{gradeTributariaBean.salvar}" ajax="grid" update="dialog2" />
 
 			<p:commandButton value="Alterar"
 				disabled="#{gradeTributariaBean.alt}"
@@ -49,7 +49,7 @@
 
 			</h:panelGrid>
 
-			<p:commandButton id="vincGrade" value="Vigência Grade" type="button"
+			<p:commandButton id="vincGrade" value="Vigência Grade" type="button" update="gridincEdi2"
 				disabled="#{gradeTributariaBean.vig}" onclick="PF('dlg2').show();" />
 
 			<h:panelGrid id="gridGradeVig" columns="1">
@@ -60,6 +60,10 @@
 
 					<p:column headerText="Código da Vigência">
 						<h:outputText value="#{listaGradeVig.id}" />
+					</p:column>
+
+					<p:column headerText="Descrição da Vigência">
+						<h:outputText value="#{listaGradeVig.descricao}" />
 					</p:column>
 
 					<p:column headerText="Estado Origem">
@@ -160,23 +164,30 @@
 			</p:dialog>
 
 			<p:dialog id="dialog2" header="Inclusão e Edição da Vigência"
-				widgetVar="dlg2" modal="true" height="250" width="380">
-				<h:panelGrid id="gridincEdi2" columns="1">
-					<h:panelGrid id="gridIncEdi" columns="2"
-						columnClasses="label, value">
-
+				widgetVar="dlg2" modal="true" height="320" width="400">
+				
+				<h:panelGrid id="gridincEdi2" columns="1"
+					columnClasses="label, value">
+					
+					<h:panelGrid columns="4" columnClasses="label, value">
 						<p:selectOneRadio id="entSai"
 							value="#{gradeTributariaBean.tipoEntSai}">
 							<f:selectItem itemLabel="Entrada" itemValue="ENTRADA" />
 							<f:selectItem itemLabel="Saida" itemValue="SAIDA" />
 						</p:selectOneRadio>
-				
+					</h:panelGrid>
+					
+					<h:panelGrid columns="2">
 					Código da Vigência:
-					<p:inputText id="idPautaMVA" disabled="true"
+					<p:inputText id="idGradeVigencia" disabled="true"
 							value="#{gradeTributariaBean.gradeVig.id}" />
+							
+					Descrição da Vigência:
+					<p:inputText id="descGradeVigencia" size="29"
+							value="#{gradeTributariaBean.gradeVig.descricao}" />
 		
 					Estado Origem:
-						<p:selectOneMenu id="ufOr"
+						<p:selectOneMenu id="ufOr" style="width:200px;"
 							value="#{gradeTributariaBean.gradeVig.origem}">
 							<f:selectItem itemLabel="Selecione um estado origem" />
 							<f:selectItems value="#{geralBean.estados}" var="listaEstados"
@@ -185,7 +196,7 @@
 						</p:selectOneMenu>
 					
 					Estado Destino:
-						<p:selectOneMenu id="ufDe"
+						<p:selectOneMenu id="ufDe" style="width:200px;"
 							value="#{gradeTributariaBean.gradeVig.destino}">
 							<f:selectItem itemLabel="Selecione um estado destino" />
 							<f:selectItems value="#{geralBean.estados}" var="listaEstados"
@@ -194,41 +205,42 @@
 						</p:selectOneMenu>
 					
 					Alíquota:
-						<p:selectOneMenu id="aliq"
+						<p:selectOneMenu id="aliq" style="width:200px;"
 							value="#{gradeTributariaBean.gradeVig.aliquota}">
 							<f:selectItem itemLabel="Selecione uma alíquota" />
 							<f:selectItems value="#{gradeTributariaBean.listaAliquota}"
 								var="listaAliquota" itemValue="#{listaAliquota}"
-								itemLabel="#{listaAliquota.id - listaAliquota.aliquota}" />
+								itemLabel="#{listaAliquota.idAliq} - #{listaAliquota.aliquota}" />
 						</p:selectOneMenu>
 					
 					Vigência:
-					<p:calendar id="pautavigencia"
+					<p:calendar id="pautavigencia" size="29"
 							value="#{gradeTributariaBean.gradeVig.vigencia}" effect="fold" />
-					</h:panelGrid>
 	
 					Tipo da Grade:
-					<p:selectOneMenu id="tipGrade"
-						value="#{gradeTributariaBean.tipoGrade}">/>
+					<p:selectOneMenu id="tipGrade" style="width:200px;"
+							value="#{gradeTributariaBean.tipoGrade}">/>
 						<f:selectItem itemLabel="Selecione uma Opção" />
-						<f:selectItem itemLabel="Distribuidor" itemValue="DISTRIBUIDOR" />
-						<f:selectItem itemLabel="Fabricante" itemValue="FABRICANTE" />
-						<f:selectItem itemLabel="Outros" itemValue="OUTROS" />
-					</p:selectOneMenu>
+							<f:selectItem itemLabel="Distribuidor" itemValue="DISTRIBUIDOR" />
+							<f:selectItem itemLabel="Fabricante" itemValue="FABRICANTE" />
+							<f:selectItem itemLabel="Outros" itemValue="OUTROS" />
+						</p:selectOneMenu>
 
 					Pauta:
-					<p:selectOneMenu id="pauta"
-						value="#{gradeTributariaBean.gradeVig.pauta}" style="width:350px;">
-						<f:selectItem itemLabel="Selecione uma Pauta" />
-						<f:selectItems value="#{gradeTributariaBean.listaPauta}"
-							var="pautaList" itemValue="#{pautaList}"
-							itemLabel="#{pautaList.idPauta} - #{pautaList.descricao}" />
-					</p:selectOneMenu>
-
+					<p:selectOneMenu id="pauta" style="width:200px;"
+							value="#{gradeTributariaBean.gradeVig.pauta}">
+							<f:selectItem itemLabel="Selecione uma Pauta" />
+							<f:selectItems value="#{gradeTributariaBean.listaPauta}"
+								var="pautaList" itemValue="#{pautaList}"
+								itemLabel="#{pautaList.descricao}" />
+						</p:selectOneMenu>
+					</h:panelGrid>
+					
 				</h:panelGrid>
+				
 				<p:commandButton value="Incluir"
 					actionListener="#{gradeTributariaBean.incluirGradeVig}"
-					update="listaGradeVig gridincEdi2" />
+					update="listaGradeVig, gridincEdi2" />
 			</p:dialog>
 		</div>
 	</h:form>

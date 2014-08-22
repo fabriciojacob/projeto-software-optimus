@@ -27,6 +27,8 @@ public class GradeTributariaVigencia implements Serializable {
 	@Id
 	@GeneratedValue
 	private Long id;
+	
+	private String descricao;
 
 	@ManyToOne
 	private Estado origem;
@@ -105,8 +107,6 @@ public class GradeTributariaVigencia implements Serializable {
 	public void setIo(IO io) {
 		this.io = io;
 	}
-
-	private String descricao;
 
 	public Long getId() {
 		return id;
