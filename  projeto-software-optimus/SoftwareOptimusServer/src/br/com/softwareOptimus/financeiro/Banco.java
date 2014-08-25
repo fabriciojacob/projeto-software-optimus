@@ -23,13 +23,13 @@ public class Banco implements Serializable {
 	private String nome;
 	
 	@OneToMany(mappedBy = "banco")
-	private Collection<ContaCorrente> contaCorrente;
+	private Collection<ContaBancaria> contaCorrente;
 	
-	public Collection<ContaCorrente> getContaCorrente() {
+	public Collection<ContaBancaria> getContaCorrente() {
 		return contaCorrente;
 	}
 	
-	public void setContaCorrente(Collection<ContaCorrente> contaCorrente) {
+	public void setContaCorrente(Collection<ContaBancaria> contaCorrente) {
 		this.contaCorrente = contaCorrente;
 	}
 	
