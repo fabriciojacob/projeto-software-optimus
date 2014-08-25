@@ -3,9 +3,9 @@ package br.com.softwareOptimus.fiscal.bens;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import br.com.softwareOptimus.fiscal.Aliquota;
 import br.com.softwareOptimus.fiscal.CodigoSituacaoTributaria;
@@ -16,7 +16,7 @@ import br.com.softwareOptimus.fiscal.RN.AliquotaRN;
 import br.com.softwareOptimus.fiscal.RN.CodigoSituacaoTributariaRN;
 
 @ManagedBean(name = "aliquotaBean")
-@SessionScoped
+@ViewScoped
 public class AliquotaBean {
 
 	private Aliquota aliquota = new Aliquota();
@@ -28,11 +28,17 @@ public class AliquotaBean {
 	private List<CodigoSituacaoTributaria> cstListEnt;
 	private List<CodigoSituacaoTributaria> cstListSai;
 	private List<Aliquota> aliqList = new ArrayList<Aliquota>();
+	private AliquotaRN aliqRN = new AliquotaRN();
+	private List<Aliquota> listaAliquota = new ArrayList<Aliquota>();
 	private String busca, filtro, tipCst, tipTrib;
 	private Long id;
 	private boolean sal = true, alt = true, rem = true, tipTri = true,
 			vinculo = true, chkIcm = true, chkIpi = true, chkPisCofins = true;
 
+	public AliquotaBean(){
+		setListaAliquota(this.aliqRN.listaAliqIcms());
+	}
+	
 	public void novo() {
 		this.sal = false;
 		this.vinculo = false;
@@ -293,6 +299,14 @@ public class AliquotaBean {
 		this.cstListSai = new ArrayList<CodigoSituacaoTributaria>();
 		this.aliqList = new ArrayList<Aliquota>();
 		this.colCst = new ArrayList<CodigoSituacaoTributaria>();
+	}
+
+	public List<Aliquota> getListaAliquota() {
+		return listaAliquota;
+	}
+
+	public void setListaAliquota(List<Aliquota> listaAliquota) {
+		this.listaAliquota = listaAliquota;
 	}
 
 	public boolean isVinculo() {

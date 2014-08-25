@@ -18,7 +18,8 @@
 				actionListener="#{gradeTributariaBean.novo}" ajax="grid" />
 
 			<p:commandButton value="Salvar" disabled="#{gradeTributariaBean.sal}"
-				actionListener="#{gradeTributariaBean.salvar}" ajax="grid" update="dialog2" />
+				actionListener="#{gradeTributariaBean.salvar}" ajax="grid"
+				update="dialog2" />
 
 			<p:commandButton value="Alterar"
 				disabled="#{gradeTributariaBean.alt}"
@@ -49,8 +50,9 @@
 
 			</h:panelGrid>
 
-			<p:commandButton id="vincGrade" value="Vigência Grade" type="button" update="gridincEdi2"
-				disabled="#{gradeTributariaBean.vig}" onclick="PF('dlg2').show();" />
+			<p:commandButton id="vincGrade" value="Vigência Grade" type="button"
+				update="gridincEdi2" disabled="#{gradeTributariaBean.vig}"
+				onclick="PF('dlg2').show();" />
 
 			<h:panelGrid id="gridGradeVig" columns="1">
 				<p:blockUI block="gridGradeVig" trigger="vincGrade" />
@@ -165,10 +167,10 @@
 
 			<p:dialog id="dialog2" header="Inclusão e Edição da Vigência"
 				widgetVar="dlg2" modal="true" height="320" width="400">
-				
+
 				<h:panelGrid id="gridincEdi2" columns="1"
 					columnClasses="label, value">
-					
+
 					<h:panelGrid columns="4" columnClasses="label, value">
 						<p:selectOneRadio id="entSai"
 							value="#{gradeTributariaBean.tipoEntSai}">
@@ -176,7 +178,7 @@
 							<f:selectItem itemLabel="Saida" itemValue="SAIDA" />
 						</p:selectOneRadio>
 					</h:panelGrid>
-					
+
 					<h:panelGrid columns="2">
 					Código da Vigência:
 					<p:inputText id="idGradeVigencia" disabled="true"
@@ -208,7 +210,7 @@
 						<p:selectOneMenu id="aliq" style="width:200px;"
 							value="#{gradeTributariaBean.gradeVig.aliquota}">
 							<f:selectItem itemLabel="Selecione uma alíquota" />
-							<f:selectItems value="#{gradeTributariaBean.listaAliquota}"
+							<f:selectItems value="#{aliquotaBean.listaAliquota}"
 								var="listaAliquota" itemValue="#{listaAliquota}"
 								itemLabel="#{listaAliquota.idAliq} - #{listaAliquota.aliquota}" />
 						</p:selectOneMenu>
@@ -230,14 +232,22 @@
 					<p:selectOneMenu id="pauta" style="width:200px;"
 							value="#{gradeTributariaBean.gradeVig.pauta}">
 							<f:selectItem itemLabel="Selecione uma Pauta" />
-							<f:selectItems value="#{gradeTributariaBean.listaPauta}"
-								var="pautaList" itemValue="#{pautaList}"
-								itemLabel="#{pautaList.descricao}" />
+							<f:selectItems value="#{pautaBean.listaPauta}" var="pautaList"
+								itemValue="#{pautaList}"
+								itemLabel="#{pautaList.idPauta} - #{pautaList.descricao}" />
 						</p:selectOneMenu>
 					</h:panelGrid>
-					
+
 				</h:panelGrid>
-				
+
+				<p:tooltip id="toolTipAliq" for="aliq"
+					value="Exibição 'Código' - 'Alíquota'" showEffect="clip"
+					hideEffect="explode" />
+
+				<p:tooltip id="toolTipPauta" for="pauta"
+					value="Exibição 'Código' - 'Descrição da Pauta'" showEffect="clip"
+					hideEffect="explode" />
+
 				<p:commandButton value="Incluir"
 					actionListener="#{gradeTributariaBean.incluirGradeVig}"
 					update="listaGradeVig, gridincEdi2" />
