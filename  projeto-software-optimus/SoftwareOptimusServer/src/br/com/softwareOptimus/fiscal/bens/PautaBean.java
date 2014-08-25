@@ -20,7 +20,12 @@ public class PautaBean {
 	private String busca, filtro;
 	private List<PautaMVA> listaPautaMVA = new ArrayList<PautaMVA>();
 	private List<Pauta> listaPauta = new ArrayList<Pauta>();
+	private PautaRN pautaRN = new PautaRN();
 	private Long id, idPautaMVA;
+	
+	public PautaBean(){
+		setListaPauta(this.pautaRN.listar());
+	}
 
 	public void novo() {
 		this.sal = false;
