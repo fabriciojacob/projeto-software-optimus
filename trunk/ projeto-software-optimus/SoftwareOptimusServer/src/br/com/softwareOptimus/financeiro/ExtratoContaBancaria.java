@@ -2,18 +2,16 @@ package br.com.softwareOptimus.financeiro;
 
 import java.io.Serializable;
 import java.util.Collection;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="tbExtratoConta")
-public class ExtratoContaCorrente implements Serializable {
+public class ExtratoContaBancaria implements Serializable {
 	
 	/**
 	 * 
@@ -25,7 +23,7 @@ public class ExtratoContaCorrente implements Serializable {
 	private Long idExtratoC;
 	
 	@ManyToOne
-	private ContaCorrente contaCorrente;
+	private ContaBancaria contaBancaria;
 	
 	@ManyToMany
 	private Collection<Titulo> titulo;
@@ -52,14 +50,6 @@ public class ExtratoContaCorrente implements Serializable {
 
 	public void setIdExtratoC(Long idExtratoC) {
 		this.idExtratoC = idExtratoC;
-	}
-
-	public ContaCorrente getContaCorrente() {
-		return contaCorrente;
-	}
-
-	public void setContaCorrente(ContaCorrente contaCorrente) {
-		this.contaCorrente = contaCorrente;
 	}
 
 	public String getDescricao() {
@@ -93,6 +83,15 @@ public class ExtratoContaCorrente implements Serializable {
 	public void setSaldo(Double saldo) {
 		this.saldo = saldo;
 	}
+	
+
+	public ContaBancaria getContaBancaria() {
+		return contaBancaria;
+	}
+
+	public void setContaBancaria(ContaBancaria contaBancaria) {
+		this.contaBancaria = contaBancaria;
+	}
 
 	@Override
 	public int hashCode() {
@@ -111,7 +110,7 @@ public class ExtratoContaCorrente implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ExtratoContaCorrente other = (ExtratoContaCorrente) obj;
+		ExtratoContaBancaria other = (ExtratoContaBancaria) obj;
 		if (idExtratoC == null) {
 			if (other.idExtratoC != null)
 				return false;

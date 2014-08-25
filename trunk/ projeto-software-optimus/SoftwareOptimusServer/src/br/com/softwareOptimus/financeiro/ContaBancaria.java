@@ -2,7 +2,6 @@ package br.com.softwareOptimus.financeiro;
 
 import java.io.Serializable;
 import java.util.Collection;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -11,8 +10,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="tbContaCorrente")
-public class ContaCorrente implements Serializable {
+@Table(name="tbContaBancaria")
+public class ContaBancaria implements Serializable {
 
 	/**
 	 * 
@@ -21,7 +20,7 @@ public class ContaCorrente implements Serializable {
 	
 	@Id
 	@GeneratedValue
-	private Long idContaCorrente;
+	private Long idContaBancaria;
 	
 	@ManyToOne
 	private Banco banco;
@@ -30,23 +29,15 @@ public class ContaCorrente implements Serializable {
 	
 	private Integer conta;
 	
-	@OneToMany(mappedBy = "contaCorrente")
-	private Collection<ExtratoContaCorrente> extrato;
+	@OneToMany(mappedBy = "contaBancaria")
+	private Collection<ExtratoContaBancaria> extrato;
 	
-	public Collection<ExtratoContaCorrente> getExtrato() {
+	public Collection<ExtratoContaBancaria> getExtrato() {
 		return extrato;
 	}
 	
-	public void setExtrato(Collection<ExtratoContaCorrente> extrato) {
+	public void setExtrato(Collection<ExtratoContaBancaria> extrato) {
 		this.extrato = extrato;
-	}
-
-	public Long getIdContaCorrente() {
-		return idContaCorrente;
-	}
-
-	public void setIdContaCorrente(Long idContaCorrente) {
-		this.idContaCorrente = idContaCorrente;
 	}
 
 	public Banco getBanco() {
@@ -73,12 +64,20 @@ public class ContaCorrente implements Serializable {
 		this.conta = conta;
 	}
 
+	public Long getIdContaBancaria() {
+		return idContaBancaria;
+	}
+
+	public void setIdContaBancaria(Long idContaBancaria) {
+		this.idContaBancaria = idContaBancaria;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
-				+ ((idContaCorrente == null) ? 0 : idContaCorrente.hashCode());
+				+ ((idContaBancaria == null) ? 0 : idContaBancaria.hashCode());
 		return result;
 	}
 
@@ -90,11 +89,11 @@ public class ContaCorrente implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ContaCorrente other = (ContaCorrente) obj;
-		if (idContaCorrente == null) {
-			if (other.idContaCorrente != null)
+		ContaBancaria other = (ContaBancaria) obj;
+		if (idContaBancaria == null) {
+			if (other.idContaBancaria != null)
 				return false;
-		} else if (!idContaCorrente.equals(other.idContaCorrente))
+		} else if (!idContaBancaria.equals(other.idContaBancaria))
 			return false;
 		return true;
 	}
