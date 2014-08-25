@@ -27,6 +27,8 @@ public class Conta implements Serializable {
 	
 	private String descricao;
 	
+	private TipoContaBancaria tipoContaBancaria;
+	
 	@OneToMany(mappedBy = "conta")
 	private Collection<Titulo> titulos;
 	
@@ -89,6 +91,14 @@ public class Conta implements Serializable {
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+	
+	public TipoContaBancaria getTipoContaBancaria() {
+		return tipoContaBancaria;
+	}
+	
+	public void setTipoContaBancaria(TipoContaBancaria tipoContaBancaria) {
+		this.tipoContaBancaria = tipoContaBancaria;
 	}
 
 	@Override
