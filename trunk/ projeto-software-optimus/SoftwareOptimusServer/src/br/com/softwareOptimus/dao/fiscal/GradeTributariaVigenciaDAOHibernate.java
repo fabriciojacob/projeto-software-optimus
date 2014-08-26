@@ -46,10 +46,10 @@ public class GradeTributariaVigenciaDAOHibernate implements
 
 	@Override
 	public List<GradeTributariaVigencia> listaVig(GradeTributaria grade) {
-		String jpql = "Select g from GradeTributaria g where g.grade = :parGrade";
+		String jpql = "Select g from GradeTributariaVigencia g where g.grade = :grade";
 		TypedQuery<GradeTributariaVigencia> consulta = this.session.createQuery(jpql,
 				GradeTributariaVigencia.class);
-		consulta.setParameter("parPauta", grade);
+		consulta.setParameter("grade", grade);
 		return consulta.getResultList();
 	}
 
