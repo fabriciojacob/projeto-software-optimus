@@ -11,7 +11,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -35,17 +34,6 @@ public class Aliquota implements Serializable, Converter{
 	private Collection<CodigoSituacaoTributaria> cst;
 	
 	private TipoTrib tipo;
-	
-	@OneToOne(mappedBy = "aliquota")
-	private GradeTributariaVigencia grade;
-	
-	public GradeTributariaVigencia getGrade() {
-		return grade;
-	}
-	
-	public void setGrade(GradeTributariaVigencia grade) {
-		this.grade = grade;
-	}
 	
 	public TipoTrib getTipo() {
 		return tipo;

@@ -29,12 +29,12 @@ public class GradeTributariaRN {
 	public Integer validaCampoNuloVig(GradeTributariaVigencia gradeVig) {
 		Integer retorno = 0;
 		if (gradeVig.getDescricao().equals("")
-				|| gradeVig.getAliquota().equals("")
-				|| gradeVig.getDestino().equals("")
-				|| gradeVig.getOrigem().equals("")
-				|| gradeVig.getIo().equals("")
-				|| gradeVig.getTipoGrade().equals("")
-				|| gradeVig.getVigencia().equals("")) {
+				|| gradeVig.getAliquota() == null
+				|| gradeVig.getDestino() == null
+				|| gradeVig.getOrigem() == null
+				|| gradeVig.getIo() ==  null
+				|| gradeVig.getTipoGrade() == null
+				|| gradeVig.getVigencia() == null) {
 			retorno = 1;
 		}
 		return retorno;

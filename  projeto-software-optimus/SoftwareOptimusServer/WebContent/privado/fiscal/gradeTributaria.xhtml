@@ -87,7 +87,7 @@
 					</p:column>
 
 					<p:column headerText="Ent/Sai">
-						<h:outputText value="#{listaGradeVig}" />
+						<h:outputText value="#{listaGradeVig.io}" />
 					</p:column>
 
 					<p:column headerText="Tipo da Grade">
@@ -210,9 +210,9 @@
 						<p:selectOneMenu id="aliq" style="width:200px;"
 							value="#{gradeTributariaBean.gradeVig.aliquota}">
 							<f:selectItem itemLabel="Selecione uma alíquota" />
-							<f:selectItems value="#{aliquotaBean.listaAliquota}"
-								var="listaAliquota" itemValue="#{listaAliquota}"
-								itemLabel="#{listaAliquota.idAliq} - #{listaAliquota.aliquota}" />
+							<f:selectItems value="#{gradeTributariaBean.listaAliquota}"
+								var="listAliquota" itemValue="#{listAliquota}"
+								itemLabel="#{listAliquota.idAliq} - #{listAliquota.aliquota}" />
 						</p:selectOneMenu>
 					
 					Vigência:
@@ -232,7 +232,7 @@
 					<p:selectOneMenu id="pauta" style="width:200px;"
 							value="#{gradeTributariaBean.gradeVig.pauta}">
 							<f:selectItem itemLabel="Selecione uma Pauta" />
-							<f:selectItems value="#{pautaBean.listaPauta}" var="pautaList"
+							<f:selectItems value="#{gradeTributariaBean.listaPauta}" var="pautaList"
 								itemValue="#{pautaList}"
 								itemLabel="#{pautaList.idPauta} - #{pautaList.descricao}" />
 						</p:selectOneMenu>
