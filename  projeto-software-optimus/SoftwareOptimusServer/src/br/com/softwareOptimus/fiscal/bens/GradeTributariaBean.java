@@ -211,6 +211,8 @@ public class GradeTributariaBean {
 						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
 								"Vigência salva com sucesso"));
 				this.gradeVig = new GradeTributariaVigencia();
+				this.tipoEntSai = new String();
+				this.tipoGrade = new String();
 			} else {
 				FacesContext.getCurrentInstance().addMessage(
 						null,
