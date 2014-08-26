@@ -29,8 +29,20 @@ public class ContaBancaria implements Serializable {
 	
 	private Integer conta;
 	
+	private String titular;
+	
 	@OneToMany(mappedBy = "contaBancaria")
 	private Collection<ExtratoContaBancaria> extrato;
+	
+	private TipoContaBancaria tipoContaBancaria;
+	
+	public String getTitular() {
+		return titular;
+	}
+	
+	public void setTitular(String titular) {
+		this.titular = titular;
+	}
 	
 	public Collection<ExtratoContaBancaria> getExtrato() {
 		return extrato;
@@ -70,6 +82,14 @@ public class ContaBancaria implements Serializable {
 
 	public void setIdContaBancaria(Long idContaBancaria) {
 		this.idContaBancaria = idContaBancaria;
+	}
+
+	public TipoContaBancaria getTipoContaBancaria() {
+		return tipoContaBancaria;
+	}
+
+	public void setTipoContaBancaria(TipoContaBancaria tipoContaBancaria) {
+		this.tipoContaBancaria = tipoContaBancaria;
 	}
 
 	@Override

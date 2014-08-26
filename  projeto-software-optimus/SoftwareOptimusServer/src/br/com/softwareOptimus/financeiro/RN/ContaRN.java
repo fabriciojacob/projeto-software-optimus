@@ -1,8 +1,8 @@
-package br.com.softwareOptimus.RN.financeiro;
+package br.com.softwareOptimus.financeiro.RN;
 
 import java.util.List;
 
-import br.com.softwareOptimus.com.dao.financeiro.ContaDAO;
+import br.com.softwareOptimus.com.financeiro.dao.ContaDAO;
 import br.com.softwareOptimus.financeiro.Conta;
 import br.com.softwareOptimus.financeiro.ContaFilha;
 import br.com.softwareOptimus.util.DAOFactory;

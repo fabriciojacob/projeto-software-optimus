@@ -1,4 +1,4 @@
-package br.com.softwareOptimus.com.dao.financeiro;
+package br.com.softwareOptimus.com.financeiro.dao;
 
 import java.io.IOException;
 import java.sql.SQLException;

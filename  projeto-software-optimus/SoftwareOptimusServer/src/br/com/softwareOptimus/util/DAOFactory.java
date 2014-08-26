@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.sql.SQLException;
 import javax.persistence.EntityManager;
 
-import br.com.softwareOptimus.com.dao.financeiro.ContaDAO;
-import br.com.softwareOptimus.com.dao.financeiro.ContaDAOHibernate;
+import br.com.softwareOptimus.com.financeiro.dao.ContaBancariaDAO;
+import br.com.softwareOptimus.com.financeiro.dao.ContaBancariaDAOHibernate;
+import br.com.softwareOptimus.com.financeiro.dao.ContaDAO;
+import br.com.softwareOptimus.com.financeiro.dao.ContaDAOHibernate;
 import br.com.softwareOptimus.dao.fiscal.AliquotaDAO;
 import br.com.softwareOptimus.dao.fiscal.AliquotaDAOHibernate;
 import br.com.softwareOptimus.dao.fiscal.CodigoSituacaoTributariaDAO;
@@ -46,6 +48,18 @@ import br.com.softwareOptimus.entidades.dao.usuario.UsuarioDAOHibernate;
 public class DAOFactory {
 
 	private static EntityManager session = JpaUtil.getEntityManager();
+	
+	public static ContaBancariaDAO criaContaBancDAO(){
+		ContaBancariaDAOHibernate contaDAO = new ContaBancariaDAOHibernate();
+		contaDAO.setSession(session);
+		try{
+			contaDAO.begin();
+		}catch (IOException | SQLException e){
+			e.printStackTrace();
+		}
+		
+		return contaDAO;
+	}
 
 	public static ContaDAO criaContaDAO() {
 		ContaDAOHibernate contaDAO = new ContaDAOHibernate();

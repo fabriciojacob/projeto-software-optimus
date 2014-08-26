@@ -1,4 +1,4 @@
-package br.com.softwareOptimus.bens.financeiro;
+package br.com.softwareOptimus.financeiro.bens;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,9 +7,9 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import br.com.softwareOptimus.RN.financeiro.ContaRN;
 import br.com.softwareOptimus.financeiro.Conta;
 import br.com.softwareOptimus.financeiro.ContaFilha;
+import br.com.softwareOptimus.financeiro.RN.ContaRN;
 
 @ManagedBean(name = "contaBean")
 @ViewScoped
