@@ -17,15 +17,15 @@
 			<p:commandButton value="Novo"
 				actionListener="#{figuraFiscalBean.novo}" ajax="grid" />
 
-			<p:commandButton value="Salvar" disabled="#{gradeTributariaBean.sal}"
+			<p:commandButton value="Salvar" disabled="#{figuraFiscalBean.sal}"
 				actionListener="#{figuraFiscalBean.salvar}" ajax="grid" />
 
 			<p:commandButton value="Alterar"
-				disabled="#{gradeTributariaBean.alt}"
+				disabled="#{figuraFiscalBean.alt}"
 				actionListener="#{figuraFiscalBean.alterar}" ajax="grid" />
 
 			<p:commandButton value="Excluir"
-				disabled="#{gradeTributariaBean.rem}"
+				disabled="#{figuraFiscalBean.rem}"
 				actionListener="#{figuraFiscalBean.remover}" ajax="grid" />
 
 			<p:commandButton id="consulta" value="Consultar" type="button"
@@ -47,119 +47,6 @@
 			</h:panelGrid>
 			<p:commandButton id="diGrade" value="Grade" type="button"
 				onclick="PF('dlg2').show();" />
-
-			<p:dialog header="Grade Tributária" widgetVar="dlg2" modal="true"
-				height="200" width="330">
-
-				<h:panelGrid columns="2" columnClasses="label, value">
-					Codigo da Grade:
-					<p:inputText id="idGrade" disabled="true"
-						value="#{gradeTributariaBean.grade.id}" />
-
-					Estado Origem:
-					<p:selectOneMenu id="ufOr"
-						value="#{gradeTributariaBean.grade.origem}" style="width:200px;">
-						<f:selectItem itemLabel="Selecione um Estado origem" />
-						<f:selectItems value="#{geralBean.estados}" var="listaEstados"
-							itemValue="#{listaEstados}" itemLabel="#{listaEstados.descricao}" />
-					</p:selectOneMenu>
-				
-					Estado Destino:
-					<p:selectOneMenu id="ufDe"
-						value="#{gradeTributariaBean.grade.destino}" style="width:200px;">
-						<f:selectItem itemLabel="Selecione um Estado Destino" />
-						<f:selectItems value="#{geralBean.estados}" var="listaEstados"
-							itemValue="#{listaEstados}" itemLabel="#{listaEstados.descricao}" />
-					</p:selectOneMenu>
-
-					Pauta:
-					<p:selectOneMenu id="pauta"
-						value="#{gradeTributariaBean.grade.pautaMva}" style="width:200px;">
-						<f:selectItem itemLabel="Selecione uma Pauta" />
-						<f:selectItems value="#{gradeTributariaBean.listaPauta}"
-							var="pautaList" itemValue="#{pautaList}"
-							itemLabel="#{pautaList.idPautaMVA} - #{pautaList.descricao}" />
-					</p:selectOneMenu>
-
-					Alíquota:
-					<p:selectOneMenu id="aliquota"
-						value="#{gradeTributariaBean.grade.aliquota}" style="width:200px;">
-						<f:selectItem itemLabel="Selecione uma Alíquota" />
-						<f:selectItems value="#{gradeTributariaBean.listaAliquota}"
-							var="pautaList" itemValue="#{pautaList}"
-							itemLabel="#{pautaList.idAliq} - #{pautaList.aliquota}" />
-					</p:selectOneMenu>
-
-					Tipo Grade
-					<p:selectOneMenu id="tipoGrade"
-						value="#{figuraFiscalBean.tipoGrade}" style="width:200px;">
-						<f:selectItem itemLabel="Selecione uma Opção" />
-						<f:selectItem itemLabel="Dristribuidor" itemValue="DISTRIBUIDOR" />
-						<f:selectItem itemLabel="Fabricante" itemValue="FABRICANTE" />
-						<f:selectItem itemLabel="Outros" itemValue="OUTROS" />
-					</p:selectOneMenu>
-
-					<p:commandButton value="Incluir"
-						actionListener="#{figuraFiscalBean.incluirGrade}"
-						update="listaGrade" />
-				</h:panelGrid>
-			</p:dialog>
-
-			<h:panelGrid id="gridGrade" columns="1">
-				<p:blockUI block="gridGrade" trigger="diGrade" />
-				<p:dataTable id="listaGrade" value="#{figuraFiscalBean.listaGrade}"
-					var="listGrade" paginator="true" rows="6">
-
-					<p:column headerText="Código da Grade">
-						<h:outputText value="#{listGrade.id}" />
-					</p:column>
-
-					<p:column headerText="Estado Origem">
-						<h:outputText value="#{listGrade.origem}" />
-					</p:column>
-
-					<p:column headerText="Estado Destino">
-						<h:outputText value="#{listGrade.destino}" />
-					</p:column>
-
-					<p:column headerText="Alíquota">
-						<h:outputText value="#{listGrade.aliquota}" />
-					</p:column>
-
-					<p:column headerText="Ent/Sai">
-						<h:outputText value="#{listGrade.io}" />
-					</p:column>
-
-					<p:column headerText="Tipo da Grade">
-						<h:outputText value="#{listGrade.tipoGrade}" />
-					</p:column>
-
-					<p:column headerText="Pauta">
-						<h:outputLabel value="#{listGrade.pauta}" />
-					</p:column>
-
-					<p:column headerText="Editar">
-						<p:commandLink id="linkEditaGrade" value="Editar" ajax="dialog"
-							action="#{figuraFiscalBean.editGrade}" update="listaGrade">
-							<f:setPropertyActionListener value="#{listaGrade.id}"
-								target="#{figuraFiscalBean.id}" />
-						</p:commandLink>
-					</p:column>
-
-					<p:column headerText="Excluir">
-						<p:commandLink id="linkExcluiGrade" value="Excluir" ajax="dialog"
-							action="#{figuraFiscalBean.excluirGrade}" update="listaGrade">
-							<f:setPropertyActionListener value="#{listaGrade.id}"
-								target="#{figuraFiscalBean.id}" />
-						</p:commandLink>
-					</p:column>
-
-				</p:dataTable>
-				<p:blockUI block="listaGrade" trigger="listaGrade">
-        				LOADING<br />
-					<p:graphicImage name="ajaxloader.gif" />
-				</p:blockUI>
-			</h:panelGrid>
 
 			<p:dialog id="dialog" header="Consulta" widgetVar="dlg3" modal="true"
 				height="300" width="650">

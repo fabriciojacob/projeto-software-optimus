@@ -42,24 +42,6 @@ public class GradeTributariaDAOHibernate implements GradeTributariaDAO {
 		this.session.close();
 	}
 
-/*	@Override
-	public void altGrade(GradeTributariaVigencia grade) {
-		this.session.merge(grade);
-		this.transaction.commit();
-	}
-
-	@Override
-	public void salva(GradeTributariaVigencia grade) {
-		this.session.persist(grade);
-		this.transaction.commit();
-	}
-
-	@Override
-	public void remover(GradeTributariaVigencia grade) {
-		this.session.remove(grade);
-		this.transaction.commit();
-	}*/
-
 	@Override
 	public void salvar(GradeTributaria grade) {
 		this.session.persist(grade);

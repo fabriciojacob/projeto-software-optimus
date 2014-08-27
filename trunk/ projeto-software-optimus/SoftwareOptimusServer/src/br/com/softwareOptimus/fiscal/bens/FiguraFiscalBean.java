@@ -2,23 +2,18 @@ package br.com.softwareOptimus.fiscal.bens;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-
 import br.com.softwareOptimus.fiscal.FiguraFiscal;
-import br.com.softwareOptimus.fiscal.GradeTributariaVigencia;
 
 @ManagedBean(name = "figuraFiscalBean")
 @ViewScoped
 public class FiguraFiscalBean {
 
 	private FiguraFiscal figura = new FiguraFiscal();
-	private GradeTributariaVigencia grade = new GradeTributariaVigencia();
 	private List<FiguraFiscal> listaFigura = new ArrayList<FiguraFiscal>();
-	private List<GradeTributariaVigencia> listaGrade = new ArrayList<GradeTributariaVigencia>();
 	private Boolean sal = true, alt = true, rem = true;
-	private String busca, filtro, tipoGrade;
+	private String busca, filtro;
 	private Long id;
 	
 	public FiguraFiscalBean(){
@@ -134,29 +129,5 @@ public class FiguraFiscalBean {
 
 	public void setListaFigura(List<FiguraFiscal> listaFigura) {
 		this.listaFigura = listaFigura;
-	}
-
-	public List<GradeTributariaVigencia> getListaGrade() {
-		return listaGrade;
-	}
-
-	public void setListaGrade(List<GradeTributariaVigencia> listaGrade) {
-		this.listaGrade = listaGrade;
-	}
-
-	public GradeTributariaVigencia getGrade() {
-		return grade;
-	}
-
-	public void setGrade(GradeTributariaVigencia grade) {
-		this.grade = grade;
-	}
-
-	public String getTipoGrade() {
-		return tipoGrade;
-	}
-
-	public void setTipoGrade(String tipoGrade) {
-		this.tipoGrade = tipoGrade;
 	}
 }
