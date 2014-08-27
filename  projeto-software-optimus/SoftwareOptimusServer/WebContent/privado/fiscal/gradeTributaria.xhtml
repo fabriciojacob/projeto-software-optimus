@@ -77,7 +77,7 @@
 					</p:column>
 
 					<p:column headerText="Alíquota">
-						<h:outputText value="#{listaGradeVig.aliquota}" />
+						<h:outputText value="#{listaGradeVig.aliquota.aliquota}" />
 					</p:column>
 
 					<p:column headerText="Vigência">
@@ -95,7 +95,7 @@
 					</p:column>
 
 					<p:column headerText="Pauta">
-						<h:outputLabel value="#{listaGradeVig.pauta}" />
+						<h:outputLabel value="#{listaGradeVig.pauta.descricao}" />
 					</p:column>
 
 					<p:column headerText="Excluir">
@@ -140,10 +140,10 @@
 				<h:panelGrid id="gridData" columns="1" columnClasses="label, value">
 					<p:blockUI block="gridData" trigger="consulta" />
 					<p:dataTable id="data" value="#{gradeTributariaBean.listaGrade}"
-						paginator="true" rows="6" var="grade" rowKey="pauta.idGradeTrib">
+						paginator="true" rows="6" var="grade" rowKey="grade.idGradeTrib">
 
 						<p:column headerText="Código da Grade">
-							<h:outputText value="#{grade.idGradTrib}" />
+							<h:outputText value="#{grade.idGradeTrib}" />
 						</p:column>
 
 						<p:column headerText="Descrição">
@@ -151,7 +151,7 @@
 						</p:column>
 
 						<p:column headerText="Selecionar">
-							<p:commandLink id="link" value="Editar" ajax="grid, dialog1"
+							<p:commandLink id="link" value="Editar" ajax="grid, dialog1, gridGradeVig"
 								action="#{gradeTributariaBean.editGrade}">
 								<f:setPropertyActionListener value="#{grade.idGradeTrib}"
 									target="#{gradeTributariaBean.id}" />

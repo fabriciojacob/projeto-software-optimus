@@ -41,6 +41,7 @@ public class GradeTributariaBean {
 		this.sal = false;
 		this.alt = true;
 		this.rem = true;
+		this.vig = true;
 		setListaAliquota(this.aliqRN.listaAliqIcms());
 		setListaPauta(this.pautaRN.listar());
 		limpar();
@@ -89,6 +90,7 @@ public class GradeTributariaBean {
 								"Grade alterada com sucesso"));
 				this.alt = true;
 				this.rem = true;
+				this.vig = true;
 				limpar();
 			} else {
 				FacesContext.getCurrentInstance().addMessage(
@@ -116,6 +118,7 @@ public class GradeTributariaBean {
 							"Grade removida com sucesso"));
 			this.alt = true;
 			this.rem = true;
+			this.vig = true;
 			limpar();
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
