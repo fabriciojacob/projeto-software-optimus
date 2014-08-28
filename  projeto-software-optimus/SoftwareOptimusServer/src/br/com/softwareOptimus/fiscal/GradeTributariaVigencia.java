@@ -29,7 +29,7 @@ public class GradeTributariaVigencia implements Serializable {
 	
 	private String descricao;
 
-	@ManyToOne
+	@ManyToOne 
 	private Estado origem;
 
 	@ManyToOne

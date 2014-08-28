@@ -1,11 +1,17 @@
 package br.com.softwareOptimus.fiscal.RN;
 
+import java.util.Date;
 import java.util.List;
 
 import br.com.softwareOptimus.dao.fiscal.GradeTributariaDAO;
 import br.com.softwareOptimus.dao.fiscal.GradeTributariaVigenciaDAO;
+import br.com.softwareOptimus.entidades.Estado;
+import br.com.softwareOptimus.entidades.TipoPessoaJuridica;
+import br.com.softwareOptimus.fiscal.Aliquota;
 import br.com.softwareOptimus.fiscal.GradeTributaria;
 import br.com.softwareOptimus.fiscal.GradeTributariaVigencia;
+import br.com.softwareOptimus.fiscal.IO;
+import br.com.softwareOptimus.fiscal.Pauta;
 import br.com.softwareOptimus.util.DAOFactory;
 
 public class GradeTributariaRN {
@@ -31,8 +37,7 @@ public class GradeTributariaRN {
 		if (gradeVig.getDescricao().equals("")
 				|| gradeVig.getAliquota() == null
 				|| gradeVig.getDestino() == null
-				|| gradeVig.getOrigem() == null
-				|| gradeVig.getIo() ==  null
+				|| gradeVig.getOrigem() == null || gradeVig.getIo() == null
 				|| gradeVig.getTipoGrade() == null
 				|| gradeVig.getVigencia() == null) {
 			retorno = 1;
@@ -78,5 +83,12 @@ public class GradeTributariaRN {
 
 	public void salvaVig(GradeTributariaVigencia gradeVig) {
 		this.gradeTribVigDAO.salvaVig(gradeVig);
+	}
+
+	public List<GradeTributariaVigencia> validaInclusao(Estado origem, Estado destino,
+			Aliquota aliquota, IO io, TipoPessoaJuridica tipoGrade,
+			Date vigencia, Pauta pauta) {
+		return this.gradeTribVigDAO.validaInclusao(origem, destino, aliquota, io, tipoGrade,
+				vigencia, pauta);
 	}
 }

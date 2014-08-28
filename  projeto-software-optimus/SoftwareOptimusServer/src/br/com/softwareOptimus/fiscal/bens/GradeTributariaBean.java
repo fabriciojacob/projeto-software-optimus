@@ -205,22 +205,40 @@ public class GradeTributariaBean {
 					.toString())) {
 				this.gradeVig.setTipoGrade(TipoPessoaJuridica.OUTROS);
 			}
-			Integer retorno = gradeRN.validaCampoNuloVig(this.gradeVig);
-			if (retorno == 0) {
-				gradeRN.salvaVig(this.gradeVig);
-				listaVigencia();
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-								"Vigência salva com sucesso"));
-				this.gradeVig = new GradeTributariaVigencia();
-				this.tipoEntSai = new String();
-				this.tipoGrade = new String();
+			List<GradeTributariaVigencia> gradeValida = gradeRN.validaInclusao(
+					this.gradeVig.getOrigem(), this.gradeVig.getDestino(),
+					this.gradeVig.getAliquota(), this.gradeVig.getIo(),
+					this.gradeVig.getTipoGrade(), this.gradeVig.getVigencia(),
+					this.gradeVig.getPauta());
+			if (gradeValida.size() == 0) {
+				Integer retorno = gradeRN.validaCampoNuloVig(this.gradeVig);
+				if (retorno == 0) {
+					gradeRN.salvaVig(this.gradeVig);
+					listaVigencia();
+					FacesContext.getCurrentInstance().addMessage(
+							null,
+							new FacesMessage(FacesMessage.SEVERITY_INFO,
+									"Info", "Vigência salva com sucesso"));
+					this.gradeVig = new GradeTributariaVigencia();
+					this.tipoEntSai = new String();
+					this.tipoGrade = new String();
+				} else {
+					FacesContext.getCurrentInstance().addMessage(
+							null,
+							new FacesMessage(FacesMessage.SEVERITY_ERROR,
+									"Info",
+									"Existem campos nulos no formulário"));
+				}
 			} else {
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-								"Existem campos nulos no formulário"));
+								"Já existe uma Grade com estas caracteristicas Código: "
+										+ gradeValida.get(0).getGrade()
+												.getIdGradeTrib()
+										+ " Descrição: "
+										+ gradeValida.get(0).getGrade()
+												.getDescricao()));
 			}
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
