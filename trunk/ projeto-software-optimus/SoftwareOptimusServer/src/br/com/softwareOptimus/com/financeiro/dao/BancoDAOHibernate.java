@@ -17,7 +17,7 @@ public class BancoDAOHibernate implements BancoDAO{
 
 	@Override
 	public List<Banco> pesquisa() throws Exception {
-		String jpql = "Select c from Banco";
+		String jpql = "Select c from Banco c";
 		TypedQuery<Banco> consulta = this.session.createQuery(jpql,Banco.class);
 		return consulta.getResultList();
 	}
