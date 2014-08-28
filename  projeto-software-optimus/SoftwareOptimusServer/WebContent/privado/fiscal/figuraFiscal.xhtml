@@ -20,16 +20,14 @@
 			<p:commandButton value="Salvar" disabled="#{figuraFiscalBean.sal}"
 				actionListener="#{figuraFiscalBean.salvar}" ajax="grid" />
 
-			<p:commandButton value="Alterar"
-				disabled="#{figuraFiscalBean.alt}"
+			<p:commandButton value="Alterar" disabled="#{figuraFiscalBean.alt}"
 				actionListener="#{figuraFiscalBean.alterar}" ajax="grid" />
 
-			<p:commandButton value="Excluir"
-				disabled="#{figuraFiscalBean.rem}"
+			<p:commandButton value="Excluir" disabled="#{figuraFiscalBean.rem}"
 				actionListener="#{figuraFiscalBean.remover}" ajax="grid" />
 
 			<p:commandButton id="consulta" value="Consultar" type="button"
-				ajax="dialog, grid" onclick="PF('dlg3').show();"
+				ajax="dialog3, grid" onclick="PF('dlg3').show();"
 				actionListener="#{figuraFiscalBean.cancelar}" />
 
 			<p:commandButton value="Cancelar"
@@ -45,10 +43,39 @@
 					Descrição da Figura:
 					<p:inputText id="desc" value="#{figuraFiscalBean.figura.descricao}" />
 			</h:panelGrid>
-			<p:commandButton id="diGrade" value="Grade" type="button"
-				onclick="PF('dlg2').show();" />
 
-			<p:dialog id="dialog" header="Consulta" widgetVar="dlg3" modal="true"
+			<p:commandButton id="diGrade" value="Vincular Grade" type="button"
+				disabled="#{figuraFiscalBean.vincGrade}" onclick=" PF('dlg2').show();" />
+
+			<h:panelGrid id="gridGrade" columns="1">
+				<p:blockUI block="gridGrade" trigger="gridGrade" />
+				<p:dataTable id="listaGrade"
+					value="#{figuraFiscalBean.listaGrade}" var="listaGrade"
+					paginator="true" rows="8">
+
+					<p:column headerText="Código da Grade">
+						<h:outputText value="#{listaGrade.idGradeTrib}" />
+					</p:column>
+
+					<p:column headerText="Descrição da Grade">
+						<h:outputText value="#{listaGradeVig.descricao}" />
+					</p:column>
+
+					<p:column headerText="Excluir">
+						<p:commandLink id="linkExcluiGrade" value="Excluir"
+							ajax="dialog" action="#{figuraFiscalBean.excluirGrade}"
+							update="listaGradeVig">
+							<f:setPropertyActionListener value="#{listaGrade.idGradeTrib}"
+								target="#{figuraFiscalBean.idGrade}" />
+						</p:commandLink>
+					</p:column>
+				</p:dataTable>
+				<p:blockUI block="listaGrade" trigger="listaGrade">
+        				LOADING<br />
+					<p:graphicImage name="ajaxloader.gif" />
+				</p:blockUI>
+			</h:panelGrid>
+			<p:dialog id="dialog3" header="Consulta" widgetVar="dlg3" modal="true"
 				height="300" width="650">
 
 				<div align="right">
@@ -83,7 +110,7 @@
 						</p:column>
 
 						<p:column headerText="Selecionar">
-							<p:commandLink id="link" value="Editar" ajax="grid, dialog1"
+							<p:commandLink id="link" value="Editar" ajax="grid, dialog"
 								action="#{figuraFiscalBean.editFigura}">
 								<f:setPropertyActionListener value="#{listaFigura.idFigura}"
 									target="#{figuraFiscalBean.id}" />
@@ -95,6 +122,9 @@
 						<p:graphicImage name="ajaxloader.gif" />
 					</p:blockUI>
 				</h:panelGrid>
+			</p:dialog>
+			<p:dialog id="dialog" header="Consulta" widgetVar="dlg2" modal="true"
+				height="300" width="650">
 			</p:dialog>
 		</div>
 	</h:form>
