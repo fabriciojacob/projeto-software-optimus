@@ -16,5 +16,6 @@ public interface FiguraFiscalDAO {
 	public List<FiguraFiscal> consultaId(long id);
 	public List<FiguraFiscal> consultaDesc(String desc);
 	public List<FiguraFiscal> listar();
+	public FiguraFiscal editFigura(Long id);
 
 }

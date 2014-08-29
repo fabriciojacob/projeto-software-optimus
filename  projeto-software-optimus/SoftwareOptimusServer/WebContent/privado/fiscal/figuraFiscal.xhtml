@@ -10,7 +10,7 @@
 
 </h:head>
 <body>
-	<h:form id="frmCadGrade">
+	<h:form id="frmCadFigura">
 		<br />
 		<h3 style="margin-top: 0">CADASTRO DE FIGURA FISCAL</h3>
 		<div align="left">
@@ -45,26 +45,25 @@
 			</h:panelGrid>
 
 			<p:commandButton id="diGrade" value="Vincular Grade" type="button"
-				disabled="#{figuraFiscalBean.vincGrade}" onclick=" PF('dlg2').show();" />
+				disabled="#{figuraFiscalBean.vincGrade}"
+				onclick=" PF('dlg2').show();" />
 
 			<h:panelGrid id="gridGrade" columns="1">
 				<p:blockUI block="gridGrade" trigger="gridGrade" />
-				<p:dataTable id="listaGrade"
-					value="#{figuraFiscalBean.listaGrade}" var="listaGrade"
-					paginator="true" rows="8">
+				<p:dataTable id="listaGrade" value="#{figuraFiscalBean.listaGrade}"
+					var="listaGrade" paginator="true" rows="8">
 
 					<p:column headerText="Código da Grade">
 						<h:outputText value="#{listaGrade.idGradeTrib}" />
 					</p:column>
 
 					<p:column headerText="Descrição da Grade">
-						<h:outputText value="#{listaGradeVig.descricao}" />
+						<h:outputText value="#{listaGrade.descricao}" />
 					</p:column>
 
 					<p:column headerText="Excluir">
-						<p:commandLink id="linkExcluiGrade" value="Excluir"
-							ajax="dialog" action="#{figuraFiscalBean.excluirGrade}"
-							update="listaGradeVig">
+						<p:commandLink id="linkExcluiGrade" value="Excluir" ajax="dialog"
+							action="#{figuraFiscalBean.excluirGrade}" update="listaGradeVig">
 							<f:setPropertyActionListener value="#{listaGrade.idGradeTrib}"
 								target="#{figuraFiscalBean.idGrade}" />
 						</p:commandLink>
@@ -75,8 +74,8 @@
 					<p:graphicImage name="ajaxloader.gif" />
 				</p:blockUI>
 			</h:panelGrid>
-			<p:dialog id="dialog3" header="Consulta" widgetVar="dlg3" modal="true"
-				height="300" width="650">
+			<p:dialog id="dialog3" header="Consulta" widgetVar="dlg3"
+				modal="true" height="300" width="650">
 
 				<div align="right">
 					<h:panelGrid columns="1">
@@ -123,9 +122,32 @@
 					</p:blockUI>
 				</h:panelGrid>
 			</p:dialog>
-			<p:dialog id="dialog" header="Consulta" widgetVar="dlg2" modal="true"
-				height="300" width="650">
+			
+			<p:dialog id="dialog" header="Incluir Grade Tributaria" widgetVar="dlg2" modal="true"
+				height="100" width="400">
+				<h:panelGrid id="gridincEdi2" columns="1"
+					columnClasses="label, value">
+					
+					Grade:
+					<p:selectOneMenu id="grade" style="width:350px;"
+						value="#{figuraFiscalBean.grade}">
+						<f:selectItem itemLabel="Selecione uma grade" />
+						<f:selectItems value="#{figuraFiscalBean.listaGradeVis}"
+							var="listGrade" itemValue="#{listGrade}"
+							itemLabel="#{listGrade.idGradeTrib} - #{listGrade.descricao}" />
+					</p:selectOneMenu>
+
+				</h:panelGrid>
+
+				<p:tooltip id="toolTipAliq" for="grade"
+					value="Exibição 'Código' - 'Descrição'" showEffect="clip"
+					hideEffect="explode" />
+					
+				<p:commandButton value="Incluir"
+					actionListener="#{figuraFiscalBean.incluirGrade}"
+					update="listaGrade, gridincEdi2" />
 			</p:dialog>
+			
 		</div>
 	</h:form>
 </body>

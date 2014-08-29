@@ -3,10 +3,9 @@ package br.com.softwareOptimus.dao.fiscal;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
-
+import javax.persistence.TypedQuery;
 import br.com.softwareOptimus.fiscal.FiguraFiscal;
 
 public class FiguralFiscalDAOHibernate implements FiguraFiscalDAO {
@@ -63,19 +62,36 @@ public class FiguralFiscalDAOHibernate implements FiguraFiscalDAO {
 
 	@Override
 	public List<FiguraFiscal> consultaId(long id) {
-		// TODO Auto-generated method stub
-		return null;
+		String jpql = "Select f From FiguraFiscal f Where f.idFigura = :id ";
+		TypedQuery<FiguraFiscal> figura = this.session.createQuery(jpql,
+				FiguraFiscal.class);
+		figura.setParameter("id", id);
+		return figura.getResultList();
 	}
 
 	@Override
 	public List<FiguraFiscal> consultaDesc(String desc) {
-		// TODO Auto-generated method stub
-		return null;
+		String jpql = "Select f From FiguraFiscal f Where f.descricao LIKE :desc";
+		TypedQuery<FiguraFiscal> listaFigura = this.session.createQuery(jpql,
+				FiguraFiscal.class);
+		listaFigura.setParameter("desc", "%" + desc + "%");
+		return listaFigura.getResultList();
 	}
 
 	@Override
 	public List<FiguraFiscal> listar() {
-		// TODO Auto-generated method stub
-		return null;
+		String jpql = "Select f From FiguraFiscal f";
+		TypedQuery<FiguraFiscal> listaFigura = this.session.createQuery(jpql,
+				FiguraFiscal.class);
+		return listaFigura.getResultList();
+	}
+
+	@Override
+	public FiguraFiscal editFigura(Long id) {
+		String jpql = "Select f From FiguraFiscal f Where f.idFigura = :id ";
+		TypedQuery<FiguraFiscal> figura = this.session.createQuery(jpql,
+				FiguraFiscal.class);
+		figura.setParameter("id", id);
+		return figura.getSingleResult();
 	}
 }

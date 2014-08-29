@@ -2,7 +2,6 @@ package br.com.softwareOptimus.fiscal.bens;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -10,6 +9,7 @@ import javax.faces.context.FacesContext;
 import br.com.softwareOptimus.fiscal.FiguraFiscal;
 import br.com.softwareOptimus.fiscal.GradeTributaria;
 import br.com.softwareOptimus.fiscal.RN.FiguraFiscalRN;
+import br.com.softwareOptimus.fiscal.RN.GradeTributariaRN;
 
 @ManagedBean(name = "figuraFiscalBean")
 @ViewScoped
@@ -18,13 +18,15 @@ public class FiguraFiscalBean {
 	private FiguraFiscal figura = new FiguraFiscal();
 	private GradeTributaria grade = new GradeTributaria();
 	private List<FiguraFiscal> listaFigura = new ArrayList<FiguraFiscal>();
-	private List<GradeTributaria> listaGrade = new ArrayList<>();
+	private List<GradeTributaria> listaGrade = new ArrayList<GradeTributaria>();
+	private List<GradeTributaria> listaGradeVis = new ArrayList<GradeTributaria>();
+	private GradeTributariaRN gradRN = new GradeTributariaRN();
 	private Boolean sal = true, alt = true, rem = true, vincGrade = true;
 	private String busca, filtro;
 	private Long id, idGrade;
 	
 	public FiguraFiscalBean(){
-		
+		setListaGradeVis(this.gradRN.listar());
 	}
 
 	public void novo() {
@@ -137,7 +139,11 @@ public class FiguraFiscalBean {
 	}
 
 	public void editFigura() {
-
+		FiguraFiscalRN figuraRN = new FiguraFiscalRN();
+		this.figura = figuraRN.editFigura(id);
+		this.alt = false;
+		this.vincGrade = false;
+		this.rem = false;
 	}
 	
 	public void editGrade(){
@@ -147,7 +153,7 @@ public class FiguraFiscalBean {
 	public void excluirGrade(){
 		
 	}
-	
+
 	public void buscar(){
 		limpar();
 		FiguraFiscalRN figuraRN = new FiguraFiscalRN();
@@ -163,7 +169,30 @@ public class FiguraFiscalBean {
 	}
 	
 	public void incluirGrade(){
-		
+		if(this.grade != null){
+			this.listaGrade.add(this.grade);
+		}else {
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+							"Escolha uma grade para incluir."));
+		}
+	}
+	
+	public List<GradeTributaria> getListaGradeVis() {
+		return listaGradeVis;
+	}
+
+	public void setListaGradeVis(List<GradeTributaria> listaGradeVis) {
+		this.listaGradeVis = listaGradeVis;
+	}
+	
+	public GradeTributaria getGrade() {
+		return grade;
+	}
+
+	public void setGrade(GradeTributaria grade) {
+		this.grade = grade;
 	}
 
 	public Long getIdGrade() {
