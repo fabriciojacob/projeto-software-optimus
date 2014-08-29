@@ -144,7 +144,7 @@ public class GradeTributariaBean {
 
 	public void editGrade() {
 		GradeTributariaRN gradeRN = new GradeTributariaRN();
-		this.grade = gradeRN.editPauta(id);
+		this.grade = gradeRN.editGrade(id);
 		listaVigencia();
 		this.alt = false;
 		this.vig = false;

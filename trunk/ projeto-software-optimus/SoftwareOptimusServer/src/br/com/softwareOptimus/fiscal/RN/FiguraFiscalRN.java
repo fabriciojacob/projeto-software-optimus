@@ -45,4 +45,8 @@ public class FiguraFiscalRN {
 		return this.figuraDAO.listar();
 	}
 
+	public FiguraFiscal editFigura(Long id) {
+		return this.figuraDAO.editFigura(id);
+	}
+
 }

@@ -73,7 +73,7 @@ public class GradeTributariaRN {
 		return this.gradeTribDAO.listar();
 	}
 
-	public GradeTributaria editPauta(Long id) {
+	public GradeTributaria editGrade(Long id) {
 		return this.gradeTribDAO.consultaId(id);
 	}
 
