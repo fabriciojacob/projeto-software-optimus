@@ -71,6 +71,7 @@ public class FiguraFiscalBean {
 	public void alterar() {
 		try {
 			FiguraFiscalRN figuraRN = new FiguraFiscalRN();
+			this.figura.setGrades(this.listaGrade);
 			Integer retorno = figuraRN.validaCampoNulo(this.figura);
 			if (retorno == 0) {
 				figuraRN.altFigura(this.figura);
@@ -125,8 +126,6 @@ public class FiguraFiscalBean {
 		this.grade = new GradeTributaria();
 		this.listaFigura = new ArrayList<FiguraFiscal>();
 		this.listaGrade = new ArrayList<GradeTributaria>();
-		this.busca = "";
-		this.filtro = "";
 	}
 
 	public void cancelar() {
@@ -139,7 +138,10 @@ public class FiguraFiscalBean {
 
 	public void editFigura() {
 		FiguraFiscalRN figuraRN = new FiguraFiscalRN();
-		this.figura = figuraRN.editFigura(id);
+		this.listaGrade = new ArrayList<GradeTributaria>();
+		this.figura = figuraRN.editFigura(this.id);
+		this.listaGrade.addAll(this.figura.getGrades());
+		this.sal = true;
 		this.alt = false;
 		this.vincGrade = false;
 		this.rem = false;
@@ -150,7 +152,15 @@ public class FiguraFiscalBean {
 	}
 
 	public void excluirGrade() {
-
+		List<GradeTributaria> listaGradeNova = new ArrayList<GradeTributaria>();
+		listaGradeNova.addAll(this.listaGrade);
+		for (GradeTributaria gra : this.listaGrade) {
+			if (gra.getIdGradeTrib().equals(this.idGrade)){
+				listaGradeNova.remove(gra);
+			}
+		}
+		this.listaGrade = new ArrayList<GradeTributaria>();
+		this.listaGrade.addAll(listaGradeNova);
 	}
 
 	public void buscar() {
@@ -159,7 +169,7 @@ public class FiguraFiscalBean {
 		if (!busca.equals("") && (!filtro.equals(""))) {
 			if (filtro.equals("id")) {
 				this.listaFigura = figuraRN.consultaId(Long.parseLong(busca));
-			} else if (filtro.equals("desc")) {
+			} else if (filtro.equals("des")) {
 				this.listaFigura = figuraRN.consultaDesc(busca);
 			}
 		} else {
@@ -168,28 +178,28 @@ public class FiguraFiscalBean {
 	}
 
 	public void incluirGrade() {
-		Integer retorno = verificaInclusaoGrade();
-		if (retorno == 0) {
-			if (this.grade != null) {
+		if (this.grade != null) {
+			Integer retorno = verificaInclusaoGrade();
+			if (retorno == 0) {
 				this.listaGrade.add(this.grade);
 			} else {
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-								"Escolha uma grade para incluir."));
+								"Grade já vinculada na figura!"));
 			}
 		} else {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Grade já vinculada na figura!"));
+							"Escolha uma grade para incluir."));
 		}
 	}
 
 	public Integer verificaInclusaoGrade() {
 		Integer retorno = 0;
 		for (GradeTributaria gra : this.listaGrade) {
-			if (gra.getClass().equals(this.grade))
+			if (gra.getIdGradeTrib().equals(this.grade.getIdGradeTrib()))
 				retorno++;
 		}
 		return retorno;
