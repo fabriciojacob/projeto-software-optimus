@@ -27,7 +27,7 @@
 				actionListener="#{figuraFiscalBean.remover}" ajax="grid" />
 
 			<p:commandButton id="consulta" value="Consultar" type="button"
-				ajax="dialog3, grid" onclick="PF('dlg3').show();"
+				ajax="dialog3, grid, gridGrade" onclick="PF('dlg3').show();"
 				actionListener="#{figuraFiscalBean.cancelar}" />
 
 			<p:commandButton value="Cancelar"
@@ -63,7 +63,7 @@
 
 					<p:column headerText="Excluir">
 						<p:commandLink id="linkExcluiGrade" value="Excluir" ajax="dialog"
-							action="#{figuraFiscalBean.excluirGrade}" update="listaGradeVig">
+							action="#{figuraFiscalBean.excluirGrade}" update="listaGrade">
 							<f:setPropertyActionListener value="#{listaGrade.idGradeTrib}"
 								target="#{figuraFiscalBean.idGrade}" />
 						</p:commandLink>
@@ -109,9 +109,9 @@
 						</p:column>
 
 						<p:column headerText="Selecionar">
-							<p:commandLink id="link" value="Editar" ajax="grid, dialog"
+							<p:commandLink id="link" value="Editar" ajax="grid, dialog3, gridGrade"
 								action="#{figuraFiscalBean.editFigura}">
-								<f:setPropertyActionListener value="#{listaFigura.idFigura}"
+								<f:setPropertyActionListener value="#{listFigura.idFigura}"
 									target="#{figuraFiscalBean.id}" />
 							</p:commandLink>
 						</p:column>
@@ -122,9 +122,9 @@
 					</p:blockUI>
 				</h:panelGrid>
 			</p:dialog>
-			
-			<p:dialog id="dialog" header="Incluir Grade Tributaria" widgetVar="dlg2" modal="true"
-				height="100" width="400">
+
+			<p:dialog id="dialog" header="Incluir Grade Tributaria"
+				widgetVar="dlg2" modal="true" height="100" width="400">
 				<h:panelGrid id="gridincEdi2" columns="1"
 					columnClasses="label, value">
 					
@@ -142,12 +142,12 @@
 				<p:tooltip id="toolTipAliq" for="grade"
 					value="Exibição 'Código' - 'Descrição'" showEffect="clip"
 					hideEffect="explode" />
-					
+
 				<p:commandButton value="Incluir"
 					actionListener="#{figuraFiscalBean.incluirGrade}"
 					update="listaGrade, gridincEdi2" />
 			</p:dialog>
-			
+
 		</div>
 	</h:form>
 </body>
