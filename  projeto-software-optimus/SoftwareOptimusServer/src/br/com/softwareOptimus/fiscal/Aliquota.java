@@ -10,6 +10,7 @@ import javax.faces.convert.ConverterException;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -30,7 +31,7 @@ public class Aliquota implements Serializable, Converter{
 	
 	private Double reducao;
 	
-	@OneToMany
+	@ManyToMany
 	private Collection<CodigoSituacaoTributaria> cst;
 	
 	private TipoTrib tipo;

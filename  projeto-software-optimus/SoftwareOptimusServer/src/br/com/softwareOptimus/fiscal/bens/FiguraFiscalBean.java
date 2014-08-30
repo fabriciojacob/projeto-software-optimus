@@ -24,8 +24,8 @@ public class FiguraFiscalBean {
 	private Boolean sal = true, alt = true, rem = true, vincGrade = true;
 	private String busca, filtro;
 	private Long id, idGrade;
-	
-	public FiguraFiscalBean(){
+
+	public FiguraFiscalBean() {
 		setListaGradeVis(this.gradRN.listar());
 	}
 
@@ -60,12 +60,11 @@ public class FiguraFiscalBean {
 								"Existem campos nulos no formulário"));
 			}
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance()
-					.addMessage(
-							null,
-							new FacesMessage(FacesMessage.SEVERITY_ERROR,
-									"Info", "Problemas na gravacao da Figura Fiscal "
-											+ e.getMessage()));
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+							"Problemas na gravacao da Figura Fiscal "
+									+ e.getMessage()));
 		}
 	}
 
@@ -91,12 +90,11 @@ public class FiguraFiscalBean {
 								"Existem campos nulos no formulário"));
 			}
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance()
-					.addMessage(
-							null,
-							new FacesMessage(FacesMessage.SEVERITY_ERROR,
-									"Info", "Problemas na alteração da Figura Fiscal "
-											+ e.getMessage()));
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+							"Problemas na alteração da Figura Fiscal "
+									+ e.getMessage()));
 		}
 	}
 
@@ -117,7 +115,8 @@ public class FiguraFiscalBean {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na remoção da Figura Fiscal " + e.getMessage()));
+							"Problemas na remoção da Figura Fiscal "
+									+ e.getMessage()));
 		}
 	}
 
@@ -145,16 +144,16 @@ public class FiguraFiscalBean {
 		this.vincGrade = false;
 		this.rem = false;
 	}
-	
-	public void editGrade(){
-		
-	}
-	
-	public void excluirGrade(){
-		
+
+	public void editGrade() {
+
 	}
 
-	public void buscar(){
+	public void excluirGrade() {
+
+	}
+
+	public void buscar() {
 		limpar();
 		FiguraFiscalRN figuraRN = new FiguraFiscalRN();
 		if (!busca.equals("") && (!filtro.equals(""))) {
@@ -167,18 +166,35 @@ public class FiguraFiscalBean {
 			this.listaFigura = figuraRN.listar();
 		}
 	}
-	
-	public void incluirGrade(){
-		if(this.grade != null){
-			this.listaGrade.add(this.grade);
-		}else {
+
+	public void incluirGrade() {
+		Integer retorno = verificaInclusaoGrade();
+		if (retorno == 0) {
+			if (this.grade != null) {
+				this.listaGrade.add(this.grade);
+			} else {
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+								"Escolha uma grade para incluir."));
+			}
+		} else {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Escolha uma grade para incluir."));
+							"Grade já vinculada na figura!"));
 		}
 	}
-	
+
+	public Integer verificaInclusaoGrade() {
+		Integer retorno = 0;
+		for (GradeTributaria gra : this.listaGrade) {
+			if (gra.getClass().equals(this.grade))
+				retorno++;
+		}
+		return retorno;
+	}
+
 	public List<GradeTributaria> getListaGradeVis() {
 		return listaGradeVis;
 	}
@@ -186,7 +202,7 @@ public class FiguraFiscalBean {
 	public void setListaGradeVis(List<GradeTributaria> listaGradeVis) {
 		this.listaGradeVis = listaGradeVis;
 	}
-	
+
 	public GradeTributaria getGrade() {
 		return grade;
 	}
