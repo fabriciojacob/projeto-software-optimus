@@ -40,8 +40,8 @@ public class PlanoDeContas implements Serializable{
 	@OneToMany
 	private Collection<Pessoa> empresa;
 	
-	//Elementar ou Basica
-	private TipoElemBas EleBas;
+	//Analitica e Sintetica
+	private TipoElemBas anaSin;
 	
 	@ManyToMany
 	private Collection<PlanoDeContasRef> planoRef;
@@ -99,12 +99,12 @@ public class PlanoDeContas implements Serializable{
 		this.classificacao = classificacao;
 	}
 
-	public TipoElemBas getEleBas() {
-		return EleBas;
+	public TipoElemBas getAnaSin() {
+		return anaSin;
 	}
 
-	public void setEleBas(TipoElemBas eleBas) {
-		EleBas = eleBas;
+	public void setAnaSin(TipoElemBas anaSin) {
+		this.anaSin = anaSin;
 	}
 
 	public Collection<Pessoa> getEmpresa() {
