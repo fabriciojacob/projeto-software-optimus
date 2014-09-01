@@ -25,19 +25,19 @@ public class CodTabelaGov {
 	@Temporal(TemporalType.DATE)
 	private Date vigencia;
 	
-	@OneToOne
+	@ManyToOne
 	private Ncm ncm;
 	
-	@OneToOne
+	@ManyToOne
 	private Aliquota entradaPis;
 	
-	@OneToOne
+	@ManyToOne
 	private Aliquota entradaCofins;
 	
-	@OneToOne
+	@ManyToOne
 	private Aliquota saidaPis;
 	
-	@OneToOne
+	@ManyToOne
 	private Aliquota saidaCofins;
 	
 	@OneToOne
