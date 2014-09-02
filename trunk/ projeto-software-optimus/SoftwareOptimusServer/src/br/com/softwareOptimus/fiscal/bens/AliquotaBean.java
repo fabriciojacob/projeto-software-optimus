@@ -31,13 +31,14 @@ public class AliquotaBean {
 	private String busca, filtro, tipCst, tipTrib;
 	private Long id;
 	private boolean sal = true, alt = true, rem = true, tipTri = true,
-			vinculo = true, chkIcm = true, chkIpi = true, chkPisCofins = true;
+			vinculo = true, chkIcm = true, chkIpi = true, chkPisCofins = true, aliq = true, red = true;
 	
 	public void novo() {
 		this.sal = false;
 		this.vinculo = false;
 		this.alt = true;
 		this.rem = true;
+		habilita();
 		limpa();
 	}
 
@@ -79,6 +80,7 @@ public class AliquotaBean {
 				this.sal = true;
 				this.vinculo = true;
 				limpa();
+				desabilita();
 			} else {
 				FacesContext.getCurrentInstance().addMessage(
 						null,
@@ -133,6 +135,7 @@ public class AliquotaBean {
 				this.alt = true;
 				this.rem = true;
 				limpa();
+				desabilita();
 			} else {
 				FacesContext.getCurrentInstance().addMessage(
 						null,
@@ -160,6 +163,7 @@ public class AliquotaBean {
 			this.rem = true;
 			this.vinculo = true;
 			limpa();
+			desabilita();
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
@@ -175,12 +179,13 @@ public class AliquotaBean {
 		this.rem = true;
 		this.vinculo = true;
 		limpa();
+		desabilita();
 	}
 
 	public void buscaAliq() {
 		limpa();
 		AliquotaRN aliqRN = new AliquotaRN();
-		if (!busca.equals("")) {
+		if (!busca.equals("")&& !filtro.equals("")) {
 			if (filtro.equals("id")) {
 				this.aliqList = aliqRN.consultaId(Long.parseLong(busca));
 			} else if (filtro.equals("aliq")) {
@@ -250,6 +255,7 @@ public class AliquotaBean {
 		this.rem = false;
 		this.sal = true;
 		this.vinculo = false;
+		habilita();
 	}
 
 	public void eventTipoCst() {
@@ -293,6 +299,32 @@ public class AliquotaBean {
 		this.cstListSai = new ArrayList<CodigoSituacaoTributaria>();
 		this.aliqList = new ArrayList<Aliquota>();
 		this.colCst = new ArrayList<CodigoSituacaoTributaria>();
+	}
+	
+	public void habilita(){
+		this.aliq = false;
+		this.red = false;
+	}
+	
+	public void desabilita(){
+		this.aliq = true;
+		this.red = true;		
+	}
+
+	public boolean isAliq() {
+		return aliq;
+	}
+
+	public void setAliq(boolean aliq) {
+		this.aliq = aliq;
+	}
+
+	public boolean isRed() {
+		return red;
+	}
+
+	public void setRed(boolean red) {
+		this.red = red;
 	}
 
 	public boolean isVinculo() {

@@ -44,11 +44,11 @@
 		
 					Alíquota:
 					<p:inputText id="aliq" value="#{aliquotaBean.aliquota.aliquota}"
-					size="10" maxlength="5"/>
+					size="10" maxlength="5" disabled="#{aliquotaBean.aliq}"/>
 					
 					Redução:
 					<p:inputText id="red" value="#{aliquotaBean.aliquota.reducao}"
-					size="40" />
+					size="40" disabled="#{aliquotaBean.red}"/>
 
 				<p:commandButton value="Vincular CST" type="button"
 					disabled="#{aliquotaBean.vinculo}" onclick="PF('dlg4').show();" />

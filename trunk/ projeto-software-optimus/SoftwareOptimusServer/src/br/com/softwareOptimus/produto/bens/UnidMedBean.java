@@ -20,7 +20,160 @@ public class UnidMedBean {
 	private String busca;
 	private String filtro;
 	private Long id;
-	private boolean alt = true, sal = true, rem = true;
+	private boolean alt = true, sal = true, rem = true, unidAbre = true,
+			desc = true;
+
+	public void salvarUnid() {
+		try {
+			UnidMedRN unidRN = new UnidMedRN();
+			this.unidMed.setIdUnidMed(null);
+			Integer retorno = unidRN.validaCampoNulo(this.unidMed);
+			if (retorno == 0) {
+				unidRN.salvar(unidMed);
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
+								"Unidade salva com sucesso"));
+				this.sal = true;
+				limpa();
+				desabilita();
+			} else {
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+								"Existem campos nulos no formulário"));
+			}
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+							"Problemas na gravacao da Unidade "
+									+ e.getMessage()));
+		}
+	}
+
+	public void buscaUnid() {
+		limpa();
+		UnidMedRN unidRN = new UnidMedRN();
+		if (!busca.equals("") && !filtro.equals("")) {
+			if (filtro.equals("id")) {
+				this.unidMedLis = unidRN.consultaId(Long.parseLong(busca));
+			} else if (filtro.equals("unid")) {
+				this.unidMedLis = unidRN.consultaUnid(busca);
+			} else if (filtro.equals("desc")) {
+				this.unidMedLis = unidRN.consultaDesc(busca);
+			}
+		} else {
+			this.unidMedLis = unidRN.lista();
+		}
+	}
+
+	public void cancelar() {
+		this.sal = true;
+		this.alt = true;
+		this.rem = true;
+		limpa();
+		desabilita();
+	}
+
+	public void novo() {
+		this.sal = false;
+		this.alt = true;
+		this.rem = true;
+		habilita();
+		limpa();
+	}
+
+	public void limpa() {
+		this.unidMed = new UnidMed();
+		this.unidMedLis = new ArrayList<UnidMed>();
+	}
+
+	public void altUnid() {
+		try {
+			UnidMedRN unidRN = new UnidMedRN();
+			Integer retorno = unidRN.validaCampoNulo(this.unidMed);
+			if (retorno == 0) {
+				unidRN.altUnid(unidMed);
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
+								"Unidade alterada com sucesso"));
+				this.alt = true;
+				this.rem = true;
+				limpa();
+				desabilita();
+			} else {
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+								"Existem campos nulos no formulário"));
+			}
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+							"Problemas na alteraÃ§Ã£o da Unidade "
+									+ e.getMessage()));
+		}
+	}
+
+	public void editUnid() {
+		UnidMedRN unidRN = new UnidMedRN();
+		this.unidMed = unidRN.editUnid(id);
+		this.alt = false;
+		this.rem = false;
+		this.sal = true;
+		habilita();
+	}
+
+	public void remUnid() {
+		UnidMedRN unidRN = new UnidMedRN();
+		try {
+			unidRN.remove(unidMed.getIdUnidMed());
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
+							"Unidade removida com sucesso"));
+			this.alt = true;
+			this.rem = true;
+			limpa();
+			desabilita();
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+							"Problemas na remoï¿½ï¿½o da Unidade "
+									+ e.getMessage()));
+		}
+
+	}
+
+	public void habilita() {
+		this.unidAbre = false;
+		this.desc = false;
+	}
+
+	public void desabilita() {
+		this.unidAbre = true;
+		this.desc = true;
+	}
+
+	public boolean isUnidAbre() {
+		return unidAbre;
+	}
+
+	public void setUnidAbre(boolean unidAbre) {
+		this.unidAbre = unidAbre;
+	}
+
+	public boolean isDesc() {
+		return desc;
+	}
+
+	public void setDesc(boolean desc) {
+		this.desc = desc;
+	}
 
 	public boolean isRem() {
 		return rem;
@@ -92,125 +245,5 @@ public class UnidMedBean {
 
 	public void setUnidMedLis(List<UnidMed> unidMedLis) {
 		this.unidMedLis = unidMedLis;
-	}
-
-	public void salvarUnid() {
-		try {
-			UnidMedRN unidRN = new UnidMedRN();
-			this.unidMed.setIdUnidMed(null);
-			Integer retorno = unidRN.validaCampoNulo(this.unidMed);
-			if (retorno == 0) {
-				unidRN.salvar(unidMed);
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-								"Unidade salva com sucesso"));
-				this.sal = true;
-				limpa();
-			} else {
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-								"Existem campos nulos no formulário"));
-			}
-		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na gravacao da Unidade "
-									+ e.getMessage()));
-		}
-	}
-
-	public void buscaUnid() {
-		limpa();
-		UnidMedRN unidRN = new UnidMedRN();
-		if (!busca.equals("")) {
-			if (filtro.equals("id")) {
-				this.unidMedLis = unidRN.consultaId(Long.parseLong(busca));
-			} else if (filtro.equals("unid")) {
-				this.unidMedLis = unidRN.consultaUnid(busca);
-			} else if (filtro.equals("desc")) {
-				this.unidMedLis = unidRN.consultaDesc(busca);
-			}
-		} else {
-			this.unidMedLis = unidRN.lista();
-		}
-	}
-
-	public void cancelar() {
-		this.sal = true;
-		this.alt = true;
-		this.rem = true;
-		limpa();
-	}
-
-	public void novo() {
-		this.sal = false;
-		this.alt = true;
-		this.rem = true;
-		limpa();
-	}
-
-	public void limpa() {
-		this.unidMed = new UnidMed();
-		this.unidMedLis = new ArrayList<UnidMed>();
-	}
-
-	public void altUnid() {
-		try {
-			UnidMedRN unidRN = new UnidMedRN();
-			Integer retorno = unidRN.validaCampoNulo(this.unidMed);
-			if (retorno == 0) {
-				unidRN.altUnid(unidMed);
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-								"Unidade alterada com sucesso"));
-				this.alt = true;
-				this.rem = true;
-				limpa();
-			} else {
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-								"Existem campos nulos no formulário"));
-			}
-		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na alteraÃ§Ã£o da Unidade "
-									+ e.getMessage()));
-		}
-	}
-
-	public void editUnid() {
-		UnidMedRN unidRN = new UnidMedRN();
-		this.unidMed = unidRN.editUnid(id);
-		this.alt = false;
-		this.rem = false;
-		this.sal = true;
-	}
-
-	public void remUnid() {
-		UnidMedRN unidRN = new UnidMedRN();
-		try {
-			unidRN.remove(unidMed.getIdUnidMed());
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-							"Unidade removida com sucesso"));
-			this.alt = true;
-			this.rem = true;
-			limpa();
-		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na remoï¿½ï¿½o da Unidade "
-									+ e.getMessage()));
-		}
-
 	}
 }
