@@ -7,7 +7,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 import br.com.softwareOptimus.financeiro.ContaBancaria;
-import br.com.softwareOptimus.financeiro.TipoContaBancaria;
 
 public class ContaBancariaDAOHibernate implements ContaBancariaDAO {
 
@@ -43,48 +42,67 @@ public class ContaBancariaDAOHibernate implements ContaBancariaDAO {
 	}
 
 	@Override
-	public List<ContaBancaria> pesquisarConta(String titular, Integer agencia,
-			Integer conta, TipoContaBancaria tipoConta) throws Exception {
-		String jpql = null;
-		TypedQuery<ContaBancaria> consulta;
-		if (titular == null) {
-			jpql = "Select c from ContaBancaria c where c.agencia = :parAgencia"
-					+ " and c.conta = :parConta"
-					+ " and c.tipoContaBancaria = :parTipoConta";
-			consulta = this.session.createQuery(jpql,
-					ContaBancaria.class);
-			consulta.setParameter("parAgencia", agencia);
-			consulta.setParameter("parConta", conta);
-			consulta.setParameter("parTipoConta", tipoConta);
-		} else {
-			jpql = "Select c from ContaBancaria c where c.titular LIKE :parTitular";
-			consulta = this.session.createQuery(jpql,
-					ContaBancaria.class); 
-			consulta.setParameter("parTitular", "%" + titular + "%");
-			
-		}
-		return consulta.getResultList();
-	}
-
-	@Override
 	public void begin() throws IOException, SQLException {
 		this.transacao = this.session.getTransaction();
-		if(!this.transacao.isActive()){
+		if (!this.transacao.isActive()) {
 			this.transacao.begin();
 		}
-		
+
 	}
 
 	@Override
 	public void close() throws Exception {
 		this.session.close();
-		
+
 	}
 
 	@Override
 	public void alterar(ContaBancaria conta) throws Exception {
 		this.session.merge(conta);
-		
+
+	}
+
+	@Override
+	public List<ContaBancaria> pesquisaTitular(String titular) throws Exception {
+		String jpql = "Select c from ContaBancaria c where c.titular LIKE :parTitular";
+		TypedQuery<ContaBancaria> consulta = this.session.createQuery(jpql,
+				ContaBancaria.class);
+		consulta.setParameter("parTitular", "%" + titular + "%");
+		return consulta.getResultList();
+	}
+
+	@Override
+	public List<ContaBancaria> pesquisaAgencia(Integer agencia)
+			throws Exception {
+		String jpql = "Select c from ContaBancaria c where c.agencia LIKE :parAgencia";
+		TypedQuery<ContaBancaria> consulta = this.session.createQuery(jpql,
+				ContaBancaria.class);
+		consulta.setParameter("parAgencia", "%" + agencia + "%");
+		return consulta.getResultList();
+
+	}
+
+	@Override
+	public List<ContaBancaria> pesquisaConta(Integer conta) throws Exception {
+		String jpql = "Select c From ContaBancaria c where c.conta LIKE :parConta";
+		TypedQuery<ContaBancaria> consulta = this.session.createQuery(jpql,
+				ContaBancaria.class);
+		consulta.setParameter("parConta", "%" + conta + "%");
+		return consulta.getResultList();
+	}
+
+	@Override
+	public List<ContaBancaria> pesquisaTodos(String titular, Integer conta,
+			Integer agencia) throws Exception {
+		String jpql = "Select c From ContaBancaria c where c.conta LIKE :parConta "
+				+ " and c.titular LIKE :parTitular"
+				+ " and c.agencia LIKE :parAgencia";
+		TypedQuery<ContaBancaria> consulta = this.session.createQuery(jpql,
+				ContaBancaria.class);
+		consulta.setParameter("parConta", "%" + conta + "%");
+		consulta.setParameter("parTitular", "%" + titular + "%");
+		consulta.setParameter("parAgencia", "%" + agencia + "%");
+		return consulta.getResultList();
 	}
 
 }

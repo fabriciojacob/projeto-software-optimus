@@ -4,7 +4,6 @@ import java.util.List;
 
 import br.com.softwareOptimus.com.financeiro.dao.ContaBancariaDAO;
 import br.com.softwareOptimus.financeiro.ContaBancaria;
-import br.com.softwareOptimus.financeiro.TipoContaBancaria;
 import br.com.softwareOptimus.util.DAOFactory;
 
 public class ContaBancariaRN {
@@ -26,11 +25,17 @@ public class ContaBancariaRN {
 	public void excluirConta(ContaBancaria conta) throws Exception {
 		this.contaDAO.excluirConta(conta);
 	}
-
-	public List<ContaBancaria> pesquisa(String titular, Integer agencia,
-			Integer conta, TipoContaBancaria tipoContaBancaria)
-			throws Exception {
-		return this.contaDAO.pesquisarConta(titular, agencia, conta,
-				tipoContaBancaria);
+	
+	public List<ContaBancaria> pesquisaConta(Integer conta) throws Exception{
+		return this.contaDAO.pesquisaConta(conta);
 	}
+	
+	public List<ContaBancaria> pesquisaAgencia(Integer agencia) throws Exception{
+		return this.contaDAO.pesquisaAgencia(agencia);
+	}
+	
+	public List<ContaBancaria> pesquisaTodos(Integer agencia, String titular, Integer conta) throws Exception{
+		return this.contaDAO.pesquisaTodos(titular, conta, agencia);
+	}
+
 }

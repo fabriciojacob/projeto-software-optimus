@@ -31,6 +31,8 @@ public class ContaBancaria implements Serializable {
 	
 	private String titular;
 	
+	private boolean inativa;
+	
 	@OneToMany(mappedBy = "contaBancaria")
 	private Collection<ExtratoContaBancaria> extrato;
 	
@@ -90,6 +92,16 @@ public class ContaBancaria implements Serializable {
 
 	public void setTipoContaBancaria(TipoContaBancaria tipoContaBancaria) {
 		this.tipoContaBancaria = tipoContaBancaria;
+	}
+	
+	
+
+	public boolean isInativa() {
+		return inativa;
+	}
+
+	public void setInativa(boolean inativa) {
+		this.inativa = inativa;
 	}
 
 	@Override

@@ -29,7 +29,6 @@ public class Simulacao {
 		ContaBancariaRN rnConta = new ContaBancariaRN();
 		try{
 			//rnConta.salvar(contaCorrente);
-			lista = rnConta.pesquisa("Fabricio", 9289, 981121, TipoContaBancaria.CORRENTE);
 			for(ContaBancaria c: lista){
 				rnConta.excluirConta(c);
 			}
