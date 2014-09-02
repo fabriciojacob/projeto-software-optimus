@@ -14,12 +14,17 @@ public interface ContaBancariaDAO {
 	public void salvarConta(ContaBancaria conta) throws Exception;
 	
 	public void alterar(ContaBancaria conta) throws Exception;
-
-	public List<ContaBancaria> pesquisarConta(String titular, Integer agencia,
-			Integer conta, TipoContaBancaria tipoContaBancaria) throws Exception;
 	
 	public void begin() throws IOException, SQLException;
 	
 	public void close()throws Exception;
+	
+	public List<ContaBancaria> pesquisaTitular(String titular) throws Exception;
+	
+	public List<ContaBancaria> pesquisaAgencia(Integer agencia) throws Exception;
+	
+	public List<ContaBancaria> pesquisaConta(Integer conta) throws Exception;
+	
+	public List<ContaBancaria> pesquisaTodos(String titular, Integer conta, Integer agencia) throws Exception;
 
 }
