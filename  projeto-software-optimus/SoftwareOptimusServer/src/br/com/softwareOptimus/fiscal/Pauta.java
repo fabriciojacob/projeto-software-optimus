@@ -10,23 +10,23 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-@Entity 
-@Table(name="tbPauta")
+@Entity
+@Table(name = "tbPauta")
 public class Pauta implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 9193639460516743770L;
-	
+
 	@Id
 	@GeneratedValue
 	private Long idPauta;
-	
+
 	private String descricao;
-	
-	@OneToMany(mappedBy = "pauta", targetEntity = PautaMVA.class, cascade = CascadeType.ALL, orphanRemoval=true)
-	private Collection<PautaMVA> pauta;
+
+	@OneToMany(mappedBy = "pauta", cascade = CascadeType.REMOVE)
+	private Collection<PautaMVA> pautaVig;
 
 	public Long getIdPauta() {
 		return idPauta;
@@ -68,6 +68,5 @@ public class Pauta implements Serializable {
 			return false;
 		return true;
 	}
-	
 
 }

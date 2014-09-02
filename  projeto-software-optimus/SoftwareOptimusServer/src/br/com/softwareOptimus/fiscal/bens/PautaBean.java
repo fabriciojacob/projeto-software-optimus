@@ -16,7 +16,7 @@ public class PautaBean {
 
 	private Pauta pauta = new Pauta();
 	private PautaMVA pautaMVA = new PautaMVA();
-	private Boolean sal = true, alt = true, rem = true, vig = true;
+	private Boolean sal = true, alt = true, rem = true, vig = true, desc = true;
 	private String busca, filtro;
 	private List<PautaMVA> listaPautaMVA = new ArrayList<PautaMVA>();
 	private List<Pauta> listaPauta = new ArrayList<Pauta>();
@@ -26,6 +26,7 @@ public class PautaBean {
 		this.sal = false;
 		this.alt = true;
 		this.rem = true;
+		habilita();
 		limpar();
 	}
 
@@ -41,7 +42,9 @@ public class PautaBean {
 								"Pauta alterada com sucesso"));
 				this.alt = true;
 				this.rem = true;
+				this.vig = true;
 				limpar();
+				desabilita();
 			} else {
 				FacesContext.getCurrentInstance().addMessage(
 						null,
@@ -68,7 +71,9 @@ public class PautaBean {
 							"Pauta removida com sucesso"));
 			this.alt = true;
 			this.rem = true;
+			this.vig = true;
 			limpar();
+			desabilita();
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
@@ -83,6 +88,7 @@ public class PautaBean {
 		this.rem = true;
 		this.vig = true;
 		limpar();
+		desabilita();
 	}
 
 	public void salvar() {
@@ -190,6 +196,7 @@ public class PautaBean {
 	public void editPauta() {
 		PautaRN pautaRN = new PautaRN();
 		this.pauta = pautaRN.editPauta(id);
+		habilita();
 		listaVigencia();
 		this.alt = false;
 		this.vig = false;
@@ -212,6 +219,22 @@ public class PautaBean {
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
 							"Problemas na remoção da vigência da Pauta " + e.getMessage()));
 		}
+	}
+	
+	public void habilita(){
+		this.desc = false;
+	}
+	
+	public void desabilita(){
+		this.desc = true;
+	}
+
+	public Boolean getDesc() {
+		return desc;
+	}
+
+	public void setDesc(Boolean desc) {
+		this.desc = desc;
 	}
 
 	public Boolean getVig() {
