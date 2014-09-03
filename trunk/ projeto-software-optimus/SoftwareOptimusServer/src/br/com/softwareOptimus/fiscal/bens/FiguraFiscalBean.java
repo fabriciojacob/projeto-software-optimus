@@ -21,7 +21,7 @@ public class FiguraFiscalBean {
 	private List<GradeTributaria> listaGrade = new ArrayList<GradeTributaria>();
 	private List<GradeTributaria> listaGradeVis = new ArrayList<GradeTributaria>();
 	private GradeTributariaRN gradRN = new GradeTributariaRN();
-	private Boolean sal = true, alt = true, rem = true, vincGrade = true;
+	private Boolean sal = true, alt = true, rem = true, vincGrade = true, desc = true;
 	private String busca, filtro;
 	private Long id, idGrade;
 
@@ -35,6 +35,7 @@ public class FiguraFiscalBean {
 		this.rem = true;
 		this.vincGrade = false;
 		limpar();
+		habilita();
 	}
 
 	public void salvar() {
@@ -84,6 +85,7 @@ public class FiguraFiscalBean {
 				this.vincGrade = true;
 				this.sal = true;
 				limpar();
+				desabilita();
 			} else {
 				FacesContext.getCurrentInstance().addMessage(
 						null,
@@ -112,6 +114,7 @@ public class FiguraFiscalBean {
 			this.vincGrade = true;
 			this.sal = true;
 			limpar();
+			desabilita();
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
@@ -134,6 +137,7 @@ public class FiguraFiscalBean {
 		this.rem = true;
 		this.vincGrade = true;
 		limpar();
+		desabilita();
 	}
 
 	public void editFigura() {
@@ -141,6 +145,7 @@ public class FiguraFiscalBean {
 		this.listaGrade = new ArrayList<GradeTributaria>();
 		this.figura = figuraRN.editFigura(this.id);
 		this.listaGrade.addAll(this.figura.getGrades());
+		habilita();
 		this.sal = true;
 		this.alt = false;
 		this.vincGrade = false;
@@ -203,6 +208,22 @@ public class FiguraFiscalBean {
 				retorno++;
 		}
 		return retorno;
+	}
+	
+	public void habilita(){
+		this.desc = false;
+	}
+
+	public void desabilita(){
+		this.desc = true;
+	}
+	
+	public Boolean getDesc() {
+		return desc;
+	}
+
+	public void setDesc(Boolean desc) {
+		this.desc = desc;
 	}
 
 	public List<GradeTributaria> getListaGradeVis() {
