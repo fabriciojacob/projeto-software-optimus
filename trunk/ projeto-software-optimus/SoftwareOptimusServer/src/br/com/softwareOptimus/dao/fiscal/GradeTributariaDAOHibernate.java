@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import br.com.softwareOptimus.fiscal.GradeTributaria;
 
@@ -55,7 +56,14 @@ public class GradeTributariaDAOHibernate implements GradeTributariaDAO {
 	}
 
 	@Override
-	public void remover(GradeTributaria grade) {
+	public void remover(GradeTributaria grade) throws SQLException, IOException {
+		
+		String deleteQuery = "delete from GradeTributariaVigencia g where g.grade = :grade";  
+		Query query = session.createQuery(deleteQuery);  
+		query.setParameter("grade", grade);  
+		query.executeUpdate();  
+		this.transaction.commit();  
+		begin();
 		this.session.remove(grade);
 		this.transaction.commit();
 	}

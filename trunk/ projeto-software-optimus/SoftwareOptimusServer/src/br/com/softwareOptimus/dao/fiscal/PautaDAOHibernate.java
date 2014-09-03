@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import br.com.softwareOptimus.fiscal.Pauta;
 
@@ -85,7 +86,14 @@ public class PautaDAOHibernate implements PautaDAO {
 		this.transaction.commit();
 	}
 	@Override
-	public void remover(Pauta pauta) {
+	public void remover(Pauta pauta) throws IOException, SQLException {
+		
+		String deleteQuery = "delete from PautaMVA p where p.pauta = :pauta";  
+		Query query = session.createQuery(deleteQuery);  
+		query.setParameter("pauta", pauta);  
+		query.executeUpdate();  
+		this.transaction.commit();  
+		begin();		
 		this.session.remove(pauta);
 		this.transaction.commit();
 	}

@@ -2,8 +2,6 @@ package br.com.softwareOptimus.fiscal;
 
 import java.io.Serializable;
 import java.util.Collection;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -25,8 +23,8 @@ public class Pauta implements Serializable {
 
 	private String descricao;
 
-	@OneToMany(mappedBy = "pauta", cascade = CascadeType.REMOVE)
-	private Collection<PautaMVA> pautaVig;
+	@OneToMany(mappedBy = "pauta")
+	private Collection<PautaMVA> pauta;
 
 	public Long getIdPauta() {
 		return idPauta;

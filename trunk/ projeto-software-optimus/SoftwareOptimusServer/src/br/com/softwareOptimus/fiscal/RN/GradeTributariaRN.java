@@ -1,5 +1,7 @@
 package br.com.softwareOptimus.fiscal.RN;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
@@ -53,7 +55,7 @@ public class GradeTributariaRN {
 		this.gradeTribDAO.altGrade(grade);
 	}
 
-	public void remover(GradeTributaria grade) {
+	public void remover(GradeTributaria grade) throws IOException, SQLException {
 		this.gradeTribDAO.remover(grade);
 	}
 

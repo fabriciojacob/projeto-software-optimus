@@ -2,7 +2,6 @@ package br.com.softwareOptimus.fiscal;
 
 import java.io.Serializable;
 import java.util.Collection;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -24,7 +23,7 @@ public class GradeTributaria implements Serializable{
 	
 	private String descricao;
 	
-	@OneToMany(mappedBy = "grade", targetEntity = GradeTributariaVigencia.class, cascade = CascadeType.ALL, orphanRemoval=true)
+	@OneToMany(mappedBy = "grade")
 	private Collection<GradeTributariaVigencia> grade;
 
 	public Long getIdGradeTrib() {
