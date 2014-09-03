@@ -26,16 +26,12 @@ public class ContaBancariaRN {
 		this.contaDAO.excluirConta(conta);
 	}
 	
-	public List<ContaBancaria> pesquisaConta(Integer conta) throws Exception{
-		return this.contaDAO.pesquisaConta(conta);
+	public List<ContaBancaria> pesquisaTitular(String titular) throws Exception {
+		return this.contaDAO.pesquisaTitular(titular);
 	}
 	
-	public List<ContaBancaria> pesquisaAgencia(Integer agencia) throws Exception{
-		return this.contaDAO.pesquisaAgencia(agencia);
-	}
-	
-	public List<ContaBancaria> pesquisaTodos(Integer agencia, String titular, Integer conta) throws Exception{
-		return this.contaDAO.pesquisaTodos(titular, conta, agencia);
+	public ContaBancaria pesquisaID(Long id) throws Exception {
+		return this.contaDAO.pesquisaID(id);
 	}
 
 }

@@ -59,6 +59,7 @@ public class ContaBancariaDAOHibernate implements ContaBancariaDAO {
 	@Override
 	public void alterar(ContaBancaria conta) throws Exception {
 		this.session.merge(conta);
+		this.transacao.commit();
 
 	}
 
@@ -103,6 +104,11 @@ public class ContaBancariaDAOHibernate implements ContaBancariaDAO {
 		consulta.setParameter("parTitular", "%" + titular + "%");
 		consulta.setParameter("parAgencia", "%" + agencia + "%");
 		return consulta.getResultList();
+	}
+
+	@Override
+	public ContaBancaria pesquisaID(Long id) throws Exception {
+		return this.session.find(ContaBancaria.class, id);
 	}
 
 }

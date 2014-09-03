@@ -16,34 +16,34 @@
 		<h3 style="margin-top: 0">CADASTRO DE CONTA BANCARIA</h3>
 		<div align="left">
 
-			<p:commandButton value="Novo" actionListener="#{contaBancariaBean.novo}"/>
+			<p:commandButton value="Novo"
+				actionListener="#{contaBancariaBean.novo}"
+				disabled="#{contaBancariaBean.btNovo}" update="frmContaBancaria" />
 
 			<p:commandButton value="Salvar"
 				actionListener="#{contaBancariaBean.gravar(bancoBean.banco)}"
-				update="frmContaBancaria" />
+				update="frmContaBancaria" disabled="#{contaBancariaBean.btSalvar}" />
 
-			<p:commandButton value="Editar" />
+			<p:commandButton value="Editar"
+				actionListener="#{contaBancariaBean.editar}"
+				disabled="#{contaBancariaBean.btEditar}" />
 
 			<p:commandButton value="Consulta" type="button"
 				onclick="PF('consulta').show();" />
 
-			<p:commandButton value="Cancelar" />
+			<p:commandButton value="Cancelar"
+				actionListener="#{contaBancariaBean.novo}"
+				disabled="#{contaBancariaBean.btNovo}" update="frmContaBancaria" />
 
 			<p:messages id="messages" showDetail="true" autoUpdate="true"
 				closable="true" />
 
 			<p:dialog header="Consulta" widgetVar="consulta" modal="true"
-				height="300" width="500">
+				height="350" width="600">
 
-				<h:panelGrid columns="2">
+				<h:panelGrid columns="3">
 				Titular:
 					<p:inputText value="#{contaBancariaBean.nomeTitular}" />
-				
-				Agencia:
-					<p:inputText value="#{contaBancariaBean.txtAgencia}" />
-					
-				Conta:
-					<p:inputText value="#{contaBancariaBean.txtConta}" />
 
 					<p:commandButton value="Pesquisar" update="pesquisaConta"
 						actionListener="#{contaBancariaBean.pesquisaConta}" />
@@ -81,10 +81,10 @@
 
 					<p:column headerText="Selecionar">
 						<p:commandLink id="link" value="Selecionar"
-							ajax="dialog,frmCadConta" action="#{contaBean.selecionar}"
-							update="listaCFilha">
-							<f:setPropertyActionListener value="#{contas.idConta}"
-								target="#{contaBean.id}" />
+							ajax="dialog,frmContaBancaria"
+							action="#{contaBancariaBean.selecionar}" update="listaCFilha">
+							<f:setPropertyActionListener value="#{contas.idContaBancaria}"
+								target="#{contaBancariaBean.id}" />
 						</p:commandLink>
 					</p:column>
 
@@ -126,6 +126,11 @@
 					Conta:
 					<p:inputText id="contaNumero"
 							value="#{contaBancariaBean.contaBancaria.conta}" />
+					
+					Banco vinculado na conta:
+					<p:inputText id="bancoConta"
+							value="#{contaBancariaBean.contaBancaria.banco.nome}"
+							disabled="true" />
 					
 					Banco:
 						<p:selectOneMenu id="bc" value="#{bancoBean.banco}">
