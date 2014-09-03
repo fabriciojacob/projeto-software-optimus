@@ -28,11 +28,12 @@ public class AliquotaBean {
 	private List<CodigoSituacaoTributaria> cstListEnt;
 	private List<CodigoSituacaoTributaria> cstListSai;
 	private List<Aliquota> aliqList = new ArrayList<Aliquota>();
-	private String busca, filtro, tipCst, tipTrib;
+	private String busca, filtro, tipCst, tipTrib, tipCstFixo;
 	private Long id;
 	private boolean sal = true, alt = true, rem = true, tipTri = true,
-			vinculo = true, chkIcm = true, chkIpi = true, chkPisCofins = true, aliq = true, red = true;
-	
+			vinculo = true, chkIcm = true, chkIpi = true, chkPisCofins = true,
+			aliq = true, red = true;
+
 	public void novo() {
 		this.sal = false;
 		this.vinculo = false;
@@ -98,49 +99,60 @@ public class AliquotaBean {
 
 	public void alterar() {
 		try {
-			this.aliquota.setCst(null);
-			this.colCst = new ArrayList<>();
-			AliquotaRN aliqRN = new AliquotaRN();
-			if (this.tipCst.equals(TipoCst.ICMS.toString())) {
-				if (this.tipTrib.equals(TipoTrib.ISENTO.toString())) {
-					this.aliquota.setTipo(TipoTrib.ISENTO);
-				} else if (this.tipTrib.equals(TipoTrib.NTRIB.toString())) {
-					this.aliquota.setTipo(TipoTrib.NTRIB);
-				} else if (this.tipTrib
-						.equals(TipoTrib.SUBSTITUICAO.toString())) {
-					this.aliquota.setTipo(TipoTrib.SUBSTITUICAO);
-				} else if (this.tipTrib.equals(TipoTrib.TRIBUTADO.toString())) {
-					this.aliquota.setTipo(TipoTrib.TRIBUTADO);
+			if (this.tipCst.equals(this.tipCstFixo)) {
+				this.aliquota.setCst(null);
+				this.colCst = new ArrayList<>();
+				AliquotaRN aliqRN = new AliquotaRN();
+				if (this.tipCst.equals(TipoCst.ICMS.toString())) {
+					if (this.tipTrib.equals(TipoTrib.ISENTO.toString())) {
+						this.aliquota.setTipo(TipoTrib.ISENTO);
+					} else if (this.tipTrib.equals(TipoTrib.NTRIB.toString())) {
+						this.aliquota.setTipo(TipoTrib.NTRIB);
+					} else if (this.tipTrib.equals(TipoTrib.SUBSTITUICAO
+							.toString())) {
+						this.aliquota.setTipo(TipoTrib.SUBSTITUICAO);
+					} else if (this.tipTrib.equals(TipoTrib.TRIBUTADO
+							.toString())) {
+						this.aliquota.setTipo(TipoTrib.TRIBUTADO);
+					}
+					if (this.cst != null) {
+						this.colCst.add(cst);
+					}
+					this.aliquota.setCst(this.colCst);
+				} else {
+					this.aliquota.setTipo(null);
+					if (this.cstEnt != null && this.cstSai != null) {
+						this.colCst.add(cstEnt);
+						this.colCst.add(cstSai);
+					}
+					this.aliquota.setCst(this.colCst);
 				}
-				if (this.cst != null) {
-					this.colCst.add(cst);
+				Integer retorno = aliqRN.validaCampoNulo(this.aliquota,
+						this.colCst, this.tipTrib, this.tipCst);
+				if (retorno == 0) {
+					aliqRN.altAliq(aliquota);
+					FacesContext.getCurrentInstance().addMessage(
+							null,
+							new FacesMessage(FacesMessage.SEVERITY_INFO,
+									"Info", "Alíquota alterada com sucesso"));
+					this.alt = true;
+					this.rem = true;
+					this.vinculo = true;
+					limpa();
+					desabilita();
+				} else {
+					FacesContext.getCurrentInstance().addMessage(
+							null,
+							new FacesMessage(FacesMessage.SEVERITY_ERROR,
+									"Info",
+									"Existem campos nulos no formulário"));
 				}
-				this.aliquota.setCst(this.colCst);
-			} else {
-				this.aliquota.setTipo(null);
-				if (this.cstEnt != null && this.cstSai != null) {
-					this.colCst.add(cstEnt);
-					this.colCst.add(cstSai);
-				}
-				this.aliquota.setCst(this.colCst);
-			}
-			Integer retorno = aliqRN.validaCampoNulo(this.aliquota,
-					this.colCst, this.tipTrib, this.tipCst);
-			if (retorno == 0) {
-				aliqRN.altAliq(aliquota);
+			}else{
 				FacesContext.getCurrentInstance().addMessage(
 						null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-								"Alíquota alterada com sucesso"));
-				this.alt = true;
-				this.rem = true;
-				limpa();
-				desabilita();
-			} else {
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-								"Existem campos nulos no formulário"));
+						new FacesMessage(FacesMessage.SEVERITY_ERROR,
+								"Info",
+								"Alteração de Cst não permitida. Vincule o tipo de Cst correto para a alíquota que se deseja alterar ou cadastre outra."));
 			}
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
@@ -185,7 +197,7 @@ public class AliquotaBean {
 	public void buscaAliq() {
 		limpa();
 		AliquotaRN aliqRN = new AliquotaRN();
-		if (!busca.equals("")&& !filtro.equals("")) {
+		if (!busca.equals("") && !filtro.equals("")) {
 			if (filtro.equals("id")) {
 				this.aliqList = aliqRN.consultaId(Long.parseLong(busca));
 			} else if (filtro.equals("aliq")) {
@@ -199,6 +211,7 @@ public class AliquotaBean {
 	}
 
 	public void editAliq() {
+		this.tipCstFixo = "";
 		AliquotaRN aliqRN = new AliquotaRN();
 		CodigoSituacaoTributariaRN cstRN = new CodigoSituacaoTributariaRN();
 		this.aliquota = aliqRN.editUnid(id);
@@ -251,6 +264,7 @@ public class AliquotaBean {
 				this.tipCst = TipoCst.IPI.toString();
 			}
 		}
+		this.tipCstFixo = this.tipCst;
 		this.alt = false;
 		this.rem = false;
 		this.sal = true;
@@ -300,15 +314,15 @@ public class AliquotaBean {
 		this.aliqList = new ArrayList<Aliquota>();
 		this.colCst = new ArrayList<CodigoSituacaoTributaria>();
 	}
-	
-	public void habilita(){
+
+	public void habilita() {
 		this.aliq = false;
 		this.red = false;
 	}
-	
-	public void desabilita(){
+
+	public void desabilita() {
 		this.aliq = true;
-		this.red = true;		
+		this.red = true;
 	}
 
 	public boolean isAliq() {
