@@ -21,31 +21,70 @@ public class ContaBancariaBean {
 	private String nomeTitular;
 	private Integer txtConta, txtAgencia;
 	private String tipoContaBancaria;
+	private boolean btSalvar = true, btConsulta = false, btEditar = true, btNovo = false;
+	private Long id;
 
 	public void gravar(Banco banco) {
 		this.contaBancariaRN = new ContaBancariaRN();
 		try {
-			if(tipoContaBancaria == TipoContaBancaria.CORRENTE.toString()){
-				this.contaBancaria.setTipoContaBancaria(TipoContaBancaria.CORRENTE);
-			}else{
-				this.contaBancaria.setTipoContaBancaria(TipoContaBancaria.POUPANCA);
+			if (tipoContaBancaria.equals(TipoContaBancaria.CORRENTE.toString())) {
+				this.contaBancaria
+						.setTipoContaBancaria(TipoContaBancaria.CORRENTE);
+			} else {
+				this.contaBancaria
+						.setTipoContaBancaria(TipoContaBancaria.POUPANCA);
 			}
 			this.contaBancaria.setBanco(banco);
 			contaBancariaRN.salvar(this.contaBancaria);
 			msgAcerto("Conta salva com sucesso !!");
+			this.btSalvar = true;
+			this.btEditar = false;
 		} catch (Exception e) {
 			msgErro("Problemas ao gravar a conta bancária ", e);
 		}
 	}
-	
-	public void novo(){
-		msgAcerto("teste");
+
+	public void novo() {
+		this.contaBancaria = new ContaBancaria();
+		this.btSalvar = false;
+	}
+
+	public void editar() {
+		try {
+			if (tipoContaBancaria.equals(TipoContaBancaria.CORRENTE.toString())) {
+				this.contaBancaria
+						.setTipoContaBancaria(TipoContaBancaria.CORRENTE);
+			} else {
+				this.contaBancaria
+						.setTipoContaBancaria(TipoContaBancaria.POUPANCA);
+			}
+			this.contaBancariaRN = new ContaBancariaRN();
+			this.contaBancariaRN.alterar(contaBancaria);
+			msgAcerto("Registro alterado com sucesso ");
+		} catch (Exception e) {
+			msgErro("Problemas na alteração ", e);
+		}
 	}
 
 	public void pesquisaConta() {
 		this.contaBancariaRN = new ContaBancariaRN();
+		if (this.listaContas != null) {
+			this.listaContas.clear();
+		}
 		try {
+			this.listaContas = this.contaBancariaRN
+					.pesquisaTitular(nomeTitular);
+		} catch (Exception e) {
+			msgErro("Problemas na pesquisa ", e);
+		}
+	}
 
+	public void selecionar() {
+		this.contaBancariaRN = new ContaBancariaRN();
+		try {
+			this.btSalvar = true;
+			this.btEditar = false;
+			this.contaBancaria = this.contaBancariaRN.pesquisaID(this.id);
 		} catch (Exception e) {
 			msgErro("Problemas na pesquisa ", e);
 		}
@@ -117,6 +156,46 @@ public class ContaBancariaBean {
 
 	public void setTipoContaBancaria(String tipoContaBancaria) {
 		this.tipoContaBancaria = tipoContaBancaria;
+	}
+
+	public boolean isBtSalvar() {
+		return btSalvar;
+	}
+
+	public void setBtSalvar(boolean btSalvar) {
+		this.btSalvar = btSalvar;
+	}
+
+	public boolean isBtConsulta() {
+		return btConsulta;
+	}
+
+	public void setBtConsulta(boolean btConsulta) {
+		this.btConsulta = btConsulta;
+	}
+
+	public boolean isBtEditar() {
+		return btEditar;
+	}
+
+	public void setBtEditar(boolean btEditar) {
+		this.btEditar = btEditar;
+	}
+
+	public boolean isBtNovo() {
+		return btNovo;
+	}
+
+	public void setBtNovo(boolean btNovo) {
+		this.btNovo = btNovo;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 }

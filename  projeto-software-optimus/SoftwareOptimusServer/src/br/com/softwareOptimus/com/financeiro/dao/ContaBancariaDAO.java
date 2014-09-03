@@ -27,4 +27,6 @@ public interface ContaBancariaDAO {
 	
 	public List<ContaBancaria> pesquisaTodos(String titular, Integer conta, Integer agencia) throws Exception;
 
+	public ContaBancaria pesquisaID(Long id) throws Exception;
+
 }
