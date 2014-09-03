@@ -30,7 +30,7 @@ public class GradeTributariaBean {
 	private PautaRN pautaRN = new PautaRN();
 	private String busca, filtro, tipoEntSai, tipoGrade;
 	private Long id, idGradeVig;
-	private boolean sal = true, alt = true, rem = true, vig = true;
+	private boolean sal = true, alt = true, rem = true, vig = true, desc = true;
 
 	public GradeTributariaBean() {
 		setListaAliquota(this.aliqRN.listaAliqIcms());
@@ -45,6 +45,7 @@ public class GradeTributariaBean {
 		setListaAliquota(this.aliqRN.listaAliqIcms());
 		setListaPauta(this.pautaRN.listar());
 		limpar();
+		habilita();
 	}
 
 	public void salvar() {
@@ -92,6 +93,7 @@ public class GradeTributariaBean {
 				this.rem = true;
 				this.vig = true;
 				limpar();
+				desabilita();
 			} else {
 				FacesContext.getCurrentInstance().addMessage(
 						null,
@@ -120,6 +122,7 @@ public class GradeTributariaBean {
 			this.rem = true;
 			this.vig = true;
 			limpar();
+			desabilita();
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
@@ -146,6 +149,7 @@ public class GradeTributariaBean {
 		GradeTributariaRN gradeRN = new GradeTributariaRN();
 		this.grade = gradeRN.editGrade(id);
 		listaVigencia();
+		habilita();
 		this.alt = false;
 		this.vig = false;
 		this.rem = false;
@@ -165,6 +169,7 @@ public class GradeTributariaBean {
 		this.rem = true;
 		this.vig = true;
 		limpar();
+		desabilita();
 	}
 
 	public void excluirGradeVig() {
@@ -265,9 +270,25 @@ public class GradeTributariaBean {
 		}
 
 	}
+	
+	public void habilita(){
+		this.desc = false;
+	}
+	
+	public void desabilita(){
+		this.desc = true;
+	}
 
 	public List<Pauta> getListaPauta() {
 		return listaPauta;
+	}
+
+	public boolean isDesc() {
+		return desc;
+	}
+
+	public void setDesc(boolean desc) {
+		this.desc = desc;
 	}
 
 	public void setListaPauta(List<Pauta> listaPauta) {
