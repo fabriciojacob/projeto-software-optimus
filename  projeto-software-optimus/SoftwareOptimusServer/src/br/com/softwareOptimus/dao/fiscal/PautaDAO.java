@@ -14,6 +14,6 @@ public interface PautaDAO {
 	public List<Pauta> consultaDesc(String desc);
 	public List<Pauta> consulta();
 	public void alterar(Pauta pauta);
-	public void remover(Pauta pauta);
+	public void remover(Pauta pauta) throws IOException, SQLException;
 	public List<Pauta> listaConsultaId(Long id);
 }

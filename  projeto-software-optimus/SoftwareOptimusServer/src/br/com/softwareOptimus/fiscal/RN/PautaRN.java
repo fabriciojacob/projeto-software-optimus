@@ -1,5 +1,7 @@
 package br.com.softwareOptimus.fiscal.RN;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 import br.com.softwareOptimus.dao.fiscal.PautaDAO;
 import br.com.softwareOptimus.dao.fiscal.PautaMVADAO;
@@ -71,7 +73,7 @@ public class PautaRN {
 		this.pautaDAO.alterar(pauta);
 	}
 
-	public void remover(Pauta pauta) {
+	public void remover(Pauta pauta) throws IOException, SQLException {
 		this.pautaDAO.remover(pauta);
 	}
 }
