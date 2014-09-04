@@ -2,7 +2,6 @@ package br.com.softwareOptimus.fiscal.RN;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -97,9 +96,7 @@ public class GradeTributariaRN {
 	}
 
 	public Integer verificaRemocao(GradeTributaria grade) {
-		List<GradeTributaria> gra = new ArrayList<GradeTributaria>();
-		gra.add(grade);
-		List<FiguraFiscal> fig = this.gradeTribDAO.verificaRemocao(gra);
+		List<FiguraFiscal> fig = this.gradeTribDAO.verificaRemocao(grade);
 		if(fig.size() != 0){
 			return 1;
 		}else{
