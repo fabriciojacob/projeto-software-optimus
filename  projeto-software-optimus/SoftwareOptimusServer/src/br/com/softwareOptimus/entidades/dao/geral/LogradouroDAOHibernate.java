@@ -33,7 +33,7 @@ public class LogradouroDAOHibernate implements LogradouroDAO {
 	@Override
 	public void salvar(Logradouro logradouro) {
 		this.session.persist(logradouro);
-		if(!this.transaction.isActive()){
+		if (!this.transaction.isActive()) {
 			this.transaction.begin();
 		}
 		this.transaction.commit();
@@ -53,10 +53,11 @@ public class LogradouroDAOHibernate implements LogradouroDAO {
 
 	@Override
 	public void excluir(Long idLogr) {
-		if(!this.transaction.isActive()){
+		if (!this.transaction.isActive()) {
 			this.transaction.begin();
 		}
-		this.session.remove(this.session.getReference(Logradouro.class, idLogr));
+		this.session
+				.remove(this.session.getReference(Logradouro.class, idLogr));
 		this.transaction.commit();
 
 	}
@@ -92,12 +93,12 @@ public class LogradouroDAOHibernate implements LogradouroDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Logradouro> listar(Pessoa pessoa) {
-		String jpql = "Select l From Logradouro l inner join l.municipio c inner join c.uf "
+		String jpql = "Select l From Logradouro l inner join l.municipio c " +
+				"inner join c.uf "
 				+ " where l.pessoa = :parPessoa";
 		Query consulta = this.session.createQuery(jpql);
 		consulta.setParameter("parPessoa", pessoa);
 		return consulta.getResultList();
 	}
-	
 
 }

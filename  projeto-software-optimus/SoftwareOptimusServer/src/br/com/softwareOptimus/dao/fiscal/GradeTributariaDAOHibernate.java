@@ -106,8 +106,8 @@ public class GradeTributariaDAOHibernate implements GradeTributariaDAO {
 	}
 
 	@Override
-	public List<FiguraFiscal> verificaRemocao(GradeTributaria grade) {
-		String jpql = "Select f From FiguraFiscal f Where f.grades = :grade ";
+	public List<FiguraFiscal> verificaRemocao(List<GradeTributaria> grade) {
+		String jpql = "Select f From FiguraFiscal f Where f.grades = :grade";
 		//passa uma coleção de grades
 		//String jpql = "Select l From Logradouro l inner join l.municipio c inner join c.uf "
 		//		+ " where l.pessoa = :parPessoa";
