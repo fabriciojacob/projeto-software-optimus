@@ -30,7 +30,8 @@ public class GradeTributariaBean {
 	private PautaRN pautaRN = new PautaRN();
 	private String busca, filtro, tipoEntSai, tipoGrade;
 	private Long id, idGradeVig;
-	private boolean sal = true, alt = true, rem = true, vig = true, desc = true;
+	private boolean sal = true, alt = true, rem = true, vig = true,
+			desc = true;
 
 	public GradeTributariaBean() {
 		setListaAliquota(this.aliqRN.listaAliqIcms());
@@ -113,16 +114,24 @@ public class GradeTributariaBean {
 	public void remover() {
 		try {
 			GradeTributariaRN gradeRN = new GradeTributariaRN();
-			gradeRN.remover(this.grade);
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-							"Grade removida com sucesso"));
-			this.alt = true;
-			this.rem = true;
-			this.vig = true;
-			limpar();
-			desabilita();
+			Integer retorno = gradeRN.verificaRemocao(this.grade);
+			if (retorno == 0) {
+				gradeRN.remover(this.grade);
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
+								"Grade removida com sucesso"));
+				this.alt = true;
+				this.rem = true;
+				this.vig = true;
+				limpar();
+				desabilita();
+			} else {
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+								"Remoção não permitida! Existem Figuras vinculadas a esta grade. "));
+			}
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
@@ -270,12 +279,12 @@ public class GradeTributariaBean {
 		}
 
 	}
-	
-	public void habilita(){
+
+	public void habilita() {
 		this.desc = false;
 	}
-	
-	public void desabilita(){
+
+	public void desabilita() {
 		this.desc = true;
 	}
 

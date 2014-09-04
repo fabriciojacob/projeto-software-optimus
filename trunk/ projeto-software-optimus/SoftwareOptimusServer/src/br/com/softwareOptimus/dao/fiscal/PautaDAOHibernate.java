@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import br.com.softwareOptimus.fiscal.GradeTributariaVigencia;
 import br.com.softwareOptimus.fiscal.Pauta;
 
 public class PautaDAOHibernate implements PautaDAO {
@@ -96,5 +97,13 @@ public class PautaDAOHibernate implements PautaDAO {
 		begin();		
 		this.session.remove(pauta);
 		this.transaction.commit();
+	}
+	@Override
+	public List<GradeTributariaVigencia> verificaRemocao(Pauta pauta) {
+		String jpql = "Select g From GradeTributariaVigencia g Where g.pauta = :pauta ";
+		TypedQuery<GradeTributariaVigencia> listaGrade = this.session.createQuery(jpql,
+				GradeTributariaVigencia.class);
+		listaGrade.setParameter("pauta", pauta);
+		return listaGrade.getResultList();
 	}
 }

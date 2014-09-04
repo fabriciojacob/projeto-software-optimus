@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 import br.com.softwareOptimus.dao.fiscal.PautaDAO;
 import br.com.softwareOptimus.dao.fiscal.PautaMVADAO;
+import br.com.softwareOptimus.fiscal.GradeTributariaVigencia;
 import br.com.softwareOptimus.fiscal.Pauta;
 import br.com.softwareOptimus.fiscal.PautaMVA;
 import br.com.softwareOptimus.util.DAOFactory;
@@ -75,5 +76,15 @@ public class PautaRN {
 
 	public void remover(Pauta pauta) throws IOException, SQLException {
 		this.pautaDAO.remover(pauta);
+	}
+
+	public Integer verificaRemocao(Pauta pauta) {
+		List<GradeTributariaVigencia> grade = pautaDAO.verificaRemocao(pauta);
+		if (grade.size() != 0){
+			return 1;
+		}else{
+			return 0;
+		}
+
 	}
 }
