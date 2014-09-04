@@ -7,6 +7,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+
+import br.com.softwareOptimus.fiscal.FiguraFiscal;
 import br.com.softwareOptimus.fiscal.GradeTributaria;
 
 public class GradeTributariaDAOHibernate implements GradeTributariaDAO {
@@ -101,5 +103,17 @@ public class GradeTributariaDAOHibernate implements GradeTributariaDAO {
 				GradeTributaria.class);
 		Grade.setParameter("id", id);
 		return Grade.getSingleResult();
+	}
+
+	@Override
+	public List<FiguraFiscal> verificaRemocao(GradeTributaria grade) {
+		String jpql = "Select f From FiguraFiscal f inner join f.grade g Where g.idGradeTrib = :grade ";
+		//String jpql = "Select l From Logradouro l inner join l.municipio c inner join c.uf "
+		//		+ " where l.pessoa = :parPessoa";
+		
+		TypedQuery<FiguraFiscal> fig = this.session.createQuery(jpql,
+				FiguraFiscal.class);
+		fig.setParameter("grade", grade.getIdGradeTrib());
+		return fig.getResultList();
 	}
 }

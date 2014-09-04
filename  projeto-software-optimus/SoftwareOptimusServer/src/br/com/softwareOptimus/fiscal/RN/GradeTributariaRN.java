@@ -10,6 +10,7 @@ import br.com.softwareOptimus.dao.fiscal.GradeTributariaVigenciaDAO;
 import br.com.softwareOptimus.entidades.Estado;
 import br.com.softwareOptimus.entidades.TipoPessoaJuridica;
 import br.com.softwareOptimus.fiscal.Aliquota;
+import br.com.softwareOptimus.fiscal.FiguraFiscal;
 import br.com.softwareOptimus.fiscal.GradeTributaria;
 import br.com.softwareOptimus.fiscal.GradeTributariaVigencia;
 import br.com.softwareOptimus.fiscal.IO;
@@ -92,5 +93,14 @@ public class GradeTributariaRN {
 			Date vigencia, Pauta pauta) {
 		return this.gradeTribVigDAO.validaInclusao(origem, destino, aliquota, io, tipoGrade,
 				vigencia, pauta);
+	}
+
+	public Integer verificaRemocao(GradeTributaria grade) {
+		List<FiguraFiscal> fig = this.gradeTribDAO.verificaRemocao(grade);
+		if(fig.size() != 0){
+			return 1;
+		}else{
+			return 0;
+		}
 	}
 }

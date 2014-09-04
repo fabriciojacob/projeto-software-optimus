@@ -16,12 +16,13 @@ public class PautaBean {
 
 	private Pauta pauta = new Pauta();
 	private PautaMVA pautaMVA = new PautaMVA();
-	private Boolean sal = true, alt = true, rem = true, vig = true, desc = true;
+	private Boolean sal = true, alt = true, rem = true, vig = true,
+			desc = true;
 	private String busca, filtro;
 	private List<PautaMVA> listaPautaMVA = new ArrayList<PautaMVA>();
 	private List<Pauta> listaPauta = new ArrayList<Pauta>();
 	private Long id, idPautaMVA;
-	
+
 	public void novo() {
 		this.sal = false;
 		this.alt = true;
@@ -64,16 +65,24 @@ public class PautaBean {
 	public void remover() {
 		try {
 			PautaRN pautaRN = new PautaRN();
-			pautaRN.remover(this.pauta);
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-							"Pauta removida com sucesso"));
-			this.alt = true;
-			this.rem = true;
-			this.vig = true;
-			limpar();
-			desabilita();
+			Integer retorno = pautaRN.verificaRemocao(this.pauta);
+			if (retorno == 0) {
+				pautaRN.remover(this.pauta);
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
+								"Pauta removida com sucesso"));
+				this.alt = true;
+				this.rem = true;
+				this.vig = true;
+				limpar();
+				desabilita();
+			} else {
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+								"Remoção não permitida! Existem grades vinculadas a esta pauta."));
+			}
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
@@ -121,7 +130,7 @@ public class PautaBean {
 											+ e.getMessage()));
 		}
 	}
-	
+
 	public void incluirPautaMVA() {
 		try {
 			PautaRN pautaRN = new PautaRN();
@@ -136,22 +145,21 @@ public class PautaBean {
 						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
 								"Vigência salva com sucesso"));
 				this.pautaMVA = new PautaMVA();
-			}else{
+			} else {
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
 								"Existem campos nulos no formulário"));
 			}
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance()
-			.addMessage(
+			FacesContext.getCurrentInstance().addMessage(
 					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR,
-							"Info", "Problemas na gravacao da Vigência "
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+							"Problemas na gravacao da Vigência "
 									+ e.getMessage()));
 		}
 	}
-	
+
 	public void listaVigencia() {
 		try {
 			PautaRN pautaRN = new PautaRN();
@@ -160,11 +168,10 @@ public class PautaBean {
 			}
 			this.listaPautaMVA = pautaRN.listar(this.pauta);
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance()
-			.addMessage(
+			FacesContext.getCurrentInstance().addMessage(
 					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR,
-							"Info", "Problemas ao listar as Vigências "
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+							"Problemas ao listar as Vigências "
 									+ e.getMessage()));
 		}
 
@@ -217,15 +224,16 @@ public class PautaBean {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na remoção da vigência da Pauta " + e.getMessage()));
+							"Problemas na remoção da vigência da Pauta "
+									+ e.getMessage()));
 		}
 	}
-	
-	public void habilita(){
+
+	public void habilita() {
 		this.desc = false;
 	}
-	
-	public void desabilita(){
+
+	public void desabilita() {
 		this.desc = true;
 	}
 
