@@ -107,13 +107,14 @@ public class GradeTributariaDAOHibernate implements GradeTributariaDAO {
 
 	@Override
 	public List<FiguraFiscal> verificaRemocao(GradeTributaria grade) {
-		String jpql = "Select f From FiguraFiscal f inner join f.grade g Where g.idGradeTrib = :grade ";
+		String jpql = "Select f From FiguraFiscal f Where f.grades = :grade ";
+		//passa uma coleção de grades
 		//String jpql = "Select l From Logradouro l inner join l.municipio c inner join c.uf "
 		//		+ " where l.pessoa = :parPessoa";
 		
 		TypedQuery<FiguraFiscal> fig = this.session.createQuery(jpql,
 				FiguraFiscal.class);
-		fig.setParameter("grade", grade.getIdGradeTrib());
+		fig.setParameter("grade", grade);
 		return fig.getResultList();
 	}
 }
