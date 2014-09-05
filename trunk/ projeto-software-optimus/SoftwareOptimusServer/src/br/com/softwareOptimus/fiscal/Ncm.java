@@ -15,9 +15,43 @@ public class Ncm {
 	@Column ( length = 10 , nullable = true , unique = false)
 	private String ncm;
 	
-	@Column ( length = 85 , nullable = true , unique = false)
-	private String descricao;
+	@Column (length = 85 , nullable = true , unique = false)
+	private String descricaoNcm;
 	
+	@Column ( length = 3 , nullable = true , unique = false)
+	private String natRec;
+	
+	@Column (length = 85 , nullable = true , unique = false)
+	private String descNatRec;
+	
+	//Com Isenção, Com Suspencao etc
+	@Column (length = 85 , nullable = true , unique = false)
+	private String descTabela;
+	
+	public String getNatRec() {
+		return natRec;
+	}
+
+	public void setNatRec(String natRec) {
+		this.natRec = natRec;
+	}
+
+	public String getDescNatRec() {
+		return descNatRec;
+	}
+
+	public void setDescNatRec(String descNatRec) {
+		this.descNatRec = descNatRec;
+	}
+
+	public String getDescTabela() {
+		return descTabela;
+	}
+
+	public void setDescTabela(String descTabela) {
+		this.descTabela = descTabela;
+	}
+
 	public Long getIdNcm() {
 		return idNcm;
 	}
@@ -34,12 +68,12 @@ public class Ncm {
 		this.ncm = ncm;
 	}
 
-	public String getDescricao() {
-		return descricao;
+	public String getDescricaoNcm() {
+		return descricaoNcm;
 	}
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+	public void setDescricaoNcm(String descricaoNcm) {
+		this.descricaoNcm = descricaoNcm;
 	}
 
 	@Override
