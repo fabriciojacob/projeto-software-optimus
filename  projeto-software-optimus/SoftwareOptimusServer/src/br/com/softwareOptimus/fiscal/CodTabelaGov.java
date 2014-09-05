@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -24,12 +23,11 @@ public class CodTabelaGov implements Serializable{
 	@GeneratedValue
 	private Long idCodGov;
 
-	private Integer natRec;
-
-	private Integer codGov;
-
 	@Temporal(TemporalType.DATE)
 	private Date vigencia;
+	
+	@ManyToOne
+	private TipoProduto tipoProduto;
 	
 	@ManyToOne
 	private Ncm ncm;
@@ -46,48 +44,12 @@ public class CodTabelaGov implements Serializable{
 	@ManyToOne
 	private Aliquota saidaCofins;
 	
-	@OneToOne
-	private CodigoSituacaoTributaria cstPisEntrada;
-	
-	@OneToOne
-	private CodigoSituacaoTributaria cstCofinsEntrada;
-	
-	@OneToOne
-	private CodigoSituacaoTributaria cstPisSaida;
-	
-	@OneToOne
-	private CodigoSituacaoTributaria cstCofinsSaida;
-	
-	public CodigoSituacaoTributaria getCstPisEntrada() {
-		return cstPisEntrada;
+	public TipoProduto getTipoProduto() {
+		return tipoProduto;
 	}
 
-	public void setCstPisEntrada(CodigoSituacaoTributaria cstPisEntrada) {
-		this.cstPisEntrada = cstPisEntrada;
-	}
-
-	public CodigoSituacaoTributaria getCstCofinsEntrada() {
-		return cstCofinsEntrada;
-	}
-
-	public void setCstCofinsEntrada(CodigoSituacaoTributaria cstCofinsEntrada) {
-		this.cstCofinsEntrada = cstCofinsEntrada;
-	}
-
-	public CodigoSituacaoTributaria getCstPisSaida() {
-		return cstPisSaida;
-	}
-
-	public void setCstPisSaida(CodigoSituacaoTributaria cstPisSaida) {
-		this.cstPisSaida = cstPisSaida;
-	}
-
-	public CodigoSituacaoTributaria getCstCofinsSaida() {
-		return cstCofinsSaida;
-	}
-
-	public void setCstCofinsSaida(CodigoSituacaoTributaria cstCofinsSaida) {
-		this.cstCofinsSaida = cstCofinsSaida;
+	public void setTipoProduto(TipoProduto tipoProduto) {
+		this.tipoProduto = tipoProduto;
 	}
 
 	public Ncm getNcm() {
@@ -147,22 +109,6 @@ public class CodTabelaGov implements Serializable{
 
 	public void setVigencia(Date vigencia) {
 		this.vigencia = vigencia;
-	}
-
-	public Integer getNatRec() {
-		return natRec;
-	}
-
-	public void setNatRec(Integer natRec) {
-		this.natRec = natRec;
-	}
-
-	public Integer getCodGov() {
-		return codGov;
-	}
-
-	public void setCodGov(Integer codGov) {
-		this.codGov = codGov;
 	}
 
 	public Long getIdCodGov() {
