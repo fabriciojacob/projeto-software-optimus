@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+</h:head>
+<h:body>
+	<h:form id="frmCaixa">
+		<br />
+		<h3 style="margin-top: 0">CADASTRO DE CAIXA</h3>
+		<div align="left">
+
+			<p:commandButton value="Novo" actionListener="#{caixaBean.novo}"
+				disabled="#{caixaBean.btNovo}" update="frmCaixa" />
+
+			<p:commandButton value="Salvar" actionListener="#{caixaBean.salvar}"
+				update="frmCaixa" disabled="#{caixaBean.btSalvar}" />
+
+			<p:commandButton value="Editar" actionListener="#{caixaBean.editar}"
+				disabled="#{caixaBean.btEditar}" />
+
+			<p:commandButton value="Consulta" type="button"
+				onclick="PF('consulta').show();" />
+
+			<p:commandButton value="Cancelar" actionListener="#{caixaBean.novo}"
+				disabled="#{caixaBean.btCancelar}" update="frmCaixa" />
+
+			<p:commandButton value="Excluir"
+				actionListener="#{caixaBean.excluir}"
+				disabled="#{caixaBean.btExcluir}" update="frmCaixa" />
+
+			<p:messages id="messages" showDetail="true" autoUpdate="true"
+				closable="true" />
+
+			<p:dialog header="Consulta" widgetVar="consulta" modal="true"
+				height="350" width="600">
+
+				<h:panelGrid columns="3">
+				Descrição:
+					<p:inputText value="#{caixaBean.descricao}" />
+
+					<p:commandButton value="Pesquisar" update="pesquisaCaixa"
+						actionListener="#{caixaBean.pesquisar}" />
+				</h:panelGrid>
+
+
+				<p:dataTable id="pesquisaCaixa" paginator="true" rows="6"
+					value="#{caixaBean.listaCaixa}" var="caixas">
+
+					<p:column headerText="Codigo">
+						<h:outputText value="#{caixas.idCaixa}" />
+					</p:column>
+
+					<p:column headerText="Descrição">
+						<h:outputText value="#{caixas.descricao}" />
+					</p:column>
+
+					<p:column headerText="Selecionar">
+						<p:commandLink id="link" value="Selecionar" ajax="dialog,frmCaixa"
+							action="#{caixaBean.selecionar}" update="dadosCaixa">
+							<f:setPropertyActionListener value="#{caixas.idCaixa}"
+								target="#{caixaBean.id}" />
+						</p:commandLink>
+					</p:column>
+
+				</p:dataTable>
+
+			</p:dialog>
+
+			<p:tabView style="border: 0px">
+
+				<p:tab id="dadosCaixa" title="Cadastro">
+
+					<h:panelGrid id="cadastroCaixa" columns="2"
+						columnClasses="label, value">
+						
+					Inativa:
+						<p:selectBooleanCheckbox id="inativaConta"
+							value="#{caixaBean.caixa.inativar}" />
+					</h:panelGrid>
+					<h:panelGrid columns="2" columnClasses="label, value">
+					
+					Codigo:
+					<p:inputText id="contaCodigo" disabled="true"
+							value="#{caixaBean.caixa.idCaixa}" />
+					
+					Descrição:
+					<p:inputText id="descCaixa" value="#{caixaBean.caixa.descricao}"
+							size="30" />
+
+					</h:panelGrid>
+
+				</p:tab>
+
+
+			</p:tabView>
+		</div>
+	</h:form>
+</h:body>
+</html>
