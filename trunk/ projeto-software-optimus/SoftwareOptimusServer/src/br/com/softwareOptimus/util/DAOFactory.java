@@ -7,6 +7,8 @@ import javax.persistence.EntityManager;
 
 import br.com.softwareOptimus.com.financeiro.dao.BancoDAO;
 import br.com.softwareOptimus.com.financeiro.dao.BancoDAOHibernate;
+import br.com.softwareOptimus.com.financeiro.dao.CaixaDAO;
+import br.com.softwareOptimus.com.financeiro.dao.CaixaDAOHibernate;
 import br.com.softwareOptimus.com.financeiro.dao.ContaBancariaDAO;
 import br.com.softwareOptimus.com.financeiro.dao.ContaBancariaDAOHibernate;
 import br.com.softwareOptimus.com.financeiro.dao.ContaDAO;
@@ -51,28 +53,39 @@ import br.com.softwareOptimus.entidades.dao.usuario.UsuarioDAOHibernate;
 public class DAOFactory {
 
 	private static EntityManager session = JpaUtil.getEntityManager();
-	
-	public static BancoDAO criaBanco(){
+
+	public static CaixaDAO criaCaixa() {
+		CaixaDAOHibernate caixaDAO = new CaixaDAOHibernate();
+		caixaDAO.setSession(session);
+		try {
+			caixaDAO.begin();
+		} catch (IOException | SQLException e) {
+			e.printStackTrace();
+		}
+		return caixaDAO;
+	}
+
+	public static BancoDAO criaBanco() {
 		BancoDAOHibernate bancoDAO = new BancoDAOHibernate();
 		bancoDAO.setSession(session);
-		try{
+		try {
 			bancoDAO.being();
-		} catch (IOException | SQLException e){
+		} catch (IOException | SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 		return bancoDAO;
 	}
-	
-	public static ContaBancariaDAO criaContaBancDAO(){
+
+	public static ContaBancariaDAO criaContaBancDAO() {
 		ContaBancariaDAOHibernate contaDAO = new ContaBancariaDAOHibernate();
 		contaDAO.setSession(session);
-		try{
+		try {
 			contaDAO.begin();
-		}catch (IOException | SQLException e){
+		} catch (IOException | SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 		return contaDAO;
 	}
 
@@ -241,7 +254,7 @@ public class DAOFactory {
 		}
 		return pautaDAO;
 	}
-	
+
 	public static PautaDAO criaPautaDAO() {
 		PautaDAOHibernate pautaDAO = new PautaDAOHibernate();
 		pautaDAO.setSession(session);
@@ -263,8 +276,8 @@ public class DAOFactory {
 		}
 		return gradeDAO;
 	}
-	
-	public static GradeTributariaVigenciaDAO criaGradeTribVigDAO(){
+
+	public static GradeTributariaVigenciaDAO criaGradeTribVigDAO() {
 		GradeTributariaVigenciaDAOHibernate gradeVigDAO = new GradeTributariaVigenciaDAOHibernate();
 		gradeVigDAO.setSession(session);
 		try {

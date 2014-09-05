@@ -21,6 +21,8 @@ public class Caixa implements Serializable {
 	private Long idCaixa;
 	
 	private String descricao;
+	
+	private boolean inativar;
 
 	public Long getIdCaixa() {
 		return idCaixa;
@@ -36,6 +38,16 @@ public class Caixa implements Serializable {
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+	
+	
+
+	public boolean isInativar() {
+		return inativar;
+	}
+
+	public void setInativar(boolean inativar) {
+		this.inativar = inativar;
 	}
 
 	@Override
