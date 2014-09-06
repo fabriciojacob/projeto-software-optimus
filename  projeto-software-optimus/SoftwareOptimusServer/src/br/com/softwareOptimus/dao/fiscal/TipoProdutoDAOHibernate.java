@@ -1,8 +1,10 @@
+package br.com.softwareOptimus.dao.fiscal;
 import java.io.IOException;
 import java.sql.SQLException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+
 
 
 public class TipoProdutoDAOHibernate implements TipoProdutoDAO {
