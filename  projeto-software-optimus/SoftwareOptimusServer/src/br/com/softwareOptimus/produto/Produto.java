@@ -8,10 +8,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
 import br.com.softwareOptimus.estoque.ProdutoEstoque;
 import br.com.softwareOptimus.fiscal.FiguraFiscal;
-import br.com.softwareOptimus.fiscal.Ncm;
+import br.com.softwareOptimus.fiscal.TipoProduto;
 import br.com.softwareOptimus.producao.ProdutoFilho;
 import br.com.softwareOptimus.producao.ProdutoPrincipal;
 
@@ -50,11 +49,9 @@ public class Produto implements Serializable{
 	
 	@ManyToOne
 	private UnidMed UnidMed;
-	//Campo 7 - 0200 valores fixos
-	private String tipoProd;
 	
 	@ManyToOne
-	private Ncm ncm;
+	private TipoProduto tipoProd;
 	
 	public ProdutoPrincipal getProdPrincipal() {
 		return prodPrincipal;
@@ -112,22 +109,6 @@ public class Produto implements Serializable{
 		UnidMed = unidMed;
 	}
 
-	public String getTipoProd() {
-		return tipoProd;
-	}
-
-	public void setTipoProd(String tipoProd) {
-		this.tipoProd = tipoProd;
-	}
-
-	public Ncm getNcm() {
-		return ncm;
-	}
-
-	public void setNcm(Ncm ncm) {
-		this.ncm = ncm;
-	}
-	
 	public ProdutoEstoque getEstoque() {
 		return estoque;
 	}
@@ -136,6 +117,14 @@ public class Produto implements Serializable{
 		this.estoque = estoque;
 	}
 
+
+	public TipoProduto getTipoProd() {
+		return tipoProd;
+	}
+
+	public void setTipoProd(TipoProduto tipoProd) {
+		this.tipoProd = tipoProd;
+	}
 
 	@Override
 	public int hashCode() {
