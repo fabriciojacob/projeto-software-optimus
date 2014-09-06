@@ -62,6 +62,13 @@ public class PautaDAOHibernate implements PautaDAO {
 				Pauta.class);
 		return listaPauta.getResultList();
 	}
+	
+	public List<Pauta> consPautVig() {
+		String jpql = "Select p From Pauta p Where exists (select v from PautaMVA v where v.pauta = p)";
+		TypedQuery<Pauta> listaPauta = this.session.createQuery(jpql,
+				Pauta.class);
+		return listaPauta.getResultList();
+	}
 
 	@Override
 	public Pauta consultaId(Long id) {

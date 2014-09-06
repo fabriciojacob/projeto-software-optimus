@@ -75,6 +75,10 @@ public class GradeTributariaRN {
 	public List<GradeTributaria> listar() {
 		return this.gradeTribDAO.listar();
 	}
+	
+	public List<GradeTributaria> consGradVig() {
+		return this.gradeTribDAO.consGradVig();
+	}
 
 	public GradeTributaria editGrade(Long id) {
 		return this.gradeTribDAO.consultaId(id);
