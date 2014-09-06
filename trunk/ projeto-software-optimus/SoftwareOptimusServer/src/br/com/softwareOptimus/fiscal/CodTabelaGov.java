@@ -44,6 +44,9 @@ public class CodTabelaGov implements Serializable{
 	@ManyToOne
 	private Aliquota saidaCofins;
 	
+	//Campo 7 - 0200 valores fixos
+	private String tipoItem;
+		
 	public TipoProduto getTipoProduto() {
 		return tipoProduto;
 	}
@@ -92,17 +95,6 @@ public class CodTabelaGov implements Serializable{
 		this.saidaCofins = saidaCofins;
 	}
 
-	@ManyToOne
-	private TipoProduto tipoProd;
-
-	public TipoProduto getTipoProd() {
-		return tipoProd;
-	}
-
-	public void setTipoProd(TipoProduto tipoProd) {
-		this.tipoProd = tipoProd;
-	}
-
 	public Date getVigencia() {
 		return vigencia;
 	}
@@ -117,6 +109,14 @@ public class CodTabelaGov implements Serializable{
 
 	public void setIdCodGov(Long idCodGov) {
 		this.idCodGov = idCodGov;
+	}
+
+	public String getTipoItem() {
+		return tipoItem;
+	}
+
+	public void setTipoItem(String tipoProd) {
+		this.tipoItem = tipoProd;
 	}
 
 	@Override
