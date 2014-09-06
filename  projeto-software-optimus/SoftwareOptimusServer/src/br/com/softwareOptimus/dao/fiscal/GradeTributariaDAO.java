@@ -17,6 +17,7 @@ public interface GradeTributariaDAO {
 	public List<GradeTributaria> listaConsultaId(long id);
 	public List<GradeTributaria> listaConsultaDesc(String busca);
 	public List<GradeTributaria> listar();
+	public List<GradeTributaria> consGradVig();
 	public GradeTributaria consultaId(Long id);
 	public List<FiguraFiscal> verificaRemocao(GradeTributaria grade);
 }

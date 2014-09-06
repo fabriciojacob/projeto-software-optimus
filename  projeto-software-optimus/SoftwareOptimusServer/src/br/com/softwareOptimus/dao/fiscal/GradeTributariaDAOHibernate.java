@@ -95,6 +95,14 @@ public class GradeTributariaDAOHibernate implements GradeTributariaDAO {
 				GradeTributaria.class);
 		return listaGrade.getResultList();
 	}
+	
+	@Override
+	public List<GradeTributaria> consGradVig() {
+		String jpql = "Select g From GradeTributaria g where exists (select v from GradeTributariaVigencia v where v.grade = g)";
+		TypedQuery<GradeTributaria> listaGrade = this.session.createQuery(jpql,
+				GradeTributaria.class);
+		return listaGrade.getResultList();
+	}
 
 	@Override
 	public GradeTributaria consultaId(Long id) {
@@ -108,10 +116,6 @@ public class GradeTributariaDAOHibernate implements GradeTributariaDAO {
 	@Override
 	public List<FiguraFiscal> verificaRemocao(GradeTributaria grade) {
 		String jpql = "Select Distinct f From FiguraFiscal f, IN(f.grades) AS g Where g.idGradeTrib = :grade";
-		//passa uma coleção de grades
-		//String jpql = "Select l From Logradouro l inner join l.municipio c inner join c.uf "
-		//		+ " where l.pessoa = :parPessoa";
-		
 		TypedQuery<FiguraFiscal> fig = this.session.createQuery(jpql,
 				FiguraFiscal.class);
 		fig.setParameter("grade", grade.getIdGradeTrib());

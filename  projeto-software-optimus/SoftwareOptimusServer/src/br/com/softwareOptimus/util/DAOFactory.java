@@ -298,4 +298,15 @@ public class DAOFactory {
 		}
 		return figuraDAO;
 	}
+	
+	public static TipoProdutoDAO criaTipoProdutoDAO(){
+		TipoProdutoDAOHibernate tipoProdutoDAO = new TipoProdutoDAOHibernate();
+		tipoProdutoDAO.setSession(session);
+		try {
+			tipoProdutoDAO.begin();
+		} catch (IOException | SQLException e) {
+			e.printStackTrace();
+		}
+		return tipoProdutoDAO;
+	}
 }

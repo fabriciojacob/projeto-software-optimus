@@ -65,6 +65,10 @@ public class PautaRN {
 	public List<Pauta> listar() {
 		return this.pautaDAO.consulta();
 	}
+	
+	public List<Pauta> consPautVig() {
+		return this.pautaDAO.consPautVig();
+	}
 
 	public Pauta editPauta(Long id) {
 		return this.pautaDAO.consultaId(id);

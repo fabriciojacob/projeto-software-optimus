@@ -35,7 +35,7 @@ public class GradeTributariaBean {
 
 	public GradeTributariaBean() {
 		setListaAliquota(this.aliqRN.listaAliqIcms());
-		setListaPauta(this.pautaRN.listar());
+		setListaPauta(this.pautaRN.consPautVig());
 	}
 
 	public void novo() {
@@ -44,7 +44,7 @@ public class GradeTributariaBean {
 		this.rem = true;
 		this.vig = true;
 		setListaAliquota(this.aliqRN.listaAliqIcms());
-		setListaPauta(this.pautaRN.listar());
+		setListaPauta(this.pautaRN.consPautVig());
 		limpar();
 		habilita();
 	}

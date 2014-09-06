@@ -26,7 +26,7 @@ public class FiguraFiscalBean {
 	private Long id, idGrade;
 
 	public FiguraFiscalBean() {
-		setListaGradeVis(this.gradRN.listar());
+		setListaGradeVis(this.gradRN.consGradVig());
 	}
 
 	public void novo() {
@@ -34,6 +34,7 @@ public class FiguraFiscalBean {
 		this.alt = true;
 		this.rem = true;
 		this.vincGrade = false;
+		setListaGradeVis(this.gradRN.consGradVig());
 		limpar();
 		habilita();
 	}
