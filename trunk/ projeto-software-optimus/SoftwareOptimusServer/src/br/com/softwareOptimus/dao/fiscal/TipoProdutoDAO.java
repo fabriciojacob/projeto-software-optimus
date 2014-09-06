@@ -1,3 +1,4 @@
+package br.com.softwareOptimus.dao.fiscal;
 import java.io.IOException;
 import java.sql.SQLException;
 

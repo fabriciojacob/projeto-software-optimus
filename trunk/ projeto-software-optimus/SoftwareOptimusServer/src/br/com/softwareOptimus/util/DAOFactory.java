@@ -27,6 +27,8 @@ import br.com.softwareOptimus.dao.fiscal.PautaDAO;
 import br.com.softwareOptimus.dao.fiscal.PautaDAOHibernate;
 import br.com.softwareOptimus.dao.fiscal.PautaMVADAO;
 import br.com.softwareOptimus.dao.fiscal.PautaMVADAOHibernate;
+import br.com.softwareOptimus.dao.fiscal.TipoProdutoDAO;
+import br.com.softwareOptimus.dao.fiscal.TipoProdutoDAOHibernate;
 import br.com.softwareOptimus.dao.produto.ProdutoDAO;
 import br.com.softwareOptimus.dao.produto.ProdutoDAOHibernate;
 import br.com.softwareOptimus.dao.produto.UnidMedDAO;
