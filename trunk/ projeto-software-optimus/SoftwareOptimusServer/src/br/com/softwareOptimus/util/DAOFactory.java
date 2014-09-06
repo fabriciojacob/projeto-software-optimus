@@ -15,6 +15,8 @@ import br.com.softwareOptimus.com.financeiro.dao.ContaDAO;
 import br.com.softwareOptimus.com.financeiro.dao.ContaDAOHibernate;
 import br.com.softwareOptimus.dao.fiscal.AliquotaDAO;
 import br.com.softwareOptimus.dao.fiscal.AliquotaDAOHibernate;
+import br.com.softwareOptimus.dao.fiscal.CodTabelaGovDAO;
+import br.com.softwareOptimus.dao.fiscal.CodTabelaGovDAOHibernate;
 import br.com.softwareOptimus.dao.fiscal.CodigoSituacaoTributariaDAO;
 import br.com.softwareOptimus.dao.fiscal.CodigoSituacaoTributariaDAOHibernate;
 import br.com.softwareOptimus.dao.fiscal.FiguraFiscalDAO;
@@ -310,5 +312,16 @@ public class DAOFactory {
 			e.printStackTrace();
 		}
 		return tipoProdutoDAO;
+	}
+	
+	public static CodTabelaGovDAO criaCodTabelaGovDAO(){
+		CodTabelaGovDAOHibernate codTabelaGovDAO = new CodTabelaGovDAOHibernate();
+		codTabelaGovDAO.setSession(session);
+		try {
+			codTabelaGovDAO.begin();
+		} catch (IOException | SQLException e) {
+			e.printStackTrace();
+		}
+		return codTabelaGovDAO;
 	}
 }
