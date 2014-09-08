@@ -5,6 +5,6 @@ import java.sql.SQLException;
 
 public interface CodTabelaGovDAO {
 
-	void begin() throws IOException, SQLException;
-	void close() throws Exception;
+	public void begin() throws IOException, SQLException;
+	public void close() throws Exception;
 }
