@@ -46,6 +46,9 @@ public class CodTabelaGov implements Serializable{
 	
 	//Campo 7 - 0200 valores fixos
 	private String tipoItem;
+	
+	@ManyToOne
+	private Aliquota aliquotaIpi;
 		
 	public TipoProduto getTipoProduto() {
 		return tipoProduto;

@@ -14,7 +14,111 @@
 		<br />
 		<h3 style="margin-top: 0">CADASTRO DO TIPO DE PRODUTO</h3>
 		<div align="left">
-			<h:panelGrid columns="2" columnClasses="label">
+
+			<p:commandButton value="Novo"
+				actionListener="#{tipoProdutoBean.novo}" ajax="grid" />
+
+			<p:commandButton value="Salvar" disabled="#{tipoProdutoBean.sal}"
+				actionListener="#{tipoProdutoBean.salvar}" ajax="grid"
+				update="dialog2" />
+
+			<p:commandButton value="Alterar" disabled="#{tipoProdutoBean.alt}"
+				actionListener="#{tipoProdutoBean.alterar}" ajax="grid" />
+
+			<p:commandButton value="Excluir" disabled="#{tipoProdutoBean.rem}"
+				actionListener="#{tipoProdutoBean.remover}" ajax="grid" />
+
+			<p:commandButton id="consulta" value="Consultar" type="button"
+				ajax="dialog, grid" onclick="PF('dlg1').show();"
+				actionListener="#{tipoProdutoBean.cancelar}" />
+
+			<p:commandButton value="Cancelar"
+				actionListener="#{tipoProdutoBean.cancelar}" ajax="grid" />
+			<p:messages id="messages" showDetail="true" autoUpdate="true"
+				closable="true" />
+
+			<h:panelGrid id="grid" columns="2" columnClasses="label, value">
+			
+					Código do Tipo de Produto:
+					<p:inputText id="idGrade" disabled="true"
+					value="#{tipoProdutoBean.tipo.idTipoProd}" />
+		
+					Descrição da Grade:
+					<p:inputText id="descGrade"
+					value="#{tipoProdutoBean.tipo.descricao}" size="40"
+					disabled="#{tipoProdutoBean.desc}" />
+			</h:panelGrid>
+
+			<p:commandButton id="vincVigencia"
+				value="Vigência do Tipo de Produto" type="button"
+				update="gridincEdi2" disabled="#{tipoProdutoBean.vig}"
+				onclick="PF('dlg2').show();" />
+
+			<h:panelGrid id="gridVigTipo" columns="1">
+				<p:blockUI block="gridVigTipo" trigger="vincVigencia" />
+				<p:dataTable id="listaVigTipoProd"
+					value="#{tipoProdutoBean.listaTbGov}" var="listatbGov"
+					paginator="true" rows="8">
+
+					<p:column headerText="Código da Vigência">
+						<h:outputText value="#{listatbGov.idCodGov}" />
+					</p:column>
+
+					<p:column headerText="Vigência">
+						<h:outputText value="#{listatbGov.vigencia}">
+							<f:convertDateTime type="date" dateStyle="medium" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Código Ncm">
+						<h:outputText value="#{listatbGov.ncm}" />
+					</p:column>
+
+					<p:column headerText="Alíquota Entrada Pis">
+						<h:outputText value="#{listatbGov.entradaPis}" />
+					</p:column>
+
+					<p:column headerText="Alíquota Entrada Cofins">
+						<h:outputText value="#{listatbGov.entradaCofins}" />
+					</p:column>
+
+					<p:column headerText="Alíquota Saída Pis">
+						<h:outputText value="#{listatbGov.saidaPis}" />
+					</p:column>
+
+					<p:column headerText="Alíquota Saída Cofins">
+						<h:outputText value="#{listatbGov.saidaCofins}" />
+					</p:column>
+
+					<p:column headerText="Alíquota Ipi">
+						<h:outputLabel value="#{listatbGov.aliquotaIpi}" />
+					</p:column>
+
+					<p:column headerText="Tipo do Item Item">
+						<h:outputLabel value="#{listatbGov.tipoItem}" />
+					</p:column>
+
+					<p:column headerText="Editar">
+						<p:commandLink id="linkEditaVig" value="Editar" ajax="dialog"
+							action="#{tipoProdutoBean.editarVigTip}" update="listatbGov">
+							<f:setPropertyActionListener value="#{listatbGov.idCodGov}"
+								target="#{tipoProdutoBean.idVig}" />
+						</p:commandLink>
+					</p:column>
+
+					<p:column headerText="Excluir">
+						<p:commandLink id="linkExcluiVig" value="Excluir" ajax="dialog"
+							action="#{tipoProdutoBean.excluirVigTip}" update="listatbGov">
+							<f:setPropertyActionListener value="#{listatbGov.idCodGov}"
+								target="#{tipoProdutoBean.idVig}" />
+						</p:commandLink>
+					</p:column>
+
+				</p:dataTable>
+				<p:blockUI block="listaVigTipoProd" trigger="listaVigTipoProd">
+        				LOADING<br />
+					<p:graphicImage name="ajaxloader.gif" />
+				</p:blockUI>
 			</h:panelGrid>
 		</div>
 	</h:form>
