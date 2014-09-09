@@ -23,6 +23,8 @@ public class FormaPgto implements Serializable {
 	private String descricao;
 	
 	private TipoFormaPgto tipoFormaPgto;
+	
+	private boolean inativar;
 
 	public Long getIdFormaPg() {
 		return idFormaPg;
@@ -46,6 +48,14 @@ public class FormaPgto implements Serializable {
 
 	public void setTipoFormaPgto(TipoFormaPgto tipoFormaPgto) {
 		this.tipoFormaPgto = tipoFormaPgto;
+	}
+
+	public boolean isInativar() {
+		return inativar;
+	}
+
+	public void setInativar(boolean inativar) {
+		this.inativar = inativar;
 	}
 
 	@Override

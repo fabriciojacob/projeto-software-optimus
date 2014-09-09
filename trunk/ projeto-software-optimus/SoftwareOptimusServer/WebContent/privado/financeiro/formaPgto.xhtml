@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+</h:head>
+<h:body>
+	<h:form id="formPgto">
+		<br />
+		<h3 style="margin-top: 0">CADASTRO DE FORMA PAGAMENTO</h3>
+		<div align="left">
+
+			<p:commandButton value="Novo" actionListener="#{formaPgtoBens.novo}"
+				disabled="#{formaPgtoBens.btNovo}" update="formPgto" />
+
+			<p:commandButton value="Salvar"
+				actionListener="#{formaPgtoBens.salvar}" update="formPgto"
+				disabled="#{formaPgtoBens.btSalvar}" />
+
+			<p:commandButton value="Editar"
+				actionListener="#{formaPgtoBens.editar}"
+				disabled="#{formaPgtoBens.btEditar}" />
+
+			<p:commandButton value="Consulta" type="button"
+				onclick="PF('consulta').show();" />
+
+			<p:commandButton value="Cancelar"
+				actionListener="#{formaPgtoBens.novo}" disabled="" update="formPgto" />
+
+			<p:commandButton value="Excluir"
+				actionListener="#{formaPgtoBens.excluir}"
+				disabled="#{formaPgtoBens.btExcluir}"  update="formPgto" />
+
+			<p:messages id="messages" showDetail="true" autoUpdate="true"
+				closable="true" />
+
+			<p:dialog header="Consulta" widgetVar="consulta" modal="true"
+				height="350" width="600">
+
+				<h:panelGrid columns="3">
+				Descrição:
+					<p:inputText value="#{formaPgtoBens.descricao}" />
+
+					<p:commandButton value="Pesquisar" update="dadosFormPgto"
+						actionListener="#{formaPgtoBens.pesquisar}" />
+				</h:panelGrid>
+
+
+				<p:dataTable id="dadosFormPgto" paginator="true" rows="6"
+					value="#{formaPgtoBens.lista}" var="dados">
+
+					<p:column headerText="Codigo">
+						<h:outputText value="#{dados.idFormaPg}" />
+					</p:column>
+
+					<p:column headerText="Descrição">
+						<h:outputText value="#{dados.descricao}" />
+					</p:column>
+
+					<p:column headerText="Selecionar">
+						<p:commandLink id="link" value="Selecionar" ajax="dialog,formPgto"
+							action="#{formaPgtoBens.selecionar}" update="dadosFormaPgto">
+							<f:setPropertyActionListener value="#{dados.idFormaPg}"
+								target="#{formaPgtoBens.id}" />
+						</p:commandLink>
+					</p:column>
+
+				</p:dataTable>
+
+			</p:dialog>
+
+			<p:tabView style="border: 0px">
+
+				<p:tab id="dados" title="Cadastro">
+
+					<h:panelGrid id="dadosFormaPgto" columns="2"
+						columnClasses="label, value">
+						
+					Inativa:
+						<p:selectBooleanCheckbox id="inativar"
+							value="#{formaPgtoBens.formaPgto.inativar}" />
+					</h:panelGrid>
+
+					<h:panelGrid columns="2" columnClasses="label, value">
+					
+					Tipo Forma Pgto:
+					<p:selectOneMenu id="fConsult" value="#{formaPgtoBens.tipoPgto}">/>
+						<f:selectItem itemLabel="DINHEIRO" itemValue="DINHEIRO" />
+							<f:selectItem itemLabel="CARTAO_CREDITO"
+								itemValue="CARTAO_CREDITO" />
+							<f:selectItem itemLabel="CARTAO_DEBITO" itemValue="CARTAO_DEBITO" />
+							<f:selectItem itemLabel="CHEQUE" itemValue="CHEQUE" />
+						</p:selectOneMenu>
+					
+					Codigo:
+					<p:inputText id="codigo" disabled="true"
+							value="#{formaPgtoBens.formaPgto.idFormaPg}" />
+					
+					Descrição:
+					<p:inputText value="#{formaPgtoBens.formaPgto.descricao}" size="30" />
+
+					</h:panelGrid>
+
+				</p:tab>
+
+
+			</p:tabView>
+		</div>
+	</h:form>
+</h:body>
+</html>
