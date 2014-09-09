@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 import br.com.softwareOptimus.fiscal.Aliquota;
+import br.com.softwareOptimus.fiscal.TipoCst;
 
 public class AliquotaDAOHibernate implements AliquotaDAO {
 
@@ -58,7 +59,7 @@ public class AliquotaDAOHibernate implements AliquotaDAO {
 				Aliquota.class);
 		return listaAliquota.getResultList();
 	}
-	
+
 	public List<Aliquota> listaAliqIcms() {
 		String jpql = "Select a From Aliquota a Where a.tipo Is Not Null";
 		TypedQuery<Aliquota> listaAliquota = this.session.createQuery(jpql,
@@ -119,4 +120,14 @@ public class AliquotaDAOHibernate implements AliquotaDAO {
 		listaAliquota.setParameter("maximo", maximo);
 		return listaAliquota.getResultList();
 	}
+
+	@Override
+	public List<Aliquota> listaAliq(TipoCst tipo) {
+		String jpql = "Select Distinct a From Aliquota a, IN(a.cst) AS b Where b.tipoCst = :tipo";
+		TypedQuery<Aliquota> aliqPisCofins = this.session.createQuery(jpql,
+				Aliquota.class);
+		aliqPisCofins.setParameter("tipo", tipo);
+		return aliqPisCofins.getResultList();
+	}
+	
 }

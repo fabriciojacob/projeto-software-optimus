@@ -50,6 +50,14 @@ public class CodTabelaGov implements Serializable{
 	@ManyToOne
 	private Aliquota aliquotaIpi;
 		
+	public Aliquota getAliquotaIpi() {
+		return aliquotaIpi;
+	}
+
+	public void setAliquotaIpi(Aliquota aliquotaIpi) {
+		this.aliquotaIpi = aliquotaIpi;
+	}
+
 	public TipoProduto getTipoProduto() {
 		return tipoProduto;
 	}

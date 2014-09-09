@@ -5,6 +5,7 @@ import java.util.List;
 import br.com.softwareOptimus.dao.fiscal.AliquotaDAO;
 import br.com.softwareOptimus.fiscal.Aliquota;
 import br.com.softwareOptimus.fiscal.CodigoSituacaoTributaria;
+import br.com.softwareOptimus.fiscal.TipoCst;
 import br.com.softwareOptimus.util.DAOFactory;
 
 public class AliquotaRN {
@@ -60,5 +61,9 @@ public class AliquotaRN {
 			retorno = 1;
 		}
 		return retorno;
+	}
+
+	public List<Aliquota> listaAliq(TipoCst tipo) {
+		return this.aliquotaDAO.listaAliq(tipo);
 	}
 }
