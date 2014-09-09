@@ -4,17 +4,103 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
 
-<ui:composition template="">
-	<ui:define name="header">
-	    Add your header here or delete to use the default
-	</ui:define>
-	<ui:define name="content">
-	    Add your content here or delete to use the default
-	</ui:define>
-	<ui:define name="footer">
-	    Add your footer here or delete to use the default
-	</ui:define>
-</ui:composition>
+<h:head>
+
+</h:head>
+<h:body>
+	<h:form id="frmExemplo">
+		<br />
+		<h3 style="margin-top: 0">CADASTRO DE EXEMPLO</h3>
+		<div align="left">
+
+			<p:commandButton value="Novo" actionListener=""
+				disabled="" update="frmCaixa" />
+
+			<p:commandButton value="Salvar" actionListener=""
+				update="" disabled="" />
+
+			<p:commandButton value="Editar" actionListener=""
+				disabled="" />
+
+			<p:commandButton value="Consulta" type="button"
+				onclick="PF('consulta').show();" />
+
+			<p:commandButton value="Cancelar" actionListener=""
+				disabled="" update="" />
+
+			<p:commandButton value="Excluir"
+				actionListener="#{caixaBean.excluir}"
+				disabled="" update="" />
+
+			<p:messages id="messages" showDetail="true" autoUpdate="true"
+				closable="true" />
+
+			<p:dialog header="Consulta" widgetVar="consulta" modal="true"
+				height="350" width="600">
+
+				<h:panelGrid columns="3">
+				Descrição:
+					<p:inputText value="" />
+
+					<p:commandButton value="Pesquisar" update=""
+						actionListener="" />
+				</h:panelGrid>
+
+
+				<p:dataTable id="" paginator="true" rows="6"
+					value="" var="">
+
+					<p:column headerText="Codigo">
+						<h:outputText value="" />
+					</p:column>
+
+					<p:column headerText="Descrição">
+						<h:outputText value="" />
+					</p:column>
+
+					<p:column headerText="Selecionar">
+						<p:commandLink id="link" value="Selecionar" ajax="dialog,frmExemplo"
+							action="" update="dados">
+							<f:setPropertyActionListener value=""
+								target="" />
+						</p:commandLink>
+					</p:column>
+
+				</p:dataTable>
+
+			</p:dialog>
+
+			<p:tabView style="border: 0px">
+
+				<p:tab id="dados" title="Cadastro">
+
+					<h:panelGrid id="" columns="2"
+						columnClasses="label, value">
+						
+					Inativa:
+						<p:selectBooleanCheckbox id=""
+							value="" />
+					</h:panelGrid>
+					<h:panelGrid columns="2" columnClasses="label, value">
+					
+					Codigo:
+					<p:inputText id="" disabled="true"
+							value="" />
+					
+					Descrição:
+					<p:inputText id="" value=""
+							size="30" />
+
+					</h:panelGrid>
+
+				</p:tab>
+
+
+			</p:tabView>
+		</div>
+	</h:form>
+</h:body>
 </html>

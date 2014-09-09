@@ -13,10 +13,10 @@ import br.com.softwareOptimus.com.financeiro.dao.ContaBancariaDAO;
 import br.com.softwareOptimus.com.financeiro.dao.ContaBancariaDAOHibernate;
 import br.com.softwareOptimus.com.financeiro.dao.ContaDAO;
 import br.com.softwareOptimus.com.financeiro.dao.ContaDAOHibernate;
+import br.com.softwareOptimus.com.financeiro.dao.FormaPgtoDAO;
+import br.com.softwareOptimus.com.financeiro.dao.FormaPgtoHibernate;
 import br.com.softwareOptimus.dao.fiscal.AliquotaDAO;
 import br.com.softwareOptimus.dao.fiscal.AliquotaDAOHibernate;
-import br.com.softwareOptimus.dao.fiscal.CodTabelaGovDAO;
-import br.com.softwareOptimus.dao.fiscal.CodTabelaGovDAOHibernate;
 import br.com.softwareOptimus.dao.fiscal.CodigoSituacaoTributariaDAO;
 import br.com.softwareOptimus.dao.fiscal.CodigoSituacaoTributariaDAOHibernate;
 import br.com.softwareOptimus.dao.fiscal.FiguraFiscalDAO;
@@ -29,8 +29,6 @@ import br.com.softwareOptimus.dao.fiscal.PautaDAO;
 import br.com.softwareOptimus.dao.fiscal.PautaDAOHibernate;
 import br.com.softwareOptimus.dao.fiscal.PautaMVADAO;
 import br.com.softwareOptimus.dao.fiscal.PautaMVADAOHibernate;
-import br.com.softwareOptimus.dao.fiscal.TipoProdutoDAO;
-import br.com.softwareOptimus.dao.fiscal.TipoProdutoDAOHibernate;
 import br.com.softwareOptimus.dao.produto.ProdutoDAO;
 import br.com.softwareOptimus.dao.produto.ProdutoDAOHibernate;
 import br.com.softwareOptimus.dao.produto.UnidMedDAO;
@@ -57,6 +55,19 @@ import br.com.softwareOptimus.entidades.dao.usuario.UsuarioDAOHibernate;
 public class DAOFactory {
 
 	private static EntityManager session = JpaUtil.getEntityManager();
+	
+	public static FormaPgtoDAO formaPgtoDAO(){
+		FormaPgtoHibernate formaPgto = new FormaPgtoHibernate();
+		formaPgto.setSession(session);
+		try{
+			formaPgto.begin();
+		} catch (IOException | SQLException e){
+			e.printStackTrace();
+		}
+		
+		return formaPgto;
+	}
+
 
 	public static CaixaDAO criaCaixa() {
 		CaixaDAOHibernate caixaDAO = new CaixaDAOHibernate();
