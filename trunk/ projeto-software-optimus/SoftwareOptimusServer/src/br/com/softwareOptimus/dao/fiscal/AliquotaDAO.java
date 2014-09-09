@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import br.com.softwareOptimus.fiscal.Aliquota;
+import br.com.softwareOptimus.fiscal.TipoCst;
 
 public interface AliquotaDAO {
 
@@ -18,4 +19,5 @@ public interface AliquotaDAO {
 	public List<Aliquota> consultaAliq(Double busca);
 	public List<Aliquota> consultaRed(Double busca);
 	public List<Aliquota> listaAliqIcms();
+	public List<Aliquota> listaAliq(TipoCst tipo);
 }

@@ -40,11 +40,11 @@
 			<h:panelGrid id="grid" columns="2" columnClasses="label, value">
 			
 					Código do Tipo de Produto:
-					<p:inputText id="idGrade" disabled="true"
+					<p:inputText id="idTip" disabled="true"
 					value="#{tipoProdutoBean.tipo.idTipoProd}" />
 		
 					Descrição da Grade:
-					<p:inputText id="descGrade"
+					<p:inputText id="descTip"
 					value="#{tipoProdutoBean.tipo.descricao}" size="40"
 					disabled="#{tipoProdutoBean.desc}" />
 			</h:panelGrid>
@@ -94,7 +94,7 @@
 						<h:outputLabel value="#{listatbGov.aliquotaIpi}" />
 					</p:column>
 
-					<p:column headerText="Tipo do Item Item">
+					<p:column headerText="Tipo do Item">
 						<h:outputLabel value="#{listatbGov.tipoItem}" />
 					</p:column>
 
@@ -120,6 +120,157 @@
 					<p:graphicImage name="ajaxloader.gif" />
 				</p:blockUI>
 			</h:panelGrid>
+
+			<p:dialog id="dialog1" header="Consulta" widgetVar="dlg1"
+				modal="true" height="300" width="430">
+
+				<div align="right">
+					<h:panelGrid columns="1">
+						<p:commandButton value="Pesquisar"
+							actionListener="#{tipoProdutoBean.buscarTipo}" update="gridData">
+						</p:commandButton>
+					</h:panelGrid>
+				</div>
+				<h:panelGrid columns="3" columnClasses="label" cellspacing="3">
+					<p:inputText id="texto" value="#{tipoProdutoBean.busca}" size="40" />
+
+					<p:selectOneMenu id="fConsult" value="#{tipoProdutoBean.filtro}">/>
+						<f:selectItem itemLabel="Selecione uma Opção" />
+						<f:selectItem itemLabel="Código" itemValue="id" />
+						<f:selectItem itemLabel="Descrição" itemValue="desc" />
+					</p:selectOneMenu>
+
+				</h:panelGrid>
+				<h:panelGrid id="gridData" columns="1" columnClasses="label, value">
+					<p:blockUI block="gridData" trigger="consulta" />
+					<p:dataTable id="data" value="#{tipoProdutoBean.listaTipoProduto}"
+						paginator="true" rows="6" var="tipoProd"
+						rowKey="tipoProd.idTipoProd">
+
+						<p:column headerText="Código do Tipo de Produto">
+							<h:outputText value="#{tipoProd.idTipoProd}" />
+						</p:column>
+
+						<p:column headerText="Descrição">
+							<h:outputText value="#{tipoProd.descricao}" />
+						</p:column>
+
+						<p:column headerText="Selecionar">
+							<p:commandLink id="link" value="Editar"
+								ajax="grid, dialog1, gridVigTipo"
+								action="#{tipoProdutoBean.editTipo}">
+								<f:setPropertyActionListener value="#{tipoProd.idTipoProd}"
+									target="#{tipoProdutoBean.id}" />
+							</p:commandLink>
+						</p:column>
+					</p:dataTable>
+					<p:blockUI block="data" trigger="data">
+        				LOADING<br />
+						<p:graphicImage name="ajaxloader.gif" />
+					</p:blockUI>
+				</h:panelGrid>
+			</p:dialog>
+
+			<p:dialog id="dialog2" header="Inclusão e Edição da Vigência"
+				widgetVar="dlg2" modal="true" height="320" width="400">
+
+				<h:panelGrid id="gridincEdi2" columns="1"
+					columnClasses="label, value">
+
+					<h:panelGrid columns="2">
+					
+					Código da Vigência do Tipo:
+					<p:inputText id="idTipoProdVig" disabled="true"
+							value="#{tipoProdutoBean.tbGov.idCodGov}" />
+					
+					Vigência:
+					<p:calendar id="pautavigencia" size="29"
+							value="#{tipoProdutoBean.tbGov.vigencia}" effect="fold" />
+							
+					Ncm:
+					<p:inputText id="ncm" value="#{tipoProdutoBean.tbGov.ncm}" />
+							
+					Alíquota Entrada Pis:
+					<p:selectOneMenu id="aliqEntPis" style="width:200px;"
+							value="#{tipoProdutoBean.tbGov.entradaPis}">
+							<f:selectItem itemLabel="Selecione uma alíquota" />
+							<f:selectItems value="#{tipoProdutoBean.listaAliqPisCofins}"
+								var="listAliqPisCofins" itemValue="#{listAliqPisCofins}"
+								itemLabel="#{listAliqPisCofins.idAliq} - #{listAliqPisCofins.aliquota}" />
+						</p:selectOneMenu>
+						
+					Alíquota Entrada Cofins:
+					<p:selectOneMenu id="aliqEntCof" style="width:200px;"
+							value="#{tipoProdutoBean.tbGov.entradaCofins}">
+							<f:selectItem itemLabel="Selecione uma alíquota" />
+							<f:selectItems value="#{tipoProdutoBean.listaAliqPisCofins}"
+								var="listAliqPisCofins2" itemValue="#{listAliqPisCofins2}"
+								itemLabel="#{listAliqPisCofins2.idAliq} - #{listAliqPisCofins2.aliquota}" />
+						</p:selectOneMenu>
+						
+					Alíquota Saída Pis:
+					<p:selectOneMenu id="aliqSaiPis" style="width:200px;"
+							value="#{tipoProdutoBean.tbGov.saidaPis}">
+							<f:selectItem itemLabel="Selecione uma alíquota" />
+							<f:selectItems value="#{tipoProdutoBean.listaAliqPisCofins}"
+								var="listAliqPisCofins3" itemValue="#{listAliqPisCofins3}"
+								itemLabel="#{listAliqPisCofins3.idAliq} - #{listAliqPisCofins3.aliquota}" />
+						</p:selectOneMenu>
+						
+					Alíquota Saída Cofins:
+					<p:selectOneMenu id="aliqSaiCo" style="width:200px;"
+							value="#{tipoProdutoBean.tbGov.saidaCofins}">
+							<f:selectItem itemLabel="Selecione uma alíquota" />
+							<f:selectItems value="#{tipoProdutoBean.listaAliqPisCofins}"
+								var="listAliqPisCofins4" itemValue="#{listAliqPisCofins4}"
+								itemLabel="#{listAliqPisCofins4.idAliq} - #{listAliqPisCofins4.aliquota}" />
+						</p:selectOneMenu>
+						
+					Alíquota IPI:
+					<p:selectOneMenu id="aliqIpi" style="width:200px;"
+							value="#{tipoProdutoBean.tbGov.aliquotaIpi}">
+							<f:selectItem itemLabel="Selecione uma alíquota" />
+							<f:selectItems value="#{tipoProdutoBean.listaAliqIpi}"
+								var="listAliqIpi" itemValue="#{listAliqIpi}"
+								itemLabel="#{listAliqIpi.idAliq} - #{listAliqIpi.aliquota}" />
+						</p:selectOneMenu>						
+						
+					Tipo Item:
+					<p:selectOneMenu id="tipoProd"
+							value='#{tipoProdutoBean.tbGov.tipoItem}'>
+							<f:selectItem itemLabel="Selecione tipo do item" />
+							<f:selectItem itemLabel="00 – Mercadoria para Revenda"
+								itemValue="00 - Mercadoria para Revenda" />
+							<f:selectItem itemLabel="01 – Matéria-Prima"
+								itemValue="01 – Matéria-Prima" />
+							<f:selectItem itemLabel="02 – Embalagem"
+								itemValue="02 – Embalagem" />
+							<f:selectItem itemLabel="03 – Produto em Processo"
+								itemValue="03 – Produto em Processo" />
+							<f:selectItem itemLabel="04 – Produto Acabado"
+								itemValue="04 – Produto Acabado" />
+							<f:selectItem itemLabel="05 – Subproduto"
+								itemValue="05 – Subproduto" />
+							<f:selectItem itemLabel="06 – Produto Intermediário"
+								itemValue="06 – Produto Intermediário" />
+							<f:selectItem itemLabel="07 – Material de Uso e Consumo"
+								itemValue="07 – Material de Uso e Consumo" />
+							<f:selectItem itemLabel="08 – Ativo Imobilizado"
+								itemValue="08 – Ativo Imobilizado" />
+							<f:selectItem itemLabel="09 – Serviços" itemValue="09 – Serviços" />
+							<f:selectItem itemLabel="10 – Outros insumos"
+								itemValue="10 – Outros insumos" />
+							<f:selectItem itemLabel="99 – Outras" itemValue="99 – Outras" />
+						</p:selectOneMenu>
+
+					</h:panelGrid>
+
+				</h:panelGrid>
+				<p:commandButton value="Incluir"
+					actionListener="#{tipoProdutoBean.incluirTipoVig}"
+					update="listaVigTipoProd, gridincEdi2" />
+			</p:dialog>
+
 		</div>
 	</h:form>
 </body>
