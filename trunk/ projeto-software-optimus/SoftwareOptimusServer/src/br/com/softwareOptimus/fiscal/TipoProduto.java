@@ -1,7 +1,6 @@
 package br.com.softwareOptimus.fiscal;
 
 import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -63,5 +62,4 @@ public class TipoProduto implements Serializable {
 			return false;
 		return true;
 	}
-
 }
