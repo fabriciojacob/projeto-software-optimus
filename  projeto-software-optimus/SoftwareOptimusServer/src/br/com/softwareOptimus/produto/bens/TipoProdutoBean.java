@@ -8,6 +8,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import br.com.softwareOptimus.fiscal.Aliquota;
 import br.com.softwareOptimus.fiscal.CodTabelaGov;
+import br.com.softwareOptimus.fiscal.Ncm;
 import br.com.softwareOptimus.fiscal.TipoCst;
 import br.com.softwareOptimus.fiscal.TipoProduto;
 import br.com.softwareOptimus.fiscal.RN.AliquotaRN;
@@ -19,15 +20,17 @@ public class TipoProdutoBean {
 
 	private TipoProduto tipo = new TipoProduto();
 	private CodTabelaGov tbGov = new CodTabelaGov();
+	private Ncm ncm = new Ncm();
 	private List<TipoProduto> listaTipoProduto = new ArrayList<TipoProduto>();
 	private List<Aliquota> listaAliqPisCofins = new ArrayList<Aliquota>();
+	private List<Ncm> listaNcm = new ArrayList<Ncm>();
 	private List<Aliquota> listaAliqIpi = new ArrayList<Aliquota>();
 	private AliquotaRN aliqRN = new AliquotaRN();
 	private List<CodTabelaGov> listaTbGov = new ArrayList<CodTabelaGov>();
 	private boolean sal = true, alt = true, rem = true, vig = true,
 			desc = true;
 	private String busca, filtro;
-	private Long id, idVig;
+	private Long id, idVig, idNcm;
 
 	public TipoProdutoBean() {
 		setListaAliqPisCofins(this.aliqRN.listaAliq(TipoCst.PISCOFINS));
@@ -146,6 +149,14 @@ public class TipoProdutoBean {
 		limpar();
 		desabilita();
 	}
+	
+	public void buscarNcm(){
+		
+	}
+	
+	public void vincularNcm(){
+		
+	}
 
 	public void excluirVigTip() {
 		try {
@@ -256,6 +267,30 @@ public class TipoProdutoBean {
 
 	public void desabilita() {
 		this.desc = true;
+	}
+
+	public Long getIdNcm() {
+		return idNcm;
+	}
+
+	public void setIdNcm(Long idNcm) {
+		this.idNcm = idNcm;
+	}
+
+	public Ncm getNcm() {
+		return ncm;
+	}
+
+	public void setNcm(Ncm ncm) {
+		this.ncm = ncm;
+	}
+
+	public List<Ncm> getListaNcm() {
+		return listaNcm;
+	}
+
+	public void setListaNcm(List<Ncm> listaNcm) {
+		this.listaNcm = listaNcm;
 	}
 
 	public List<Aliquota> getListaAliqPisCofins() {

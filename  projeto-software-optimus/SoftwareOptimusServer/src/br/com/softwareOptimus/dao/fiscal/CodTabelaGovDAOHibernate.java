@@ -41,7 +41,7 @@ public class CodTabelaGovDAOHibernate implements CodTabelaGovDAO {
 	}
 	@Override
 	public List<CodTabelaGov> listaVig(TipoProduto tipo) {
-		String jpql = "Select c from CodTavelaGov c where c.tipoProduto = :tipo";
+		String jpql = "Select c from CodTabelaGov c where c.tipoProduto = :tipo";
 		TypedQuery<CodTabelaGov> consulta = this.session
 				.createQuery(jpql, CodTabelaGov.class);
 		consulta.setParameter("tipo", tipo);

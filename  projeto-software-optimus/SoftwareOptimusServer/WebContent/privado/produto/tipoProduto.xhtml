@@ -44,9 +44,8 @@
 					value="#{tipoProdutoBean.tipo.idTipoProd}" />
 		
 					Descrição da Grade:
-					<p:inputText id="descTip"
-					value="#{tipoProdutoBean.tipo.descricao}" size="40"
-					disabled="#{tipoProdutoBean.desc}" />
+					<p:inputText id="descTip" value="#{tipoProdutoBean.tipo.descricao}"
+					size="40" disabled="#{tipoProdutoBean.desc}" />
 			</h:panelGrid>
 
 			<p:commandButton id="vincVigencia"
@@ -182,14 +181,19 @@
 					Código da Vigência do Tipo:
 					<p:inputText id="idTipoProdVig" disabled="true"
 							value="#{tipoProdutoBean.tbGov.idCodGov}" />
-					
-					Vigência:
-					<p:calendar id="pautavigencia" size="29"
-							value="#{tipoProdutoBean.tbGov.vigencia}" effect="fold" />
 							
 					Ncm:
-					<p:inputText id="ncm" value="#{tipoProdutoBean.tbGov.ncm}" />
-							
+					<h:panelGrid id="textoNcm" columns="2">
+							<p:inputText id="ncm" value="#{tipoProdutoBean.tbGov.ncm}"
+								size="15" disabled="true" />
+
+							<p:commandButton id="vincularNcm" value="Busca NCM"
+								onclick="PF('dlg5').show();" update="ncm" />
+						</h:panelGrid>
+					Vigência:
+					<p:calendar id="tipVigencia" size="29"
+							value="#{tipoProdutoBean.tbGov.vigencia}" effect="fold" />	
+				
 					Alíquota Entrada Pis:
 					<p:selectOneMenu id="aliqEntPis" style="width:200px;"
 							value="#{tipoProdutoBean.tbGov.entradaPis}">
@@ -237,8 +241,9 @@
 						
 					Tipo Item:
 					<p:selectOneMenu id="tipoProd"
-							value='#{tipoProdutoBean.tbGov.tipoItem}'>
-							<f:selectItem itemLabel="Selecione tipo do item" />
+							value='#{tipoProdutoBean.tbGov.tipoItem}' style="width:200px;">
+							<f:selectItem itemLabel=" Selecione
+							tipo do item" />
 							<f:selectItem itemLabel="00 – Mercadoria para Revenda"
 								itemValue="00 - Mercadoria para Revenda" />
 							<f:selectItem itemLabel="01 – Matéria-Prima"
@@ -269,6 +274,73 @@
 				<p:commandButton value="Incluir"
 					actionListener="#{tipoProdutoBean.incluirTipoVig}"
 					update="listaVigTipoProd, gridincEdi2" />
+			</p:dialog>
+
+			<p:dialog id="dialog5" header="Busca NCM" widgetVar="dlg5"
+				modal="true" height="400" width="750">
+
+				<div align="right">
+					<h:panelGrid columns="1">
+						<p:commandButton value="Buscar" id="bus"
+							actionListener="#{tipoProdutoBean.buscarNcm}"
+							update="gridDataNcm">
+						</p:commandButton>
+					</h:panelGrid>
+				</div>
+				<h:panelGrid columns="3" columnClasses="label" cellspacing="3">
+					<p:inputText id="texto2" value="#{tipoProdutoBean.busca}" size="40" />
+
+					<p:selectOneMenu id="filtroConsultaNcm"
+						value="#{tipoProdutoBean.filtro}">/>
+						<f:selectItem itemLabel="Selecione uma Opção" />
+						<f:selectItem itemLabel="Código do NCM" itemValue="codNcm" />
+						<f:selectItem itemLabel="Descrição do NCM" itemValue="descNcm" />
+						<f:selectItem itemLabel="Descrição da NatRec" itemValue="descNat" />
+						<f:selectItem itemLabel="Código da NatRec" itemValue="codNat" />
+						<f:selectItem itemLabel="Descrição Tabela" itemValue="codNat" />
+					</p:selectOneMenu>
+
+				</h:panelGrid>
+				<h:panelGrid id="gridDataNcm" columns="1"
+					columnClasses="label, value">
+					<p:blockUI block="gridDataNcm" trigger="bus" />
+					<p:dataTable id="dataNcm" value="#{tipoProdutoBean.listaNcm}"
+						paginator="true" rows="10" var="listNcm" rowKey="tipoProd.idNcm">
+
+						<p:column headerText="Código do NCM">
+							<h:outputText value="#{tlistNcm.idNcm}" />
+						</p:column>
+
+						<p:column headerText="NCM">
+							<h:outputText value="#{listNcm.ncm}" />
+						</p:column>
+
+						<p:column headerText="Descricao do NCM">
+							<h:outputText value="#{listNcm.descricaoNcm}" />
+						</p:column>
+
+						<p:column headerText="Natureza da Receita">
+							<h:outputText value="#{listNcm.natRec}" />
+						</p:column>
+						
+						<p:column headerText="Descrição da Tabela">
+							<h:outputText value="#{listNcm.natRec}" />
+						</p:column>
+
+						<p:column headerText="Selecionar">
+							<p:commandLink id="link" value="Vincular" update="textoNcm"
+								action="#{tipoProdutoBean.vincularNcm}">
+								<f:setPropertyActionListener value="#{tipoProd.idNcm}"
+									target="#{tipoProdutoBean.idNcm}" />
+							</p:commandLink>
+						</p:column>
+					</p:dataTable>
+					<p:blockUI block="dataNcm" trigger="dataNcm">
+        				LOADING<br />
+						<p:graphicImage name="ajaxloader.gif" />
+					</p:blockUI>
+				</h:panelGrid>
+
 			</p:dialog>
 
 		</div>

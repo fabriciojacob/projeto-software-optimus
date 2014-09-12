@@ -4,8 +4,10 @@ import java.sql.SQLException;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import br.com.softwareOptimus.fiscal.TipoProduto;
+import br.com.softwareOptimus.produto.Produto;
 
 
 
@@ -50,6 +52,11 @@ public class TipoProdutoDAOHibernate implements TipoProdutoDAO {
 	}
 	@Override
 	public void remover(TipoProduto tipo) {
+		
+		String deleteQuery = "delete from CodTabelaGov c where c.tipoProduto = :tipo";  
+		Query query = session.createQuery(deleteQuery);  
+		query.setParameter("tipo", tipo);  
+		query.executeUpdate();  
 		this.session.remove(tipo);
 		this.transaction.commit();
 	}
@@ -79,5 +86,12 @@ public class TipoProdutoDAOHibernate implements TipoProdutoDAO {
 		TypedQuery<TipoProduto> tipo = this.session.createQuery(jpql, TipoProduto.class);
 		tipo.setParameter("id", id);
 		return tipo.getSingleResult();
+	}
+	@Override
+	public List<Produto> verificaRemocao(TipoProduto tipo) {
+		String jpql = "select p from Produto p where p.tipoProd = :tipo";
+		TypedQuery<Produto> prod = this.session.createQuery(jpql, Produto.class);
+		prod.setParameter("tipo", tipo);
+		return prod.getResultList();
 	}
 }

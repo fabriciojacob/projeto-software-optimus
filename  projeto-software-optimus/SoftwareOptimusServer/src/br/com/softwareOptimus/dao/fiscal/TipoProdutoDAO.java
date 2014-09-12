@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import br.com.softwareOptimus.fiscal.TipoProduto;
+import br.com.softwareOptimus.produto.Produto;
 
 
 public interface TipoProdutoDAO {
@@ -17,5 +18,6 @@ public interface TipoProdutoDAO {
 	public List<TipoProduto> consultaId(long id);
 	public List<TipoProduto> consultaDesc(String busca);
 	public TipoProduto editaTipo(Long id);
+	public List<Produto> verificaRemocao(TipoProduto tipo);
 
 }
