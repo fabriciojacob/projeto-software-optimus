@@ -6,6 +6,7 @@ import br.com.softwareOptimus.dao.fiscal.CodTabelaGovDAO;
 import br.com.softwareOptimus.dao.fiscal.TipoProdutoDAO;
 import br.com.softwareOptimus.fiscal.CodTabelaGov;
 import br.com.softwareOptimus.fiscal.TipoProduto;
+import br.com.softwareOptimus.produto.Produto;
 import br.com.softwareOptimus.util.DAOFactory;
 
 public class TipoProdutoRN {
@@ -20,7 +21,7 @@ public class TipoProdutoRN {
 
 	public Integer validaCampoNulo(TipoProduto tipo) {
 		Integer retorno = 0;
-		if (tipo.getDescricao().equals("") || tipo.getIdTipoProd().equals("")) {
+		if (tipo.getDescricao().equals("")) {
 			retorno = 1;
 		}
 		return retorno;
@@ -35,7 +36,12 @@ public class TipoProdutoRN {
 	}
 
 	public Integer verificaRemocao(TipoProduto tipo) {
-		return null;
+		List<Produto> prod = this.tipoProdutoDAO.verificaRemocao(tipo);
+		if(prod.size() != 0){
+			return 1;
+		}else{
+			return 0;
+		}
 	}
 
 	public void remover(TipoProduto tipo) {
