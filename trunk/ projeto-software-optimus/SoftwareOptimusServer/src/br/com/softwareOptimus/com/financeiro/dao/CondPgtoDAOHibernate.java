@@ -67,4 +67,9 @@ public class CondPgtoDAOHibernate implements CondPgtoDAO {
 		
 	}
 
+	@Override
+	public CondPgto find(Long id) throws Exception {
+		return this.session.find(CondPgto.class, id);
+	}
+
 }
