@@ -9,9 +9,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import br.com.softwareOptimus.entidades.Pessoa;
 
 @Entity
 @Table(name="tbTitulo")
@@ -60,6 +63,12 @@ public class Titulo implements Serializable{
 	private Conta conta;
 	
 	private Rubrica rubrica;
+	
+	@ManyToOne
+	private Pessoa pessoa;
+	
+	@ManyToOne
+	private Pessoa empresa;
 	
 	public Rubrica getRubrica() {
 		return rubrica;
@@ -179,6 +188,26 @@ public class Titulo implements Serializable{
 
 	public void setDataPagamento(Calendar dataPagamento) {
 		this.dataPagamento = dataPagamento;
+	}
+
+	public Pessoa getPessoa() {
+		return pessoa;
+	}
+
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
+	}
+
+	public void setIdTitulo(Long idTitulo) {
+		this.idTitulo = idTitulo;
+	}
+
+	public Pessoa getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(Pessoa empresa) {
+		this.empresa = empresa;
 	}
 
 	@Override
