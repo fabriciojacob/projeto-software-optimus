@@ -24,8 +24,9 @@ public class CondPgto implements Serializable{
 	
 	private Integer parcela;
 	
-	@OneToMany(mappedBy = "condPgto")
-	private Collection<Vencimento> vencimento;
+	private String descricao;
+	
+	private boolean inativar;
 
 	public Long getIdCondPgto() {
 		return idCondPgto;
@@ -41,6 +42,24 @@ public class CondPgto implements Serializable{
 
 	public void setParcela(Integer parcela) {
 		this.parcela = parcela;
+	}
+
+	public boolean isInativar() {
+		return inativar;
+	}
+
+	public void setInativar(boolean inativar) {
+		this.inativar = inativar;
+	}
+	
+	
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
 	@Override
