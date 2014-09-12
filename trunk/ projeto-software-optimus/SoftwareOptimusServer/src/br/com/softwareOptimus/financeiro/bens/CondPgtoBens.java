@@ -12,7 +12,7 @@ import br.com.softwareOptimus.financeiro.CondPgto;
 import br.com.softwareOptimus.financeiro.RN.CondPgtoRN;
 import br.com.softwareOptimus.util.Geral;
 
-@ManagedBean
+@ManagedBean (name ="condPgtoBens")
 @ViewScoped
 public class CondPgtoBens implements Geral {
 
