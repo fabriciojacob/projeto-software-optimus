@@ -9,6 +9,8 @@ import br.com.softwareOptimus.com.financeiro.dao.BancoDAO;
 import br.com.softwareOptimus.com.financeiro.dao.BancoDAOHibernate;
 import br.com.softwareOptimus.com.financeiro.dao.CaixaDAO;
 import br.com.softwareOptimus.com.financeiro.dao.CaixaDAOHibernate;
+import br.com.softwareOptimus.com.financeiro.dao.CondPgtoDAO;
+import br.com.softwareOptimus.com.financeiro.dao.CondPgtoDAOHibernate;
 import br.com.softwareOptimus.com.financeiro.dao.ContaBancariaDAO;
 import br.com.softwareOptimus.com.financeiro.dao.ContaBancariaDAOHibernate;
 import br.com.softwareOptimus.com.financeiro.dao.ContaDAO;
@@ -59,6 +61,18 @@ import br.com.softwareOptimus.entidades.dao.usuario.UsuarioDAOHibernate;
 public class DAOFactory {
 
 	private static EntityManager session = JpaUtil.getEntityManager();
+	
+	public static CondPgtoDAO criaCondPgto(){
+		CondPgtoDAOHibernate condPgto = new CondPgtoDAOHibernate();
+		condPgto.setSession(session);
+		try{
+			condPgto.begin();
+		}catch (IOException | SQLException e){
+			e.printStackTrace();
+		}
+		
+		return condPgto;
+	}
 	
 	public static FormaPgtoDAO formaPgtoDAO(){
 		FormaPgtoHibernate formaPgto = new FormaPgtoHibernate();
