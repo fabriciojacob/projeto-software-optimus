@@ -29,5 +29,9 @@ public class CondPgtoRN {
 	public List<CondPgto> listar() throws Exception {
 		return this.condDAO.listar();
 	}
+	
+	public CondPgto selecionar(Long id) throws Exception{
+		return this.condDAO.find(id);
+	}
 
 }

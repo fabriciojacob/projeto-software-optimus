@@ -17,5 +17,7 @@ public interface CondPgtoDAO {
 	public List<CondPgto> listar() throws Exception;
 	
 	public void begin() throws IOException, SQLException;
+	
+	public CondPgto find(Long id) throws Exception;
 
 }
