@@ -149,13 +149,34 @@ public class TipoProdutoBean {
 		limpar();
 		desabilita();
 	}
-	
-	public void buscarNcm(){
-		
+
+	public void buscarNcm() {
+		TipoProdutoRN tipoRN = new TipoProdutoRN();
+		if (!busca.equals("") && (!filtro.equals(""))) {
+			if (filtro.equals("codNcm")) {
+				this.listaNcm = tipoRN.consultaNCMCod(busca);
+			} else if (filtro.equals("descNcm")) {
+				this.listaNcm = tipoRN.consultaNCMDesc(busca);
+			}else if (filtro.equals("descNat")){
+				this.listaNcm = tipoRN.consultaNatDesc(busca);
+			}else if (filtro.equals("codNat")){
+				this.listaNcm = tipoRN.consultaNatCod(busca);
+			}else if (filtro.equals("descTb")){
+				this.listaNcm = tipoRN.consultaTbDesc(busca);
+			}
+		} else {
+			FacesContext
+					.getCurrentInstance()
+					.addMessage(
+							null,
+							new FacesMessage(FacesMessage.SEVERITY_ERROR,
+									"Info",
+									"Para listar os NCM inclua um parâmentro."));
+		}
 	}
-	
-	public void vincularNcm(){
-		
+
+	public void vincularNcm() {
+
 	}
 
 	public void excluirVigTip() {
