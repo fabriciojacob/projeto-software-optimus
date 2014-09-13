@@ -5,6 +5,7 @@ import java.util.List;
 import br.com.softwareOptimus.dao.fiscal.CodTabelaGovDAO;
 import br.com.softwareOptimus.dao.fiscal.TipoProdutoDAO;
 import br.com.softwareOptimus.fiscal.CodTabelaGov;
+import br.com.softwareOptimus.fiscal.Ncm;
 import br.com.softwareOptimus.fiscal.TipoProduto;
 import br.com.softwareOptimus.produto.Produto;
 import br.com.softwareOptimus.util.DAOFactory;
@@ -89,5 +90,25 @@ public class TipoProdutoRN {
 
 	public void salvaVig(CodTabelaGov tbGov) {
 		this.codTbDAO.salvar(tbGov);
+	}
+
+	public List<Ncm> consultaNCMCod(String busca) {
+		return null;
+	}
+
+	public List<Ncm> consultaNCMDesc(String busca) {
+		return null;
+	}
+
+	public List<Ncm> consultaNatDesc(String busca) {
+		return null;
+	}
+
+	public List<Ncm> consultaNatCod(String busca) {
+		return null;
+	}
+
+	public List<Ncm> consultaTbDesc(String busca) {
+		return null;
 	}
 }
