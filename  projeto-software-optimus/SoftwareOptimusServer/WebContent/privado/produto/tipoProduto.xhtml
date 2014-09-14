@@ -13,26 +13,29 @@
 	<h:form id="frmCadTipoProduto">
 		<br />
 		<h3 style="margin-top: 0">CADASTRO DO TIPO DE PRODUTO</h3>
-		<div align="left">
+		<div id="principal" align="left">
 
-			<p:commandButton value="Novo"
+			<p:commandButton id="new" value="Novo"
 				actionListener="#{tipoProdutoBean.novo}" ajax="grid" />
 
-			<p:commandButton value="Salvar" disabled="#{tipoProdutoBean.sal}"
+			<p:commandButton id="save" value="Salvar"
+				disabled="#{tipoProdutoBean.sal}"
 				actionListener="#{tipoProdutoBean.salvar}" ajax="grid"
 				update="dialog2" />
 
-			<p:commandButton value="Alterar" disabled="#{tipoProdutoBean.alt}"
+			<p:commandButton id="alterarado" value="Alterar"
+				disabled="#{tipoProdutoBean.alt}"
 				actionListener="#{tipoProdutoBean.alterar}" ajax="grid" />
 
-			<p:commandButton value="Excluir" disabled="#{tipoProdutoBean.rem}"
+			<p:commandButton id="delete" value="Excluir"
+				disabled="#{tipoProdutoBean.rem}"
 				actionListener="#{tipoProdutoBean.remover}" ajax="grid" />
 
 			<p:commandButton id="consulta" value="Consultar" type="button"
 				ajax="dialog, grid" onclick="PF('dlg1').show();"
 				actionListener="#{tipoProdutoBean.cancelar}" />
 
-			<p:commandButton value="Cancelar"
+			<p:commandButton id="cancelar" value="Cancelar"
 				actionListener="#{tipoProdutoBean.cancelar}" ajax="grid" />
 			<p:messages id="messages" showDetail="true" autoUpdate="true"
 				closable="true" />
@@ -50,8 +53,8 @@
 
 			<p:commandButton id="vincVigencia"
 				value="Vigência do Tipo de Produto" type="button"
-				update="gridincEdi2" disabled="#{tipoProdutoBean.vig}"
-				onclick="PF('dlg2').show();" />
+				actionListener="#{tipoProdutoBean.incVigNovo}" update="gridincEdi2"
+				disabled="#{tipoProdutoBean.vig}" onclick="PF('dlg2').show();" />
 
 			<h:panelGrid id="gridVigTipo" columns="1">
 				<p:blockUI block="gridVigTipo" trigger="vincVigencia" />
@@ -70,27 +73,31 @@
 					</p:column>
 
 					<p:column headerText="Código Ncm">
-						<h:outputText value="#{listatbGov.ncm}" />
+						<h:outputText value="#{listatbGov.ncm.ncm}" />
+					</p:column>
+
+					<p:column headerText="Código da NatRec">
+						<h:outputText value="#{listatbGov.ncm.natRec}" />
 					</p:column>
 
 					<p:column headerText="Alíquota Entrada Pis">
-						<h:outputText value="#{listatbGov.entradaPis}" />
+						<h:outputText value="#{listatbGov.entradaPis.aliquota}" />
 					</p:column>
 
 					<p:column headerText="Alíquota Entrada Cofins">
-						<h:outputText value="#{listatbGov.entradaCofins}" />
+						<h:outputText value="#{listatbGov.entradaCofins.aliquota}" />
 					</p:column>
 
 					<p:column headerText="Alíquota Saída Pis">
-						<h:outputText value="#{listatbGov.saidaPis}" />
+						<h:outputText value="#{listatbGov.saidaPis.aliquota}" />
 					</p:column>
 
 					<p:column headerText="Alíquota Saída Cofins">
-						<h:outputText value="#{listatbGov.saidaCofins}" />
+						<h:outputText value="#{listatbGov.saidaCofins.aliquota}" />
 					</p:column>
 
 					<p:column headerText="Alíquota Ipi">
-						<h:outputLabel value="#{listatbGov.aliquotaIpi}" />
+						<h:outputLabel value="#{listatbGov.aliquotaIpi.aliquota}" />
 					</p:column>
 
 					<p:column headerText="Tipo do Item">
@@ -98,8 +105,8 @@
 					</p:column>
 
 					<p:column headerText="Editar">
-						<p:commandLink id="linkEditaVig" value="Editar" ajax="dialog"
-							action="#{tipoProdutoBean.editarVigTip}" update="listatbGov">
+						<p:commandLink id="linkEditaVig" value="Editar"
+							action="#{tipoProdutoBean.editarVigTip}">
 							<f:setPropertyActionListener value="#{listatbGov.idCodGov}"
 								target="#{tipoProdutoBean.idVig}" />
 						</p:commandLink>
@@ -124,13 +131,14 @@
 				modal="true" height="300" width="430">
 
 				<div align="right">
-					<h:panelGrid columns="1">
+					<h:panelGrid id="filtroPesquisa" columns="1">
 						<p:commandButton value="Pesquisar"
 							actionListener="#{tipoProdutoBean.buscarTipo}" update="gridData">
 						</p:commandButton>
 					</h:panelGrid>
 				</div>
-				<h:panelGrid columns="3" columnClasses="label" cellspacing="3">
+				<h:panelGrid id="filtroGeral2" columns="3" columnClasses="label"
+					cellspacing="3">
 					<p:inputText id="texto" value="#{tipoProdutoBean.busca}" size="40" />
 
 					<p:selectOneMenu id="fConsult" value="#{tipoProdutoBean.filtro}">/>
@@ -170,32 +178,112 @@
 				</h:panelGrid>
 			</p:dialog>
 
+
+			<p:dialog id="dialog5" header="Busca NCM" widgetVar="dlg5"
+				modal="true" height="600" width="900">
+
+				<div id="principal2" align="right">
+					<h:panelGrid id="filtroBusca" columns="1">
+						<p:commandButton value="Buscar" id="bus"
+							actionListener="#{tipoProdutoBean.buscarNcm}"
+							update="gridDataNcm">
+						</p:commandButton>
+					</h:panelGrid>
+				</div>
+				<h:panelGrid id="filtroGeral" columns="3" columnClasses="label"
+					cellspacing="3">
+					<p:inputText id="texto2" value="#{tipoProdutoBean.busca}" size="40" />
+
+					<p:selectOneMenu id="filtroConsultaNcm"
+						value="#{tipoProdutoBean.filtro}">/>
+						<f:selectItem itemLabel="Selecione uma Opção" />
+						<f:selectItem itemLabel="Código do NCM" itemValue="codNcm" />
+						<f:selectItem itemLabel="Descrição do NCM" itemValue="descNcm" />
+						<f:selectItem itemLabel="Descrição da NatRec" itemValue="descNat" />
+						<f:selectItem itemLabel="Código da NatRec" itemValue="codNat" />
+						<f:selectItem itemLabel="Descrição Tabela" itemValue="descTb" />
+					</p:selectOneMenu>
+
+				</h:panelGrid>
+				<h:panelGrid id="gridDataNcm" columns="1"
+					columnClasses="label, value">
+					<p:dataTable id="dataNcm" value="#{tipoProdutoBean.listaNcm}"
+						paginator="true" rows="10" var="listNcm" rowKey="tipoProd.idNcm">
+
+						<p:column headerText="Código do NCM">
+							<h:outputText value="#{listNcm.idNcm}" />
+						</p:column>
+
+						<p:column headerText="NCM">
+							<h:outputText value="#{listNcm.ncm}" />
+						</p:column>
+
+						<p:column headerText="Descricao do NCM">
+							<h:outputText value="#{listNcm.descricaoNcm}" />
+						</p:column>
+
+						<p:column headerText="Natureza da Receita">
+							<h:outputText value="#{listNcm.natRec}" />
+						</p:column>
+
+						<p:column headerText="Descrição da Natureza da Receita">
+							<h:outputText value="#{listNcm.descNatRec}" />
+						</p:column>
+
+						<p:column headerText="Descrição da Tabela">
+							<h:outputText value="#{listNcm.descTabela}" />
+						</p:column>
+
+						<p:column headerText="Selecionar">
+							<p:commandLink id="linkNcm" value="Vincular"
+								action="#{tipoProdutoBean.vincularNcm}"
+								update=":frmCadTipoProduto:ncm, :frmCadTipoProduto:descNcmVig, :frmCadTipoProduto:natRecVig, :frmCadTipoProduto:descNatRecVig"
+								onclick="PF('dlg2').show();">
+								<f:setPropertyActionListener value="#{listNcm.idNcm}"
+									target="#{tipoProdutoBean.idNcm}" />
+							</p:commandLink>
+						</p:column>
+					</p:dataTable>
+				</h:panelGrid>
+
+			</p:dialog>
+
 			<p:dialog id="dialog2" header="Inclusão e Edição da Vigência"
-				widgetVar="dlg2" modal="true" height="320" width="400">
+				widgetVar="dlg2" modal="true" height="400" width="500">
 
 				<h:panelGrid id="gridincEdi2" columns="1"
 					columnClasses="label, value">
 
-					<h:panelGrid columns="2">
+					<h:panelGrid id="gridVig" columns="2">
 					
 					Código da Vigência do Tipo:
 					<p:inputText id="idTipoProdVig" disabled="true"
 							value="#{tipoProdutoBean.tbGov.idCodGov}" />
-							
+
 					Ncm:
 					<h:panelGrid id="textoNcm" columns="2">
-							<p:inputText id="ncm" value="#{tipoProdutoBean.tbGov.ncm}"
-								size="15" disabled="true" />
-
-							<p:commandButton id="vincularNcm" value="Busca NCM"
-								onclick="PF('dlg5').show();" update="ncm" />
+							<p:inputText id="ncm" value="#{tipoProdutoBean.tbGov.ncm.ncm}"
+								size="30" disabled="true" />
+							<p:commandButton id="vincularNcm" value="NCM"
+								icon="ui-icon-folder-open" onclick="PF('dlg5').show();"
+								update="ncm" />
 						</h:panelGrid>
-					Vigência:
-					<p:calendar id="tipVigencia" size="29"
-							value="#{tipoProdutoBean.tbGov.vigencia}" effect="fold" />	
-				
+					Descrição NCM:
+					<p:inputText id="descNcmVig"
+							value="#{tipoProdutoBean.tbGov.ncm.descricaoNcm}" size="40"
+							disabled="true" />
+					NatRec:
+					<p:inputText id="natRecVig"
+							value="#{tipoProdutoBean.tbGov.ncm.natRec}" size="40"
+							disabled="true" />
+							
+					Descrição NatRec:
+					<p:inputText id="descNatRecVig"
+							value="#{tipoProdutoBean.tbGov.ncm.descNatRec}" size="40"
+							disabled="true" />
+
 					Alíquota Entrada Pis:
-					<p:selectOneMenu id="aliqEntPis" style="width:200px;"
+					<p:selectOneMenu id="aliqEntPis" style="width:265px;"
 							value="#{tipoProdutoBean.tbGov.entradaPis}">
 							<f:selectItem itemLabel="Selecione uma alíquota" />
 							<f:selectItems value="#{tipoProdutoBean.listaAliqPisCofins}"
@@ -204,7 +292,7 @@
 						</p:selectOneMenu>
 						
 					Alíquota Entrada Cofins:
-					<p:selectOneMenu id="aliqEntCof" style="width:200px;"
+					<p:selectOneMenu id="aliqEntCof" style="width:265px;"
 							value="#{tipoProdutoBean.tbGov.entradaCofins}">
 							<f:selectItem itemLabel="Selecione uma alíquota" />
 							<f:selectItems value="#{tipoProdutoBean.listaAliqPisCofins}"
@@ -213,7 +301,7 @@
 						</p:selectOneMenu>
 						
 					Alíquota Saída Pis:
-					<p:selectOneMenu id="aliqSaiPis" style="width:200px;"
+					<p:selectOneMenu id="aliqSaiPis" style="width:265px;"
 							value="#{tipoProdutoBean.tbGov.saidaPis}">
 							<f:selectItem itemLabel="Selecione uma alíquota" />
 							<f:selectItems value="#{tipoProdutoBean.listaAliqPisCofins}"
@@ -222,7 +310,7 @@
 						</p:selectOneMenu>
 						
 					Alíquota Saída Cofins:
-					<p:selectOneMenu id="aliqSaiCo" style="width:200px;"
+					<p:selectOneMenu id="aliqSaiCo" style="width:265px;"
 							value="#{tipoProdutoBean.tbGov.saidaCofins}">
 							<f:selectItem itemLabel="Selecione uma alíquota" />
 							<f:selectItems value="#{tipoProdutoBean.listaAliqPisCofins}"
@@ -231,7 +319,7 @@
 						</p:selectOneMenu>
 						
 					Alíquota IPI:
-					<p:selectOneMenu id="aliqIpi" style="width:200px;"
+					<p:selectOneMenu id="aliqIpi" style="width:265px;"
 							value="#{tipoProdutoBean.tbGov.aliquotaIpi}">
 							<f:selectItem itemLabel="Selecione uma alíquota" />
 							<f:selectItems value="#{tipoProdutoBean.listaAliqIpi}"
@@ -241,7 +329,7 @@
 						
 					Tipo Item:
 					<p:selectOneMenu id="tipoProd"
-							value='#{tipoProdutoBean.tbGov.tipoItem}' style="width:200px;">
+							value='#{tipoProdutoBean.tbGov.tipoItem}' style="width:265px;">
 							<f:selectItem itemLabel=" Selecione
 							tipo do item" />
 							<f:selectItem itemLabel="00 – Mercadoria para Revenda"
@@ -267,82 +355,17 @@
 								itemValue="10 – Outros insumos" />
 							<f:selectItem itemLabel="99 – Outras" itemValue="99 – Outras" />
 						</p:selectOneMenu>
+						
+					Vigência:
+					<p:calendar id="tipVigencia" size="40"
+							value="#{tipoProdutoBean.tbGov.vigencia}" effect="fold" />
 
 					</h:panelGrid>
-
 				</h:panelGrid>
-				<p:commandButton value="Incluir"
+				<p:commandButton id="btnIncluir" value="Incluir/Alterar"
 					actionListener="#{tipoProdutoBean.incluirTipoVig}"
 					update="listaVigTipoProd, gridincEdi2" />
 			</p:dialog>
-
-			<p:dialog id="dialog5" header="Busca NCM" widgetVar="dlg5"
-				modal="true" height="400" width="750">
-
-				<div align="right">
-					<h:panelGrid columns="1">
-						<p:commandButton value="Buscar" id="bus"
-							actionListener="#{tipoProdutoBean.buscarNcm}"
-							update="gridDataNcm">
-						</p:commandButton>
-					</h:panelGrid>
-				</div>
-				<h:panelGrid columns="3" columnClasses="label" cellspacing="3">
-					<p:inputText id="texto2" value="#{tipoProdutoBean.busca}" size="40" />
-
-					<p:selectOneMenu id="filtroConsultaNcm"
-						value="#{tipoProdutoBean.filtro}">/>
-						<f:selectItem itemLabel="Selecione uma Opção" />
-						<f:selectItem itemLabel="Código do NCM" itemValue="codNcm" />
-						<f:selectItem itemLabel="Descrição do NCM" itemValue="descNcm" />
-						<f:selectItem itemLabel="Descrição da NatRec" itemValue="descNat" />
-						<f:selectItem itemLabel="Código da NatRec" itemValue="codNat" />
-						<f:selectItem itemLabel="Descrição Tabela" itemValue="descTb" />
-					</p:selectOneMenu>
-
-				</h:panelGrid>
-				<h:panelGrid id="gridDataNcm" columns="1"
-					columnClasses="label, value">
-					<p:blockUI block="gridDataNcm" trigger="bus" />
-					<p:dataTable id="dataNcm" value="#{tipoProdutoBean.listaNcm}"
-						paginator="true" rows="10" var="listNcm" rowKey="tipoProd.idNcm">
-
-						<p:column headerText="Código do NCM">
-							<h:outputText value="#{tlistNcm.idNcm}" />
-						</p:column>
-
-						<p:column headerText="NCM">
-							<h:outputText value="#{listNcm.ncm}" />
-						</p:column>
-
-						<p:column headerText="Descricao do NCM">
-							<h:outputText value="#{listNcm.descricaoNcm}" />
-						</p:column>
-
-						<p:column headerText="Natureza da Receita">
-							<h:outputText value="#{listNcm.natRec}" />
-						</p:column>
-						
-						<p:column headerText="Descrição da Tabela">
-							<h:outputText value="#{listNcm.natRec}" />
-						</p:column>
-
-						<p:column headerText="Selecionar">
-							<p:commandLink id="link" value="Vincular" update="textoNcm"
-								action="#{tipoProdutoBean.vincularNcm}">
-								<f:setPropertyActionListener value="#{tipoProd.idNcm}"
-									target="#{tipoProdutoBean.idNcm}" />
-							</p:commandLink>
-						</p:column>
-					</p:dataTable>
-					<p:blockUI block="dataNcm" trigger="dataNcm">
-        				LOADING<br />
-						<p:graphicImage name="ajaxloader.gif" />
-					</p:blockUI>
-				</h:panelGrid>
-
-			</p:dialog>
-
 		</div>
 	</h:form>
 </body>

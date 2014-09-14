@@ -59,5 +59,12 @@ public class CodTabelaGovDAOHibernate implements CodTabelaGovDAO {
 		this.session.persist(tbGov);
 		this.transaction.commit();
 	}
+	@Override
+	public CodTabelaGov editVig(Long idVig) {
+		String jpql = "Select c from CodTabelaGov c Where c.idCodGov = :idVig";
+		TypedQuery<CodTabelaGov> consulta = this.session.createQuery(jpql, CodTabelaGov.class);
+		consulta.setParameter("idVig", idVig);
+		return consulta.getSingleResult();
+	}
 
 }

@@ -61,8 +61,8 @@ public class TipoProdutoBean {
 								"Tipo de Produto salvo com sucesso"));
 				this.vig = false;
 				this.sal = true;
-				this.alt = true;
-				this.rem = true;
+				this.alt = false;
+				this.rem = false;
 			} else {
 				FacesContext.getCurrentInstance().addMessage(
 						null,
@@ -157,25 +157,29 @@ public class TipoProdutoBean {
 				this.listaNcm = tipoRN.consultaNCMCod(busca);
 			} else if (filtro.equals("descNcm")) {
 				this.listaNcm = tipoRN.consultaNCMDesc(busca);
-			}else if (filtro.equals("descNat")){
+			} else if (filtro.equals("descNat")) {
 				this.listaNcm = tipoRN.consultaNatDesc(busca);
-			}else if (filtro.equals("codNat")){
+			} else if (filtro.equals("codNat")) {
 				this.listaNcm = tipoRN.consultaNatCod(busca);
-			}else if (filtro.equals("descTb")){
+			} else if (filtro.equals("descTb")) {
 				this.listaNcm = tipoRN.consultaTbDesc(busca);
 			}
 		} else {
-			FacesContext
-					.getCurrentInstance()
-					.addMessage(
-							null,
-							new FacesMessage(FacesMessage.SEVERITY_ERROR,
-									"Info",
-									"Para listar os NCM inclua um parâmentro."));
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+							"Para listar os NCM inclua um parâmentro."));
 		}
 	}
 
 	public void vincularNcm() {
+		TipoProdutoRN tipoRN = new TipoProdutoRN();
+		this.ncm = tipoRN.consultaNCMId(this.idNcm);
+		this.tbGov.setNcm(ncm);
+		FacesContext.getCurrentInstance().addMessage(
+				null,
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
+						"Ncm Vinculado ao Tipo!"));
 
 	}
 
@@ -201,7 +205,16 @@ public class TipoProdutoBean {
 	}
 
 	public void editarVigTip() {
-
+		try {
+			TipoProdutoRN tipoRN = new TipoProdutoRN();
+			this.tbGov = tipoRN.editVig(this.idVig);
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+							"Problemas na remoção da vigência do tipo de produto "
+									+ e.getMessage()));
+		}
 	}
 
 	public void buscarTipo() {
@@ -258,11 +271,18 @@ public class TipoProdutoBean {
 									+ e.getMessage()));
 		}
 	}
+	
+	public void incVigNovo(){
+		this.tbGov = new CodTabelaGov();
+	}
 
 	public void limpar() {
 		this.tipo = new TipoProduto();
 		this.tbGov = new CodTabelaGov();
 		this.listaTipoProduto = new ArrayList<TipoProduto>();
+		this.listaTbGov = new ArrayList<CodTabelaGov>();
+		this.ncm = new Ncm();
+		this.listaNcm = new ArrayList<Ncm>();
 	}
 
 	public void listaVigencia() {
