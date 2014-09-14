@@ -246,22 +246,42 @@ public class TipoProdutoBean {
 	public void incluirTipoVig() {
 		try {
 			TipoProdutoRN tipoRN = new TipoProdutoRN();
-			this.tbGov.setIdCodGov(null);
-			this.tbGov.setTipoProduto(this.tipo);
-			Integer retorno = tipoRN.validaCampoNuloVig(this.tbGov);
-			if (retorno == 0) {
-				tipoRN.salvaVig(this.tbGov);
-				listaVigencia();
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-								"Vigência salva com sucesso"));
-				this.tbGov = new CodTabelaGov();
+			if (this.tbGov.getIdCodGov() == null) {
+				this.tbGov.setIdCodGov(null);
+				this.tbGov.setTipoProduto(this.tipo);
+				Integer retorno = tipoRN.validaCampoNuloVig(this.tbGov);
+				if (retorno == 0) {
+					tipoRN.salvaVig(this.tbGov);
+					listaVigencia();
+					FacesContext.getCurrentInstance().addMessage(
+							null,
+							new FacesMessage(FacesMessage.SEVERITY_INFO,
+									"Info", "Vigência salva com sucesso"));
+					this.tbGov = new CodTabelaGov();
+				} else {
+					FacesContext.getCurrentInstance().addMessage(
+							null,
+							new FacesMessage(FacesMessage.SEVERITY_ERROR,
+									"Info",
+									"Existem campos nulos no formulário"));
+				}
 			} else {
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-								"Existem campos nulos no formulário"));
+				Integer retorno = tipoRN.validaCampoNuloVig(this.tbGov);
+				if (retorno == 0) {
+					tipoRN.salvaVig2(this.tbGov);
+					listaVigencia();
+					FacesContext.getCurrentInstance().addMessage(
+							null,
+							new FacesMessage(FacesMessage.SEVERITY_INFO,
+									"Info", "Vigência salva com sucesso"));
+					this.tbGov = new CodTabelaGov();
+				} else {
+					FacesContext.getCurrentInstance().addMessage(
+							null,
+							new FacesMessage(FacesMessage.SEVERITY_ERROR,
+									"Info",
+									"Existem campos nulos no formulário"));
+				}
 			}
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
@@ -271,8 +291,8 @@ public class TipoProdutoBean {
 									+ e.getMessage()));
 		}
 	}
-	
-	public void incVigNovo(){
+
+	public void incVigNovo() {
 		this.tbGov = new CodTabelaGov();
 	}
 

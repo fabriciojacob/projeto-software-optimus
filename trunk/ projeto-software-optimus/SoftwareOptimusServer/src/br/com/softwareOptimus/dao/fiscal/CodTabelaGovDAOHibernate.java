@@ -66,5 +66,10 @@ public class CodTabelaGovDAOHibernate implements CodTabelaGovDAO {
 		consulta.setParameter("idVig", idVig);
 		return consulta.getSingleResult();
 	}
+	@Override
+	public void salvaVig2(CodTabelaGov tbGov) {
+		this.session.merge(tbGov);
+		this.transaction.commit();
+	}
 
 }

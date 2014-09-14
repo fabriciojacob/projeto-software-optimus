@@ -51,9 +51,9 @@
 					size="40" disabled="#{tipoProdutoBean.desc}" />
 			</h:panelGrid>
 
-			<p:commandButton id="vincVigencia"
-				value="Vigência do Tipo de Produto" type="button"
-				actionListener="#{tipoProdutoBean.incVigNovo}" update="gridincEdi2"
+			<p:commandButton id="vincVigencia" update="gridincEdi2, gridVigTipo"
+				value="Vigência do Tipo de Produto"
+				actionListener="#{tipoProdutoBean.incVigNovo}"
 				disabled="#{tipoProdutoBean.vig}" onclick="PF('dlg2').show();" />
 
 			<h:panelGrid id="gridVigTipo" columns="1">
@@ -106,7 +106,8 @@
 
 					<p:column headerText="Editar">
 						<p:commandLink id="linkEditaVig" value="Editar"
-							action="#{tipoProdutoBean.editarVigTip}">
+							action="#{tipoProdutoBean.editarVigTip}" update=":frmCadTipoProduto:gridincEdi2"
+							onclick="PF('dlg2').show();">
 							<f:setPropertyActionListener value="#{listatbGov.idCodGov}"
 								target="#{tipoProdutoBean.idVig}" />
 						</p:commandLink>
@@ -362,7 +363,7 @@
 
 					</h:panelGrid>
 				</h:panelGrid>
-				<p:commandButton id="btnIncluir" value="Incluir/Alterar"
+				<p:commandButton id="btnIncluir" value="Salvar"
 					actionListener="#{tipoProdutoBean.incluirTipoVig}"
 					update="listaVigTipoProd, gridincEdi2" />
 			</p:dialog>
