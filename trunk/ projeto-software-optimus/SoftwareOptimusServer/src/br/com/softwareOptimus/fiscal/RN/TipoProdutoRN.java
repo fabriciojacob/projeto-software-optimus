@@ -38,9 +38,9 @@ public class TipoProdutoRN {
 
 	public Integer verificaRemocao(TipoProduto tipo) {
 		List<Produto> prod = this.tipoProdutoDAO.verificaRemocao(tipo);
-		if(prod.size() != 0){
+		if (prod.size() != 0) {
 			return 1;
-		}else{
+		} else {
 			return 0;
 		}
 	}
@@ -75,14 +75,12 @@ public class TipoProdutoRN {
 
 	public Integer validaCampoNuloVig(CodTabelaGov tbGov) {
 		Integer retorno = 0;
-		if (tbGov.getAliquotaIpi().equals("")
-				|| tbGov.getEntradaCofins().equals("")
-				|| tbGov.getEntradaPis().equals("")
-				|| tbGov.getNcm().equals("")
-				|| tbGov.getSaidaCofins().equals("")
-				|| tbGov.getSaidaPis().equals("")
+		if (tbGov.getAliquotaIpi() == null || tbGov.getEntradaCofins() == null
+				|| tbGov.getEntradaPis() == null || tbGov.getNcm() == null
+				|| tbGov.getSaidaCofins() == null
+				|| tbGov.getSaidaPis() == null
 				|| tbGov.getTipoItem().equals("")
-				|| tbGov.getVigencia().equals("")) {			
+				|| tbGov.getVigencia() == null) {
 			retorno = 1;
 		}
 		return retorno;
@@ -93,22 +91,30 @@ public class TipoProdutoRN {
 	}
 
 	public List<Ncm> consultaNCMCod(String busca) {
-		return null;
+		return this.tipoProdutoDAO.consultaNCMCod(busca);
 	}
 
 	public List<Ncm> consultaNCMDesc(String busca) {
-		return null;
+		return this.tipoProdutoDAO.consultaNCMDesc(busca);
 	}
 
 	public List<Ncm> consultaNatDesc(String busca) {
-		return null;
+		return this.tipoProdutoDAO.consultaNatDesc(busca);
 	}
 
 	public List<Ncm> consultaNatCod(String busca) {
-		return null;
+		return this.tipoProdutoDAO.consultaNatCod(busca);
 	}
 
 	public List<Ncm> consultaTbDesc(String busca) {
-		return null;
+		return this.tipoProdutoDAO.consultaTbDesc(busca);
+	}
+
+	public Ncm consultaNCMId(Long idNcm) {
+		return this.tipoProdutoDAO.consultaNCMId(idNcm);
+	}
+
+	public CodTabelaGov editVig(Long idVig) {	
+		return this.codTbDAO.editVig(idVig);
 	}
 }
