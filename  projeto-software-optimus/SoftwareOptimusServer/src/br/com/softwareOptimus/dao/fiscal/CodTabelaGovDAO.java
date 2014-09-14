@@ -15,4 +15,5 @@ public interface CodTabelaGovDAO {
 	public void remover(Long idVig);
 	public void salvar(CodTabelaGov tbGov);
 	public CodTabelaGov editVig(Long idVig);
+	public void salvaVig2(CodTabelaGov tbGov);
 }

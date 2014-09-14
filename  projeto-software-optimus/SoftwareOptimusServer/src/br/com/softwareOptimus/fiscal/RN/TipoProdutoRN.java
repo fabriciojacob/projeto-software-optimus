@@ -117,4 +117,8 @@ public class TipoProdutoRN {
 	public CodTabelaGov editVig(Long idVig) {	
 		return this.codTbDAO.editVig(idVig);
 	}
+
+	public void salvaVig2(CodTabelaGov tbGov) {
+		this.codTbDAO.salvaVig2(tbGov);
+	}
 }
