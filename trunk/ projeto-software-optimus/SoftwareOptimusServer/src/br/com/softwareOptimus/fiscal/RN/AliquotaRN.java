@@ -4,7 +4,10 @@ import java.util.Collection;
 import java.util.List;
 import br.com.softwareOptimus.dao.fiscal.AliquotaDAO;
 import br.com.softwareOptimus.fiscal.Aliquota;
+import br.com.softwareOptimus.fiscal.CodTabelaGov;
 import br.com.softwareOptimus.fiscal.CodigoSituacaoTributaria;
+import br.com.softwareOptimus.fiscal.GradeTributariaVigencia;
+import br.com.softwareOptimus.fiscal.PisCofins;
 import br.com.softwareOptimus.fiscal.TipoCst;
 import br.com.softwareOptimus.util.DAOFactory;
 
@@ -60,10 +63,27 @@ public class AliquotaRN {
 		if(tipCst.equals("ICMS") && aliquota.getTipo() == null){
 			retorno = 1;
 		}
+		if(tipCst.equals("PISCOFINS") && aliquota.getPisCofins() == null){
+			retorno = 1;
+		}
 		return retorno;
 	}
 
 	public List<Aliquota> listaAliq(TipoCst tipo) {
 		return this.aliquotaDAO.listaAliq(tipo);
+	}
+
+	public List<Aliquota> listaAliqPisCofins(TipoCst pisCofins, PisCofins tipoAliq) {
+		return this.aliquotaDAO.listaAliqPisCofins(pisCofins, tipoAliq);
+	}
+
+	public Integer ValidaRemocao(Aliquota aliquota) {
+		List<CodTabelaGov> codTbGov = this.aliquotaDAO.verificaRemocao1(aliquota);
+		List<GradeTributariaVigencia> gradeVig = this.aliquotaDAO.verificaRemocao2(aliquota);
+		if (codTbGov.size() != 0 || gradeVig.size() != 0){
+			return 1;
+		}else{
+			return 0;
+		}
 	}
 }

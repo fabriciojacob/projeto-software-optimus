@@ -147,12 +147,15 @@ public class AliquotaBean {
 									"Info",
 									"Existem campos nulos no formulário"));
 				}
-			}else{
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR,
-								"Info",
-								"Alteração de Cst não permitida. Vincule o tipo de Cst correto para a alíquota que se deseja alterar ou cadastre outra."));
+			} else {
+				FacesContext
+						.getCurrentInstance()
+						.addMessage(
+								null,
+								new FacesMessage(
+										FacesMessage.SEVERITY_ERROR,
+										"Info",
+										"Alteração de Cst não permitida. Vincule o tipo de Cst correto para a alíquota que se deseja alterar ou cadastre outra."));
 			}
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
@@ -166,16 +169,27 @@ public class AliquotaBean {
 	public void remover() {
 		AliquotaRN aliqRN = new AliquotaRN();
 		try {
-			aliqRN.remove(aliquota.getIdAliq());
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-							"Alíquota removida com sucesso"));
-			this.alt = true;
-			this.rem = true;
-			this.vinculo = true;
-			limpa();
-			desabilita();
+			Integer retorno = aliqRN.ValidaRemocao(this.aliquota);
+			if (retorno == 0) {
+				aliqRN.remove(aliquota.getIdAliq());
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
+								"Alíquota removida com sucesso"));
+				this.alt = true;
+				this.rem = true;
+				this.vinculo = true;
+				limpa();
+				desabilita();
+			} else {
+				FacesContext
+						.getCurrentInstance()
+						.addMessage(
+								null,
+								new FacesMessage(FacesMessage.SEVERITY_ERROR,
+										"Info",
+										"Remoção não permitida! Existem registros vinculados a esta alíquota. "));
+			}
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
 					null,

@@ -35,6 +35,16 @@ public class Aliquota implements Serializable, Converter{
 	
 	private TipoTrib tipo;
 	
+	private PisCofins pisCofins;
+	
+	public PisCofins getPisCofins() {
+		return pisCofins;
+	}
+
+	public void setPisCofins(PisCofins pisCofins) {
+		this.pisCofins = pisCofins;
+	}
+
 	public TipoTrib getTipo() {
 		return tipo;
 	}

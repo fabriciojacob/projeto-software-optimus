@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import br.com.softwareOptimus.fiscal.Aliquota;
+import br.com.softwareOptimus.fiscal.CodTabelaGov;
+import br.com.softwareOptimus.fiscal.GradeTributariaVigencia;
+import br.com.softwareOptimus.fiscal.PisCofins;
 import br.com.softwareOptimus.fiscal.TipoCst;
 
 public interface AliquotaDAO {
@@ -20,4 +23,7 @@ public interface AliquotaDAO {
 	public List<Aliquota> consultaRed(Double busca);
 	public List<Aliquota> listaAliqIcms();
 	public List<Aliquota> listaAliq(TipoCst tipo);
+	public List<Aliquota> listaAliqPisCofins(TipoCst pisCofins, PisCofins tipoAliq);
+	public List<CodTabelaGov> verificaRemocao1(Aliquota aliquota);
+	public List<GradeTributariaVigencia> verificaRemocao2(Aliquota aliquota);
 }

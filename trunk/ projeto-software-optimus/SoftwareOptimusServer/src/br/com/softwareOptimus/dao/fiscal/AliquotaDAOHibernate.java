@@ -7,6 +7,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 import br.com.softwareOptimus.fiscal.Aliquota;
+import br.com.softwareOptimus.fiscal.CodTabelaGov;
+import br.com.softwareOptimus.fiscal.GradeTributariaVigencia;
+import br.com.softwareOptimus.fiscal.PisCofins;
 import br.com.softwareOptimus.fiscal.TipoCst;
 
 public class AliquotaDAOHibernate implements AliquotaDAO {
@@ -124,10 +127,46 @@ public class AliquotaDAOHibernate implements AliquotaDAO {
 	@Override
 	public List<Aliquota> listaAliq(TipoCst tipo) {
 		String jpql = "Select Distinct a From Aliquota a, IN(a.cst) AS b Where b.tipoCst = :tipo";
+		TypedQuery<Aliquota> aliqIpi = this.session.createQuery(jpql,
+				Aliquota.class);
+		aliqIpi.setParameter("tipo", tipo);
+		return aliqIpi.getResultList();
+	}
+
+	@Override
+	public List<Aliquota> listaAliqPisCofins(TipoCst pisCofins,
+			PisCofins tipoAliq) {
+		String jpql = "Select Distinct a From Aliquota a, IN(a.cst) AS b Where b.tipoCst = :tipo and a.pisCofins = :tipoAliq";
 		TypedQuery<Aliquota> aliqPisCofins = this.session.createQuery(jpql,
 				Aliquota.class);
-		aliqPisCofins.setParameter("tipo", tipo);
+		aliqPisCofins.setParameter("tipo", pisCofins);
+		aliqPisCofins.setParameter("tipoAliq", tipoAliq);
 		return aliqPisCofins.getResultList();
 	}
-	
+
+	@Override
+	public List<CodTabelaGov> verificaRemocao1(Aliquota aliquota) {
+		String jpql = "Select c from CodTabelaGov c "
+				+ "where c.entradaPis = :aliquota1 "
+				+ "or c.entradaCofins = :aliquota2 "
+				+ "or c.saidaPis = :aliquota3 "
+				+ "or c.saidaCofins = :aliquota4";
+		TypedQuery<CodTabelaGov> codTb = this.session.createQuery(jpql,
+				CodTabelaGov.class);
+		codTb.setParameter("aliquota1", aliquota);
+		codTb.setParameter("aliquota2", aliquota);
+		codTb.setParameter("aliquota3", aliquota);
+		codTb.setParameter("aliquota4", aliquota);
+		return codTb.getResultList();
+	}
+
+	@Override
+	public List<GradeTributariaVigencia> verificaRemocao2(Aliquota aliquota) {
+		String jpql = "select g from GradeTributariaVigencia g where g.aliquota = :aliquota";
+		TypedQuery<GradeTributariaVigencia> grade = this.session.createQuery(
+				jpql, GradeTributariaVigencia.class);
+		grade.setParameter("aliquota", aliquota);
+		return grade.getResultList();
+	}
+
 }
