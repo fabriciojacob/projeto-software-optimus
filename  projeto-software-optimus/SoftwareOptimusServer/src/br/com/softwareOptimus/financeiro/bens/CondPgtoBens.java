@@ -23,6 +23,7 @@ public class CondPgtoBens implements Geral {
 	private boolean btSalvar, btExcluir, btEditar, btNovo;
 	
 	public CondPgtoBens(){
+		this.condPgto = new CondPgto();
 		this.btNovo = false;
 		this.btEditar = true;
 		this.btSalvar = true;
