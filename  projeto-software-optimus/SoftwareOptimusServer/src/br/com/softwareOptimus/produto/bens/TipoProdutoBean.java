@@ -9,6 +9,7 @@ import javax.faces.context.FacesContext;
 import br.com.softwareOptimus.fiscal.Aliquota;
 import br.com.softwareOptimus.fiscal.CodTabelaGov;
 import br.com.softwareOptimus.fiscal.Ncm;
+import br.com.softwareOptimus.fiscal.PisCofins;
 import br.com.softwareOptimus.fiscal.TipoCst;
 import br.com.softwareOptimus.fiscal.TipoProduto;
 import br.com.softwareOptimus.fiscal.RN.AliquotaRN;
@@ -22,7 +23,8 @@ public class TipoProdutoBean {
 	private CodTabelaGov tbGov = new CodTabelaGov();
 	private Ncm ncm = new Ncm();
 	private List<TipoProduto> listaTipoProduto = new ArrayList<TipoProduto>();
-	private List<Aliquota> listaAliqPisCofins = new ArrayList<Aliquota>();
+	private List<Aliquota> listaAliqPis = new ArrayList<Aliquota>();
+	private List<Aliquota> listaAliqCofins = new ArrayList<Aliquota>();
 	private List<Ncm> listaNcm = new ArrayList<Ncm>();
 	private List<Aliquota> listaAliqIpi = new ArrayList<Aliquota>();
 	private AliquotaRN aliqRN = new AliquotaRN();
@@ -33,7 +35,8 @@ public class TipoProdutoBean {
 	private Long id, idVig, idNcm;
 
 	public TipoProdutoBean() {
-		setListaAliqPisCofins(this.aliqRN.listaAliq(TipoCst.PISCOFINS));
+		setListaAliqPis(this.aliqRN.listaAliqPisCofins(TipoCst.PISCOFINS, PisCofins.PIS));
+		setListaAliqCofins(this.aliqRN.listaAliqPisCofins(TipoCst.PISCOFINS, PisCofins.COFINS));
 		setListaAliqIpi(this.aliqRN.listaAliq(TipoCst.IPI));
 	}
 
@@ -42,7 +45,8 @@ public class TipoProdutoBean {
 		this.alt = true;
 		this.rem = true;
 		this.vig = true;
-		setListaAliqPisCofins(this.aliqRN.listaAliq(TipoCst.PISCOFINS));
+		setListaAliqPis(this.aliqRN.listaAliqPisCofins(TipoCst.PISCOFINS, PisCofins.PIS));
+		setListaAliqCofins(this.aliqRN.listaAliqPisCofins(TipoCst.PISCOFINS, PisCofins.COFINS));
 		setListaAliqIpi(this.aliqRN.listaAliq(TipoCst.IPI));
 		limpar();
 		habilita();
@@ -338,6 +342,22 @@ public class TipoProdutoBean {
 		this.idNcm = idNcm;
 	}
 
+	public List<Aliquota> getListaAliqPis() {
+		return listaAliqPis;
+	}
+
+	public void setListaAliqPis(List<Aliquota> listaAliqPis) {
+		this.listaAliqPis = listaAliqPis;
+	}
+
+	public List<Aliquota> getListaAliqCofins() {
+		return listaAliqCofins;
+	}
+
+	public void setListaAliqCofins(List<Aliquota> listaAliqCofins) {
+		this.listaAliqCofins = listaAliqCofins;
+	}
+
 	public Ncm getNcm() {
 		return ncm;
 	}
@@ -352,14 +372,6 @@ public class TipoProdutoBean {
 
 	public void setListaNcm(List<Ncm> listaNcm) {
 		this.listaNcm = listaNcm;
-	}
-
-	public List<Aliquota> getListaAliqPisCofins() {
-		return listaAliqPisCofins;
-	}
-
-	public void setListaAliqPisCofins(List<Aliquota> listaAliqPisCofins) {
-		this.listaAliqPisCofins = listaAliqPisCofins;
 	}
 
 	public List<Aliquota> getListaAliqIpi() {

@@ -44,11 +44,11 @@
 		
 					Alíquota:
 					<p:inputText id="aliq" value="#{aliquotaBean.aliquota.aliquota}"
-					size="10" maxlength="5" disabled="#{aliquotaBean.aliq}"/>
+					size="10" maxlength="5" disabled="#{aliquotaBean.aliq}" />
 					
 					Redução:
 					<p:inputText id="red" value="#{aliquotaBean.aliquota.reducao}"
-					size="40" disabled="#{aliquotaBean.red}"/>
+					size="40" disabled="#{aliquotaBean.red}" />
 
 				<p:commandButton value="Vincular CST" type="button"
 					disabled="#{aliquotaBean.vinculo}" onclick="PF('dlg4').show();" />
@@ -168,7 +168,13 @@
 							</p:selectOneMenu>
 						</h:panelGrid>
 					CST PisCofins:
-					<h:panelGrid columns="2">
+						<p:selectOneRadio id="pisCofins" disabled="#{aliquotaBean.chkPisCofins}"
+							value="#{aliquotaBean.aliquota.pisCofins}">
+							<f:selectItem itemLabel="Pis" itemValue="PIS" />
+							<f:selectItem itemLabel="Cofins" itemValue="COFINS" />
+						</p:selectOneRadio>
+						<h:panelGrid columns="2">
+
 						Entrada:
 							<p:selectOneMenu id="cstPisCofinsEnt"
 								value="#{aliquotaBean.cstEnt}" style="width:350px;"
