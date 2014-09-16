@@ -35,7 +35,7 @@
 				disabled="#{condPgtoBens.btExcluir}" update="frmCond" />
 
 			<p:commandButton value="Excluir"
-				actionListener="#{caixaBean.excluir}"
+				actionListener="#{condPgtoBens.excluir}"
 				disabled="#{condPgtoBens.btExcluir}" update="frmCond" />
 
 			<p:messages id="messages" showDetail="true" autoUpdate="true"
@@ -47,7 +47,7 @@
 				<h:panelGrid columns="1">
 
 					<p:commandButton value="Listar" update="listaCondPgto"
-						actionListener="" />
+						actionListener="#{condPgtoBens.pesquisar}" />
 				</h:panelGrid>
 
 
@@ -86,7 +86,7 @@
 
 				<p:tab id="dados" title="Cadastro">
 
-					<h:panelGrid id="" columns="2" columnClasses="label, value">
+					<h:panelGrid  columns="2" columnClasses="label, value">
 						
 					Inativa:
 						<p:selectBooleanCheckbox id="inativar"
