@@ -53,6 +53,16 @@ public class Produto implements Serializable{
 	@ManyToOne
 	private TipoProduto tipoProd;
 	
+	private boolean status;
+	
+	public boolean isStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+
 	public ProdutoPrincipal getProdPrincipal() {
 		return prodPrincipal;
 	}

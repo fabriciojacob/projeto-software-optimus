@@ -121,4 +121,8 @@ public class TipoProdutoRN {
 	public void salvaVig2(CodTabelaGov tbGov) {
 		this.codTbDAO.salvaVig2(tbGov);
 	}
+
+	public List<TipoProduto> listarTipoVig() {
+		return this.tipoProdutoDAO.listarTipoVig();
+	}
 }

@@ -14,15 +14,38 @@
 		<br />
 		<h3 style="margin-top: 0">CADASTRO DE PRODUTO</h3>
 		<div align="left">
-		
-			<p:commandButton value="Salvar"
-				actionListener="#{produtoBean.salvarProd}" />
-				
-			<p:commandButton value="Cancelar" />
+
+			<p:commandButton id="new" value="Novo"
+				actionListener="#{produtoBean.novo}" ajax="grid" />
+
+			<p:commandButton id="save" value="Salvar"
+				disabled="#{produtoBean.sal}" actionListener="#{produtoBean.salvar}"
+				ajax="grid" update="dialog2" />
+
+			<p:commandButton id="alterarado" value="Alterar"
+				disabled="#{produtoBean.alt}"
+				actionListener="#{produtoBean.alterar}" ajax="grid" />
+
+			<p:commandButton id="delete" value="Excluir"
+				disabled="#{produtoBean.rem}"
+				actionListener="#{produtoBean.remover}" ajax="grid" />
+
+			<p:commandButton id="consulta" value="Consultar" type="button"
+				ajax="dialog, grid" onclick="PF('dlg1').show();"
+				actionListener="#{produtoBean.cancelar}" />
+
+			<p:commandButton id="cancelar" value="Cancelar"
+				actionListener="#{produtoBean.cancelar}" ajax="grid" />
+
 			<p:messages id="messages" showDetail="true" autoUpdate="true"
 				closable="true" />
+
 			<h:panelGrid columns="2" columnClasses="label">
 				
+					Inativa:
+					<p:selectBooleanCheckbox id="inativaProd"
+					value="#{produtoBean.produto.status}" />
+					
 					Código do Produto:
 					<p:inputText id="idProduto" disabled="true"
 					value="#{produtoBean.produto.idProduto}" />
@@ -36,12 +59,32 @@
 					size="40" />
 			
 					Figura:
-					<p:selectOneMenu id="figura" value="#{produtoBean.figura}">
+					<p:selectOneMenu id="figura" value="#{produtoBean.produto.figura}"
+					style="width:265px;">
 					<f:selectItem itemLabel="Selecione uma Figura" />
-					<f:selectItems value="#{produtoBean.figura}" var="listaFig"
-						itemValue="#{listaFig}" itemLabel="#{listaFig.descricao}" />
+					<f:selectItems value="#{produtoBean.listaFigura}" var="listaFig"
+						itemValue="#{listaFig}" itemLabel="#{listaFig.idFigura} - #{listaFig.descricao}" />
 				</p:selectOneMenu>
-						
+				
+					Unidade de Medida:
+					<p:selectOneMenu id="unidMed" value="#{produtoBean.produto.unidMed}"
+					style="width:265px;">
+					<f:selectItem itemLabel="Selecione uma Unidade de Medida" />
+					<f:selectItems value="#{produtoBean.listaUnidade}" var="listaUnid"
+						itemValue="#{listaUnid}" itemLabel="#{listaUnid.idUnidMed} - #{listaUnid.descUnid}" />
+				</p:selectOneMenu>
+				
+					Tipo de Produto:
+					<p:selectOneMenu id="tipoProduto" value="#{produtoBean.produto.tipoProd}"
+					style="width:265px;">
+					<f:selectItem itemLabel="Selecione um Tipo de Produto" />
+					<f:selectItems value="#{produtoBean.listaTipo}" var="listaTip"
+						itemValue="#{listaTip}" itemLabel="#{listaTip.idTipoProd} - #{listaTip.descricao}" />
+				</p:selectOneMenu>
+				
+			  	<p:tooltip id="toolTipAliq" for="figura, unidMed, tipoProduto"
+				value="Exibição 'Codigo' - 'Descrição'" showEffect="clip"
+				hideEffect="explode" />
 
 			</h:panelGrid>
 		</div>

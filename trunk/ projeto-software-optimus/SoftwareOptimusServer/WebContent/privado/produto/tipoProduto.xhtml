@@ -106,7 +106,8 @@
 
 					<p:column headerText="Editar">
 						<p:commandLink id="linkEditaVig" value="Editar"
-							action="#{tipoProdutoBean.editarVigTip}" update=":frmCadTipoProduto:gridincEdi2"
+							action="#{tipoProdutoBean.editarVigTip}"
+							update=":frmCadTipoProduto:gridincEdi2"
 							onclick="PF('dlg2').show();">
 							<f:setPropertyActionListener value="#{listatbGov.idCodGov}"
 								target="#{tipoProdutoBean.idVig}" />
@@ -208,6 +209,7 @@
 				</h:panelGrid>
 				<h:panelGrid id="gridDataNcm" columns="1"
 					columnClasses="label, value">
+					<p:blockUI block="gridDataNcm" trigger="filtroBusca" />
 					<p:dataTable id="dataNcm" value="#{tipoProdutoBean.listaNcm}"
 						paginator="true" rows="10" var="listNcm" rowKey="tipoProd.idNcm">
 
@@ -245,6 +247,10 @@
 							</p:commandLink>
 						</p:column>
 					</p:dataTable>
+					<p:blockUI block="dataNcm" trigger="dataNcm">
+        				LOADING<br />
+						<p:graphicImage name="ajaxloader.gif" />
+					</p:blockUI>
 				</h:panelGrid>
 
 			</p:dialog>

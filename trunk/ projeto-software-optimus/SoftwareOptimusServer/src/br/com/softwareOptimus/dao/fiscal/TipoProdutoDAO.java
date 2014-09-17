@@ -26,5 +26,6 @@ public interface TipoProdutoDAO {
 	public List<Ncm> consultaNatCod(String busca);
 	public List<Ncm> consultaTbDesc(String busca);
 	public Ncm consultaNCMId(Long idNcm);
+	public List<TipoProduto> listarTipoVig();
 
 }

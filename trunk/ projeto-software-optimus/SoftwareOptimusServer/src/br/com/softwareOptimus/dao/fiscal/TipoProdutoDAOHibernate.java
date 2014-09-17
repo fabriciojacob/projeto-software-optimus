@@ -7,7 +7,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-
 import br.com.softwareOptimus.fiscal.Ncm;
 import br.com.softwareOptimus.fiscal.TipoProduto;
 import br.com.softwareOptimus.produto.Produto;
@@ -165,5 +164,13 @@ public class TipoProdutoDAOHibernate implements TipoProdutoDAO {
 				Ncm.class);
 		tipo.setParameter("idNcm", idNcm);
 		return tipo.getSingleResult();
+	}
+
+	@Override
+	public List<TipoProduto> listarTipoVig() {
+		String jpql = "Select t From TipoProduto t where exists (select c from CodTabelaGov c where c.tipoProduto = t)";
+		TypedQuery<TipoProduto> listaTipo = this.session.createQuery(jpql,
+				TipoProduto.class);
+		return listaTipo.getResultList();
 	}
 }
