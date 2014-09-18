@@ -1,5 +1,7 @@
 package br.com.softwareOptimus.com.financeiro.dao;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
@@ -24,5 +26,7 @@ public interface TituloDAO {
 	public List<Titulo> pesquisaPessoa(Pessoa p) throws Exception;
 
 	public void excluir(Titulo titulo) throws Exception;
+	
+	public void begin() throws IOException, SQLException;
 
 }

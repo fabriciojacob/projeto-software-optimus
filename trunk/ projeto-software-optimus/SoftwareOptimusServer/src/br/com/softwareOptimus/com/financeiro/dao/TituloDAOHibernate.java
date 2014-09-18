@@ -1,5 +1,7 @@
 package br.com.softwareOptimus.com.financeiro.dao;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
@@ -95,6 +97,14 @@ public class TituloDAOHibernate implements TituloDAO {
 
 	public void setTransacao(EntityTransaction transacao) {
 		this.transacao = transacao;
+	}
+
+	@Override
+	public void begin() throws IOException, SQLException {
+		this.transacao = this.session.getTransaction();
+		if(!this.transacao.isActive()){
+			this.transacao.begin();
+		}
 	}
 
 }
