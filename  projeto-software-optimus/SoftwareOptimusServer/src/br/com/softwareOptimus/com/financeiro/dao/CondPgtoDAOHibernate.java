@@ -36,7 +36,7 @@ public class CondPgtoDAOHibernate implements CondPgtoDAO {
 
 	@Override
 	public List<CondPgto> listar() throws Exception {
-		String jpql = "Select e from CondPgto";
+		String jpql = "Select e from CondPgto e";
 		TypedQuery<CondPgto> consulta = this.session.createQuery(jpql,
 				CondPgto.class);
 		return consulta.getResultList();

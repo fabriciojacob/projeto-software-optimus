@@ -38,6 +38,7 @@ public class CondPgtoBens implements Geral {
 			msgAcerto("Registro salvo com sucesso ");
 			this.btEditar = false;
 			this.btExcluir = false;
+			this.btSalvar = true;
 		} catch (Exception e) {
 			msgErro("Problemas ao salvar a condição de pgto ", e);
 		}
@@ -107,6 +108,7 @@ public class CondPgtoBens implements Geral {
 		this.condRN = new CondPgtoRN();
 		try{
 			this.condRN.remover(condPgto);
+			msgAcerto("Registro excluído com sucesso !!!");
 		}catch (Exception e){
 			msgErro("Problemas ao excluir o registro ", e);
 		}
