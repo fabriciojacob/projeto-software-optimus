@@ -2,9 +2,7 @@ package br.com.softwareOptimus.util;
 
 import java.io.IOException;
 import java.sql.SQLException;
-
 import javax.persistence.EntityManager;
-
 import br.com.softwareOptimus.com.financeiro.dao.BancoDAO;
 import br.com.softwareOptimus.com.financeiro.dao.BancoDAOHibernate;
 import br.com.softwareOptimus.com.financeiro.dao.CaixaDAO;
@@ -17,6 +15,8 @@ import br.com.softwareOptimus.com.financeiro.dao.ContaDAO;
 import br.com.softwareOptimus.com.financeiro.dao.ContaDAOHibernate;
 import br.com.softwareOptimus.com.financeiro.dao.FormaPgtoDAO;
 import br.com.softwareOptimus.com.financeiro.dao.FormaPgtoHibernate;
+import br.com.softwareOptimus.com.financeiro.dao.TituloDAO;
+import br.com.softwareOptimus.com.financeiro.dao.TituloDAOHibernate;
 import br.com.softwareOptimus.dao.fiscal.AliquotaDAO;
 import br.com.softwareOptimus.dao.fiscal.AliquotaDAOHibernate;
 import br.com.softwareOptimus.dao.fiscal.CodTabelaGovDAO;
@@ -61,6 +61,18 @@ import br.com.softwareOptimus.entidades.dao.usuario.UsuarioDAOHibernate;
 public class DAOFactory {
 
 	private static EntityManager session = JpaUtil.getEntityManager();
+	
+	public static TituloDAO criaTitulo(){
+		TituloDAOHibernate tituloDAO = new TituloDAOHibernate();
+		tituloDAO.setSession(session);
+		try{
+			tituloDAO.begin();
+		}catch (IOException | SQLException e){
+			e.printStackTrace();
+		}
+		
+		return tituloDAO;
+	}
 	
 	public static CondPgtoDAO criaCondPgto(){
 		CondPgtoDAOHibernate condPgto = new CondPgtoDAOHibernate();
