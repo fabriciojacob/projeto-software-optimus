@@ -10,6 +10,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 
 import br.com.softwareOptimus.entidades.Pessoa;
+import br.com.softwareOptimus.financeiro.TipoTitulo;
 import br.com.softwareOptimus.financeiro.Titulo;
 
 public class TituloDAOHibernate implements TituloDAO {
@@ -33,7 +34,8 @@ public class TituloDAOHibernate implements TituloDAO {
 	@Override
 	public List<Titulo> pesquisaPessoa(Pessoa p) throws Exception {
 		String jpql = "Select e from Titulo e where e.empresa = :parEmpresa";
-		TypedQuery<Titulo> consulta = this.session.createQuery(jpql, Titulo.class);
+		TypedQuery<Titulo> consulta = this.session.createQuery(jpql,
+				Titulo.class);
 		consulta.setParameter("parEmpresa", p);
 		return consulta.getResultList();
 	}
@@ -46,40 +48,55 @@ public class TituloDAOHibernate implements TituloDAO {
 
 	@Override
 	public List<Titulo> pesquisaVencimento(Date dataInicio, Date dataFim,
-			Pessoa empresa) throws Exception {
+			Pessoa empresa, Pessoa participante, TipoTitulo tipo)
+			throws Exception {
 		String jpql = "Select e from Titulo e where e.vencimento between :parDataIni and :parDataFim"
-				+ " and e.empresa = :parEmpresa";
+				+ " and e.empresa = :parEmpresa"
+				+ " and e.pessoa = :parParticipante"
+				+ " and e.tipoTitulo = :parTipo";
 		TypedQuery<Titulo> consulta = this.session.createQuery(jpql,
 				Titulo.class);
 		consulta.setParameter("parDataIni", dataInicio);
 		consulta.setParameter("parDataFim", dataFim);
 		consulta.setParameter("parEmpresa", empresa);
+		consulta.setParameter("parParticipante", participante);
+		consulta.setParameter("parTipo", tipo);
 		return consulta.getResultList();
 	}
 
 	@Override
 	public List<Titulo> pesquisaPagamento(Date dataInicio, Date dataFim,
-			Pessoa empresa) throws Exception {
+			Pessoa empresa, Pessoa participante, TipoTitulo tipo)
+			throws Exception {
 		String jpql = "Select e from Titulo e where e.dataPagamento between :parDataIni and :parDataFim"
-				+ " and e.empresa = :parEmpresa";
+				+ " and e.empresa = :parEmpresa "
+				+ " and e.pessoa = :parParticipante"
+				+ " and e.tipoTitulo = :parTipo";
 		TypedQuery<Titulo> consulta = this.session.createQuery(jpql,
 				Titulo.class);
 		consulta.setParameter("parDataIni", dataInicio);
 		consulta.setParameter("parDataFim", dataFim);
 		consulta.setParameter("parEmpresa", empresa);
+		consulta.setParameter("parParticipante", participante);
+		consulta.setParameter("parTipo", tipo);
 		return consulta.getResultList();
 	}
 
 	@Override
 	public List<Titulo> pesquisaLancamento(Date dataInicio, Date dataFim,
-			Pessoa empresa) throws Exception {
+			Pessoa empresa, Pessoa participante, TipoTitulo tipo)
+			throws Exception {
 		String jpql = "Select e from Titulo e where e.dataLancamento between :parDataIni and :parDataFim"
-				+ " and e.empresa = :parEmpresa";
+				+ " and e.empresa = :parEmpresa"
+				+ " and e.pessoa = :parParticipante"
+				+ " and e.tipoTitulo = :parTipo";
 		TypedQuery<Titulo> consulta = this.session.createQuery(jpql,
 				Titulo.class);
 		consulta.setParameter("parDataIni", dataInicio);
 		consulta.setParameter("parDataFim", dataFim);
 		consulta.setParameter("parEmpresa", empresa);
+		consulta.setParameter("parParticipante", participante);
+		consulta.setParameter("parTipo", tipo);
 		return consulta.getResultList();
 	}
 
@@ -102,7 +119,7 @@ public class TituloDAOHibernate implements TituloDAO {
 	@Override
 	public void begin() throws IOException, SQLException {
 		this.transacao = this.session.getTransaction();
-		if(!this.transacao.isActive()){
+		if (!this.transacao.isActive()) {
 			this.transacao.begin();
 		}
 	}
