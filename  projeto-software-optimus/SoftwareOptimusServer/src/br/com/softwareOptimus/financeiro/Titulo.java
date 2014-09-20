@@ -3,13 +3,11 @@ package br.com.softwareOptimus.financeiro;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Collection;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -42,6 +40,8 @@ public class Titulo implements Serializable{
 	private Double saldo;
 	
 	private boolean previsao;
+	
+	private TipoTitulo tipoTitulo;
 	
 	@Temporal(TemporalType.DATE)
 	private Calendar dataLancamento;
@@ -208,6 +208,14 @@ public class Titulo implements Serializable{
 
 	public void setEmpresa(Pessoa empresa) {
 		this.empresa = empresa;
+	}
+	
+	public TipoTitulo getTipoTitulo() {
+		return tipoTitulo;
+	}
+	
+	public void setTipoTitulo(TipoTitulo tipoTitulo) {
+		this.tipoTitulo = tipoTitulo;
 	}
 
 	@Override
