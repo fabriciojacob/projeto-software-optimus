@@ -53,6 +53,9 @@ public class Produto implements Serializable{
 	@ManyToOne
 	private TipoProduto tipoProd;
 	
+	@ManyToOne
+	private Setor setor;
+	
 	private boolean status;
 	
 	public boolean isStatus() {
@@ -134,6 +137,14 @@ public class Produto implements Serializable{
 
 	public void setTipoProd(TipoProduto tipoProd) {
 		this.tipoProd = tipoProd;
+	}
+	
+	public Setor getSetor() {
+		return setor;
+	}
+	
+	public void setSetor(Setor setor) {
+		this.setor = setor;
 	}
 
 	@Override
