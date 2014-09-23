@@ -35,8 +35,12 @@ import br.com.softwareOptimus.dao.fiscal.PautaMVADAO;
 import br.com.softwareOptimus.dao.fiscal.PautaMVADAOHibernate;
 import br.com.softwareOptimus.dao.fiscal.TipoProdutoDAO;
 import br.com.softwareOptimus.dao.fiscal.TipoProdutoDAOHibernate;
+import br.com.softwareOptimus.dao.produto.CategoriaDAO;
+import br.com.softwareOptimus.dao.produto.CategoridoDAOHibernate;
 import br.com.softwareOptimus.dao.produto.ProdutoDAO;
 import br.com.softwareOptimus.dao.produto.ProdutoDAOHibernate;
+import br.com.softwareOptimus.dao.produto.SubGrupoDAO;
+import br.com.softwareOptimus.dao.produto.SubGrupoDAOHibernate;
 import br.com.softwareOptimus.dao.produto.UnidMedDAO;
 import br.com.softwareOptimus.dao.produto.UnidMedDAOHibernate;
 import br.com.softwareOptimus.entidades.dao.empresa.EmpresaDAO;
@@ -364,5 +368,27 @@ public class DAOFactory {
 			e.printStackTrace();
 		}
 		return codTabelaGovDAO;
+	}
+	
+	public static SubGrupoDAO criaSubGrupoDAO(){
+		SubGrupoDAOHibernate subGrupoDAO = new SubGrupoDAOHibernate();
+		subGrupoDAO.setSession(session);
+		try {
+			subGrupoDAO.begin();
+		} catch (IOException | SQLException e) {
+			e.printStackTrace();
+		}
+		return subGrupoDAO;
+	}
+	
+	public static CategoriaDAO criaCategoriaDAO(){
+		CategoridoDAOHibernate categoriaDAO = new CategoridoDAOHibernate();
+		categoriaDAO.setSession(session);
+		try {
+			categoriaDAO.begin();
+		} catch (IOException | SQLException e) {
+			e.printStackTrace();
+		}
+		return categoriaDAO;
 	}
 }

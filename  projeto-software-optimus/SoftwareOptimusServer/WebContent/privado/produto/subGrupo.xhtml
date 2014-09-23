@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+</h:head>
+<body>
+	<h:form id="frmCadSubGrupo">
+		<br />
+		<h3 style="margin-top: 0">CADASTRO DE SUBGRUPO</h3>
+		<div align="left">
+			<p:commandButton value="Novo" actionListener="#{subGrupoBean.novo}"
+				ajax="grid" />
+
+			<p:commandButton value="Salvar" disabled="#{subGrupoBean.sal}"
+				actionListener="#{subGrupoBean.salvar}" ajax="grid" />
+
+			<p:commandButton value="Alterar" disabled="#{subGrupoBean.alt}"
+				actionListener="#{subGrupoBean.alterar}" ajax="grid" />
+
+			<p:commandButton value="Excluir" disabled="#{subGrupoBean.rem}"
+				actionListener="#{subGrupoBean.remover}" ajax="grid" />
+
+			<p:commandButton id="consulta" value="Consultar" type="button"
+				ajax="dialog, grid" onclick="PF('dlg3').show();"
+				actionListener="#{subGrupoBean.cancelar}" />
+
+			<p:commandButton value="Cancelar"
+				actionListener="#{subGrupoBean.cancelar}" ajax="grid" />
+			<p:messages id="messages" showDetail="true" autoUpdate="true"
+				closable="true" />
+
+			<h:panelGrid id="grid" columns="2" columnClasses="label, value">
+				
+					Código do SubGrupo:
+					<p:inputText id="idSub" disabled="true"
+					value="#{subGrupoBean.subGrupo.idSubGrupo}" />
+		
+					Descrição:
+					<p:inputText id="desc" value="#{subGrupoBean.subGrupo.descricao}" maxlength="100"
+					size="10" disabled="#{subGrupoBean.desc}" />
+					
+			</h:panelGrid>
+
+			<p:dialog id="dialog" header="Consulta" widgetVar="dlg3" modal="true"
+				height="300" width="650">
+
+				<div align="right">
+					<h:panelGrid columns="1">
+						<p:commandButton value="Pesquisar"
+							actionListener="#{subGrupoBean.buscaUnid}" update="gridData">
+						</p:commandButton>
+					</h:panelGrid>
+				</div>
+				<h:panelGrid columns="3" columnClasses="label" cellspacing="3">
+
+					<p:inputText id="texto" value="#{subGrupoBean.busca}" size="40" />
+
+					<p:selectOneMenu id="fConsult" value="#{subGrupoBean.filtro}">/>
+						<f:selectItem itemLabel="Código" itemValue="id" />
+						<f:selectItem itemLabel="Unid. Abreviada" itemValue="unid" />
+						<f:selectItem itemLabel="Descrição" itemValue="desc" />
+					</p:selectOneMenu>
+
+				</h:panelGrid>
+				<h:panelGrid id="gridData" columns="1" columnClasses="label, value">
+					<p:blockUI block="gridData" trigger="consulta" />
+					<p:dataTable id="data" value="#{subGrupoBean.unidMedLis}"
+						paginator="true" rows="6" var="unidades"
+						rowKey="unidades.idUnidMed">
+						<p:column headerText="Codigo da Unidade">
+							<h:outputText value="#{unidades.idUnidMed}" />
+						</p:column>
+
+						<p:column headerText="Unidade Abreviada">
+							<h:outputText value="#{unidades.unid}" />
+						</p:column>
+
+						<p:column headerText="Descrição da Unidade">
+							<h:outputText value="#{unidades.descUnid}" />
+						</p:column>
+						<p:column headerText="Selecionar">
+							<p:commandLink id="link" value="Editar" ajax="data"
+								action="#{subGrupoBean.editUnid}">
+								<f:setPropertyActionListener value="#{unidades.idUnidMed}"
+									target="#{subGrupoBean.id}" />
+							</p:commandLink>
+						</p:column>
+					</p:dataTable>
+					<p:blockUI block="data" trigger="data">
+        				LOADING<br />
+						<p:graphicImage name="ajaxloader.gif" />
+					</p:blockUI>
+				</h:panelGrid>
+
+			</p:dialog>
+		</div>
+	</h:form>
+</body>
+</html>
