@@ -149,6 +149,11 @@
 					</p:column>
 				</p:dataTable>
 			</p:dialog>
+			
+			<p:dialog header="Operações">
+			
+			
+			</p:dialog>
 
 			<br />
 			<p:tab id="dados">
@@ -193,6 +198,8 @@
 
 				<p:dataTable id="tabelaTitulo" paginator="true" rows="6"
 					var="titulos">
+					
+					<p:column headerText="Codigo"/>
 
 					<p:column headerText="Descrição" />
 
@@ -200,41 +207,27 @@
 
 					<p:column headerText="Saldo titulo" />
 
-					<p:column headerText="Data lançamento" />
+					<p:column headerText="Lançamento" />
 
-					<p:column headerText="Data vencimento" />
+					<p:column headerText="Vencimento" />
 
-					<p:column headerText="Data pagamento" />
+					<p:column headerText="Pagamento" />
 
-					<p:column headerText="Forma de pagamento" />
+					<p:column headerText="Forma pgto" />
 
-					<p:column headerText="Condição de pagamento" />
+					<p:column headerText="Cond de pgto" />
 
 					<p:column headerText="Tipo de titulo" />
 
 					<p:column headerText="Status" />
 
-					<p:column headerText="Previsão" />
+					<p:column headerText="Rubrica" />
 
 
-					<p:column headerText="Selecionar">
-						<p:commandLink id="link" value="Selecionar"
-							ajax="dialog,frmTitulo" update="tabelaTitulo">
-							<f:setPropertyActionListener value="" target="" />
-						</p:commandLink>
-					</p:column>
-
-					<p:column headerText="Editar">
-						<p:commandLink id="linkEdit" value="Editar"
-							ajax="dialog,frmTitulo" update="tabelaTitulo">
-							<f:setPropertyActionListener value="" target="" />
-						</p:commandLink>
-					</p:column>
-
-
-					<p:column headerText="Excluir">
-						<p:commandLink id="linkExc" value="Excluir"
-							ajax="dialog,frmTitulo" update="tabelaTitulo">
+					<p:column headerText="Operar">
+						<p:commandLink id="linkBaixar" value="Baixar"
+							ajax="dialog,frmTitulo" update="tabelaTitulo"
+							onclick="PF('participante').show();">
 							<f:setPropertyActionListener value="" target="" />
 						</p:commandLink>
 					</p:column>

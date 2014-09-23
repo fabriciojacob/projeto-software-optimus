@@ -39,8 +39,6 @@ public class Titulo implements Serializable{
 	
 	private Double saldo;
 	
-	private boolean previsao;
-	
 	private TipoTitulo tipoTitulo;
 	
 	@Temporal(TemporalType.DATE)
@@ -164,14 +162,6 @@ public class Titulo implements Serializable{
 
 	public void setSaldo(Double saldo) {
 		this.saldo = saldo;
-	}
-
-	public boolean isPrevisao() {
-		return previsao;
-	}
-
-	public void setPrevisao(boolean previsao) {
-		this.previsao = previsao;
 	}
 
 	public Calendar getDataLancamento() {
