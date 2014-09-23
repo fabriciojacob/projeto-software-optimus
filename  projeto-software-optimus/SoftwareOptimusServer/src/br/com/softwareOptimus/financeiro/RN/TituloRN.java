@@ -2,9 +2,9 @@ package br.com.softwareOptimus.financeiro.RN;
 
 import java.util.Date;
 import java.util.List;
-
 import br.com.softwareOptimus.com.financeiro.dao.TituloDAO;
 import br.com.softwareOptimus.entidades.Pessoa;
+import br.com.softwareOptimus.financeiro.StatusConta;
 import br.com.softwareOptimus.financeiro.TipoTitulo;
 import br.com.softwareOptimus.financeiro.Titulo;
 import br.com.softwareOptimus.util.DAOFactory;
@@ -18,18 +18,40 @@ public class TituloRN {
 	}
 
 	public List<Titulo> pesquisaVencimento(Date dataIni, Date dataFim,
-			Pessoa empresa, Pessoa participante, TipoTitulo tipo) throws Exception {
+			Pessoa empresa, Pessoa participante, Integer tipo, Integer status)
+			throws Exception {
 		return this.titulo.pesquisaVencimento(dataIni, dataFim, empresa,
-				participante, tipo);
+				participante, tipo, status);
 	}
 
 	public List<Titulo> pesquisaPagamento(Date dateIni, Date dataFim,
-			Pessoa empresa, Pessoa participante, TipoTitulo tipo) throws Exception {
-		return this.pesquisaPagamento(dateIni, dataFim, empresa, participante, tipo);
+			Pessoa empresa, Pessoa participante, Integer tipo, Integer status)
+			throws Exception {
+		return this.pesquisaPagamento(dateIni, dataFim, empresa, participante,
+				tipo, status);
+	}
+
+	public List<Titulo> pesquisaLancamento(Date dataIni, Date dataFim,
+			Pessoa empresa, Pessoa particupante, Integer tipo, Integer status)
+			throws Exception {
+		return this.pesquisaLancamento(dataIni, dataFim, empresa, particupante,
+				tipo, status);
 	}
 
 	public List<Titulo> pesquisaPessoa(Pessoa empresa) throws Exception {
 		return this.pesquisaPessoa(empresa);
+	}
+
+	public void salvar(Titulo titulo) throws Exception {
+		this.titulo.salvar(titulo);
+	}
+
+	public void excluir(Titulo titulo) throws Exception {
+		this.titulo.excluir(titulo);
+	}
+
+	public void editar(Titulo titulo) throws Exception {
+		this.titulo.editar(titulo);
 	}
 
 	public TituloDAO getTitulo() {
