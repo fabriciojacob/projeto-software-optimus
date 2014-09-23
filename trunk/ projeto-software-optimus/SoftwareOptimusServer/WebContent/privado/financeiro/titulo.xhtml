@@ -17,64 +17,233 @@
 		<div align="left">
 
 
-			<p:commandButton value="Novo" type="button"
-				onclick="PF('Titulo').show();" />
+			<p:commandButton value="+" type="button"
+				onclick="PF('titulo').show();" />
 
-			<p:commandButton value="Consulta" type="button"
-				onclick="PF('Titulo').show();" />
+			<p:commandButton value="Empresa" type="button"
+				onclick="PF('empresa').show();" />
 
+			<p:commandButton value="Participante" type="button"
+				onclick="PF('participante').show();" />
 
 
 			<p:messages id="messages" showDetail="true" autoUpdate="true"
 				closable="true" />
 
 			<p:dialog header="Titulo" widgetVar="titulo" modal="true"
-				height="350" width="600">
+				height="350" width="400">
+				<h:panelGrid columns="3">
+					<p:commandButton value="Vincular Empresa" type="button"
+						onclick="PF('empresa').show();" />
+					<p:commandButton value="Vincular participante" type="+"
+						onclick="PF('participante').show();" />
+				</h:panelGrid>
+
+				<h:panelGrid columns="2">
+				
+				Empresa:
+				<p:inputText size="30" disabled="true" />
+				
+				Participante:                       
+				<p:inputText size="30" disabled="true" />
+				
+				Descricao:
+				<p:inputText size="30" />
+				
+				Data lançamento:
+				 <p:calendar size="15" />
+				 
+				 Data Vencimento:
+				 <p:calendar size="15" />
+				 
+				 Forma de pagamento:
+				 <p:selectOneMenu>
+					</p:selectOneMenu>
+				 
+				 Condição de Pagamento:
+				  <p:selectOneMenu>
+					</p:selectOneMenu>
+					
+				Intervalo em dias:
+				 <p:inputText size="10" />
+					
+				Valor:
+				<p:inputText />
+				
+				Saldo titulo:
+				<p:inputText />
+					<p:commandButton value="Salvar" />
+				</h:panelGrid>
+			</p:dialog>
+
+			<p:dialog header="Pesquisa" widgetVar="empresa" modal="true"
+				height="200" width="500">
 
 				<h:panelGrid columns="3">
 				Descrição:
-					<p:inputText value="" />
+					<p:inputText />
 
-					<p:commandButton value="Pesquisar" update="" actionListener="" />
+					<p:commandButton value="Pesquisar" />
 				</h:panelGrid>
+				<p:dataTable id="dataPesquisa"
+					value="#{empresaBean.retornoListaPessoa}" var="pesEmpresa"
+					paginator="true" rows="6">
 
+					<p:column headerText="Codigo">
+						<h:outputText value="#{pesEmpresa.idPessoa}" />
+					</p:column>
+
+					<p:column headerText="Nome Fantasia">
+						<h:outputText value="#{pesEmpresa.fantasia}" />
+					</p:column>
+
+					<p:column headerText="CNPJ">
+						<h:outputText value="#{pesEmpresa.cnpj}" />
+					</p:column>
+
+					<p:column headerText="Selecionar">
+						<p:commandLink id="link" value="Editar"
+							ajax="dialog,frmCadEmpresa" action="#{empresaBean.editEmp}">
+							<f:setPropertyActionListener value="#{pesEmpresa.idPessoa}"
+								target="#{empresaBean.id}" />
+						</p:commandLink>
+					</p:column>
+				</p:dataTable>
 			</p:dialog>
 
-			<p:tabView style="border: 0px">
+			<p:dialog header="Pesquisa" widgetVar="participante" modal="true"
+				height="200" width="500">
 
-				<p:tab id="dados" title="Lancamento">
+				<h:panelGrid columns="3">
+				Descrição:
+					<p:inputText />
 
-					<p:dataTable id="" paginator="true" rows="6" value="" var="">
+					<p:commandButton value="Pesquisar" />
+				</h:panelGrid>
+				<p:dataTable id="dataPesquisa2"
+					value="#{empresaBean.retornoListaPessoa}" var="pesEmpresa"
+					paginator="true" rows="6">
 
-						<p:column headerText="Selecionar">
-							<p:commandLink id="link" value="Selecionar"
-								ajax="dialog,frmTitulo" action="" update="dados">
-								<f:setPropertyActionListener value="" target="" />
-							</p:commandLink>
-						</p:column>
+					<p:column headerText="Codigo">
+						<h:outputText value="#{pesEmpresa.idPessoa}" />
+					</p:column>
 
-						<p:column headerText="Editar">
-							<p:commandLink id="linkEdit" value="Editar"
-								ajax="dialog,frmTitulo" action="" update="dados">
-								<f:setPropertyActionListener value="" target="" />
-							</p:commandLink>
-						</p:column>
+					<p:column headerText="Nome Fantasia">
+						<h:outputText value="#{pesEmpresa.fantasia}" />
+					</p:column>
+
+					<p:column headerText="CNPJ">
+						<h:outputText value="#{pesEmpresa.cnpj}" />
+					</p:column>
+
+					<p:column headerText="CPF">
+						<h:outputText value="#{pesEmpresa.cnpj}" />
+					</p:column>
+
+					<p:column headerText="Selecionar">
+						<p:commandLink id="link" value="Editar"
+							ajax="dialog,frmCadEmpresa" action="#{empresaBean.editEmp}">
+							<f:setPropertyActionListener value="#{pesEmpresa.idPessoa}"
+								target="#{empresaBean.id}" />
+						</p:commandLink>
+					</p:column>
+				</p:dataTable>
+			</p:dialog>
+
+			<br />
+			<p:tab id="dados">
+				<h:panelGrid columns="15">
+					Empresa:
+					<p:inputText value="Empresa teste" />
+					
+					Participante:
+					<p:inputText value="Participante Teste" />
+					
+					 Data Inicio:
+					 <p:calendar size="5" />
+					 
+					 Data Fim:
+					 <p:calendar size="5" />
+
+					<p:selectOneMenu>
+						<f:selectItem itemLabel="Selecione tipo de pesquisa" />
+						<f:selectItem itemLabel="DATA PAGAMENTO" itemValue="PAGAMENTO" />
+						<f:selectItem itemLabel="DATA DE LANÇAMENTO"
+							itemValue="LANCAMENTO" />
+						<f:selectItem itemLabel="DATA DE VENCIMENTO"
+							itemValue="VENCIMENTO" />
+					</p:selectOneMenu>
+
+					<p:selectOneMenu>
+						<f:selectItem itemLabel="Selecione tipo de titulo" />
+						<f:selectItem itemLabel="PAGAR" itemValue="PAGAR" />
+						<f:selectItem itemLabel="RECEBER" itemValue="RECEBER" />
+					</p:selectOneMenu>
+					
+					Status:
+					 <p:selectOneMenu>
+						<f:selectItem itemLabel="BAIXADA" itemValue="BAIXADA" />
+						<f:selectItem itemLabel="PENDENTE" itemValue="PENDENTE" />
+						<f:selectItem itemLabel="CANCELADA" itemValue="CANCELADA" />
+					</p:selectOneMenu>
+
+					<p:commandButton value="Pesquisar" update="tabelaTitulo" />
+
+				</h:panelGrid>
+
+				<p:dataTable id="tabelaTitulo" paginator="true" rows="6"
+					var="titulos">
+
+					<p:column headerText="Descrição" />
+
+					<p:column headerText="Valor" />
+
+					<p:column headerText="Saldo titulo" />
+
+					<p:column headerText="Data lançamento" />
+
+					<p:column headerText="Data vencimento" />
+
+					<p:column headerText="Data pagamento" />
+
+					<p:column headerText="Forma de pagamento" />
+
+					<p:column headerText="Condição de pagamento" />
+
+					<p:column headerText="Tipo de titulo" />
+
+					<p:column headerText="Status" />
+
+					<p:column headerText="Previsão" />
 
 
-						<p:column headerText="Excluir">
-							<p:commandLink id="linkExc" value="Excluir"
-								ajax="dialog,frmTitulo" action="" update="dados">
-								<f:setPropertyActionListener value="" target="" />
-							</p:commandLink>
-						</p:column>
+					<p:column headerText="Selecionar">
+						<p:commandLink id="link" value="Selecionar"
+							ajax="dialog,frmTitulo" update="tabelaTitulo">
+							<f:setPropertyActionListener value="" target="" />
+						</p:commandLink>
+					</p:column>
+
+					<p:column headerText="Editar">
+						<p:commandLink id="linkEdit" value="Editar"
+							ajax="dialog,frmTitulo" update="tabelaTitulo">
+							<f:setPropertyActionListener value="" target="" />
+						</p:commandLink>
+					</p:column>
 
 
-					</p:dataTable>
+					<p:column headerText="Excluir">
+						<p:commandLink id="linkExc" value="Excluir"
+							ajax="dialog,frmTitulo" update="tabelaTitulo">
+							<f:setPropertyActionListener value="" target="" />
+						</p:commandLink>
+					</p:column>
 
-				</p:tab>
 
+				</p:dataTable>
 
-			</p:tabView>
+			</p:tab>
+
 		</div>
 	</h:form>
 </h:body>
