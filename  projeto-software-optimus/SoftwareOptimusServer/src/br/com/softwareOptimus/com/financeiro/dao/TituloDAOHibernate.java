@@ -8,7 +8,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 import br.com.softwareOptimus.entidades.Pessoa;
-import br.com.softwareOptimus.financeiro.TipoTitulo;
 import br.com.softwareOptimus.financeiro.Titulo;
 
 public class TituloDAOHibernate implements TituloDAO {
@@ -46,8 +45,8 @@ public class TituloDAOHibernate implements TituloDAO {
 
 	@Override
 	public List<Titulo> pesquisaVencimento(Date dataInicio, Date dataFim,
-			Pessoa empresa, Pessoa participante, Integer tipo,
-			Integer status) throws Exception {
+			Pessoa empresa, Pessoa participante, Integer tipo, Integer status)
+			throws Exception {
 		String jpql = "Select e from Titulo e where e.vencimento between :parDataIni and :parDataFim"
 				+ " and e.empresa = :parEmpresa"
 				+ " and e.pessoa = :parParticipante"
@@ -65,8 +64,8 @@ public class TituloDAOHibernate implements TituloDAO {
 
 	@Override
 	public List<Titulo> pesquisaPagamento(Date dataInicio, Date dataFim,
-			Pessoa empresa, Pessoa participante, Integer tipo,
-			Integer status) throws Exception {
+			Pessoa empresa, Pessoa participante, Integer tipo, Integer status)
+			throws Exception {
 		String jpql = "Select e from Titulo e where e.dataPagamento between :parDataIni and :parDataFim"
 				+ " and e.empresa = :parEmpresa "
 				+ " and e.pessoa = :parParticipante"
@@ -84,8 +83,8 @@ public class TituloDAOHibernate implements TituloDAO {
 
 	@Override
 	public List<Titulo> pesquisaLancamento(Date dataInicio, Date dataFim,
-			Pessoa empresa, Pessoa participante, Integer tipo,
-			Integer status) throws Exception {
+			Pessoa empresa, Pessoa participante, Integer tipo, Integer status)
+			throws Exception {
 		String jpql = "Select e from Titulo e where e.dataLancamento between :parDataIni and :parDataFim"
 				+ " and e.empresa = :parEmpresa"
 				+ " and e.pessoa = :parParticipante"
@@ -123,6 +122,20 @@ public class TituloDAOHibernate implements TituloDAO {
 		if (!this.transacao.isActive()) {
 			this.transacao.begin();
 		}
+	}
+
+	@Override
+	public List<Pessoa> listaParticipante(String nome) throws Exception {
+		String jpql = "Select e From Pessoa e where e.fantasia like :parNome";
+		TypedQuery<Pessoa> consulta = this.session.createQuery(jpql,
+				Pessoa.class);
+		consulta.setParameter("parNome", "%" + nome + "%");
+		return consulta.getResultList();
+	}
+
+	@Override
+	public Pessoa participante(Long id) throws Exception {
+		return this.session.find(Pessoa.class, id);
 	}
 
 }

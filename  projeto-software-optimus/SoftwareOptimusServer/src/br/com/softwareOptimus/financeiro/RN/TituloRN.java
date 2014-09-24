@@ -4,8 +4,6 @@ import java.util.Date;
 import java.util.List;
 import br.com.softwareOptimus.com.financeiro.dao.TituloDAO;
 import br.com.softwareOptimus.entidades.Pessoa;
-import br.com.softwareOptimus.financeiro.StatusConta;
-import br.com.softwareOptimus.financeiro.TipoTitulo;
 import br.com.softwareOptimus.financeiro.Titulo;
 import br.com.softwareOptimus.util.DAOFactory;
 
@@ -60,6 +58,14 @@ public class TituloRN {
 
 	public void setTitulo(TituloDAO titulo) {
 		this.titulo = titulo;
+	}
+
+	public List<Pessoa> listaParticipante(String nome) throws Exception {
+		return this.titulo.listaParticipante(nome);
+	}
+
+	public Pessoa participante(Long id) throws Exception {
+		return this.titulo.participante(id);
 	}
 
 }
