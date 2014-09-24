@@ -31,7 +31,7 @@
 				closable="true" />
 
 			<p:dialog header="Titulo" widgetVar="titulo" modal="true"
-				height="350" width="400">
+				height="350" width="400" id="dialogTitulo">
 				<h:panelGrid columns="3">
 					<p:commandButton value="Vincular Empresa" type="button"
 						onclick="PF('empresa').show();" />
@@ -72,18 +72,36 @@
 				
 				Saldo titulo:
 				<p:inputText />
-					<p:commandButton value="Salvar" />
+					<h:panelGrid columns="2">
+						<p:commandButton id="btNovo" value="Novo"
+							actionListener="#{tituloBens.novo}" update="btSalvar, btNovo" />
+						<p:commandButton id="btSalvar" value="Salvar"
+							disabled="#{tituloBens.btSalvarTitulo}" />
+					</h:panelGrid>
 				</h:panelGrid>
 			</p:dialog>
 
-			<p:dialog header="Pesquisa" widgetVar="empresa" modal="true"
-				height="200" width="500">
+			<p:dialog header="Empresa" widgetVar="empresa" modal="true"
+				height="300" width="400">
 
-				<h:panelGrid columns="3">
-				Descrição:
-					<p:inputText />
+				<div align="right">
+					<h:panelGrid columns="1">
 
-					<p:commandButton value="Pesquisar" />
+						<p:commandButton value="Pesquisar"
+							actionListener="#{empresaBean.pesquisa}" update="dataPesquisa" />
+					</h:panelGrid>
+				</div>
+
+				<h:panelGrid columns="2">
+
+					<p:inputText id="textoConsulta" size="40"
+						value="#{empresaBean.tipoConsulta}" />
+
+					<p:selectOneMenu id="fConsult" value="#{empresaBean.filtro}">/>
+						<f:selectItem itemLabel="CNPJ" itemValue="cnpj" />
+						<f:selectItem itemLabel="Nome Fantasia" itemValue="nomeFantasia" />
+					</p:selectOneMenu>
+
 				</h:panelGrid>
 				<p:dataTable id="dataPesquisa"
 					value="#{empresaBean.retornoListaPessoa}" var="pesEmpresa"
@@ -108,7 +126,9 @@
 								target="#{empresaBean.id}" />
 						</p:commandLink>
 					</p:column>
+
 				</p:dataTable>
+
 			</p:dialog>
 
 			<p:dialog header="Pesquisa" widgetVar="participante" modal="true"
@@ -116,43 +136,36 @@
 
 				<h:panelGrid columns="3">
 				Descrição:
-					<p:inputText />
+					<p:inputText value="#{tituloBens.nomePesquisa}" />
 
-					<p:commandButton value="Pesquisar" />
+					<p:commandButton value="Pesquisar"
+						actionListener="#{tituloBens.pesquisaParticipante}"
+						update="dataPesquisa2" />
 				</h:panelGrid>
-				<p:dataTable id="dataPesquisa2"
-					value="#{empresaBean.retornoListaPessoa}" var="pesEmpresa"
-					paginator="true" rows="6">
+				<p:dataTable id="dataPesquisa2" value="#{tituloBens.participantes}"
+					var="participantes" paginator="true" rows="6">
 
 					<p:column headerText="Codigo">
-						<h:outputText value="#{pesEmpresa.idPessoa}" />
+						<h:outputText value="#{participantes.idPessoa}" />
 					</p:column>
 
 					<p:column headerText="Nome Fantasia">
-						<h:outputText value="#{pesEmpresa.fantasia}" />
-					</p:column>
-
-					<p:column headerText="CNPJ">
-						<h:outputText value="#{pesEmpresa.cnpj}" />
-					</p:column>
-
-					<p:column headerText="CPF">
-						<h:outputText value="#{pesEmpresa.cnpj}" />
+						<h:outputText value="#{participantes.fantasia}" />
 					</p:column>
 
 					<p:column headerText="Selecionar">
-						<p:commandLink id="link" value="Editar"
-							ajax="dialog,frmCadEmpresa" action="#{empresaBean.editEmp}">
-							<f:setPropertyActionListener value="#{pesEmpresa.idPessoa}"
-								target="#{empresaBean.id}" />
+						<p:commandLink id="link" value="Utilizar" ajax="dialog,frmTitulo"
+							action="#{tituloBens.selecionaParticipante}">
+							<f:setPropertyActionListener value="#{participantes.idPessoa}"
+								target="#{tituloBens.participanteSelecionado}" />
 						</p:commandLink>
 					</p:column>
 				</p:dataTable>
 			</p:dialog>
-			
+
 			<p:dialog header="Operações">
-			
-			
+
+
 			</p:dialog>
 
 			<br />
@@ -198,8 +211,8 @@
 
 				<p:dataTable id="tabelaTitulo" paginator="true" rows="6"
 					var="titulos">
-					
-					<p:column headerText="Codigo"/>
+
+					<p:column headerText="Codigo" />
 
 					<p:column headerText="Descrição" />
 
