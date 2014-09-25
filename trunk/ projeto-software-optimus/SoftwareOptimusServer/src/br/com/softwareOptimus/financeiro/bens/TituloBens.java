@@ -23,8 +23,9 @@ public class TituloBens {
 	private List<Pessoa> participantes = new ArrayList<>();
 	private TituloRN regraNegocio = new TituloRN();
 	private Pessoa pessoa;
+	private Pessoa empresa;
 
-	public void novo(){
+	public void novo() {
 		this.titulo = new Titulo();
 		this.btSalvarTitulo = false;
 	}
@@ -42,13 +43,31 @@ public class TituloBens {
 	}
 
 	public void selecionaEmpresa() {
+		this.regraNegocio = new TituloRN();
+		try {
+			this.empresa = this.regraNegocio.participante(empresaSelecionada);
+			this.titulo.setEmpresa(empresa);
+		} catch (Exception e) {
+			msgErro("Problemas na seleção da empresa ", e);
+		}
 
+	}
+
+	public void salvarTitulo() {
+		this.regraNegocio = new TituloRN();
+		try {
+			this.regraNegocio.salvar(titulo);
+			msgAcerto("Registro salvo com sucesso ");
+		} catch (Exception e) {
+			msgErro("Problemas ao salvar o titulo ", e);
+		}
 	}
 
 	public void selecionaParticipante() {
 		this.regraNegocio = new TituloRN();
 		try {
-			this.pessoa = this.regraNegocio.participante(participanteSelecionado);
+			this.pessoa = this.regraNegocio
+					.participante(participanteSelecionado);
 			this.titulo.setPessoa(this.pessoa);
 		} catch (Exception e) {
 			msgErro("Problemas na seleção do participante ", e);
@@ -138,6 +157,13 @@ public class TituloBens {
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
 	}
-	
-	
+
+	public Pessoa getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(Pessoa empresa) {
+		this.empresa = empresa;
+	}
+
 }
