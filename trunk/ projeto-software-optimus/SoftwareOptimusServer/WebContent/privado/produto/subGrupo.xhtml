@@ -43,12 +43,11 @@
 		
 					Descrição:
 					<p:inputText id="desc" value="#{subGrupoBean.subGrupo.descricao}"
-					maxlength="100" size="10" disabled="#{subGrupoBean.desc}" />
+					maxlength="100" size="30" disabled="#{subGrupoBean.desc}" />
 
 			</h:panelGrid>
 
 			<p:commandButton id="vincCategoria" value="Incluir Categoria"
-				actionListener="#{subGrupoBean.vincCategoria}"
 				disabled="#{subGrupoBean.vig}" onclick="PF('dlg2').show();" />
 
 
@@ -96,7 +95,8 @@
 
 					<p:inputText id="texto" value="#{subGrupoBean.busca}" size="40" />
 
-					<p:selectOneMenu id="fConsult" value="#{subGrupoBean.filtro}">/>
+					<p:selectOneMenu id="fConsult" value="#{subGrupoBean.filtro}">
+						<f:selectItem itemLabel="Selecione uma Opção" />
 						<f:selectItem itemLabel="Código" itemValue="id" />
 						<f:selectItem itemLabel="Descrição" itemValue="desc" />
 					</p:selectOneMenu>
@@ -133,8 +133,24 @@
 
 
 			<p:dialog id="dialog2" header="Categoria" widgetVar="dlg2"
-				modal="true" height="300" width="650">
+				modal="true" height="100" width="400">
 
+				<h:panelGrid id="gridCat" columns="2" columnClasses="label, value">
+				
+					Código da Categoria:
+					<p:inputText id="idCat" disabled="true"
+						value="#{subGrupoBean.categoria.idCategoria}" />
+		
+					Descrição:
+					<p:inputText id="descCat"
+						value="#{subGrupoBean.categoria.descricao}" maxlength="100"
+						size="30" disabled="#{subGrupoBean.desc}" />
+
+				</h:panelGrid>
+				
+				<p:commandButton id="btnIncluir" value="Incluir"
+					actionListener="#{subGrupoBean.incluirCategoria}"
+					update="gridCat, listaCategoria" />
 			</p:dialog>
 		</div>
 	</h:form>

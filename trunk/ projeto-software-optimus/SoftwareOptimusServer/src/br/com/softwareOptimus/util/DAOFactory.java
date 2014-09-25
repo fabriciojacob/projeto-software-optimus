@@ -37,6 +37,8 @@ import br.com.softwareOptimus.dao.fiscal.TipoProdutoDAO;
 import br.com.softwareOptimus.dao.fiscal.TipoProdutoDAOHibernate;
 import br.com.softwareOptimus.dao.produto.CategoriaDAO;
 import br.com.softwareOptimus.dao.produto.CategoridoDAOHibernate;
+import br.com.softwareOptimus.dao.produto.GrupoDAO;
+import br.com.softwareOptimus.dao.produto.GrupoDAOHibernate;
 import br.com.softwareOptimus.dao.produto.ProdutoDAO;
 import br.com.softwareOptimus.dao.produto.ProdutoDAOHibernate;
 import br.com.softwareOptimus.dao.produto.SubGrupoDAO;
@@ -390,5 +392,16 @@ public class DAOFactory {
 			e.printStackTrace();
 		}
 		return categoriaDAO;
+	}
+	
+	public static GrupoDAO criaGrupoDAO(){
+		GrupoDAOHibernate grupoDAO = new GrupoDAOHibernate();
+		grupoDAO.setSession(session);
+		try {
+			grupoDAO.begin();
+		} catch (IOException | SQLException e) {
+			e.printStackTrace();
+		}
+		return grupoDAO;
 	}
 }

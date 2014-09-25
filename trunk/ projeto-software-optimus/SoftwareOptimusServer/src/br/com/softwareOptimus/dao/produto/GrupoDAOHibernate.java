@@ -2,16 +2,13 @@ package br.com.softwareOptimus.dao.produto;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
-import javax.persistence.TypedQuery;
 
-import br.com.softwareOptimus.produto.Categoria;
-import br.com.softwareOptimus.produto.SubGrupo;
+import br.com.softwareOptimus.produto.Grupo;
 
-public class CategoridoDAOHibernate implements CategoriaDAO {
+public class GrupoDAOHibernate implements GrupoDAO {
 
 	private EntityManager session;
 	private EntityTransaction transaction;
@@ -44,26 +41,15 @@ public class CategoridoDAOHibernate implements CategoriaDAO {
 	public void close() throws Exception {
 		this.session.close();
 	}
-
-	@Override
-	public void remover(Long idCateg) {
-		Categoria cat = this.session.find(Categoria.class, idCateg);
-		this.session.remove(cat);
+	
+	public void salvar(Grupo grupo){
+		this.session.persist(grupo);
 		this.transaction.commit();
 	}
 
-	@Override
-	public List<Categoria> listarCatg(SubGrupo subGrupo) {
-		String jpql = "select c from Categoria c where c.subGrupo = :subGrupo";
-		TypedQuery<Categoria> cat = this.session.createQuery(jpql, Categoria.class);
-		cat.setParameter("subGrupo", subGrupo);
-		return cat.getResultList();
-	}
-
-	@Override
-	public void salvarCategoria(Categoria categoria) {
-		this.session.persist(categoria);
+	public void alterar(Grupo grupo){
+		this.session.merge(grupo);
 		this.transaction.commit();
+		
 	}
-
 }
