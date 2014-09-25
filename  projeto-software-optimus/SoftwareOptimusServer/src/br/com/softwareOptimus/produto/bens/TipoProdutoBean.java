@@ -107,7 +107,7 @@ public class TipoProdutoBean {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na alteração dp Tipo de Produto "
+							"Problemas na alteração do Tipo de Produto "
 									+ e.getMessage()));
 		}
 	}

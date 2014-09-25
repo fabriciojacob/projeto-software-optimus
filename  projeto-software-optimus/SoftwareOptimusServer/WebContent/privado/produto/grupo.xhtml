@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+</h:head>
+<body>
+	<h:form id="frmCadSubGrupo">
+		<br />
+		<h3 style="margin-top: 0">CADASTRO DE SUBGRUPO</h3>
+		<div align="left">
+			<p:commandButton value="Novo" actionListener="#{subGrupoBean.novo}"
+				ajax="grid" />
+
+			<p:commandButton value="Salvar" disabled="#{subGrupoBean.sal}"
+				actionListener="#{grupoBean.salvar}" ajax="grid" />
+
+			<p:commandButton value="Alterar" disabled="#{subGrupoBean.alt}"
+				actionListener="#{grupoBean.alterar}" ajax="grid" />
+
+			<p:commandButton value="Excluir" disabled="#{subGrupoBean.rem}"
+				actionListener="#{grupoBean.remover}" ajax="grid" />
+
+			<p:commandButton id="consulta" value="Consultar" type="button"
+				ajax="dialog, grid" onclick="PF('dlg3').show();"
+				actionListener="#{grupoBean.cancelar}" />
+
+			<p:commandButton value="Cancelar"
+				actionListener="#{grupoBean.cancelar}" ajax="grid" />
+			<p:messages id="messages" showDetail="true" autoUpdate="true"
+				closable="true" />
+		</div>
+	</h:form>
+</body>
+</html>
