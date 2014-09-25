@@ -23,7 +23,12 @@ public class GrupoBean {
 	private Long id, idSub;
 	
 	public void novo(){
-		
+		this.sal = false;
+		this.alt = true;
+		this.rem = true;
+		this.vig = true;
+		limpar();
+		habilita();
 	}
 	
 	public void salvar(){
@@ -39,11 +44,19 @@ public class GrupoBean {
 	}
 	
 	public void cancelar(){
-		
+		this.sal = true;
+		this.alt = true;
+		this.rem = true;
+		this.vig = true;
+		limpar();
+		desabilita();
 	}
 	
 	public void limpar(){
-		
+		this.grupo = new Grupo();
+		this.subGrupo = new SubGrupo();
+		this.listaGrupo = new ArrayList<Grupo>();
+		this.listaSubGrupo = new ArrayList<SubGrupo>();
 	}
 	
 	public void buscarGrup(){
