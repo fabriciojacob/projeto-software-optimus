@@ -63,6 +63,16 @@ public class TituloBens {
 		}
 	}
 
+	public void editarTitulo() {
+		this.regraNegocio = new TituloRN();
+		try {
+			this.regraNegocio.editar(titulo);
+			msgAcerto("Registro editado com sucesso ");
+		} catch (Exception e) {
+			msgErro("Problemas na edição do titulo ", e);
+		}
+	}
+
 	public void selecionaParticipante() {
 		this.regraNegocio = new TituloRN();
 		try {
