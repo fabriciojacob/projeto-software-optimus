@@ -121,9 +121,9 @@
 
 					<p:column headerText="Selecionar">
 						<p:commandLink id="link" value="Editar"
-							ajax="dialog,frmCadEmpresa" action="#{empresaBean.editEmp}">
+							ajax="dialog,frmTitulo" action="#{empresaBean.editEmp}">
 							<f:setPropertyActionListener value="#{pesEmpresa.idPessoa}"
-								target="#{empresaBean.id}" />
+								target="#{tituloBens.empresaSelecionada}" />
 						</p:commandLink>
 					</p:column>
 
