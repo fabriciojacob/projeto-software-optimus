@@ -39,13 +39,9 @@
 		<class>br.com.softwareOptimus.financeiro.MovCaixa</class>
 		<class>br.com.softwareOptimus.financeiro.CondPgto</class>
 		<class>br.com.softwareOptimus.financeiro.Conta</class>
-		<class>br.com.softwareOptimus.financeiro.ContaCorrente</class>
-		<class>br.com.softwareOptimus.financeiro.ExtratoContaCorrente</class>
 		<class>br.com.softwareOptimus.financeiro.FormaPgto</class>
 		<class>br.com.softwareOptimus.financeiro.Titulo</class>
-		<class>br.com.softwareOptimus.financeiro.Vencimento</class>
 		<class>br.com.softwareOptimus.fiscal.Aliquota</class>
-		<class>br.com.softwareOptimus.fiscal.CodigoFiscalGenerico</class>
 		<class>br.com.softwareOptimus.fiscal.CodigoFiscalOperacao</class>
 		<class>br.com.softwareOptimus.fiscal.CodigoSituacaoTributaria</class>
 		<class>br.com.softwareOptimus.fiscal.CodTabelaGov</class>
@@ -66,6 +62,12 @@
 		<class>br.com.softwareOptimus.fiscal.Pauta</class>
 		<class>br.com.softwareOptimus.fiscal.GradeTributaria</class>
 		<class>br.com.softwareOptimus.fiscal.TipoProduto</class>
+		<class>br.com.softwareOptimus.financeiro.ContaBancaria</class>
+		<class>br.com.softwareOptimus.financeiro.ExtratoContaBancaria</class>
+		<class>br.com.softwareOptimus.produto.Categoria</class>
+		<class>br.com.softwareOptimus.produto.SubGrupo</class>
+		<class>br.com.softwareOptimus.produto.Grupo</class>
+		<class>br.com.softwareOptimus.produto.Setor</class>
 		<properties>
 			<property name=" javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
 			<property name=" javax.persistence.jdbc.user" value="root" />

@@ -41,6 +41,8 @@ import br.com.softwareOptimus.dao.produto.GrupoDAO;
 import br.com.softwareOptimus.dao.produto.GrupoDAOHibernate;
 import br.com.softwareOptimus.dao.produto.ProdutoDAO;
 import br.com.softwareOptimus.dao.produto.ProdutoDAOHibernate;
+import br.com.softwareOptimus.dao.produto.SetorDAO;
+import br.com.softwareOptimus.dao.produto.SetorDAOHibernate;
 import br.com.softwareOptimus.dao.produto.SubGrupoDAO;
 import br.com.softwareOptimus.dao.produto.SubGrupoDAOHibernate;
 import br.com.softwareOptimus.dao.produto.UnidMedDAO;
@@ -403,5 +405,16 @@ public class DAOFactory {
 			e.printStackTrace();
 		}
 		return grupoDAO;
+	}
+	
+	public static SetorDAO criaSetorDAO(){
+		SetorDAOHibernate setorDAO = new SetorDAOHibernate();
+		setorDAO.setSession(session);
+		try {
+			setorDAO.begin();
+		} catch (IOException | SQLException e) {
+			e.printStackTrace();
+		}
+		return setorDAO;
 	}
 }
