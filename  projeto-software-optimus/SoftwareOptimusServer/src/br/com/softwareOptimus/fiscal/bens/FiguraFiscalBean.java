@@ -153,10 +153,6 @@ public class FiguraFiscalBean {
 		this.rem = false;
 	}
 
-	public void editGrade() {
-
-	}
-
 	public void excluirGrade() {
 		List<GradeTributaria> listaGradeNova = new ArrayList<GradeTributaria>();
 		listaGradeNova.addAll(this.listaGrade);

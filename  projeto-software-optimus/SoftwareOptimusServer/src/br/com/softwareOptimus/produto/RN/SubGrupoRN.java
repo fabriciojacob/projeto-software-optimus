@@ -86,4 +86,8 @@ public class SubGrupoRN {
 		this.categoriaDAO.salvarCategoria(categoria);
 	}
 
+	public List<SubGrupo> listaSubGrupo() {
+		return this.subGrupoDAO.listaSubGrupo();
+	}
+
 }

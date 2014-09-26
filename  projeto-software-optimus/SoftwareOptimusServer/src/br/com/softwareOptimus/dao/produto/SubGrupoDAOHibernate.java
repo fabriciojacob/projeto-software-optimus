@@ -11,10 +11,10 @@ import br.com.softwareOptimus.produto.Grupo;
 import br.com.softwareOptimus.produto.SubGrupo;
 
 public class SubGrupoDAOHibernate implements SubGrupoDAO {
-	
+
 	private EntityManager session;
 	private EntityTransaction transaction;
-	
+
 	public EntityManager getSession() {
 		return session;
 	}
@@ -30,7 +30,7 @@ public class SubGrupoDAOHibernate implements SubGrupoDAO {
 	public void setTransaction(EntityTransaction transaction) {
 		this.transaction = transaction;
 	}
-	
+
 	@Override
 	public void begin() throws IOException, SQLException {
 		this.transaction = session.getTransaction();
@@ -59,20 +59,19 @@ public class SubGrupoDAOHibernate implements SubGrupoDAO {
 	@Override
 	public List<Grupo> verificaRemocao(SubGrupo subGrupo) {
 		String jpql = "Select Distinct g From Grupo g, IN(g.subGrupo) AS s Where s.idSubGrupo = :subGrupo";
-		TypedQuery<Grupo> gru = this.session.createQuery(jpql,
-				Grupo.class);
+		TypedQuery<Grupo> gru = this.session.createQuery(jpql, Grupo.class);
 		gru.setParameter("subGrupo", subGrupo.getIdSubGrupo());
 		return gru.getResultList();
 	}
 
 	@Override
 	public void remover(SubGrupo subGrupo) throws IOException, SQLException {
-		
-		String deleteQuery = "delete from Categoria c where c.subGrupo = :subGrupo";  
-		Query query = session.createQuery(deleteQuery);  
-		query.setParameter("subGrupo", subGrupo);  
-		query.executeUpdate();  
-		this.transaction.commit();  
+
+		String deleteQuery = "delete from Categoria c where c.subGrupo = :subGrupo";
+		Query query = session.createQuery(deleteQuery);
+		query.setParameter("subGrupo", subGrupo);
+		query.executeUpdate();
+		this.transaction.commit();
 		begin();
 		this.session.remove(subGrupo);
 		this.transaction.commit();
@@ -111,6 +110,14 @@ public class SubGrupoDAOHibernate implements SubGrupoDAO {
 				SubGrupo.class);
 		subGru.setParameter("subGrupo", id);
 		return subGru.getSingleResult();
+	}
+
+	@Override
+	public List<SubGrupo> listaSubGrupo() {
+		String jpql = "select s from SubGrupo s where exists (select c from Categoria c where c.subGrupo = s)";
+		TypedQuery<SubGrupo> listaSub = this.session.createQuery(jpql,
+				SubGrupo.class);
+		return listaSub.getResultList();
 	}
 
 }
