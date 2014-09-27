@@ -149,7 +149,6 @@ public class GrupoBean {
 		this.grupo = new Grupo();
 		this.subGrupo = new SubGrupo();
 		this.listaGrupo = new ArrayList<Grupo>();
-		this.listaSubGrupo = new ArrayList<SubGrupo>();
 		this.listaSubGrupoExib = new ArrayList<SubGrupo>();
 	}
 
