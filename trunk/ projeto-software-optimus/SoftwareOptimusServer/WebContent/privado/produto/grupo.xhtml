@@ -14,16 +14,16 @@
 		<br />
 		<h3 style="margin-top: 0">CADASTRO DE GRUPO</h3>
 		<div align="left">
-			<p:commandButton value="Novo" actionListener="#{subGrupoBean.novo}"
-				ajax="grid" />
+			<p:commandButton value="Novo" actionListener="#{grupoBean.novo}"
+				ajax="grid"/>
 
-			<p:commandButton value="Salvar" disabled="#{subGrupoBean.sal}"
+			<p:commandButton value="Salvar" disabled="#{grupoBean.sal}"
 				actionListener="#{grupoBean.salvar}" ajax="grid" />
 
-			<p:commandButton value="Alterar" disabled="#{subGrupoBean.alt}"
+			<p:commandButton value="Alterar" disabled="#{grupoBean.alt}"
 				actionListener="#{grupoBean.alterar}" ajax="grid" />
 
-			<p:commandButton value="Excluir" disabled="#{subGrupoBean.rem}"
+			<p:commandButton value="Excluir" disabled="#{grupoBean.rem}"
 				actionListener="#{grupoBean.remover}" ajax="grid" />
 
 			<p:commandButton id="consulta" value="Consultar" type="button"
@@ -46,15 +46,14 @@
 					<p:inputText id="desc" value="#{grupoBean.grupo.descricao}"
 					maxlength="100" size="30" disabled="#{grupoBean.desc}" />
 
+				<p:commandButton id="vincSubGrupo" value="Incluir SubGrupo"
+					disabled="#{grupoBean.vig}" onclick="PF('dlg2').show();" />
+
 			</h:panelGrid>
 
-			<p:commandButton id="vincSubGrupo" value="Incluir SubGrupo"
-				disabled="#{subGrupoBean.vig}" onclick="PF('dlg2').show();" />
-
-
 			<h:panelGrid id="gridData1" columns="1">
-				<p:blockUI block="gridData1" trigger="vincSubGrupo" />
-				<p:dataTable id="listGrupo" value="#{grupoBean.listaSubGrupo}"
+				<p:blockUI block="gridData1" trigger="gridData1" />
+				<p:dataTable id="listGrupo" value="#{grupoBean.listaSubGrupoExib}"
 					paginator="true" rows="6" var="subGrupo">
 
 					<p:column headerText="Codigo do SubGrupo">
@@ -141,15 +140,19 @@
 						value="#{grupoBean.subGrupo}">
 						<f:selectItem itemLabel="Selecione um SubGrupo" />
 						<f:selectItems value="#{grupoBean.listaSubGrupo}"
-							var="listaSubGrupo" itemValue="#{listaSubGrupo}"
-							itemLabel="#{listaSubGrupo.idSubGrupo} - #{listaSubGrupo.descricao}" />
+							var="lisSubGrupo" itemValue="#{lisSubGrupo}"
+							itemLabel="#{lisSubGrupo.idSubGrupo} - #{lisSubGrupo.descricao}" />
 					</p:selectOneMenu>
 
 				</h:panelGrid>
 
+				<p:tooltip id="toolTipAliq" for="subGrupoChk"
+					value="Exibição 'Código' - 'Descrição'" showEffect="clip"
+					hideEffect="explode" />
+
 				<p:commandButton id="btnIncluir" value="Incluir"
 					actionListener="#{grupoBean.incluirSub}"
-					update="gridSub, listGrupo" />
+					update="gridSub, listGrupo, subGrupoChk" />
 			</p:dialog>
 		</div>
 	</h:form>
