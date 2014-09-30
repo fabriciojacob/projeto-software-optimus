@@ -14,6 +14,147 @@
 		<br />
 		<h3 style="margin-top: 0">CADASTRO DE SETOR</h3>
 		<div align="left">
+		
+			<p:commandButton value="Novo" actionListener="#{setorBean.novo}"
+				ajax="grid"/>
+
+			<p:commandButton value="Salvar" disabled="#{setorBean.sal}"
+				actionListener="#{setorBean.salvar}" ajax="grid" />
+
+			<p:commandButton value="Alterar" disabled="#{setorBean.alt}"
+				actionListener="#{setorBean.alterar}" ajax="grid" />
+
+			<p:commandButton value="Excluir" disabled="#{setorBean.rem}"
+				actionListener="#{setorBean.remover}" ajax="grid" />
+
+			<p:commandButton id="consulta" value="Consultar" type="button"
+				ajax="dialog, grid" onclick="PF('dlg3').show();"
+				actionListener="#{setorBean.cancelar}" />
+
+			<p:commandButton value="Cancelar"
+				actionListener="#{setorBean.cancelar}" ajax="grid" />
+			<p:messages id="messages" showDetail="true" autoUpdate="true"
+				closable="true" />
+
+
+			<h:panelGrid id="grid" columns="2" columnClasses="label, value">
+				
+					Código do Setor:
+					<p:inputText id="idGrup" disabled="true"
+					value="#{setorBean.setor.idsetor}" />
+		
+					Descrição:
+					<p:inputText id="desc" value="#{setorBean.setor.descricao}"
+					maxlength="100" size="30" disabled="#{setorBean.desc}" />
+
+				<p:commandButton id="vincGripo" value="Incluir Grupo"
+					disabled="#{setorBean.vig}" onclick="PF('dlg2').show();" />
+
+			</h:panelGrid>
+
+			<h:panelGrid id="gridData1" columns="1">
+				<p:blockUI block="gridData1" trigger="gridData1" />
+				<p:dataTable id="listGrupo" value="#{setorBean.listaGrupoExib}"
+					paginator="true" rows="6" var="subsetor">
+
+					<p:column headerText="Codigo do Grupo">
+						<h:outputText value="#{listGrupo.idGrupo}" />
+					</p:column>
+
+					<p:column headerText="Descrição ">
+						<h:outputText value="#{listGrupo.descricao}" />
+					</p:column>
+
+					<p:column headerText="Excluir">
+						<p:commandLink id="linkExcluir" value="Excluir" ajax="dialog2"
+							action="#{setorBean.remGru}" update="data1">
+							<f:setPropertyActionListener value="#{listGrupo.idGrupo}"
+								target="#{setorBean.idGrup}" />
+						</p:commandLink>
+					</p:column>
+
+				</p:dataTable>
+				<p:blockUI block="listGrupo" trigger="listGrupo">
+        				LOADING<br />
+					<p:graphicImage name="ajaxloader.gif" />
+				</p:blockUI>
+			</h:panelGrid>
+
+
+			<p:dialog id="dialog" header="Consulta" widgetVar="dlg3" modal="true"
+				height="300" width="650">
+
+				<div align="right">
+					<h:panelGrid columns="1">
+						<p:commandButton value="Pesquisar"
+							actionListener="#{setorBean.buscarSetor}" update="gridData">
+						</p:commandButton>
+					</h:panelGrid>
+				</div>
+				<h:panelGrid columns="3" columnClasses="label" cellspacing="3">
+
+					<p:inputText id="texto" value="#{setorBean.busca}" size="40" />
+
+					<p:selectOneMenu id="fConsult" value="#{setorBean.filtro}">
+						<f:selectItem itemLabel="Selecione uma Opção" />
+						<f:selectItem itemLabel="Código" itemValue="id" />
+						<f:selectItem itemLabel="Descrição" itemValue="desc" />
+					</p:selectOneMenu>
+
+				</h:panelGrid>
+				<h:panelGrid id="gridData" columns="1" columnClasses="label, value">
+					<p:blockUI block="gridData" trigger="consulta" />
+					<p:dataTable id="data" value="#{setorBean.listaSetor}"
+						paginator="true" rows="6" var="setor" rowKey="setor.idSetor">
+						<p:column headerText="Código do setor">
+							<h:outputText value="#{setor.idSetor}" />
+						</p:column>
+
+						<p:column headerText="Descrição">
+							<h:outputText value="#{setor.descricao}" />
+						</p:column>
+
+						<p:column headerText="Selecionar">
+							<p:commandLink id="link" value="Editar" ajax="data, listsetor"
+								action="#{setorBean.editsetor}">
+								<f:setPropertyActionListener value="#{setor.idSetor}"
+									target="#{setorBean.id}" />
+							</p:commandLink>
+						</p:column>
+					</p:dataTable>
+					<p:blockUI block="data" trigger="data">
+        				LOADING<br />
+						<p:graphicImage name="ajaxloader.gif" />
+					</p:blockUI>
+				</h:panelGrid>
+
+			</p:dialog>
+
+
+			<p:dialog id="dialog2" header="Grupo" widgetVar="dlg2"
+				modal="true" height="100" width="400">
+
+				<h:panelGrid id="gridGru" columns="2" columnClasses="label, value">
+				
+					Grupo:
+					<p:selectOneMenu id="subsetorChk" style="width:265px;"
+						value="#{setorBean.grupo}">
+						<f:selectItem itemLabel="Selecione um Grupo" />
+						<f:selectItems value="#{setorBean.listaGrupo}"
+							var="lisGrupo" itemValue="#{lisGrupo}"
+							itemLabel="#{lisGrupo.idGrupo} - #{lisGrupo.descricao}" />
+					</p:selectOneMenu>
+
+				</h:panelGrid>
+
+				<p:tooltip id="toolTipAliq" for="subsetorChk"
+					value="Exibição 'Código' - 'Descrição'" showEffect="clip"
+					hideEffect="explode" />
+
+				<p:commandButton id="btnIncluir" value="Incluir"
+					actionListener="#{setorBean.incluirSub}"
+					update="gridSub, listsetor, subsetorChk" />
+			</p:dialog>
 		</div>
 	</h:form>
 </body>
