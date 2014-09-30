@@ -42,26 +42,34 @@
 				<h:panelGrid columns="2">
 				
 				Empresa:
-				<p:inputText size="30" disabled="true" />
+				<p:inputText size="30" disabled="true"
+						value="#{tituloBens.titulo.empresa}" />
 				
 				Participante:                       
-				<p:inputText size="30" disabled="true" />
+				<p:inputText size="30" disabled="true"
+						value="#{tituloBens.titulo.pessoa}" />
 				
 				Descricao:
-				<p:inputText size="30" />
+				<p:inputText size="30" value="#{tituloBens.titulo.descricao}" />
 				
 				Data lançamento:
-				 <p:calendar size="15" />
+				 <p:calendar size="15" value="#{tituloBens.titulo.dataLancamento}" />
 				 
 				 Data Vencimento:
-				 <p:calendar size="15" />
+				 <p:calendar size="15" value="#{tituloBens.titulo.vencimento}" />
 				 
 				 Forma de pagamento:
-				 <p:selectOneMenu>
+				<p:selectOneMenu id="pgto" value="#{formaPgtoBens.formaPgto}">
+						<f:selectItem itemLabel="Selecione uma forma de pgto" />
+						<f:selectItems value="#{formaPgtoBens.lista}" var="listaPgto"
+							itemValue="#{listaPgto}" itemLabel="#{listaPgto.descricao}" />
 					</p:selectOneMenu>
 				 
 				 Condição de Pagamento:
-				  <p:selectOneMenu>
+				 <p:selectOneMenu id="cond" value="#{condPgtoBens.condPgto}">
+						<f:selectItem itemLabel="Selecione uma condição de pgto" />
+						<f:selectItems value="#{condPgtoBens.lista}" var="listaCond"
+							itemValue="#{listaCond}" itemLabel="#{listaCond.descricao}" />
 					</p:selectOneMenu>
 					
 				Intervalo em dias:
@@ -120,8 +128,8 @@
 					</p:column>
 
 					<p:column headerText="Selecionar">
-						<p:commandLink id="link" value="Editar"
-							ajax="dialog,frmTitulo" action="#{empresaBean.editEmp}">
+						<p:commandLink id="link" value="Editar" ajax="dialog,frmTitulo"
+							action="#{empresaBean.editEmp}">
 							<f:setPropertyActionListener value="#{pesEmpresa.idPessoa}"
 								target="#{tituloBens.empresaSelecionada}" />
 						</p:commandLink>
@@ -142,6 +150,7 @@
 						actionListener="#{tituloBens.pesquisaParticipante}"
 						update="dataPesquisa2" />
 				</h:panelGrid>
+
 				<p:dataTable id="dataPesquisa2" value="#{tituloBens.participantes}"
 					var="participantes" paginator="true" rows="6">
 
