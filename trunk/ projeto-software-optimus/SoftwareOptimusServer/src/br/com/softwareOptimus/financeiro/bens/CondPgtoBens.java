@@ -12,22 +12,28 @@ import br.com.softwareOptimus.financeiro.CondPgto;
 import br.com.softwareOptimus.financeiro.RN.CondPgtoRN;
 import br.com.softwareOptimus.util.Geral;
 
-@ManagedBean (name ="condPgtoBens")
+@ManagedBean(name = "condPgtoBens")
 @ViewScoped
 public class CondPgtoBens implements Geral {
 
 	private CondPgto condPgto;
-	private CondPgtoRN condRN;
+	private CondPgtoRN condRN = new CondPgtoRN();
 	private List<CondPgto> lista = new ArrayList<>();
 	private Long id;
 	private boolean btSalvar, btExcluir, btEditar, btNovo;
-	
-	public CondPgtoBens(){
+
+	public CondPgtoBens() {
 		this.condPgto = new CondPgto();
 		this.btNovo = false;
 		this.btEditar = true;
 		this.btSalvar = true;
 		this.btExcluir = true;
+		try {
+			setLista(this.condRN.listar());
+		} catch (Exception e) {
+			msgErro("Não há condições de pagamento ", e);
+		}
+
 	}
 
 	@Override
@@ -62,10 +68,10 @@ public class CondPgtoBens implements Geral {
 	@Override
 	public void editar() {
 		this.condRN = new CondPgtoRN();
-		try{
+		try {
 			this.condRN.editar(condPgto);
 			msgAcerto("Registro editado com sucesso ");
-		}catch (Exception e){
+		} catch (Exception e) {
 			msgErro("Problemas na edição ", e);
 		}
 
@@ -74,9 +80,9 @@ public class CondPgtoBens implements Geral {
 	@Override
 	public void pesquisar() {
 		this.condRN = new CondPgtoRN();
-		try{
+		try {
 			this.lista = this.condRN.listar();
-		}catch (Exception e){
+		} catch (Exception e) {
 			msgErro("Problemas na listagem ", e);
 		}
 	}
@@ -106,10 +112,10 @@ public class CondPgtoBens implements Geral {
 	@Override
 	public void excluir() {
 		this.condRN = new CondPgtoRN();
-		try{
+		try {
 			this.condRN.remover(condPgto);
 			msgAcerto("Registro excluído com sucesso !!!");
-		}catch (Exception e){
+		} catch (Exception e) {
 			msgErro("Problemas ao excluir o registro ", e);
 		}
 
@@ -178,5 +184,5 @@ public class CondPgtoBens implements Geral {
 	public void setBtNovo(boolean btNovo) {
 		this.btNovo = btNovo;
 	}
-	
+
 }

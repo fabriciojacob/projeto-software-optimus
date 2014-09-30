@@ -19,13 +19,19 @@ public class FormaPgtoBens implements Geral {
 
 	private FormaPgto formaPgto;
 	private String tipoPgto, descricao;
-	private FormaPgtoRN formaRN;
+	private FormaPgtoRN formaRN = new FormaPgtoRN();
 	private Long id;
 	private List<FormaPgto> lista = new ArrayList<>();
-	private boolean btNovo = false, btSalvar = true, btEditar = true, btExcluir = true;
-	
-	public FormaPgtoBens(){
+	private boolean btNovo = false, btSalvar = true, btEditar = true,
+			btExcluir = true;
+
+	public FormaPgtoBens() {
 		this.formaPgto = new FormaPgto();
+		try {
+			setLista(this.formaRN.listar(" "));
+		} catch (Exception e) {
+			msgErro("Não há registros de forma de pgto ", e);
+		}
 	}
 
 	@Override
@@ -210,6 +216,5 @@ public class FormaPgtoBens implements Geral {
 	public void setBtExcluir(boolean btExcluir) {
 		this.btExcluir = btExcluir;
 	}
-	
 
 }
