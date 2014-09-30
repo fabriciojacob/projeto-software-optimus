@@ -2,10 +2,14 @@ package br.com.softwareOptimus.produto.bens;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import br.com.softwareOptimus.produto.Grupo;
 import br.com.softwareOptimus.produto.Setor;
+import br.com.softwareOptimus.produto.RN.GrupoRN;
+import br.com.softwareOptimus.produto.RN.SetorRN;
 
 @ManagedBean(name = "setorBean")
 @ViewScoped
@@ -15,61 +19,213 @@ public class SetorBean{
 	private Grupo grupo = new Grupo();
 	private List<Setor> listaSetor = new ArrayList<Setor>();
 	private List<Grupo> listaGrupo = new ArrayList<Grupo>();
+	private List<Grupo> listaGrupoExib = new ArrayList<Grupo>();
+	private GrupoRN gruRN = new GrupoRN();
 	private String busca, filtro;
 	private boolean sal = true, alt = true, rem = true, desc = true,
 			vig = true;
-	private Long id, idSub;
+	private Long id, idGrup;
 	
 	public SetorBean(){
-		
+		this.listaGrupo = gruRN.listaGrupo();
 	}
 	
 	public void novo(){
-		
+		this.sal = false;
+		this.alt = true;
+		this.rem = true;
+		this.vig = false;
+		this.listaGrupo = gruRN.listaGrupo();
+		limpar();
+		habilita();
 	}
 	
 	public void salvar(){
-		
+		try {
+			SetorRN setRN = new SetorRN();
+			this.setor.setIdSetor(null);
+			this.setor.setGrupo(this.listaGrupoExib);
+			Integer retorno = setRN.validaCampoNulo(this.setor);
+			if (retorno == 0) {
+				setRN.salvar(this.setor);
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
+								"Setor salvo com sucesso"));
+				this.vig = false;
+				this.sal = true;
+				this.alt = false;
+				this.rem = false;
+			} else {
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+								"Existem campos nulos no formulário"));
+			}
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance()
+					.addMessage(
+							null,
+							new FacesMessage(FacesMessage.SEVERITY_ERROR,
+									"Info", "Problemas na gravacao do Setor "
+											+ e.getMessage()));
+		}
 	}
 	
 	public void alterar(){
-		
+		try {
+			SetorRN setRN = new SetorRN();
+			this.setor.setGrupo(this.listaGrupoExib);
+			Integer retorno = setRN.validaCampoNulo(this.setor);
+			if (retorno == 0) {
+				setRN.altSet(this.setor);
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
+								"Setor alterado com sucesso"));
+				this.alt = true;
+				this.rem = true;
+				this.vig = true;
+				this.sal = true;
+				limpar();
+				desabilita();
+			} else {
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+								"Existem campos nulos no formulário"));
+			}
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance()
+					.addMessage(
+							null,
+							new FacesMessage(FacesMessage.SEVERITY_ERROR,
+									"Info", "Problemas na alteração do Setor "
+											+ e.getMessage()));
+		}
 	}
 	
 	public void cancelar(){
-		
+		this.sal = true;
+		this.alt = true;
+		this.rem = true;
+		this.vig = true;
+		limpar();
+		desabilita();
 	}
 	
 	public void limpar(){
-		
+		this.grupo = new Grupo();
+		this.setor = new Setor();
+		this.listaSetor = new ArrayList<Setor>();
+		this.listaGrupo = new ArrayList<Grupo>();
+		this.listaGrupoExib = new ArrayList<Grupo>();
 	}
 	
 	public void remover(){
-		
+		try {
+			SetorRN setRN = new SetorRN();
+			Integer retorno = setRN.verificaRemocao(this.setor);
+			if (retorno == 0) {
+				setRN.remover(this.setor);
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
+								"Setor removido com sucesso"));
+				this.alt = true;
+				this.rem = true;
+				this.vig = true;
+				limpar();
+				desabilita();
+			} else {
+				FacesContext
+						.getCurrentInstance()
+						.addMessage(
+								null,
+								new FacesMessage(FacesMessage.SEVERITY_ERROR,
+										"Info",
+										"Remoção não permitida! Existem Produtos vinculados a este Setor. "));
+			}
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+							"Problemas na remoção do Setor " + e.getMessage()));
+		}
 	}
 	
 	public void buscarSetor(){
-		
+		limpar();
+		SetorRN setRN = new SetorRN();
+		if (!busca.equals("") && (!filtro.equals(""))) {
+			if (filtro.equals("id")) {
+				this.listaSetor = setRN.consultaId(Long.parseLong(busca));
+			} else if (filtro.equals("desc")) {
+				this.listaSetor = setRN.consultaDesc(busca);
+			}
+		} else {
+			this.listaSetor = setRN.listar();
+		}
 	}
 	
 	public void remGru(){
-		
+		List<Grupo> listaGruNovo = new ArrayList<Grupo>();
+		listaGruNovo.addAll(this.listaGrupoExib);
+		for (Grupo gru : this.listaGrupoExib) {
+			if (gru.getIdGrupo().equals(this.idGrup)){
+				listaGruNovo.remove(gru);
+			}
+		}
+		this.listaGrupoExib = new ArrayList<Grupo>();
+		this.listaGrupoExib.addAll(listaGruNovo);
 	}
 	
 	public void editSet(){
-		
+		SetorRN setRN = new SetorRN();
+		this.listaGrupoExib = new ArrayList<Grupo>();
+		this.setor = setRN.editSet(this.id);
+		this.listaGrupoExib.addAll(this.setor.getGrupo());
+		habilita();
+		this.alt = false;
+		this.vig = false;
+		this.rem = false;
+		this.sal = true;
 	}
 	
 	public void incluirGrup(){
-		
+		if (this.grupo != null) {
+			Integer retorno = verificaInclusaoGrupo();
+			if (retorno == 0) {
+				this.listaGrupoExib.add(this.grupo);
+			} else {
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+								"Grupo já vinculado no Setor!"));
+			}
+		} else {
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+							"Escolha uma Grupo para incluir."));
+		}
 	}
 	
 	public void habilita(){
-		
+		this.desc = false;
 	}
 	
 	public void desabilita(){
-		
+		this.desc = true;
+	}
+	
+	private Integer verificaInclusaoGrupo() {
+		Integer retorno = 0;
+		for (Grupo gru : this.listaGrupoExib) {
+			if (gru.getIdGrupo().equals(this.grupo.getIdGrupo()))
+				retorno++;
+		}
+		return retorno;
 	}
 
 	public Setor getSetor() {
@@ -168,13 +324,20 @@ public class SetorBean{
 		this.id = id;
 	}
 
-	public Long getIdSub() {
-		return idSub;
+	public List<Grupo> getListaGrupoExib() {
+		return listaGrupoExib;
 	}
 
-	public void setIdSub(Long idSub) {
-		this.idSub = idSub;
+	public void setListaGrupoExib(List<Grupo> listaGrupoExib) {
+		this.listaGrupoExib = listaGrupoExib;
 	}
-	
+
+	public Long getIdGrup() {
+		return idGrup;
+	}
+
+	public void setIdGrup(Long idGrup) {
+		this.idGrup = idGrup;
+	}
 	
 }

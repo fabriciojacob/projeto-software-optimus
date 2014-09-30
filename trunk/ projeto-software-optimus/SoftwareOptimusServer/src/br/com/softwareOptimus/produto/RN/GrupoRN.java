@@ -59,4 +59,9 @@ public class GrupoRN {
 	public Grupo editGru(Long id) {
 		return this.grupoDAO.editGrupo(id);
 	}
+
+	public List<Grupo> listaGrupo() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
