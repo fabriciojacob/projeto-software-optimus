@@ -78,7 +78,7 @@ public class GrupoDAOHibernate implements GrupoDAO {
 
 	@Override
 	public List<Grupo> consultaDesc(String busca) {
-		String jpql = "Select g From Grupo g Where g.descricao = :grupo";
+		String jpql = "Select g From Grupo g Where g.descricao LIKE :grupo";
 		TypedQuery<Grupo> gru = this.session.createQuery(jpql, Grupo.class);
 		gru.setParameter("grupo", "%" + busca + "%");
 		return gru.getResultList();
