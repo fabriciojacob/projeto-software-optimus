@@ -2,12 +2,11 @@ package br.com.softwareOptimus.produto;
 
 import java.io.Serializable;
 import java.util.Collection;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -26,7 +25,7 @@ public class Setor implements Serializable{
 	@Column ( length = 100 , nullable = true , unique = false)
 	private String descricao;
 	
-	@OneToMany
+	@ManyToMany
 	private Collection<Grupo> grupo;
 	
 	public String getDescricao() {

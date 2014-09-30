@@ -75,6 +75,7 @@ public class GrupoBean {
 	public void alterar() {
 		try {
 			GrupoRN gruRN = new GrupoRN();
+			this.grupo.setSubGrupo(this.listaSubGrupoExib);
 			Integer retorno = gruRN.validaCampoNulo(this.grupo);
 			if (retorno == 0) {
 				gruRN.altGru(this.grupo);
