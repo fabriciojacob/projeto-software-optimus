@@ -3,60 +3,71 @@ package br.com.softwareOptimus.produto.RN;
 import java.util.List;
 
 import br.com.softwareOptimus.dao.produto.SetorDAO;
+import br.com.softwareOptimus.produto.Grupo;
+import br.com.softwareOptimus.produto.Produto;
 import br.com.softwareOptimus.produto.Setor;
 import br.com.softwareOptimus.util.DAOFactory;
 
 public class SetorRN {
-	
+
 	private SetorDAO setorDAO;
-	
-	public SetorRN(){
+
+	public SetorRN() {
 		this.setorDAO = DAOFactory.criaSetorDAO();
 	}
 
-	public Integer validaCampoNulo(Setor setor) {
-		// TODO Auto-generated method stub
-		return null;
+	public Integer validaCampoNulo(Setor setor, List<Grupo> listaGrupoExib) {
+		Integer retorno = 0;
+		if(setor.getDescricao().equals("") || listaGrupoExib.size() == 0){
+			retorno =1;
+		}
+		return retorno;
 	}
 
 	public void salvar(Setor setor) {
-		// TODO Auto-generated method stub
-		
+		this.setorDAO.salvar(setor);
 	}
 
 	public void altSet(Setor setor) {
-		// TODO Auto-generated method stub
-		
+		this.setorDAO.altSet(setor);
 	}
 
 	public Integer verificaRemocao(Setor setor) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Produto> prod = this.setorDAO.verProdSet(setor);
+		if (prod.size() == 0){
+			return 0;
+		}else{
+			return 1;
+		}
 	}
 
 	public void remover(Setor setor) {
-		// TODO Auto-generated method stub
-		
+		this.setorDAO.remove(setor);
 	}
 
 	public List<Setor> consultaId(long parseLong) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.setorDAO.consultaId(parseLong);
 	}
 
 	public List<Setor> consultaDesc(String busca) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.setorDAO.consultaDesc(busca);
 	}
 
 	public List<Setor> listar() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.setorDAO.listar();
 	}
 
 	public Setor editSet(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.setorDAO.editSet(id);
+	}
+
+	public Integer verificaRemocaoRelGrupo(Setor setor, Long idGrup) {
+		List<Produto> prod = this.setorDAO.verRemRelGrup(setor, idGrup);
+		if(prod.size() == 0){
+			return 0;
+		}else{
+			return 1;
+		}
 	}
 
 }

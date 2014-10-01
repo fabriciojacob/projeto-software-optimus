@@ -90,4 +90,8 @@ public class SubGrupoRN {
 		return this.subGrupoDAO.listaSubGrupo();
 	}
 
+	public List<SubGrupo> listaSubGru(Long id) {
+		return this.subGrupoDAO.listaSubGru(id);
+	}
+
 }

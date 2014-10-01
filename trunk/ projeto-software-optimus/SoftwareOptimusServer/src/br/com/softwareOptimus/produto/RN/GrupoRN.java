@@ -5,6 +5,7 @@ import java.util.List;
 import br.com.softwareOptimus.dao.produto.GrupoDAO;
 import br.com.softwareOptimus.produto.Grupo;
 import br.com.softwareOptimus.produto.Setor;
+import br.com.softwareOptimus.produto.SubGrupo;
 import br.com.softwareOptimus.util.DAOFactory;
 
 public class GrupoRN {
@@ -19,9 +20,9 @@ public class GrupoRN {
 		this.grupoDAO.salvar(grupo);
 	}
 
-	public Integer validaCampoNulo(Grupo grupo) {
+	public Integer validaCampoNulo(Grupo grupo, List<SubGrupo> listaSubGrupoExib) {
 		Integer retorno = 0;
-		if (grupo.getDescricao().equals("")|| grupo.getSubGrupo().isEmpty()){ 
+		if (grupo.getDescricao().equals("")|| listaSubGrupoExib.size() == 0){ 
 			retorno = 1;
 		}
 		return retorno;
@@ -61,7 +62,6 @@ public class GrupoRN {
 	}
 
 	public List<Grupo> listaGrupo() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.grupoDAO.listaGrupo();
 	}
 }

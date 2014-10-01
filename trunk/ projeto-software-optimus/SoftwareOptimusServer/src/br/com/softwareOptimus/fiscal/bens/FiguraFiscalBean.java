@@ -43,9 +43,9 @@ public class FiguraFiscalBean {
 		try {
 			FiguraFiscalRN figuraRN = new FiguraFiscalRN();
 			this.figura.setIdFigura(null);
-			this.figura.setGrades(this.listaGrade);
-			Integer retorno = figuraRN.validaCampoNulo(this.figura);
+			Integer retorno = figuraRN.validaCampoNulo(this.figura, this.listaGrade);
 			if (retorno == 0) {
+				this.figura.setGrades(this.listaGrade);
 				figuraRN.salvar(this.figura);
 				FacesContext.getCurrentInstance().addMessage(
 						null,
@@ -73,9 +73,9 @@ public class FiguraFiscalBean {
 	public void alterar() {
 		try {
 			FiguraFiscalRN figuraRN = new FiguraFiscalRN();
-			this.figura.setGrades(this.listaGrade);
-			Integer retorno = figuraRN.validaCampoNulo(this.figura);
+			Integer retorno = figuraRN.validaCampoNulo(this.figura, this.listaGrade);
 			if (retorno == 0) {
+				this.figura.setGrades(this.listaGrade);
 				figuraRN.altFigura(this.figura);
 				FacesContext.getCurrentInstance().addMessage(
 						null,

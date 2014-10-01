@@ -20,5 +20,6 @@ public interface SubGrupoDAO {
 	public List<SubGrupo> consultaDesc(String busca);
 	public SubGrupo editSub(Long id);
 	public List<SubGrupo> listaSubGrupo();
+	public List<SubGrupo> listaSubGru(Long id);
 
 }

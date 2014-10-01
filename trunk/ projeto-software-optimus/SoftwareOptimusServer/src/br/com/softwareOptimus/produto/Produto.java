@@ -56,8 +56,41 @@ public class Produto implements Serializable{
 	@ManyToOne
 	private Setor setor;
 	
+	@ManyToOne
+	private Grupo grupo;
+	
+	@ManyToOne
+	private SubGrupo subGrupo;
+	
+	@ManyToOne
+	private Categoria categoria;
+	
 	private boolean status;
 	
+	public Grupo getGrupo() {
+		return grupo;
+	}
+
+	public void setGrupo(Grupo grupo) {
+		this.grupo = grupo;
+	}
+
+	public SubGrupo getSubGrupo() {
+		return subGrupo;
+	}
+
+	public void setSubGrupo(SubGrupo subGrupo) {
+		this.subGrupo = subGrupo;
+	}
+
+	public Categoria getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
+	}
+
 	public boolean isStatus() {
 		return status;
 	}

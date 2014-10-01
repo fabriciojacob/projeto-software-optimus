@@ -19,4 +19,5 @@ public interface GrupoDAO {
 	public List<Grupo> consultaDesc(String busca);
 	public List<Grupo> lista();
 	public Grupo editGrupo(Long id);
+	public List<Grupo> listaGrupo();
 }

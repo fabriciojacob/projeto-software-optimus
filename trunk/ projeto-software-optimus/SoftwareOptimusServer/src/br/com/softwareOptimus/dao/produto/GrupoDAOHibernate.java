@@ -93,9 +93,18 @@ public class GrupoDAOHibernate implements GrupoDAO {
 
 	@Override
 	public Grupo editGrupo(Long id) {
-		String jpql = "Select g From Grupo g Where g.idGrupo = :grupo";
-		TypedQuery<Grupo> gru = this.session.createQuery(jpql, Grupo.class);
-		gru.setParameter("grupo", id);
-		return gru.getSingleResult();
+		//String jpql = "Select g From Grupo g Where g.idGrupo = :grupo";
+		//TypedQuery<Grupo> gru = this.session.createQuery(jpql, Grupo.class);
+		//gru.setParameter("grupo", id);
+		Grupo gru = this.session.find(Grupo.class, id);
+		return gru;
+	}
+
+	@Override
+	public List<Grupo> listaGrupo() {
+		String jpql = "Select g From Grupo g ";
+		TypedQuery<Grupo> gru = this.session.createQuery(jpql,
+				Grupo.class);
+		return gru.getResultList();
 	}
 }
