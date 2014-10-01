@@ -13,7 +13,7 @@ import br.com.softwareOptimus.produto.RN.SetorRN;
 
 @ManagedBean(name = "setorBean")
 @ViewScoped
-public class SetorBean{
+public class SetorBean {
 
 	private Setor setor = new Setor();
 	private Grupo grupo = new Grupo();
@@ -25,28 +25,28 @@ public class SetorBean{
 	private boolean sal = true, alt = true, rem = true, desc = true,
 			vig = true;
 	private Long id, idGrup;
-	
-	public SetorBean(){
+
+	public SetorBean() {
 		this.listaGrupo = gruRN.listaGrupo();
 	}
-	
-	public void novo(){
+
+	public void novo() {
+		limpar();
 		this.sal = false;
 		this.alt = true;
 		this.rem = true;
 		this.vig = false;
 		this.listaGrupo = gruRN.listaGrupo();
-		limpar();
 		habilita();
 	}
-	
-	public void salvar(){
+
+	public void salvar() {
 		try {
 			SetorRN setRN = new SetorRN();
 			this.setor.setIdSetor(null);
-			this.setor.setGrupo(this.listaGrupoExib);
-			Integer retorno = setRN.validaCampoNulo(this.setor);
+			Integer retorno = setRN.validaCampoNulo(this.setor, this.listaGrupoExib);
 			if (retorno == 0) {
+				this.setor.setGrupo(this.listaGrupoExib);
 				setRN.salvar(this.setor);
 				FacesContext.getCurrentInstance().addMessage(
 						null,
@@ -71,13 +71,13 @@ public class SetorBean{
 											+ e.getMessage()));
 		}
 	}
-	
-	public void alterar(){
+
+	public void alterar() {
 		try {
 			SetorRN setRN = new SetorRN();
-			this.setor.setGrupo(this.listaGrupoExib);
-			Integer retorno = setRN.validaCampoNulo(this.setor);
+			Integer retorno = setRN.validaCampoNulo(this.setor, this.listaGrupoExib);
 			if (retorno == 0) {
+				this.setor.setGrupo(this.listaGrupoExib);
 				setRN.altSet(this.setor);
 				FacesContext.getCurrentInstance().addMessage(
 						null,
@@ -104,8 +104,8 @@ public class SetorBean{
 											+ e.getMessage()));
 		}
 	}
-	
-	public void cancelar(){
+
+	public void cancelar() {
 		this.sal = true;
 		this.alt = true;
 		this.rem = true;
@@ -113,16 +113,15 @@ public class SetorBean{
 		limpar();
 		desabilita();
 	}
-	
-	public void limpar(){
+
+	public void limpar() {
 		this.grupo = new Grupo();
 		this.setor = new Setor();
 		this.listaSetor = new ArrayList<Setor>();
-		this.listaGrupo = new ArrayList<Grupo>();
 		this.listaGrupoExib = new ArrayList<Grupo>();
 	}
-	
-	public void remover(){
+
+	public void remover() {
 		try {
 			SetorRN setRN = new SetorRN();
 			Integer retorno = setRN.verificaRemocao(this.setor);
@@ -153,8 +152,8 @@ public class SetorBean{
 							"Problemas na remoção do Setor " + e.getMessage()));
 		}
 	}
-	
-	public void buscarSetor(){
+
+	public void buscarSetor() {
 		limpar();
 		SetorRN setRN = new SetorRN();
 		if (!busca.equals("") && (!filtro.equals(""))) {
@@ -167,20 +166,32 @@ public class SetorBean{
 			this.listaSetor = setRN.listar();
 		}
 	}
-	
-	public void remGru(){
-		List<Grupo> listaGruNovo = new ArrayList<Grupo>();
-		listaGruNovo.addAll(this.listaGrupoExib);
-		for (Grupo gru : this.listaGrupoExib) {
-			if (gru.getIdGrupo().equals(this.idGrup)){
-				listaGruNovo.remove(gru);
+
+	public void remGru() {
+		SetorRN setRN = new SetorRN();
+		Integer retorno = setRN.verificaRemocaoRelGrupo(this.setor, idGrup);
+		if (retorno == 0) {
+			List<Grupo> listaGruNovo = new ArrayList<Grupo>();
+			listaGruNovo.addAll(this.listaGrupoExib);
+			for (Grupo gru : this.listaGrupoExib) {
+				if (gru.getIdGrupo().equals(this.idGrup)) {
+					listaGruNovo.remove(gru);
+				}
 			}
+			this.listaGrupoExib = new ArrayList<Grupo>();
+			this.listaGrupoExib.addAll(listaGruNovo);
+		} else {
+			FacesContext
+					.getCurrentInstance()
+					.addMessage(
+							null,
+							new FacesMessage(FacesMessage.SEVERITY_ERROR,
+									"Info",
+									"Remoção não permitida! Existem Produtos vinculados a este Setor e Grupo. "));
 		}
-		this.listaGrupoExib = new ArrayList<Grupo>();
-		this.listaGrupoExib.addAll(listaGruNovo);
 	}
-	
-	public void editSet(){
+
+	public void editSet() {
 		SetorRN setRN = new SetorRN();
 		this.listaGrupoExib = new ArrayList<Grupo>();
 		this.setor = setRN.editSet(this.id);
@@ -191,8 +202,8 @@ public class SetorBean{
 		this.rem = false;
 		this.sal = true;
 	}
-	
-	public void incluirGrup(){
+
+	public void incluirGrup() {
 		if (this.grupo != null) {
 			Integer retorno = verificaInclusaoGrupo();
 			if (retorno == 0) {
@@ -210,15 +221,15 @@ public class SetorBean{
 							"Escolha uma Grupo para incluir."));
 		}
 	}
-	
-	public void habilita(){
+
+	public void habilita() {
 		this.desc = false;
 	}
-	
-	public void desabilita(){
+
+	public void desabilita() {
 		this.desc = true;
 	}
-	
+
 	private Integer verificaInclusaoGrupo() {
 		Integer retorno = 0;
 		for (Grupo gru : this.listaGrupoExib) {
@@ -339,5 +350,5 @@ public class SetorBean{
 	public void setIdGrup(Long idGrup) {
 		this.idGrup = idGrup;
 	}
-	
+
 }

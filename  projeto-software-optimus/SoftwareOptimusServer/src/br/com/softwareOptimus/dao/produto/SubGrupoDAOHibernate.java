@@ -120,4 +120,12 @@ public class SubGrupoDAOHibernate implements SubGrupoDAO {
 		return listaSub.getResultList();
 	}
 
+	@Override
+	public List<SubGrupo> listaSubGru(Long id) {
+		String jpql = "Select Distinct s From Grupo g, IN(g.subGrupo) AS s Where g.idGrupo = :Grupo";
+		TypedQuery<SubGrupo> subGru = this.session.createQuery(jpql, SubGrupo.class);
+		subGru.setParameter("Grupo", id);
+		return subGru.getResultList();
+	}
+
 }

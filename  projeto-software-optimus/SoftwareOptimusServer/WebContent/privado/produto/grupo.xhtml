@@ -60,7 +60,7 @@
 						<h:outputText value="#{subGrupo.idSubGrupo}" />
 					</p:column>
 
-					<p:column headerText="Descrição da Categoria">
+					<p:column headerText="Descrição do SubGrupo">
 						<h:outputText value="#{subGrupo.descricao}" />
 					</p:column>
 
@@ -114,7 +114,7 @@
 						</p:column>
 
 						<p:column headerText="Selecionar">
-							<p:commandLink id="link" value="Editar" ajax="data, listGrupo"
+							<p:commandLink id="link" value="Editar" ajax="data, grid, gridData1"
 								action="#{grupoBean.editGrupo}">
 								<f:setPropertyActionListener value="#{grupo.idGrupo}"
 									target="#{grupoBean.id}" />

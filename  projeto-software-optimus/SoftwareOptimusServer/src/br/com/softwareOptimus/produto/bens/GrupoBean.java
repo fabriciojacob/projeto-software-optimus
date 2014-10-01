@@ -44,9 +44,10 @@ public class GrupoBean {
 		try {
 			GrupoRN gruRN = new GrupoRN();
 			this.grupo.setIdGrupo(null);
-			this.grupo.setSubGrupo(this.listaSubGrupoExib);
-			Integer retorno = gruRN.validaCampoNulo(this.grupo);
+			
+			Integer retorno = gruRN.validaCampoNulo(this.grupo, this.listaSubGrupoExib);
 			if (retorno == 0) {
+				this.grupo.setSubGrupo(this.listaSubGrupoExib);
 				gruRN.salvar(this.grupo);
 				FacesContext.getCurrentInstance().addMessage(
 						null,
@@ -75,9 +76,9 @@ public class GrupoBean {
 	public void alterar() {
 		try {
 			GrupoRN gruRN = new GrupoRN();
-			this.grupo.setSubGrupo(this.listaSubGrupoExib);
-			Integer retorno = gruRN.validaCampoNulo(this.grupo);
+			Integer retorno = gruRN.validaCampoNulo(this.grupo, this.listaSubGrupoExib);
 			if (retorno == 0) {
+				this.grupo.setSubGrupo(this.listaSubGrupoExib);
 				gruRN.altGru(this.grupo);
 				FacesContext.getCurrentInstance().addMessage(
 						null,
@@ -180,10 +181,10 @@ public class GrupoBean {
 	}
 
 	public void editGrupo() {
+		limpar();
 		GrupoRN gruRN = new GrupoRN();
-		this.listaSubGrupoExib = new ArrayList<SubGrupo>();
 		this.grupo = gruRN.editGru(this.id);
-		this.listaSubGrupoExib.addAll(this.grupo.getSubGrupo());
+		this.listaSubGrupoExib.addAll(this.subRN.listaSubGru(this.id));
 		habilita();
 		this.alt = false;
 		this.vig = false;

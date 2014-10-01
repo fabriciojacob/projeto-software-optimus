@@ -3,6 +3,7 @@ package br.com.softwareOptimus.fiscal.RN;
 import java.util.List;
 import br.com.softwareOptimus.dao.fiscal.FiguraFiscalDAO;
 import br.com.softwareOptimus.fiscal.FiguraFiscal;
+import br.com.softwareOptimus.fiscal.GradeTributaria;
 import br.com.softwareOptimus.util.DAOFactory;
 
 public class FiguraFiscalRN {
@@ -13,9 +14,9 @@ public class FiguraFiscalRN {
 		this.figuraDAO = DAOFactory.criaFiguraDAO();
 	}
 
-	public Integer validaCampoNulo(FiguraFiscal figura) {
+	public Integer validaCampoNulo(FiguraFiscal figura, List<GradeTributaria> listaGrade) {
 		Integer retorno = 0;
-		if (figura.getDescricao().equals("") || figura.getGrades().isEmpty()){
+		if (figura.getDescricao().equals("") || listaGrade.size() == 0){
 			retorno = 1;
 		}
 		return retorno;
