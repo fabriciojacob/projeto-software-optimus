@@ -16,19 +16,13 @@ import br.com.softwareOptimus.financeiro.RN.TituloRN;
 @ViewScoped
 public class TituloBens {
 
-	private Titulo titulo;
+	private Titulo titulo = new Titulo();
 	private String nomePesquisa;
 	private Long empresaSelecionada, participanteSelecionado;
-	private boolean btSalvarTitulo = true, btNovoTitulo = false;
 	private List<Pessoa> participantes = new ArrayList<>();
 	private TituloRN regraNegocio = new TituloRN();
 	private Pessoa pessoa;
 	private Pessoa empresa;
-
-	public void novo() {
-		this.titulo = new Titulo();
-		this.btSalvarTitulo = false;
-	}
 
 	public void pesquisaParticipante() {
 		if (this.participantes != null) {
@@ -47,6 +41,7 @@ public class TituloBens {
 		try {
 			this.empresa = this.regraNegocio.participante(empresaSelecionada);
 			this.titulo.setEmpresa(empresa);
+			msgAcerto("Empresa selecionada");
 		} catch (Exception e) {
 			msgErro("Problemas na seleção da empresa ", e);
 		}
@@ -144,22 +139,6 @@ public class TituloBens {
 						+ e.getMessage()));
 	}
 
-	public boolean isBtSalvarTitulo() {
-		return btSalvarTitulo;
-	}
-
-	public void setBtSalvarTitulo(boolean btSalvarTitulo) {
-		this.btSalvarTitulo = btSalvarTitulo;
-	}
-
-	public boolean isBtNovoTitulo() {
-		return btNovoTitulo;
-	}
-
-	public void setBtNovoTitulo(boolean btNovoTitulo) {
-		this.btNovoTitulo = btNovoTitulo;
-	}
-
 	public Pessoa getPessoa() {
 		return pessoa;
 	}
@@ -175,5 +154,4 @@ public class TituloBens {
 	public void setEmpresa(Pessoa empresa) {
 		this.empresa = empresa;
 	}
-
 }

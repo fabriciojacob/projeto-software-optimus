@@ -27,6 +27,8 @@ public class CondPgto implements Serializable{
 	private String descricao;
 	
 	private boolean inativar;
+	
+	private Integer intervaloDias;
 
 	public Long getIdCondPgto() {
 		return idCondPgto;
@@ -60,6 +62,14 @@ public class CondPgto implements Serializable{
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+
+	public Integer getIntervaloDias() {
+		return intervaloDias;
+	}
+
+	public void setIntervaloDias(Integer intervaloDias) {
+		this.intervaloDias = intervaloDias;
 	}
 
 	@Override
