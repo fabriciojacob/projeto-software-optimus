@@ -32,22 +32,16 @@
 
 			<p:dialog header="Titulo" widgetVar="titulo" modal="true"
 				height="350" width="400" id="dialogTitulo">
-				<h:panelGrid columns="3">
-					<p:commandButton value="Vincular Empresa" type="button"
-						onclick="PF('empresa').show();" />
-					<p:commandButton value="Vincular participante" type="+"
-						onclick="PF('participante').show();" />
-				</h:panelGrid>
-
-				<h:panelGrid columns="2">
+		
+				<h:panelGrid columns="2" id="dadosTitulo">
 				
 				Empresa:
-				<p:inputText size="30" disabled="true"
-						value="#{tituloBens.titulo.empresa}" />
+				<p:inputText size="30" disabled="true" id="txtEmpresa"
+						value="#{tituloBens.titulo.empresa.fantasia}" />
 				
 				Participante:                       
 				<p:inputText size="30" disabled="true"
-						value="#{tituloBens.titulo.pessoa}" />
+						value="#{tituloBens.titulo.pessoa.fantasia}" />
 				
 				Descricao:
 				<p:inputText size="30" value="#{tituloBens.titulo.descricao}" />
@@ -72,25 +66,20 @@
 							itemValue="#{listaCond}" itemLabel="#{listaCond.descricao}" />
 					</p:selectOneMenu>
 					
-				Intervalo em dias:
-				 <p:inputText size="10" />
-					
 				Valor:
-				<p:inputText />
+				<p:inputText value="#{tituloBens.titulo.valor}" />
 				
 				Saldo titulo:
 				<p:inputText />
+				
 					<h:panelGrid columns="2">
-						<p:commandButton id="btNovo" value="Novo"
-							actionListener="#{tituloBens.novo}" update="btSalvar, btNovo" />
-						<p:commandButton id="btSalvar" value="Salvar"
-							disabled="#{tituloBens.btSalvarTitulo}" />
+						<p:commandButton id="btSalvar" value="Salvar"/>
 					</h:panelGrid>
 				</h:panelGrid>
 			</p:dialog>
 
 			<p:dialog header="Empresa" widgetVar="empresa" modal="true"
-				height="300" width="400">
+				height="300" width="400" id="dialogEmpresa" >
 
 				<div align="right">
 					<h:panelGrid columns="1">
@@ -128,8 +117,8 @@
 					</p:column>
 
 					<p:column headerText="Selecionar">
-						<p:commandLink id="link" value="Editar" ajax="dialog,frmTitulo"
-							action="#{empresaBean.editEmp}">
+						<p:commandLink id="link" value="Editar" 
+							action="#{tituloBens.selecionaEmpresa}" ajax="dialogEmpresa">
 							<f:setPropertyActionListener value="#{pesEmpresa.idPessoa}"
 								target="#{tituloBens.empresaSelecionada}" />
 						</p:commandLink>
@@ -181,10 +170,10 @@
 			<p:tab id="dados">
 				<h:panelGrid columns="15">
 					Empresa:
-					<p:inputText value="Empresa teste" />
+					<p:outputLabel value="#{tituloBens.titulo.empresa.fantasia}"/>
 					
 					Participante:
-					<p:inputText value="Participante Teste" />
+					<p:outputLabel value="#{tituloBens.titulo.pessoa.fantasia}" />
 					
 					 Data Inicio:
 					 <p:calendar size="5" />

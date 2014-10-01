@@ -66,6 +66,10 @@
 						<h:outputText value="#{lista.parcela}" />
 					</p:column>
 
+					<p:column headerText="Intervalo Dias">
+						<h:outputText value="#{lista.intervaloDias}" />
+					</p:column>
+
 					<p:column headerText="Inativa">
 						<h:outputText value="#{lista.inativar}" />
 					</p:column>
@@ -86,7 +90,7 @@
 
 				<p:tab id="dados" title="Cadastro">
 
-					<h:panelGrid  columns="2" columnClasses="label, value">
+					<h:panelGrid columns="2" columnClasses="label, value">
 						
 					Inativa:
 						<p:selectBooleanCheckbox id="inativar"
@@ -105,6 +109,10 @@
 					Parcela:
 					<p:inputText id="parcela" value="#{condPgtoBens.condPgto.parcela}"
 							size="10" />
+							
+					Intervalo Dias
+					<p:inputText id="intervalo"
+							value="#{condPgtoBens.condPgto.intervaloDias}" size="10" />
 
 					</h:panelGrid>
 
