@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 import br.com.softwareOptimus.fiscal.FiguraFiscal;
+import br.com.softwareOptimus.produto.Produto;
 
 public class FiguralFiscalDAOHibernate implements FiguraFiscalDAO {
 	
@@ -93,5 +94,13 @@ public class FiguralFiscalDAOHibernate implements FiguraFiscalDAO {
 				FiguraFiscal.class);
 		figura.setParameter("id", id);
 		return figura.getSingleResult();
+	}
+
+	@Override
+	public List<Produto> verificaRemocao(FiguraFiscal figura) {
+		String jpql = "select p from Produto p where p.figura = :figura";
+		TypedQuery<Produto> prod = this.session.createQuery(jpql, Produto.class);
+		prod.setParameter("figura", figura);
+		return prod.getResultList();
 	}
 }

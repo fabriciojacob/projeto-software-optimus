@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import br.com.softwareOptimus.produto.Grupo;
+import br.com.softwareOptimus.produto.Produto;
 import br.com.softwareOptimus.produto.SubGrupo;
 
 public interface SubGrupoDAO {
@@ -21,5 +22,6 @@ public interface SubGrupoDAO {
 	public SubGrupo editSub(Long id);
 	public List<SubGrupo> listaSubGrupo();
 	public List<SubGrupo> listaSubGru(Long id);
+	public List<Produto> verificaRemocaoSubProd(SubGrupo subGrupo);
 
 }

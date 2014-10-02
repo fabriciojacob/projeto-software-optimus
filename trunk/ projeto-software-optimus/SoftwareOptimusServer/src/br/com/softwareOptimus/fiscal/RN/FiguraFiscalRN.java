@@ -4,6 +4,7 @@ import java.util.List;
 import br.com.softwareOptimus.dao.fiscal.FiguraFiscalDAO;
 import br.com.softwareOptimus.fiscal.FiguraFiscal;
 import br.com.softwareOptimus.fiscal.GradeTributaria;
+import br.com.softwareOptimus.produto.Produto;
 import br.com.softwareOptimus.util.DAOFactory;
 
 public class FiguraFiscalRN {
@@ -48,5 +49,14 @@ public class FiguraFiscalRN {
 
 	public FiguraFiscal editFigura(Long id) {
 		return this.figuraDAO.editFigura(id);
+	}
+
+	public Integer verificaRemocao(FiguraFiscal figura) {
+		List<Produto> listProd = this.figuraDAO.verificaRemocao(figura);
+		if(listProd.size() == 0){
+			return 0;
+		}else{
+			return 1;
+		}
 	}
 }

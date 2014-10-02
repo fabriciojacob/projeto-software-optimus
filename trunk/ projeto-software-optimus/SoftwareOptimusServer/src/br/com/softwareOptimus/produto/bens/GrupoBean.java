@@ -44,8 +44,8 @@ public class GrupoBean {
 		try {
 			GrupoRN gruRN = new GrupoRN();
 			this.grupo.setIdGrupo(null);
-			
-			Integer retorno = gruRN.validaCampoNulo(this.grupo, this.listaSubGrupoExib);
+			Integer retorno = gruRN.validaCampoNulo(this.grupo,
+					this.listaSubGrupoExib);
 			if (retorno == 0) {
 				this.grupo.setSubGrupo(this.listaSubGrupoExib);
 				gruRN.salvar(this.grupo);
@@ -76,7 +76,8 @@ public class GrupoBean {
 	public void alterar() {
 		try {
 			GrupoRN gruRN = new GrupoRN();
-			Integer retorno = gruRN.validaCampoNulo(this.grupo, this.listaSubGrupoExib);
+			Integer retorno = gruRN.validaCampoNulo(this.grupo,
+					this.listaSubGrupoExib);
 			if (retorno == 0) {
 				this.grupo.setSubGrupo(this.listaSubGrupoExib);
 				gruRN.altGru(this.grupo);
@@ -128,7 +129,7 @@ public class GrupoBean {
 								null,
 								new FacesMessage(FacesMessage.SEVERITY_ERROR,
 										"Info",
-										"Remoção não permitida! Existem Setores vinculados a este Grupo. "));
+										"Remoção não permitida! Existem Setores ou Produtos vinculados a este Grupo. "));
 			}
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
@@ -169,15 +170,27 @@ public class GrupoBean {
 	}
 
 	public void removiSub() {
-		List<SubGrupo> listaSubNovo = new ArrayList<SubGrupo>();
-		listaSubNovo.addAll(this.listaSubGrupoExib);
-		for (SubGrupo sub : this.listaSubGrupoExib) {
-			if (sub.getIdSubGrupo().equals(this.idSub)){
-				listaSubNovo.remove(sub);
+		GrupoRN gruRN = new GrupoRN();
+		Integer retorno = gruRN.verificaRemSubPro(this.grupo, this.idSub);
+		if (retorno == 0) {
+			List<SubGrupo> listaSubNovo = new ArrayList<SubGrupo>();
+			listaSubNovo.addAll(this.listaSubGrupoExib);
+			for (SubGrupo sub : this.listaSubGrupoExib) {
+				if (sub.getIdSubGrupo().equals(this.idSub)) {
+					listaSubNovo.remove(sub);
+				}
 			}
+			this.listaSubGrupoExib = new ArrayList<SubGrupo>();
+			this.listaSubGrupoExib.addAll(listaSubNovo);
+		} else {
+			FacesContext
+					.getCurrentInstance()
+					.addMessage(
+							null,
+							new FacesMessage(FacesMessage.SEVERITY_ERROR,
+									"Info",
+									"Remoção não permitida! Existem Produtos vinculados a este Grupo e SubGrupo. "));
 		}
-		this.listaSubGrupoExib = new ArrayList<SubGrupo>();
-		this.listaSubGrupoExib.addAll(listaSubNovo);
 	}
 
 	public void editGrupo() {

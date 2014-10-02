@@ -8,6 +8,7 @@ import br.com.softwareOptimus.dao.produto.CategoriaDAO;
 import br.com.softwareOptimus.dao.produto.SubGrupoDAO;
 import br.com.softwareOptimus.produto.Categoria;
 import br.com.softwareOptimus.produto.Grupo;
+import br.com.softwareOptimus.produto.Produto;
 import br.com.softwareOptimus.produto.SubGrupo;
 import br.com.softwareOptimus.util.DAOFactory;
 
@@ -39,7 +40,8 @@ public class SubGrupoRN {
 
 	public Integer verificaRemocao(SubGrupo subGrupo) {
 		List<Grupo> listaGrupo = this.subGrupoDAO.verificaRemocao(subGrupo);
-		if(listaGrupo.size() == 0){
+		List<Produto> listProd = this.subGrupoDAO.verificaRemocaoSubProd(subGrupo);
+		if(listaGrupo.size() == 0 && listProd.size() ==0){
 			return 0;
 		}else{
 			return 1;
@@ -92,6 +94,15 @@ public class SubGrupoRN {
 
 	public List<SubGrupo> listaSubGru(Long id) {
 		return this.subGrupoDAO.listaSubGru(id);
+	}
+
+	public Integer VerificaRemCatSub(SubGrupo subGrupo, Long idCateg) {
+		List<Produto> listProd = this.categoriaDAO.verificaRemCat(subGrupo, idCateg);
+		if (listProd.size() == 0){
+			return 0;
+		}else{
+			return 1;
+		}
 	}
 
 }

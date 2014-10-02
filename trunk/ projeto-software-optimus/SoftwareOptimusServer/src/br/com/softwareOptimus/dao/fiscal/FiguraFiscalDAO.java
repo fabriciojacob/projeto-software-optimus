@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import br.com.softwareOptimus.fiscal.FiguraFiscal;
+import br.com.softwareOptimus.produto.Produto;
 
 public interface FiguraFiscalDAO {
 
@@ -17,4 +18,5 @@ public interface FiguraFiscalDAO {
 	public List<FiguraFiscal> consultaDesc(String desc);
 	public List<FiguraFiscal> listar();
 	public FiguraFiscal editFigura(Long id);
+	public List<Produto> verificaRemocao(FiguraFiscal figura);
 }
