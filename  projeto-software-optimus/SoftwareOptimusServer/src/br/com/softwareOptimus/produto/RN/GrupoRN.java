@@ -4,6 +4,7 @@ import java.util.List;
 
 import br.com.softwareOptimus.dao.produto.GrupoDAO;
 import br.com.softwareOptimus.produto.Grupo;
+import br.com.softwareOptimus.produto.Produto;
 import br.com.softwareOptimus.produto.Setor;
 import br.com.softwareOptimus.produto.SubGrupo;
 import br.com.softwareOptimus.util.DAOFactory;
@@ -34,7 +35,8 @@ public class GrupoRN {
 
 	public Integer verificaRemocao(Grupo grupo) {
 		List<Setor> listaSetor = this.grupoDAO.verificaRemocao(grupo);
-		if(listaSetor.size() == 0){
+		List<Produto> lisProd = this.grupoDAO.VerificaRemGrupoProd(grupo);
+		if(listaSetor.size() == 0 && lisProd.size() == 0){
 			return 0;
 		}else{
 			return 1;
@@ -63,5 +65,14 @@ public class GrupoRN {
 
 	public List<Grupo> listaGrupo() {
 		return this.grupoDAO.listaGrupo();
+	}
+
+	public Integer verificaRemSubPro(Grupo grupo, Long idSub) {
+		List<Produto> lisProd = this.grupoDAO.verificaRemSubGrupo(grupo, idSub);
+		if(lisProd.size() == 0){
+			return 0;
+		}else{
+			return 1;
+		}
 	}
 }

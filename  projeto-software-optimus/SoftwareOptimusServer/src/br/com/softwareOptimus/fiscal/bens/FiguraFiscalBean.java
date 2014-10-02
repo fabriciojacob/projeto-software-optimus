@@ -21,7 +21,8 @@ public class FiguraFiscalBean {
 	private List<GradeTributaria> listaGrade = new ArrayList<GradeTributaria>();
 	private List<GradeTributaria> listaGradeVis = new ArrayList<GradeTributaria>();
 	private GradeTributariaRN gradRN = new GradeTributariaRN();
-	private Boolean sal = true, alt = true, rem = true, vincGrade = true, desc = true;
+	private Boolean sal = true, alt = true, rem = true, vincGrade = true,
+			desc = true;
 	private String busca, filtro;
 	private Long id, idGrade;
 
@@ -43,7 +44,8 @@ public class FiguraFiscalBean {
 		try {
 			FiguraFiscalRN figuraRN = new FiguraFiscalRN();
 			this.figura.setIdFigura(null);
-			Integer retorno = figuraRN.validaCampoNulo(this.figura, this.listaGrade);
+			Integer retorno = figuraRN.validaCampoNulo(this.figura,
+					this.listaGrade);
 			if (retorno == 0) {
 				this.figura.setGrades(this.listaGrade);
 				figuraRN.salvar(this.figura);
@@ -73,7 +75,8 @@ public class FiguraFiscalBean {
 	public void alterar() {
 		try {
 			FiguraFiscalRN figuraRN = new FiguraFiscalRN();
-			Integer retorno = figuraRN.validaCampoNulo(this.figura, this.listaGrade);
+			Integer retorno = figuraRN.validaCampoNulo(this.figura,
+					this.listaGrade);
 			if (retorno == 0) {
 				this.figura.setGrades(this.listaGrade);
 				figuraRN.altFigura(this.figura);
@@ -105,17 +108,28 @@ public class FiguraFiscalBean {
 	public void remover() {
 		try {
 			FiguraFiscalRN figuraRN = new FiguraFiscalRN();
-			figuraRN.remover(this.figura);
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-							"Figura Fiscal removida com sucesso"));
-			this.alt = true;
-			this.rem = true;
-			this.vincGrade = true;
-			this.sal = true;
-			limpar();
-			desabilita();
+			Integer retorno = figuraRN.verificaRemocao(this.figura);
+			if (retorno == 0) {
+				figuraRN.remover(this.figura);
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
+								"Figura Fiscal removida com sucesso"));
+				this.alt = true;
+				this.rem = true;
+				this.vincGrade = true;
+				this.sal = true;
+				limpar();
+				desabilita();
+			} else {
+				FacesContext
+				.getCurrentInstance()
+				.addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR,
+								"Info",
+								"Remoção não permitida! Existem Produtos vinculados a esta Figura. "));
+			}
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
@@ -157,7 +171,7 @@ public class FiguraFiscalBean {
 		List<GradeTributaria> listaGradeNova = new ArrayList<GradeTributaria>();
 		listaGradeNova.addAll(this.listaGrade);
 		for (GradeTributaria gra : this.listaGrade) {
-			if (gra.getIdGradeTrib().equals(this.idGrade)){
+			if (gra.getIdGradeTrib().equals(this.idGrade)) {
 				listaGradeNova.remove(gra);
 			}
 		}
@@ -206,15 +220,15 @@ public class FiguraFiscalBean {
 		}
 		return retorno;
 	}
-	
-	public void habilita(){
+
+	public void habilita() {
 		this.desc = false;
 	}
 
-	public void desabilita(){
+	public void desabilita() {
 		this.desc = true;
 	}
-	
+
 	public Boolean getDesc() {
 		return desc;
 	}

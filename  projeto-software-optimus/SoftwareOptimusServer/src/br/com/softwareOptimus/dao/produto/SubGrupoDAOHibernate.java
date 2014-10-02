@@ -8,6 +8,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import br.com.softwareOptimus.produto.Grupo;
+import br.com.softwareOptimus.produto.Produto;
 import br.com.softwareOptimus.produto.SubGrupo;
 
 public class SubGrupoDAOHibernate implements SubGrupoDAO {
@@ -126,6 +127,14 @@ public class SubGrupoDAOHibernate implements SubGrupoDAO {
 		TypedQuery<SubGrupo> subGru = this.session.createQuery(jpql, SubGrupo.class);
 		subGru.setParameter("Grupo", id);
 		return subGru.getResultList();
+	}
+
+	@Override
+	public List<Produto> verificaRemocaoSubProd(SubGrupo subGrupo) {
+		String jpql = "select p from Produto p where p.subGrupo = :subGrupo";
+		TypedQuery<Produto> prod = this.session.createQuery(jpql, Produto.class);
+		prod.setParameter("subGrupo", subGrupo);
+		return prod.getResultList();
 	}
 
 }

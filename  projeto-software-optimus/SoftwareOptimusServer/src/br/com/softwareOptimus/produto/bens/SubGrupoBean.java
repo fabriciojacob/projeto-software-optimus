@@ -128,9 +128,10 @@ public class SubGrupoBean {
 						.getCurrentInstance()
 						.addMessage(
 								null,
-								new FacesMessage(FacesMessage.SEVERITY_ERROR,
+								new FacesMessage(
+										FacesMessage.SEVERITY_ERROR,
 										"Info",
-										"Remoção não permitida! Existem Grupos vinculados a este SubGrupo. "));
+										"Remoção não permitida! Existem Grupos ou Produtos vinculados a este SubGrupo. "));
 			}
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
@@ -140,8 +141,8 @@ public class SubGrupoBean {
 									+ e.getMessage()));
 		}
 	}
-	
-	public void buscaSub(){
+
+	public void buscaSub() {
 		limpar();
 		SubGrupoRN subRN = new SubGrupoRN();
 		if (!busca.equals("") && (!filtro.equals(""))) {
@@ -154,19 +155,29 @@ public class SubGrupoBean {
 			this.listaSubGrupo = subRN.listar();
 		}
 	}
-	
-	public void remCategoria(){
+
+	public void remCategoria() {
 		try {
 			SubGrupoRN subRN = new SubGrupoRN();
-			subRN.removerCat(this.idCateg);
-			listaCategoria();
-			FacesContext
-					.getCurrentInstance()
-					.addMessage(
-							null,
-							new FacesMessage(FacesMessage.SEVERITY_INFO,
-									"Info",
-									"Categoria removida com sucesso"));
+			Integer retorno = subRN.VerificaRemCatSub(this.subGrupo,
+					this.idCateg);
+			if (retorno == 0) {
+				subRN.removerCat(this.idCateg);
+				listaCategoria();
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
+								"Categoria removida com sucesso"));
+			} else {
+				FacesContext
+						.getCurrentInstance()
+						.addMessage(
+								null,
+								new FacesMessage(
+										FacesMessage.SEVERITY_ERROR,
+										"Info",
+										"Remoção não permitida! Existem Produtos vinculados a este SubGrupo e Categoria. "));
+			}
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
@@ -175,8 +186,8 @@ public class SubGrupoBean {
 									+ e.getMessage()));
 		}
 	}
-	
-	public void editSub(){
+
+	public void editSub() {
 		SubGrupoRN subRN = new SubGrupoRN();
 		this.subGrupo = subRN.editSub(this.id);
 		listaCategoria();
@@ -186,8 +197,8 @@ public class SubGrupoBean {
 		this.rem = false;
 		this.sal = true;
 	}
-	
-	public void incluirCategoria(){
+
+	public void incluirCategoria() {
 		try {
 			SubGrupoRN subRN = new SubGrupoRN();
 			this.categoria.setIdCategoria(null);
@@ -215,8 +226,8 @@ public class SubGrupoBean {
 									+ e.getMessage()));
 		}
 	}
-	
-	public void listaCategoria(){
+
+	public void listaCategoria() {
 		try {
 			SubGrupoRN subRN = new SubGrupoRN();
 			if (this.listaCategoria != null) {
@@ -236,11 +247,10 @@ public class SubGrupoBean {
 		this.desc = false;
 	}
 
-	
 	public void desabilita() {
 		this.desc = true;
 	}
-	
+
 	public List<Categoria> getListaCategoria() {
 		return listaCategoria;
 	}
@@ -260,7 +270,7 @@ public class SubGrupoBean {
 	public Long getIdCateg() {
 		return idCateg;
 	}
-	
+
 	public void setIdCateg(Long idCateg) {
 		this.idCateg = idCateg;
 	}
@@ -268,27 +278,27 @@ public class SubGrupoBean {
 	public Long getId() {
 		return id;
 	}
-	
+
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
 	public String getBusca() {
 		return busca;
 	}
-	
+
 	public String getFiltro() {
 		return filtro;
 	}
-	
+
 	public void setBusca(String busca) {
 		this.busca = busca;
 	}
-	
+
 	public void setFiltro(String filtro) {
 		this.filtro = filtro;
 	}
-	
+
 	public boolean isVig() {
 		return vig;
 	}

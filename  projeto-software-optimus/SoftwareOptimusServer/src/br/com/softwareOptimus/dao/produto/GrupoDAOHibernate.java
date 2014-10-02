@@ -7,7 +7,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 import br.com.softwareOptimus.produto.Grupo;
+import br.com.softwareOptimus.produto.Produto;
 import br.com.softwareOptimus.produto.Setor;
+import br.com.softwareOptimus.produto.SubGrupo;
 
 public class GrupoDAOHibernate implements GrupoDAO {
 
@@ -93,9 +95,6 @@ public class GrupoDAOHibernate implements GrupoDAO {
 
 	@Override
 	public Grupo editGrupo(Long id) {
-		//String jpql = "Select g From Grupo g Where g.idGrupo = :grupo";
-		//TypedQuery<Grupo> gru = this.session.createQuery(jpql, Grupo.class);
-		//gru.setParameter("grupo", id);
 		Grupo gru = this.session.find(Grupo.class, id);
 		return gru;
 	}
@@ -106,5 +105,23 @@ public class GrupoDAOHibernate implements GrupoDAO {
 		TypedQuery<Grupo> gru = this.session.createQuery(jpql,
 				Grupo.class);
 		return gru.getResultList();
+	}
+
+	@Override
+	public List<Produto> VerificaRemGrupoProd(Grupo grupo) {
+		String jpql = "select p from Produto p where p.grupo = :grupo";
+		TypedQuery<Produto> prod = this.session.createQuery(jpql, Produto.class);
+		prod.setParameter("grupo", grupo);
+		return prod.getResultList();
+	}
+
+	@Override
+	public List<Produto> verificaRemSubGrupo(Grupo grupo, Long idSub) {
+		SubGrupo subGru = this.session.find(SubGrupo.class, idSub);		
+		String jpql = "select p from Produto p where p.grupo = :grupo and p.subGrupo = :subGru";
+		TypedQuery<Produto> prod = this.session.createQuery(jpql, Produto.class);
+		prod.setParameter("grupo", grupo);
+		prod.setParameter("subGru", subGru);
+		return prod.getResultList();
 	}
 }

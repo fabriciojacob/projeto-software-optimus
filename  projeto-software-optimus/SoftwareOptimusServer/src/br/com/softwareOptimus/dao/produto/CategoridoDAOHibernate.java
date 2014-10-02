@@ -9,6 +9,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 
 import br.com.softwareOptimus.produto.Categoria;
+import br.com.softwareOptimus.produto.Produto;
 import br.com.softwareOptimus.produto.SubGrupo;
 
 public class CategoridoDAOHibernate implements CategoriaDAO {
@@ -64,6 +65,16 @@ public class CategoridoDAOHibernate implements CategoriaDAO {
 	public void salvarCategoria(Categoria categoria) {
 		this.session.persist(categoria);
 		this.transaction.commit();
+	}
+
+	@Override
+	public List<Produto> verificaRemCat(SubGrupo subGrupo, Long idCateg) {
+		Categoria categ = this.session.find(Categoria.class, idCateg);		
+		String jpql = "select p from Produto p where p.subGrupo = :subGrupo and p.categoria = :categ";
+		TypedQuery<Produto> prod = this.session.createQuery(jpql, Produto.class);
+		prod.setParameter("subGrupo", subGrupo);
+		prod.setParameter("categ", categ);
+		return prod.getResultList();
 	}
 
 }
