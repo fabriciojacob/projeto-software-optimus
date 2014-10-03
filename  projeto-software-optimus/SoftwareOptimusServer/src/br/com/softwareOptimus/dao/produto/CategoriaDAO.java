@@ -16,6 +16,4 @@ public interface CategoriaDAO {
 	public List<Categoria> listarCatg(SubGrupo subGrupo);
 	public void salvarCategoria(Categoria categoria);
 	public List<Produto> verificaRemCat(SubGrupo subGrupo, Long idCateg);
-
-
 }

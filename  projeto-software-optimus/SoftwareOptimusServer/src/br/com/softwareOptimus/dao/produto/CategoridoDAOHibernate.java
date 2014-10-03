@@ -76,5 +76,4 @@ public class CategoridoDAOHibernate implements CategoriaDAO {
 		prod.setParameter("categ", categ);
 		return prod.getResultList();
 	}
-
 }
