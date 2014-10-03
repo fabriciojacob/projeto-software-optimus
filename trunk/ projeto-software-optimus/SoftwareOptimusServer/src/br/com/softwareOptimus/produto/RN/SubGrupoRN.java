@@ -105,4 +105,7 @@ public class SubGrupoRN {
 		}
 	}
 
+	public List<SubGrupo> listaSubGrupoVincGrupo(Grupo grupo) {
+		return this.subGrupoDAO.listaSubGrupoVincGrupo(grupo);
+	}
 }

@@ -124,4 +124,12 @@ public class GrupoDAOHibernate implements GrupoDAO {
 		prod.setParameter("subGru", subGru);
 		return prod.getResultList();
 	}
+
+	@Override
+	public List<Grupo> listaGrupoVincSet(Setor setor) {
+		String jpql = "Select Distinct g From Setor s, IN(s.grupo) AS g Where s = :setor";
+		TypedQuery<Grupo> gru = this.session.createQuery(jpql, Grupo.class);
+		gru.setParameter("setor", setor);
+		return gru.getResultList();
+	}
 }

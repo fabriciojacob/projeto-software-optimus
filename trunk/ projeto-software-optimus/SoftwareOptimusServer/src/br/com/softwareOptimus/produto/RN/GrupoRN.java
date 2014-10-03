@@ -75,4 +75,8 @@ public class GrupoRN {
 			return 1;
 		}
 	}
+
+	public List<Grupo> listaGrupoVincSet(Setor setor) {
+		return this.grupoDAO.listaGrupoVincSet(setor);
+	}
 }
