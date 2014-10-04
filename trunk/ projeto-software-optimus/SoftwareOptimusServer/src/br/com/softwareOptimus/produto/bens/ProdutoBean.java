@@ -33,16 +33,21 @@ public class ProdutoBean {
 	private List<Setor> listaSetor = new ArrayList<Setor>();
 	private List<Grupo> listaGrupo = new ArrayList<Grupo>();
 	private List<SubGrupo> listaSubGrupo = new ArrayList<SubGrupo>();
+	private List<Produto> listaProduto = new ArrayList<Produto>();
 	private List<Categoria> listaCategoria = new ArrayList<Categoria>();
 	private FiguraFiscalRN figRN = new FiguraFiscalRN();
 	private UnidMedRN unidRN = new UnidMedRN();
 	private SubGrupoRN subRN = new SubGrupoRN();
 	private GrupoRN gruRN = new GrupoRN();
 	private SetorRN setRN = new SetorRN();
+	private String busca, filtro;
+	private Long id;
 	private TipoProdutoRN tipRN = new TipoProdutoRN();
-	private boolean sal = true, alt = true, rem = true;
-	
-	public ProdutoBean(){
+	private boolean sal = true, alt = true, rem = true, sta = true,
+			desc = true, codBarra = true, fig = true, unid = true,
+			tipoProd = true, set = true, gru = true, subGru = true, categ = true;
+
+	public ProdutoBean() {
 		setListaUnidade(this.unidRN.lista());
 		setListaTipo(this.tipRN.listarTipoVig());
 		setListaFigura(this.figRN.listar());
@@ -66,45 +71,203 @@ public class ProdutoBean {
 		}
 
 	}
+
+	public void novo() {
+		this.sal = false;
+		this.alt = true;
+		this.rem = true;
+		limpar();
+		habilita();
+		setListaUnidade(this.unidRN.lista());
+		setListaTipo(this.tipRN.listarTipoVig());
+		setListaFigura(this.figRN.listar());
+		setListaSetor(this.setRN.listar());
+	}
+
+	public void alterar() {
+
+	}
+
+	public void remover() {
+
+	}
 	
-	public void novo(){
+	public void buscarProd(){
 		
 	}
 	
-	public void alterar(){
+	public void editProduto(){
 		
 	}
-	
-	public void remover(){
-		
+
+	public void cancelar() {
+		this.sal = true;
+		this.alt = true;
+		this.rem = true;
+		limpar();
+		desabilita();
 	}
-	
-	public void cancelar(){
-		
+
+	public void limpar() {
+		this.produto = new Produto();
+		this.listaFigura = new ArrayList<FiguraFiscal>();
+		this.listaUnidade = new ArrayList<UnidMed>();
+		this.listaTipo = new ArrayList<TipoProduto>();
+		this.listaSetor = new ArrayList<Setor>();
+		this.listaGrupo = new ArrayList<Grupo>();
+		this.listaSubGrupo = new ArrayList<SubGrupo>();
+		this.listaCategoria = new ArrayList<Categoria>();
 	}
-	
-	public void limpar(){
-		
+
+	public void habilita() {
+		this.sta = false;
+		this.desc = false;
+		this.codBarra = false;
+		this.fig = false;
+		this.unid = false;
+		this.tipoProd = false;
+		this.set = false;
+		this.gru = false;
+		this.subGru = false;
+		this.categ = false;
 	}
-	
-	public void habilita(){
-		
+
+	public void desabilita() {
+		this.sta = true;
+		this.desc = true;
+		this.codBarra = true;
+		this.fig = true;
+		this.unid = true;
+		this.tipoProd = true;
+		this.set = true;
+		this.gru = true;
+		this.subGru = true;
+		this.categ = true;
 	}
-	
-	public void desabilita(){
-		
-	}
-	
-	public void filtraGrupo(){
+
+	public void filtraGrupo() {
 		setListaGrupo(this.gruRN.listaGrupoVincSet(this.produto.getSetor()));
 	}
-	
-	public void filtraSubGrupo(){
-		setListaSubGrupo(this.subRN.listaSubGrupoVincGrupo(this.produto.getGrupo()));
+
+	public void filtraSubGrupo() {
+		setListaSubGrupo(this.subRN.listaSubGrupoVincGrupo(this.produto
+				.getGrupo()));
 	}
-	
-	public void filtraCategoria(){
-		setListaCategoria(this.subRN.listarCatg(this.produto.getSubGrupo()));		
+
+	public void filtraCategoria() {
+		setListaCategoria(this.subRN.listarCatg(this.produto.getSubGrupo()));
+	}
+
+	public List<Produto> getListaProduto() {
+		return listaProduto;
+	}
+
+	public void setListaProduto(List<Produto> listaProduto) {
+		this.listaProduto = listaProduto;
+	}
+
+	public String getBusca() {
+		return busca;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void setBusca(String busca) {
+		this.busca = busca;
+	}
+
+	public String getFiltro() {
+		return filtro;
+	}
+
+	public void setFiltro(String filtro) {
+		this.filtro = filtro;
+	}
+
+	public boolean isSta() {
+		return sta;
+	}
+
+	public void setSta(boolean sta) {
+		this.sta = sta;
+	}
+
+	public boolean isDesc() {
+		return desc;
+	}
+
+	public void setDesc(boolean desc) {
+		this.desc = desc;
+	}
+
+	public boolean isCodBarra() {
+		return codBarra;
+	}
+
+	public void setCodBarra(boolean codBarra) {
+		this.codBarra = codBarra;
+	}
+
+	public boolean isFig() {
+		return fig;
+	}
+
+	public void setFig(boolean fig) {
+		this.fig = fig;
+	}
+
+	public boolean isUnid() {
+		return unid;
+	}
+
+	public void setUnid(boolean unid) {
+		this.unid = unid;
+	}
+
+	public boolean isTipoProd() {
+		return tipoProd;
+	}
+
+	public void setTipoProd(boolean tipoProd) {
+		this.tipoProd = tipoProd;
+	}
+
+	public boolean isSet() {
+		return set;
+	}
+
+	public void setSet(boolean set) {
+		this.set = set;
+	}
+
+	public boolean isGru() {
+		return gru;
+	}
+
+	public void setGru(boolean gru) {
+		this.gru = gru;
+	}
+
+	public boolean isSubGru() {
+		return subGru;
+	}
+
+	public void setSubGru(boolean subGru) {
+		this.subGru = subGru;
+	}
+
+	public boolean isCateg() {
+		return categ;
+	}
+
+	public void setCateg(boolean categ) {
+		this.categ = categ;
 	}
 
 	public List<Setor> getListaSetor() {
@@ -142,19 +305,19 @@ public class ProdutoBean {
 	public List<TipoProduto> getListaTipo() {
 		return listaTipo;
 	}
-	
+
 	public List<UnidMed> getListaUnidade() {
 		return listaUnidade;
 	}
-	
+
 	public void setListaTipo(List<TipoProduto> listaTipo) {
 		this.listaTipo = listaTipo;
 	}
-	
+
 	public void setListaUnidade(List<UnidMed> listaUnidade) {
 		this.listaUnidade = listaUnidade;
 	}
-	
+
 	public boolean isSal() {
 		return sal;
 	}
@@ -178,7 +341,7 @@ public class ProdutoBean {
 	public void setRem(boolean rem) {
 		this.rem = rem;
 	}
-	
+
 	public List<FiguraFiscal> getListaFigura() {
 		return listaFigura;
 	}
@@ -186,7 +349,7 @@ public class ProdutoBean {
 	public void setListaFigura(List<FiguraFiscal> listaFigura) {
 		this.listaFigura = listaFigura;
 	}
-	
+
 	public Produto getProduto() {
 		return produto;
 	}
@@ -194,6 +357,5 @@ public class ProdutoBean {
 	public void setProduto(Produto produto) {
 		this.produto = produto;
 	}
-
 
 }
