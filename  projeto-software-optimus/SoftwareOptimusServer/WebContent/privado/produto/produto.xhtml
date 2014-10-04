@@ -31,7 +31,7 @@
 				actionListener="#{produtoBean.remover}" ajax="grid" />
 
 			<p:commandButton id="consulta" value="Consultar" type="button"
-				ajax="dialog, grid" onclick="PF('dlg1').show();"
+				ajax="dialog, grid" onclick="PF('dlg3').show();"
 				actionListener="#{produtoBean.cancelar}" />
 
 			<p:commandButton id="cancelar" value="Cancelar"
@@ -40,13 +40,62 @@
 			<p:messages id="messages" showDetail="true" autoUpdate="true"
 				closable="true" />
 
+			<p:dialog id="dialog" header="Consulta" widgetVar="dlg3" modal="true"
+				height="300" width="650">
+
+				<div align="right">
+					<h:panelGrid columns="1">
+						<p:commandButton value="Pesquisar"
+							actionListener="#{produtoBean.buscarProd}" update="gridData">
+						</p:commandButton>
+					</h:panelGrid>
+				</div>
+				<h:panelGrid columns="3" columnClasses="label" cellspacing="3">
+
+					<p:inputText id="texto" value="#{produtoBean.busca}" size="40" />
+
+					<p:selectOneMenu id="fConsult" value="#{produtoBean.filtro}">
+						<f:selectItem itemLabel="Selecione uma Opção" />
+						<f:selectItem itemLabel="Código" itemValue="id" />
+						<f:selectItem itemLabel="Descrição" itemValue="desc" />
+					</p:selectOneMenu>
+
+				</h:panelGrid>
+				<h:panelGrid id="gridData" columns="1" columnClasses="label, value">
+					<p:blockUI block="gridData" trigger="consulta" />
+					<p:dataTable id="data" value="#{produtoBean.listaProduto}"
+						paginator="true" rows="6" var="produto" rowKey="produto.idPorduto">
+						<p:column headerText="Código do Produto">
+							<h:outputText value="#{produto.idProduto}" />
+						</p:column>
+
+						<p:column headerText="Descrição">
+							<h:outputText value="#{produto.descProd}" />
+						</p:column>
+
+						<p:column headerText="Selecionar">
+							<p:commandLink id="link" value="Editar" ajax="data, cadProduto, cadSetor"
+								action="#{produtoBean.editProduto}">
+								<f:setPropertyActionListener value="#{produto.idProduto}"
+									target="#{produtoBean.id}" />
+							</p:commandLink>
+						</p:column>
+					</p:dataTable>
+					<p:blockUI block="data" trigger="data">
+        				LOADING<br />
+						<p:graphicImage name="ajaxloader.gif" />
+					</p:blockUI>
+				</h:panelGrid>
+
+			</p:dialog>
+
 			<p:tabView style="border: 0px">
 				<p:tab id="cadProduto" title="Dados Básicos">
 
 					<h:panelGrid columns="2" columnClasses="label">
 				
 					Inativa:
-					<p:selectBooleanCheckbox id="inativaProd"
+					<p:selectBooleanCheckbox id="inativaProd" disabled="#{produtoBean.sta}"
 							value="#{produtoBean.produto.status}" />
 					
 					Código do Produto:
@@ -54,15 +103,15 @@
 							value="#{produtoBean.produto.idProduto}" />
 		
 					Descrição do Produto:
-					<p:inputText id="descProd" value="#{produtoBean.produto.descProd}"
+					<p:inputText id="descProd" value="#{produtoBean.produto.descProd}" disabled="#{produtoBean.desc}"
 							size="40" />
 					
 					Código de Barra:
-					<p:inputText id="codBarra" value="#{produtoBean.produto.codBarra}"
+					<p:inputText id="codBarra" value="#{produtoBean.produto.codBarra}" disabled="#{produtoBean.codBarra}"
 							size="40" />
 			
 					Figura:
-					<p:selectOneMenu id="figura" value="#{produtoBean.produto.figura}"
+					<p:selectOneMenu id="figura" value="#{produtoBean.produto.figura}" disabled="#{produtoBean.fig}"
 							style="width:265px;">
 							<f:selectItem itemLabel="Selecione uma Figura" />
 							<f:selectItems value="#{produtoBean.listaFigura}" var="listaFig"
@@ -71,7 +120,7 @@
 						</p:selectOneMenu>
 				
 					Unidade de Medida:
-					<p:selectOneMenu id="unidMed"
+					<p:selectOneMenu id="unidMed" disabled="#{produtoBean.unid}"
 							value="#{produtoBean.produto.unidMed}" style="width:265px;">
 							<f:selectItem itemLabel="Selecione uma Unidade de Medida" />
 							<f:selectItems value="#{produtoBean.listaUnidade}"
@@ -80,7 +129,7 @@
 						</p:selectOneMenu>
 				
 					Tipo de Produto:
-					<p:selectOneMenu id="tipoProduto"
+					<p:selectOneMenu id="tipoProduto" disabled="#{produtoBean.tipoProd}"
 							value="#{produtoBean.produto.tipoProd}" style="width:265px;">
 							<f:selectItem itemLabel="Selecione um Tipo de Produto" />
 							<f:selectItems value="#{produtoBean.listaTipo}" var="listaTip"
@@ -99,7 +148,7 @@
 				<p:tab id="cadSetor" title="Setorização">
 					<h:panelGrid columns="2" columnClasses="label">
 				 Setor:
-					<p:selectOneMenu id="setor" value="#{produtoBean.produto.setor}"
+					<p:selectOneMenu id="setor" value="#{produtoBean.produto.setor}" disabled="#{produtoBean.set}"
 							style="width:265px;">
 							<f:selectItem itemLabel="Selecione um Setor" />
 							<f:selectItems value="#{produtoBean.listaSetor}" var="listaSetor"
@@ -110,7 +159,7 @@
 						</p:selectOneMenu>
 					
 				 Grupo:
-					<p:selectOneMenu id="grupo" value="#{produtoBean.produto.grupo}"
+					<p:selectOneMenu id="grupo" value="#{produtoBean.produto.grupo}" disabled="#{produtoBean.gru}"
 							style="width:265px;">
 							<f:selectItem itemLabel="Selecione um Grupo" />
 							<f:selectItems value="#{produtoBean.listaGrupo}" var="listaGrupo"
@@ -121,7 +170,7 @@
 						</p:selectOneMenu>
 					
 				 SubGrupo:
-					<p:selectOneMenu id="subGrupo"
+					<p:selectOneMenu id="subGrupo" disabled="#{produtoBean.subGru}"
 							value="#{produtoBean.produto.subGrupo}" style="width:265px;">
 							<f:selectItem itemLabel="Selecione um SubGrupo" />
 							<f:selectItems value="#{produtoBean.listaSubGrupo}"
@@ -132,7 +181,7 @@
 						</p:selectOneMenu>
 
 				 Categoria:
-					<p:selectOneMenu id="categoria"
+					<p:selectOneMenu id="categoria" disabled="#{produtoBean.categ}"
 							value="#{produtoBean.produto.categoria}" style="width:265px;">
 							<f:selectItem itemLabel="Selecione uma Categoria" />
 							<f:selectItems value="#{produtoBean.listaCategoria}"
@@ -147,8 +196,6 @@
 							
 					</h:panelGrid>
 				</p:tab>
-
-
 			</p:tabView>
 		</div>
 	</h:form>
