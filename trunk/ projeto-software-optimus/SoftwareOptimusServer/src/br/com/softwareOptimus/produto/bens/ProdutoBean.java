@@ -56,20 +56,34 @@ public class ProdutoBean {
 
 	public void salvar() {
 		try {
-			ProdutoRN produtoRN = new ProdutoRN();
-			produtoRN.salvar(produto);
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-							"Produto salvo com sucesso"));
+			ProdutoRN proRN = new ProdutoRN();
+			this.produto.setIdProduto(null);
+			Integer retorno = proRN.validaCampoNulo(this.produto);
+			if (retorno == 0) {
+				proRN.salvar(this.produto);
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
+								"Produto salvo com sucesso"));
+				this.sal = true;
+				this.alt = true;
+				this.rem = true;
+				limpar();
+				desabilita();
+			} else {
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+								"Existem campos nulos no formulário"));
+			}
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na gravacao do produto "
-									+ e.getMessage()));
+			FacesContext.getCurrentInstance()
+					.addMessage(
+							null,
+							new FacesMessage(FacesMessage.SEVERITY_ERROR,
+									"Info", "Problemas na gravacao do Produto "
+											+ e.getMessage()));
 		}
-
 	}
 
 	public void novo() {
@@ -78,26 +92,94 @@ public class ProdutoBean {
 		this.rem = true;
 		limpar();
 		habilita();
-		setListaUnidade(this.unidRN.lista());
-		setListaTipo(this.tipRN.listarTipoVig());
-		setListaFigura(this.figRN.listar());
-		setListaSetor(this.setRN.listar());
 	}
 
 	public void alterar() {
-
+		try {
+			ProdutoRN prodRN = new ProdutoRN();
+			Integer retorno = prodRN.validaCampoNulo(this.produto);
+			if (retorno == 0) {
+				prodRN.altPro(this.produto);
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
+								"Produto alterado com sucesso"));
+				this.alt = true;
+				this.rem = true;
+				this.sal = true;
+				limpar();
+				desabilita();
+			} else {
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+								"Existem campos nulos no formulário"));
+			}
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance()
+					.addMessage(
+							null,
+							new FacesMessage(FacesMessage.SEVERITY_ERROR,
+									"Info", "Problemas na alteração do Produto "
+											+ e.getMessage()));
+		}
 	}
 
 	public void remover() {
-
+		try {
+			ProdutoRN proRN = new ProdutoRN();
+			Integer retorno = proRN.verificaRemocao(this.produto);
+			if (retorno == 0) {
+				proRN.remover(this.produto);
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
+								"Produto removido com sucesso"));
+				this.alt = true;
+				this.rem = true;
+				limpar();
+				desabilita();
+			} else {
+				FacesContext
+						.getCurrentInstance()
+						.addMessage(
+								null,
+								new FacesMessage(FacesMessage.SEVERITY_ERROR,
+										"Info",
+										"Remoção não permitida! Existem Registros vinculados a este Produto. "));
+			}
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+							"Problemas na remoção do Produto " + e.getMessage()));
+		}
 	}
 	
 	public void buscarProd(){
-		
+		limpar();
+		ProdutoRN proRN = new ProdutoRN();
+		if (!busca.equals("") && (!filtro.equals(""))) {
+			if (filtro.equals("id")) {
+				this.listaProduto = proRN.consultaId(Long.parseLong(busca));
+			} else if (filtro.equals("desc")) {
+				this.listaProduto = proRN.consultaDesc(busca);
+			}
+		} else {
+			this.listaProduto = proRN.listar();
+		}
 	}
 	
 	public void editProduto(){
-		
+		ProdutoRN proRN = new ProdutoRN();
+		this.produto = proRN.editPro(this.id);
+		filtraGrupo();
+		filtraSubGrupo();
+		filtraCategoria();
+		habilita();
+		this.alt = false;
+		this.rem = false;
+		this.sal = true;	
 	}
 
 	public void cancelar() {
@@ -111,12 +193,17 @@ public class ProdutoBean {
 	public void limpar() {
 		this.produto = new Produto();
 		this.listaFigura = new ArrayList<FiguraFiscal>();
+		this.listaProduto = new ArrayList<Produto>();
 		this.listaUnidade = new ArrayList<UnidMed>();
 		this.listaTipo = new ArrayList<TipoProduto>();
 		this.listaSetor = new ArrayList<Setor>();
 		this.listaGrupo = new ArrayList<Grupo>();
 		this.listaSubGrupo = new ArrayList<SubGrupo>();
 		this.listaCategoria = new ArrayList<Categoria>();
+		setListaUnidade(this.unidRN.lista());
+		setListaTipo(this.tipRN.listarTipoVig());
+		setListaFigura(this.figRN.listar());
+		setListaSetor(this.setRN.listar());
 	}
 
 	public void habilita() {
@@ -147,6 +234,8 @@ public class ProdutoBean {
 
 	public void filtraGrupo() {
 		setListaGrupo(this.gruRN.listaGrupoVincSet(this.produto.getSetor()));
+		this.listaSubGrupo = new ArrayList<SubGrupo>();
+		this.listaCategoria = new ArrayList<Categoria>();
 	}
 
 	public void filtraSubGrupo() {

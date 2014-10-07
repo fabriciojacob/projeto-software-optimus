@@ -28,7 +28,7 @@
 
 			<p:commandButton id="delete" value="Excluir"
 				disabled="#{produtoBean.rem}"
-				actionListener="#{produtoBean.remover}" ajax="grid" />
+				actionListener="#{produtoBean.remover}" ajax="grid, dialog" />
 
 			<p:commandButton id="consulta" value="Consultar" type="button"
 				ajax="dialog, grid" onclick="PF('dlg3').show();"
@@ -154,7 +154,7 @@
 							<f:selectItems value="#{produtoBean.listaSetor}" var="listaSetor"
 								itemValue="#{listaSetor}"
 								itemLabel="#{listaSetor.idSetor} - #{listaSetor.descricao}" />
-							<p:ajax update="grupo" event="change"
+							<p:ajax update="grupo, subGrupo, categoria" event="change"
 								listener="#{produtoBean.filtraGrupo}" />
 						</p:selectOneMenu>
 					
