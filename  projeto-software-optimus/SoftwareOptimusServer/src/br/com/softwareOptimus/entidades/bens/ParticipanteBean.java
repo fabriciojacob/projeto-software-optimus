@@ -76,7 +76,7 @@ public class ParticipanteBean {
 			}
 
 		} else {
-			msgErro("Existem campos ", null);
+			msgNull("Existem campos ");
 		}
 	}
 
@@ -253,6 +253,12 @@ public class ParticipanteBean {
 				null,
 				new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info", msg
 						+ e.getMessage()));
+	}
+	
+	public void msgNull(String msg) {
+		FacesContext.getCurrentInstance().addMessage(
+				null,
+				new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info", msg));
 	}
 
 	public void editar() {
