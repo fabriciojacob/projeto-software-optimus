@@ -72,8 +72,16 @@
 				Saldo titulo:
 				<p:inputText />
 				
+				<p:selectOneRadio id="tipoTitulo"
+						value="#{tituloBens.tipo}">
+						<f:selectItem itemLabel="PAGAR" itemValue="PAGAR" />
+						<f:selectItem itemLabel="RECEBER" itemValue="RECEBER" />
+					</p:selectOneRadio>
+				
 					<h:panelGrid columns="2">
-						<p:commandButton id="btSalvar" value="Salvar"/>
+						<p:commandButton id="btSalvar" value="Salvar" 
+						actionListener="#{tituloBens.salvarTitulo(condPgtoBens.condPgto,formaPgtoBens.formaPgto)}"
+						 update="frmTitulo"/>
 					</h:panelGrid>
 				</h:panelGrid>
 			</p:dialog>

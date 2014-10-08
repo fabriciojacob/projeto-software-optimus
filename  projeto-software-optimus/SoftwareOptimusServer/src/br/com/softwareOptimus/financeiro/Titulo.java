@@ -1,8 +1,8 @@
 package br.com.softwareOptimus.financeiro;
 
 import java.io.Serializable;
-import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -11,7 +11,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
 import br.com.softwareOptimus.entidades.Pessoa;
 
 @Entity
@@ -29,8 +28,8 @@ public class Titulo implements Serializable{
 	
 	private String descricao;
 	
-	@ManyToMany
-	private Collection<FormaPgto> formaPgto;
+	@ManyToOne
+	private FormaPgto formaPgto;
 	
 	@ManyToOne
 	private CondPgto condPgto;
@@ -42,13 +41,13 @@ public class Titulo implements Serializable{
 	private TipoTitulo tipoTitulo;
 	
 	@Temporal(TemporalType.DATE)
-	private Calendar dataLancamento;
+	private Date dataLancamento;
 	
 	@Temporal(TemporalType.DATE)
-	private Calendar vencimento;
+	private Date vencimento;
 	
 	@Temporal(TemporalType.DATE)
-	private Calendar dataPagamento;
+	private Date dataPagamento;
 	
 	private StatusConta status;
 	
@@ -92,14 +91,6 @@ public class Titulo implements Serializable{
 		this.tipoBaixa = tipoBaixa;
 	}
 	
-	public Calendar getVencimento() {
-		return vencimento;
-	}
-	
-	public void setVencimento(Calendar vencimento) {
-		this.vencimento = vencimento;
-	}
-	
 	public Conta getConta() {
 		return conta;
 	}
@@ -132,11 +123,11 @@ public class Titulo implements Serializable{
 		this.descricao = descricao;
 	}
 
-	public Collection<FormaPgto> getFormaPgto() {
+	public FormaPgto getFormaPgto() {
 		return formaPgto;
 	}
 
-	public void setFormaPgto(Collection<FormaPgto> formaPgto) {
+	public void setFormaPgto(FormaPgto formaPgto) {
 		this.formaPgto = formaPgto;
 	}
 
@@ -162,22 +153,6 @@ public class Titulo implements Serializable{
 
 	public void setSaldo(Double saldo) {
 		this.saldo = saldo;
-	}
-
-	public Calendar getDataLancamento() {
-		return dataLancamento;
-	}
-
-	public void setDataLancamento(Calendar dataLancamento) {
-		this.dataLancamento = dataLancamento;
-	}
-
-	public Calendar getDataPagamento() {
-		return dataPagamento;
-	}
-
-	public void setDataPagamento(Calendar dataPagamento) {
-		this.dataPagamento = dataPagamento;
 	}
 
 	public Pessoa getPessoa() {
@@ -206,6 +181,30 @@ public class Titulo implements Serializable{
 	
 	public void setTipoTitulo(TipoTitulo tipoTitulo) {
 		this.tipoTitulo = tipoTitulo;
+	}	
+
+	public Date getDataLancamento() {
+		return dataLancamento;
+	}
+
+	public void setDataLancamento(Date dataLancamento) {
+		this.dataLancamento = dataLancamento;
+	}
+
+	public Date getVencimento() {
+		return vencimento;
+	}
+
+	public void setVencimento(Date vencimento) {
+		this.vencimento = vencimento;
+	}
+
+	public Date getDataPagamento() {
+		return dataPagamento;
+	}
+
+	public void setDataPagamento(Date dataPagamento) {
+		this.dataPagamento = dataPagamento;
 	}
 
 	@Override

@@ -9,6 +9,9 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import br.com.softwareOptimus.entidades.Pessoa;
+import br.com.softwareOptimus.financeiro.CondPgto;
+import br.com.softwareOptimus.financeiro.FormaPgto;
+import br.com.softwareOptimus.financeiro.TipoTitulo;
 import br.com.softwareOptimus.financeiro.Titulo;
 import br.com.softwareOptimus.financeiro.RN.TituloRN;
 
@@ -17,7 +20,7 @@ import br.com.softwareOptimus.financeiro.RN.TituloRN;
 public class TituloBens {
 
 	private Titulo titulo = new Titulo();
-	private String nomePesquisa;
+	private String nomePesquisa, tipo;
 	private Long empresaSelecionada, participanteSelecionado;
 	private List<Pessoa> participantes = new ArrayList<>();
 	private TituloRN regraNegocio = new TituloRN();
@@ -48,8 +51,15 @@ public class TituloBens {
 
 	}
 
-	public void salvarTitulo() {
+	public void salvarTitulo(CondPgto condPgto, FormaPgto formaPgto) {
 		this.regraNegocio = new TituloRN();
+		titulo.setCondPgto(condPgto);
+		titulo.setFormaPgto(formaPgto);
+		if(tipo.equals("PAGAR")){
+			titulo.setTipoTitulo(TipoTitulo.PAGAR);
+		}else{
+			titulo.setTipoTitulo(TipoTitulo.RECEBER);
+		}
 		try {
 			this.regraNegocio.salvar(titulo);
 			msgAcerto("Registro salvo com sucesso ");
@@ -154,4 +164,13 @@ public class TituloBens {
 	public void setEmpresa(Pessoa empresa) {
 		this.empresa = empresa;
 	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
 }
