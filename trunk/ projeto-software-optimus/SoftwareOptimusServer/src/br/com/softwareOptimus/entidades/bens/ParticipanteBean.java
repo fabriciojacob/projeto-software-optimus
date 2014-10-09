@@ -109,7 +109,7 @@ public class ParticipanteBean {
 				this.email = false;
 				this.telefone = false;
 			} else {
-				msgErro("Existem campos nÃ£o preenchidos", null);
+				msgErro("Existem campos não preenchidos", null);
 			}
 		} catch (Exception e) {
 			msgErro("Problemas ao salvar", e);
@@ -147,7 +147,7 @@ public class ParticipanteBean {
 			listaLogradouro();
 			this.logradouro = new Logradouro();
 		} catch (Exception e) {
-			msgErro("Problemas na gravacao do endereco", e);
+			msgErro("Problemas na gravacao do endereço", e);
 		}
 	}
 
@@ -268,7 +268,7 @@ public class ParticipanteBean {
 			this.tipoParticipante = this.pessoaFisica.getNaturezaPessoa()
 					.toString();
 		} catch (Exception e) {
-			msgErro("Problemas na ediÃ§Ã£o", e);
+			msgErro("Problemas na edição", e);
 		}
 		listaLogradouro();
 		listaEmail();
@@ -306,7 +306,7 @@ public class ParticipanteBean {
 			msgAcerto("Logradouro excluido com sucesso");
 			listaLogradouro();
 		} catch (Exception e) {
-			msgErro("Problemas na exclusao do logradouro", e);
+			msgErro("Problemas na exclusão do logradouro", e);
 		}
 	}
 
@@ -333,7 +333,7 @@ public class ParticipanteBean {
 			msgAcerto("Email excluido com sucesso");
 			listaEmail();
 		} catch (Exception e) {
-			msgErro("Problemas na exclusao do email", e);
+			msgErro("Problemas na exclusão do email", e);
 		}
 	}
 
@@ -352,7 +352,7 @@ public class ParticipanteBean {
 			}
 
 			if (padraoNFE && checkNFe == 1) {
-				msgErro("Ja existe um email como padrï¿½o NFE", null);
+				msgErro("Ja existe um email como padrão NFE", null);
 			} else {
 				try {
 					if (this.pessoaFisica.getIdPessoa() == 0) {
@@ -375,7 +375,7 @@ public class ParticipanteBean {
 			}
 			listaEmail();
 		} catch (Exception e) {
-			msgErro("Problemas na exclusao do email", e);
+			msgErro("Problemas na exclusão do email", e);
 		}
 	}
 
