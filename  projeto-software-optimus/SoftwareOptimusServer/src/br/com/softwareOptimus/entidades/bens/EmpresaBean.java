@@ -314,7 +314,7 @@ public class EmpresaBean {
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-								"Existem campos nulos no formulï¿½rio"));
+								"Existem campos nulos no formulário"));
 			}
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
@@ -347,14 +347,14 @@ public class EmpresaBean {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-							"EndereÃ§o salvo com sucesso"));
+							"Endereço salvo com sucesso"));
 			listaLogradouro();
 			this.logradouro = new Logradouro();
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na gravacao do endereÃ§o "
+							"Problemas na gravacao do endereço "
 									+ e.getMessage()));
 		}
 	}
@@ -442,7 +442,7 @@ public class EmpresaBean {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na verificaï¿½ï¿½o do regime"
+							"Problemas na verificação do regime"
 									+ e.getMessage()));
 			retorno = 1;
 		}
@@ -517,7 +517,7 @@ public class EmpresaBean {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na exclusï¿½o do regime"
+							"Problemas na exclusão do regime"
 									+ e.getMessage()));
 		}
 	}
@@ -535,7 +535,7 @@ public class EmpresaBean {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na exclusï¿½o do logradouro"
+							"Problemas na exclusão do logradouro"
 									+ e.getMessage()));
 		}
 	}
@@ -571,7 +571,7 @@ public class EmpresaBean {
 					.addMessage(
 							null,
 							new FacesMessage(FacesMessage.SEVERITY_ERROR,
-									"Info", "Problemas na exclusï¿½o do email"
+									"Info", "Problemas na exclusão do email"
 											+ e.getMessage()));
 		}
 	}
@@ -606,7 +606,7 @@ public class EmpresaBean {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na exclusao do email" + e.getMessage()));
+							"Problemas na exclusão do email" + e.getMessage()));
 		}
 	}
 
@@ -623,7 +623,7 @@ public class EmpresaBean {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na exclusao do telefone"
+							"Problemas na exclusão do telefone"
 									+ e.getMessage()));
 		}
 	}
