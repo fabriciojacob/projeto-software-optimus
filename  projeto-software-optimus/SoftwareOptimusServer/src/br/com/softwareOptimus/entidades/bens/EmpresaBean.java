@@ -647,9 +647,11 @@ public class EmpresaBean {
 
 	public void salvarTelefone() {
 		TelefoneRN telefoneRN = new TelefoneRN();
-
+		String celular = "9";
 		if (tipoSelecionadoTel.equals(TipoTelefone.CELULAR.toString())) {
 			this.tel.setTipoFone(TipoTelefone.CELULAR);
+			celular = celular + tel.getNumero();
+			tel.setNumero(Integer.parseInt(celular));
 		} else if (tipoSelecionadoTel.equals(TipoTelefone.COMERCIAL.toString())) {
 			this.tel.setTipoFone(TipoTelefone.COMERCIAL);
 		} else {
