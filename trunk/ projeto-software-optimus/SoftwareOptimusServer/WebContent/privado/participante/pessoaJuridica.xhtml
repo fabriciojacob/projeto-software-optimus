@@ -320,7 +320,7 @@
 						height="100" width="400">
 						<h:panelGrid columns="2">
 						Telefone:
-						<p:inputMask id="numero" value="#{participanteBean.tel.numero}" size="50"
+						<p:inputMask id="numTel" value="#{participanteBean.tel.numero}" size="50"
 								mask="99999999" />
 						
 						Tipo telefone:
@@ -337,7 +337,7 @@
 								actionListener="#{participanteBean.salvarTelefone}"
 								update="listaTelefone" />
 
-							<p:tooltip id="toolTipTel" for="numero"
+							<p:tooltip id="toolTipTel" for="numTel"
 								value="Mascara 99999999" showEffect="clip"
 								hideEffect="explode" />
 
