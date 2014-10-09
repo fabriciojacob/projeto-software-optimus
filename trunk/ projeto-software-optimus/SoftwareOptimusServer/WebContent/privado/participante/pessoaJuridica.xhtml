@@ -90,7 +90,7 @@
 
 			<p:tabView style="border: 0px">
 				<p:tab id="cadEmpresa" title="Informações Gerais">
-				
+
 					<p:selectOneRadio id="tipoParticipante"
 						value="#{participanteBean.tipoParticipante}">
 						<f:selectItem itemLabel="CLIENTE" itemValue="CLIENTE" />
@@ -99,7 +99,7 @@
 							itemValue="TRANSPORTADORA" />
 						<f:selectItem itemLabel="CONTADOR" itemValue="CONTADOR" />
 					</p:selectOneRadio>
-					
+
 					<h:panelGrid id="cadastroEmpresa" columns="2"
 						columnClasses="label, value">
 						
@@ -109,23 +109,22 @@
 			
 					Codigo:
 					<p:inputText id="idEmpresa" disabled="true"
-							value="#{participanteBean.pessoaJuridica.idPessoa}"/>
+							value="#{participanteBean.pessoaJuridica.idPessoa}" />
 		
 					Nome Fantasia:
 					<p:inputText id="nomeFantasia"
-							value="#{participanteBean.pessoaJuridica.fantasia}" size="40"/>
+							value="#{participanteBean.pessoaJuridica.fantasia}" size="40" />
 					
 					Razão Social:
 					<p:inputText id="razaoSocial"
-							value="#{participanteBean.pessoaJuridica.razaoSocial}" size="40"/>
+							value="#{participanteBean.pessoaJuridica.razaoSocial}" size="40" />
 			
 					CNPJ:
 					<p:inputText id="cnpj"
 							value="#{participanteBean.pessoaJuridica.cnpj}" />
 					
 					Inscrição estadual:
-					<p:inputText id="ie" value="#{participanteBean.pessoaJuridica.ie}"
-							/>
+					<p:inputText id="ie" value="#{participanteBean.pessoaJuridica.ie}" />
 					
 					CNAE:
 					<p:inputText id="cnae"
@@ -321,7 +320,8 @@
 						height="100" width="400">
 						<h:panelGrid columns="2">
 						Telefone:
-						<p:inputMask value="#{participanteBean.tel.numero}" size="50" mask="99999999"/>
+						<p:inputMask id="numero" value="#{participanteBean.tel.numero}" size="50"
+								mask="99999999" />
 						
 						Tipo telefone:
 						<p:selectOneMenu id="tipoTelefone"
@@ -336,6 +336,10 @@
 								disabled="#{participanteBean.telefone}"
 								actionListener="#{participanteBean.salvarTelefone}"
 								update="listaTelefone" />
+
+							<p:tooltip id="toolTipTel" for="numero"
+								value="Mascara 99999999" showEffect="clip"
+								hideEffect="explode" />
 
 						</h:panelGrid>
 
