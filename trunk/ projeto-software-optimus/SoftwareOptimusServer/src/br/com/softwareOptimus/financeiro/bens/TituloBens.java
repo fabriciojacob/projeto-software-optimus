@@ -26,6 +26,8 @@ public class TituloBens {
 	private TituloRN regraNegocio = new TituloRN();
 	private Pessoa pessoa;
 	private Pessoa empresa;
+	private boolean btAdicionar = true;
+	private int verifica = 0;
 
 	public void pesquisaParticipante() {
 		if (this.participantes != null) {
@@ -45,6 +47,10 @@ public class TituloBens {
 			this.empresa = this.regraNegocio.participante(empresaSelecionada);
 			this.titulo.setEmpresa(empresa);
 			msgAcerto("Empresa selecionada");
+			verifica= verifica + 1;
+			if(verifica == 2){
+				btAdicionar = false;
+			}
 		} catch (Exception e) {
 			msgErro("Problemas na seleção da empresa ", e);
 		}
@@ -84,6 +90,10 @@ public class TituloBens {
 			this.pessoa = this.regraNegocio
 					.participante(participanteSelecionado);
 			this.titulo.setPessoa(this.pessoa);
+			verifica= verifica + 1;
+			if(verifica == 2){
+				btAdicionar = false;
+			}
 		} catch (Exception e) {
 			msgErro("Problemas na seleção do participante ", e);
 		}
@@ -173,4 +183,21 @@ public class TituloBens {
 		this.tipo = tipo;
 	}
 
+	public boolean isBtAdicionar() {
+		return btAdicionar;
+	}
+
+	public void setBtAdicionar(boolean btAdicionar) {
+		this.btAdicionar = btAdicionar;
+	}
+
+	public int getVerifica() {
+		return verifica;
+	}
+
+	public void setVerifica(int verifica) {
+		this.verifica = verifica;
+	}
+	
+	
 }
