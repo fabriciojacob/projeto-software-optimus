@@ -18,13 +18,13 @@
 
 
 			<p:commandButton value="+" type="button"
-				onclick="PF('titulo').show();" />
+				onclick="PF('titulo').show();" disabled="#{tituloBens.btAdicionar}"/>
 
 			<p:commandButton value="Empresa" type="button"
-				onclick="PF('empresa').show();" />
+				onclick="PF('empresa').show();" update="frmTitulo" />
 
 			<p:commandButton value="Participante" type="button"
-				onclick="PF('participante').show();" />
+				onclick="PF('participante').show();" update="frmTitulo"/>
 
 
 			<p:messages id="messages" showDetail="true" autoUpdate="true"
