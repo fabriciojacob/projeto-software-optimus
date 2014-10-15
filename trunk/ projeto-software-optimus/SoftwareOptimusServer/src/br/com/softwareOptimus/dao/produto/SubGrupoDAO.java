@@ -24,5 +24,4 @@ public interface SubGrupoDAO {
 	public List<SubGrupo> listaSubGru(Long id);
 	public List<Produto> verificaRemocaoSubProd(SubGrupo subGrupo);
 	public List<SubGrupo> listaSubGrupoVincGrupo(Grupo grupo);
-
 }

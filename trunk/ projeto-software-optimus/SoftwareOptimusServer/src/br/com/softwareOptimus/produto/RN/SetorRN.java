@@ -70,4 +70,12 @@ public class SetorRN {
 		}
 	}
 
+	public List<Setor> consultaIdGrup(long idGrup) {
+		return this.setorDAO.consultaIdGrup(idGrup);
+	}
+
+	public List<Setor> consultaDescGrup(String busca) {
+		return this.setorDAO.consultaDescGrup(busca);
+	}
+
 }

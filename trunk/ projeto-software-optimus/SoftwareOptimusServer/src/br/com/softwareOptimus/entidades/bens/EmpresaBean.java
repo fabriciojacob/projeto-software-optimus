@@ -47,8 +47,74 @@ public class EmpresaBean {
 	private Telefone tel = new Telefone();
 	private boolean padraoNFE;
 	private boolean salvar = true, cancelar = true, enderecos = true,
-			salReg = true, email = true, telefone = true;
+			salReg = true, email = true, telefone = true, ina = true,
+			nomeFant = true, nomeRaz = true, cnpj = true, inscEst = true,
+			cnae = true, datIni = true, reg = true;
 	private boolean novo = false, consulta = false;
+
+	public boolean isIna() {
+		return ina;
+	}
+
+	public void setIna(boolean ina) {
+		this.ina = ina;
+	}
+
+	public boolean isNomeFant() {
+		return nomeFant;
+	}
+
+	public void setNomeFant(boolean nomeFant) {
+		this.nomeFant = nomeFant;
+	}
+
+	public boolean isNomeRaz() {
+		return nomeRaz;
+	}
+
+	public void setNomeRaz(boolean nomeRaz) {
+		this.nomeRaz = nomeRaz;
+	}
+
+	public boolean isCnpj() {
+		return cnpj;
+	}
+
+	public void setCnpj(boolean cnpj) {
+		this.cnpj = cnpj;
+	}
+
+	public boolean isInscEst() {
+		return inscEst;
+	}
+
+	public void setInscEst(boolean inscEst) {
+		this.inscEst = inscEst;
+	}
+
+	public boolean isCnae() {
+		return cnae;
+	}
+
+	public void setCnae(boolean cnae) {
+		this.cnae = cnae;
+	}
+
+	public boolean isDatIni() {
+		return datIni;
+	}
+
+	public void setDatIni(boolean datIni) {
+		this.datIni = datIni;
+	}
+
+	public boolean isReg() {
+		return reg;
+	}
+
+	public void setReg(boolean reg) {
+		this.reg = reg;
+	}
 
 	public String getTipoSelecionadoTel() {
 		return tipoSelecionadoTel;
@@ -486,6 +552,7 @@ public class EmpresaBean {
 		this.salReg = false;
 		this.email = false;
 		this.telefone = false;
+		habilita();
 	}
 
 	public void novo() {
@@ -501,7 +568,7 @@ public class EmpresaBean {
 		this.enderecos = true;
 		this.email = true;
 		this.telefone = true;
-
+		habilita();
 	}
 
 	public void excluirRegime() {
@@ -514,11 +581,12 @@ public class EmpresaBean {
 							"Regime excluido com sucesso"));
 			listaRegime();
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na exclusão do regime"
-									+ e.getMessage()));
+			FacesContext.getCurrentInstance()
+					.addMessage(
+							null,
+							new FacesMessage(FacesMessage.SEVERITY_ERROR,
+									"Info", "Problemas na exclusão do regime"
+											+ e.getMessage()));
 		}
 	}
 
@@ -567,12 +635,10 @@ public class EmpresaBean {
 							"Email excluido com sucesso"));
 			listaEmail();
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance()
-					.addMessage(
-							null,
-							new FacesMessage(FacesMessage.SEVERITY_ERROR,
-									"Info", "Problemas na exclusão do email"
-											+ e.getMessage()));
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+							"Problemas na exclusão do email" + e.getMessage()));
 		}
 	}
 
@@ -660,6 +726,7 @@ public class EmpresaBean {
 		try {
 			this.tel.setPessoa(pessoaJuridica);
 			telefoneRN.salvar(tel);
+			this.tel = new Telefone();
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
@@ -671,5 +738,27 @@ public class EmpresaBean {
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
 							"Problemas em salvar o telefone" + e.getMessage()));
 		}
+	}
+
+	public void habilita() {
+		this.ina = false;
+		this.nomeFant = false;
+		this.nomeRaz = false;
+		this.cnpj = false;
+		this.inscEst = false;
+		this.cnae = false;
+		this.datIni = false;
+		this.reg = false;
+	}
+
+	public void desabilita() {
+		this.ina = true;
+		this.nomeFant = true;
+		this.nomeRaz = true;
+		this.cnpj = true;
+		this.inscEst = true;
+		this.cnae = true;
+		this.datIni = true;
+		this.reg = true;
 	}
 }

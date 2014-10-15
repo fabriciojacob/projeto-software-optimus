@@ -108,4 +108,20 @@ public class SetorDAOHibernate implements SetorDAO {
 		Setor set = this.session.find(Setor.class, id);
 		return set;
 	}
+
+	@Override
+	public List<Setor> consultaDescGrup(String busca) {
+		String jpql = "Select Distinct s From Setor s, IN(s.grupo) AS g Where g.descricao LIKE :busca";
+		TypedQuery<Setor> set = this.session.createQuery(jpql, Setor.class);
+		set.setParameter("busca", "%" + busca + "%");
+		return set.getResultList();
+	}
+
+	@Override
+	public List<Setor> consultaIdGrup(long idGrup) {
+		String jpql = "Select Distinct s From Setor s, IN(s.grupo) AS g Where g.idGrupo = :idGrup";
+		TypedQuery<Setor> set = this.session.createQuery(jpql, Setor.class);
+		set.setParameter("idGrup", idGrup);
+		return set.getResultList();
+	}
 }

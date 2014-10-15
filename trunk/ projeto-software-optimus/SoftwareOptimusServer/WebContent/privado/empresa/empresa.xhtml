@@ -89,6 +89,7 @@
 					
 					Inativa:
 					<p:selectBooleanCheckbox id="inativaEmp"
+							disabled="#{empresaBean.ina}"
 							value="#{empresaBean.pessoaJuridica.status}" />
 			
 					Codigo Empresa:
@@ -96,22 +97,26 @@
 							value="#{empresaBean.pessoaJuridica.idPessoa}" />
 		
 					Nome Fantasia:
-					<p:inputText id="nomeFantasia"
+					<p:inputText id="nomeFantasia" disabled="#{empresaBean.nomeFant}"
 							value="#{empresaBean.pessoaJuridica.fantasia}" size="40" />
 					
 					Razão Social:
-					<p:inputText id="razaoSocial"
+					<p:inputText id="razaoSocial" disabled="#{empresaBean.nomeRaz}"
 							value="#{empresaBean.pessoaJuridica.razaoSocial}" size="40" />
 			
 					CNPJ:
-					<p:inputText id="cnpj" value="#{empresaBean.pessoaJuridica.cnpj}" />
+					<p:inputMask id="cnpj" value="#{empresaBean.pessoaJuridica.cnpj}"
+							disabled="#{empresaBean.cnpj}" mask="99999999999999" />
 					
 					Inscrição estadual:
-					<p:inputText id="ie" value="#{empresaBean.pessoaJuridica.ie}"
-							rendered="true" />
+					<p:inputMask id="ie" value="#{empresaBean.pessoaJuridica.ie}"
+							disabled="#{empresaBean.inscEst}" rendered="true"
+							mask="99999999?999999" />
 					
 					CNAE:
-					<p:inputText id="cnae" value="#{empresaBean.pessoaJuridica.cnae}" />
+					<p:inputMask id="cnae" value="#{empresaBean.pessoaJuridica.cnae}"
+							disabled="#{empresaBean.cnae}" mask="9999999" />
+
 					</h:panelGrid>
 
 				</p:tab>
@@ -121,8 +126,8 @@
 					<p:commandButton value="Enderecos" type="button"
 						onclick="PF('dlg2').show();" disabled="#{empresaBean.enderecos}" />
 
-					<p:dialog header=" Enderecos" widgetVar="dlg2" modal="true"
-						height="300" width="400">
+					<p:dialog id="cadEndereco" header=" Enderecos" widgetVar="dlg2"
+						modal="true" height="300" width="400">
 
 
 						<h:panelGrid columns="2" columnClasses="label, value">
@@ -148,8 +153,8 @@
 								size="15" />		
 						
 						CEP:
-						<p:inputText id="cep" value="#{empresaBean.logradouro.cep}"
-								size="8" />							
+						<p:inputMask id="cep" value="#{empresaBean.logradouro.cep}"
+								size="8" mask="99999999" />
 							
 						Tipo Endereco:
 					 	<p:selectOneMenu id="tipoLogr"
@@ -184,7 +189,7 @@
 								actionListener="#{empresaBean.salvarLogr(geralBean.municipio)}"
 								update="listaEndereco" />
 
-							<p:commandButton value="Cancelar" />
+							<p:commandButton value="Cancelar" ajax="cadEndereco" />
 						</h:panelGrid>
 
 					</p:dialog>
@@ -247,9 +252,10 @@
 
 							Data Inicio:
 							<p:calendar id="dataIni" value="#{empresaBean.regime.dataInicio}"
-								effect="fold" />
+								effect="fold" disabled="#{empresaBean.datIni}" />
 							Regime:
-							<p:selectOneMenu id="fConsult" value="#{empresaBean.tipoRegime}">
+							<p:selectOneMenu id="fConsult" value="#{empresaBean.tipoRegime}"
+								disabled="#{empresaBean.reg}">
 								<f:selectItem itemLabel="SIMPLES" itemValue="SIMPLES" />
 								<f:selectItem itemLabel="REAL" itemValue="LUCROREAL" />
 								<f:selectItem itemLabel="PRESUMIDO" itemValue="LUCROPRESUMIDO" />
@@ -345,7 +351,7 @@
 					<br />
 					<p:dialog header="Telefones" widgetVar="dlg4" modal="true"
 						height="100" width="400">
-						<h:panelGrid columns="2">
+						<h:panelGrid id="gridTel" columns="2">
 						Telefone:
 						<p:inputMask id="numTel" value="#{empresaBean.tel.numero}"
 								size="50" mask="99999999" />
@@ -362,7 +368,7 @@
 							<p:commandButton id="incluirTelefone" icon="ui-icon-disk"
 								disabled="#{empresaBean.telefone}"
 								actionListener="#{empresaBean.salvarTelefone}"
-								update="listaTelefone" />
+								update="listaTelefone, gridTel" />
 
 							<p:tooltip id="toolTipTel" for="numTel" value="Mascara 99999999"
 								showEffect="clip" hideEffect="explode" />

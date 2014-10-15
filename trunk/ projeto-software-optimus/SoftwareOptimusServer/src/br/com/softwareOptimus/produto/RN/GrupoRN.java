@@ -79,4 +79,12 @@ public class GrupoRN {
 	public List<Grupo> listaGrupoVincSet(Setor setor) {
 		return this.grupoDAO.listaGrupoVincSet(setor);
 	}
+
+	public List<Grupo> consultaIdSub(long idSub) {
+		return this.grupoDAO.listaGrupoIdSub(idSub);
+	}
+
+	public List<Grupo> consultaDescSub(String busca) {
+		return this.grupoDAO.listaGrupoDescSub(busca);
+	}
 }

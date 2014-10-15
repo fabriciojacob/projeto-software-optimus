@@ -161,6 +161,10 @@ public class SetorBean {
 				this.listaSetor = setRN.consultaId(Long.parseLong(busca));
 			} else if (filtro.equals("desc")) {
 				this.listaSetor = setRN.consultaDesc(busca);
+			}else if (filtro.equals("idGrup")) {
+				this.listaSetor = setRN.consultaIdGrup(Long.parseLong(busca));
+			}else if (filtro.equals("descGrup")) {
+				this.listaSetor = setRN.consultaDescGrup(busca);
 			}
 		} else {
 			this.listaSetor = setRN.listar();

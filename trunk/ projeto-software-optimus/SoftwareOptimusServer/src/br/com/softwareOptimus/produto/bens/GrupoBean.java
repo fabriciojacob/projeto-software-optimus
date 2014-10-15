@@ -163,6 +163,10 @@ public class GrupoBean {
 				this.listaGrupo = gruRN.consultaId(Long.parseLong(busca));
 			} else if (filtro.equals("desc")) {
 				this.listaGrupo = gruRN.consultaDesc(busca);
+			}else if (filtro.equals("idSub")) {
+				this.listaGrupo = gruRN.consultaIdSub(Long.parseLong(busca));
+			}else if (filtro.equals("descSub")) {
+				this.listaGrupo = gruRN.consultaDescSub(busca);
 			}
 		} else {
 			this.listaGrupo = gruRN.listar();
