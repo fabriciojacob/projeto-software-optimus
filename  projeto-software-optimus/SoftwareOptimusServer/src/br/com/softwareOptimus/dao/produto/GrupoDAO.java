@@ -23,4 +23,6 @@ public interface GrupoDAO {
 	public List<Produto> VerificaRemGrupoProd(Grupo grupo);
 	public List<Produto> verificaRemSubGrupo(Grupo grupo, Long idSub);
 	public List<Grupo> listaGrupoVincSet(Setor setor);
+	public List<Grupo> listaGrupoIdSub(long idSub);
+	public List<Grupo> listaGrupoDescSub(String busca);
 }

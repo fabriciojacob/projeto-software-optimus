@@ -144,5 +144,4 @@ public class SubGrupoDAOHibernate implements SubGrupoDAO {
 		subGru.setParameter("grupo", grupo);
 		return subGru.getResultList();
 	}
-
 }

@@ -20,5 +20,7 @@ public interface SetorDAO {
 	public List<Setor> consultaDesc(String busca);
 	public List<Produto> verRemRelGrup(Setor setor, Long idGrup);
 	public Setor editSet(Long id);
+	public List<Setor> consultaDescGrup(String busca);
+	public List<Setor> consultaIdGrup(long idGrup);
 
 }
