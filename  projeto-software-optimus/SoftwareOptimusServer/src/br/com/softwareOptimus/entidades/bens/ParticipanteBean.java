@@ -40,30 +40,29 @@ public class ParticipanteBean {
 	private List<Telefone> listaTelefone = new ArrayList<>();
 	private boolean salvar = true, cancelar = true, enderecos = true,
 			salReg = true, email = true, telefone = true, padraoNFE,
-			novo = false, consulta = false;
+			novo = false, consulta = false, tipoParPerFis = true,
+			inaParPerFis = true, nomeParPesFis = true, cpfParPesFis = true,
+			rgParPesFis = true, tipoParPerJur = true, inaParPerJur = true,
+			nomeParPesJur = true, razParPesJur = true, cnpjParPesJur = true,
+			inscParPesJur = true, cnaeParPesJur = true;
 	private Telefone tel = new Telefone();
 	private Email emails = new Email();
 
 	public void salvarPJ() {
 		this.participanteRN = new ParticipanteRN();
+		if (tipoParticipante.equals(NaturezaPessoa.FORNECEDOR.toString())) {
+			this.pessoaJuridica.setNaturezaPessoa(NaturezaPessoa.FORNECEDOR);
+		} else if (tipoParticipante.equals(NaturezaPessoa.CLIENTE.toString())) {
+			this.pessoaJuridica.setNaturezaPessoa(NaturezaPessoa.CLIENTE);
+		} else if (tipoParticipante.equals(NaturezaPessoa.TRANSPORTADORA
+				.toString())) {
+			this.pessoaJuridica.equals(NaturezaPessoa.TRANSPORTADORA);
+		} else {
+			this.pessoaJuridica.equals(NaturezaPessoa.CONTADOR);
+		}
 		Integer retorno = this.participanteRN.validaCampoNuloPJ(pessoaJuridica);
 		if (retorno == 0) {
 			try {
-				if (tipoParticipante.equals(NaturezaPessoa.FORNECEDOR
-						.toString())) {
-					this.pessoaJuridica
-							.setNaturezaPessoa(NaturezaPessoa.FORNECEDOR);
-				} else if (tipoParticipante.equals(NaturezaPessoa.CLIENTE
-						.toString())) {
-					this.pessoaJuridica
-							.setNaturezaPessoa(NaturezaPessoa.CLIENTE);
-				} else if (tipoParticipante
-						.equals(NaturezaPessoa.TRANSPORTADORA.toString())) {
-					this.pessoaJuridica.equals(NaturezaPessoa.TRANSPORTADORA);
-				} else {
-					this.pessoaJuridica.equals(NaturezaPessoa.CONTADOR);
-				}
-
 				participanteRN.salvarPJ(pessoaJuridica);
 				msgAcerto("Registro salvo com sucesso");
 				this.novo = false;
@@ -76,31 +75,28 @@ public class ParticipanteBean {
 			}
 
 		} else {
-			msgNull("Existem campos ");
+			msgNull("Existem campos Nulo no Formulário");
 		}
 	}
 
 	public void salvarPF() {
 		try {
 			participanteRN = new ParticipanteRN();
+			if (tipoParticipante.equals(NaturezaPessoa.FORNECEDOR.toString())) {
+				this.pessoaFisica.setNaturezaPessoa(NaturezaPessoa.FORNECEDOR);
+			} else if (tipoParticipante.equals(NaturezaPessoa.CLIENTE
+					.toString())) {
+				this.pessoaFisica.setNaturezaPessoa(NaturezaPessoa.CLIENTE);
+			} else if (tipoParticipante.equals(NaturezaPessoa.TRANSPORTADORA
+					.toString())) {
+				this.pessoaFisica
+						.setNaturezaPessoa(NaturezaPessoa.TRANSPORTADORA);
+			} else {
+				this.pessoaFisica.setNaturezaPessoa(NaturezaPessoa.CONTADOR);
+			}
 			Integer retorno = this.participanteRN
 					.validaCampoNuloPF(this.pessoaFisica);
 			if (retorno == 0) {
-				if (tipoParticipante.equals(NaturezaPessoa.FORNECEDOR
-						.toString())) {
-					this.pessoaFisica
-							.setNaturezaPessoa(NaturezaPessoa.FORNECEDOR);
-				} else if (tipoParticipante.equals(NaturezaPessoa.CLIENTE
-						.toString())) {
-					this.pessoaFisica.setNaturezaPessoa(NaturezaPessoa.CLIENTE);
-				} else if (tipoParticipante
-						.equals(NaturezaPessoa.TRANSPORTADORA.toString())) {
-					this.pessoaFisica
-							.setNaturezaPessoa(NaturezaPessoa.TRANSPORTADORA);
-				} else {
-					this.pessoaFisica
-							.setNaturezaPessoa(NaturezaPessoa.CONTADOR);
-				}
 				participanteRN.salvarPF(pessoaFisica);
 				msgAcerto("Registro salvo com sucesso");
 				this.novo = false;
@@ -185,7 +181,7 @@ public class ParticipanteBean {
 		this.enderecos = true;
 		this.email = true;
 		this.telefone = true;
-
+		habilitar();
 	}
 
 	public void pesquisaPJ() {
@@ -254,10 +250,9 @@ public class ParticipanteBean {
 				new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info", msg
 						+ e.getMessage()));
 	}
-	
+
 	public void msgNull(String msg) {
-		FacesContext.getCurrentInstance().addMessage(
-				null,
+		FacesContext.getCurrentInstance().addMessage(null,
 				new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info", msg));
 	}
 
@@ -267,11 +262,13 @@ public class ParticipanteBean {
 			this.pessoaFisica = this.participanteRN.carregaIDPF(id);
 			this.tipoParticipante = this.pessoaFisica.getNaturezaPessoa()
 					.toString();
+			habilitar();
 		} catch (Exception e) {
 			msgErro("Problemas na edição", e);
 		}
 		listaLogradouro();
 		listaEmail();
+		listaTelefone();
 		this.salvar = false;
 		this.cancelar = false;
 		this.enderecos = false;
@@ -286,11 +283,13 @@ public class ParticipanteBean {
 			this.pessoaJuridica = this.participanteRN.carregaIDPJ(id);
 			this.tipoParticipante = this.pessoaJuridica.getNaturezaPessoa()
 					.toString();
+			habilitar();
 		} catch (Exception e) {
 			msgErro("Problemas na edição", e);
 		}
 		listaLogradouro();
 		listaEmail();
+		listaTelefone();
 		this.salvar = false;
 		this.cancelar = false;
 		this.enderecos = false;
@@ -436,9 +435,98 @@ public class ParticipanteBean {
 			telefoneRN.salvar(tel);
 			msgAcerto("Telefone salvo com sucesso");
 			listaTelefone();
+			this.tel = new Telefone();
 		} catch (Exception e) {
 			msgErro("Problemas em salvar o telefone", e);
 		}
+	}
+
+	public void habilitar() {
+		this.tipoParPerFis = false;
+		this.inaParPerFis = false;
+		this.nomeParPesFis = false;
+		this.cpfParPesFis = false;
+		this.rgParPesFis = false;
+		// ***********************
+		this.tipoParPerJur = false;
+		this.inaParPerJur = false;
+		this.nomeParPesJur = false;
+		this.razParPesJur = false;
+		this.cnpjParPesJur = false;
+		this.inscParPesJur = false;
+		this.cnaeParPesJur = false;
+	}
+
+	public void desabilitar() {
+		this.tipoParPerFis = true;
+		this.inaParPerFis = true;
+		this.nomeParPesFis = true;
+		this.cpfParPesFis = true;
+		this.rgParPesFis = true;
+		// ***********************
+		this.tipoParPerJur = true;
+		this.inaParPerJur = true;
+		this.nomeParPesJur = true;
+		this.razParPesJur = true;
+		this.cnpjParPesJur = true;
+		this.inscParPesJur = true;
+		this.cnaeParPesJur = true;
+	}
+
+	public ParticipanteRN getParticipanteRN() {
+		return participanteRN;
+	}
+
+	public void setParticipanteRN(ParticipanteRN participanteRN) {
+		this.participanteRN = participanteRN;
+	}
+
+	public LogradouroRN getLogrRN() {
+		return logrRN;
+	}
+
+	public void setLogrRN(LogradouroRN logrRN) {
+		this.logrRN = logrRN;
+	}
+
+	public boolean isTipoParPerFis() {
+		return tipoParPerFis;
+	}
+
+	public void setTipoParPerFis(boolean tipoParPerFis) {
+		this.tipoParPerFis = tipoParPerFis;
+	}
+
+	public boolean isInaParPerFis() {
+		return inaParPerFis;
+	}
+
+	public void setInaParPerFis(boolean inaParPerFis) {
+		this.inaParPerFis = inaParPerFis;
+	}
+
+	public boolean isNomeParPesFis() {
+		return nomeParPesFis;
+	}
+
+	public void setNomeParPesFis(boolean nomeParPesFis) {
+		this.nomeParPesFis = nomeParPesFis;
+	}
+
+	public boolean isCpfParPesFis() {
+		return cpfParPesFis;
+	}
+
+	public void setCpfParPesFis(boolean cpfParPesFis) {
+		this.cpfParPesFis = cpfParPesFis;
+	}
+
+	public boolean isRgParPesFis() {
+		return rgParPesFis;
+	}
+
+	public void setRgParPesFis(boolean rgParPesFis) {
+		this.rgParPesFis = rgParPesFis;
 	}
 
 	public String getTipoPJ() {
@@ -679,6 +767,62 @@ public class ParticipanteBean {
 
 	public void setListaPessoaJuridica(List<PessoaJuridica> listaPessoaJuridica) {
 		this.listaPessoaJuridica = listaPessoaJuridica;
+	}
+
+	public boolean isTipoParPerJur() {
+		return tipoParPerJur;
+	}
+
+	public void setTipoParPerJur(boolean tipoParPerJur) {
+		this.tipoParPerJur = tipoParPerJur;
+	}
+
+	public boolean isInaParPerJur() {
+		return inaParPerJur;
+	}
+
+	public void setInaParPerJur(boolean inaParPerJur) {
+		this.inaParPerJur = inaParPerJur;
+	}
+
+	public boolean isNomeParPesJur() {
+		return nomeParPesJur;
+	}
+
+	public void setNomeParPesJur(boolean nomeParPesJur) {
+		this.nomeParPesJur = nomeParPesJur;
+	}
+
+	public boolean isRazParPesJur() {
+		return razParPesJur;
+	}
+
+	public void setRazParPesJur(boolean razParPesJur) {
+		this.razParPesJur = razParPesJur;
+	}
+
+	public boolean isCnpjParPesJur() {
+		return cnpjParPesJur;
+	}
+
+	public void setCnpjParPesJur(boolean cnpjParPesJur) {
+		this.cnpjParPesJur = cnpjParPesJur;
+	}
+
+	public boolean isInscParPesJur() {
+		return inscParPesJur;
+	}
+
+	public void setInscParPesJur(boolean inscParPesJur) {
+		this.inscParPesJur = inscParPesJur;
+	}
+
+	public boolean isCnaeParPesJur() {
+		return cnaeParPesJur;
+	}
+
+	public void setCnaeParPesJur(boolean cnaeParPesJur) {
+		this.cnaeParPesJur = cnaeParPesJur;
 	}
 
 }
