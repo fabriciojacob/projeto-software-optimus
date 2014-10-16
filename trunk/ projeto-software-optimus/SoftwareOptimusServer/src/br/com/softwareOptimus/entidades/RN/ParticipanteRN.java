@@ -40,7 +40,8 @@ public class ParticipanteRN {
 
 		if (pessoa.getCnpj().isEmpty() || pessoa.getFantasia().isEmpty()
 				|| pessoa.getRazaoSocial().isEmpty()
-				|| pessoa.getCnae().isEmpty() || pessoa.getIe().isEmpty()) {
+				|| pessoa.getCnae().isEmpty() || pessoa.getIe().isEmpty()
+				|| pessoa.getNaturezaPessoa() == null) {
 			retorno = 1;
 		}
 
@@ -51,17 +52,17 @@ public class ParticipanteRN {
 		Integer retorno = 0;
 
 		if (pessoa.getFantasia().isEmpty() || pessoa.getRg().isEmpty()
-				|| pessoa.getCpf().isEmpty()) {
+				|| pessoa.getCpf().isEmpty() || pessoa.getNaturezaPessoa() == null) {
 			retorno = 1;
 		}
 
 		return retorno;
 	}
-	
+
 	public List<PessoaJuridica> listaPJCNPJ(String CNPJ) throws Exception {
 		return this.participanteDAO.buscaCNPJ(CNPJ);
 	}
-	
+
 	public List<PessoaJuridica> listaPJNome(String nome) throws Exception {
 		return this.participanteDAO.buscaNomePJ(nome);
 	}
@@ -81,7 +82,7 @@ public class ParticipanteRN {
 	public PessoaFisica carregaIDPF(Long codigo) throws Exception {
 		return this.participanteDAO.carregarPF(codigo);
 	}
-	
+
 	public PessoaJuridica carregaIDPJ(Long codigo) throws Exception {
 		return this.participanteDAO.carregarPJ(codigo);
 	}

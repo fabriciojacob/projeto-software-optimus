@@ -22,8 +22,7 @@
 
 			<p:commandButton value="Salvar"
 				actionListener="#{participanteBean.salvarPF}"
-				disabled="#{participanteBean.salvar}"
-				update="frmCadParticipante" />
+				disabled="#{participanteBean.salvar}" update="frmCadParticipante" />
 
 			<p:commandButton value="Consulta" type="button"
 				onclick="PF('consulta').show();"
@@ -89,6 +88,7 @@
 				<p:tab id="cadParticipante" title="Informações Gerais">
 
 					<p:selectOneRadio id="tipoParticipante"
+						disabled="#{participanteBean.tipoParPerFis}"
 						value="#{participanteBean.tipoParticipante}">
 						<f:selectItem itemLabel="CLIENTE" itemValue="CLIENTE" />
 						<f:selectItem itemLabel="FORNECEDOR" itemValue="FORNECEDOR" />
@@ -102,6 +102,7 @@
 						
 					Inativa:
 					<p:selectBooleanCheckbox id="inativaEmp"
+							disabled="#{participanteBean.inaParPerFis}"
 							value="#{participanteBean.pessoaFisica.status}" />
 			
 					Codigo:
@@ -110,14 +111,17 @@
 		
 					Nome:
 					<p:inputText id="nomeFantasia"
+							disabled="#{participanteBean.nomeParPesFis}"
 							value="#{participanteBean.pessoaFisica.fantasia}" size="40" />
 					
 				
 					CPF:
-					<p:inputText value="#{participanteBean.pessoaFisica.cpf}" />
+					<p:inputMask value="#{participanteBean.pessoaFisica.cpf}"
+							disabled="#{participanteBean.cpfParPesFis}" mask="99999999999" />
 					
 					RG:
-					<p:inputText value="#{participanteBean.pessoaFisica.rg}" />
+					<p:inputText value="#{participanteBean.pessoaFisica.rg}"
+							disabled="#{participanteBean.rgParPesFis}" />
 
 					</h:panelGrid>
 
@@ -128,7 +132,7 @@
 						onclick="PF('dlg2').show();"
 						disabled="#{participanteBean.enderecos}" />
 
-					<p:dialog header=" Enderecos" widgetVar="dlg2" modal="true"
+					<p:dialog id="enderecoPesFis" header=" Enderecos" widgetVar="dlg2" modal="true"
 						height="300" width="450">
 
 
@@ -156,8 +160,8 @@
 								value="#{participanteBean.logradouro.numero}" size="15" />		
 						
 						CEP:
-						<p:inputText id="cep" value="#{participanteBean.logradouro.cep}"
-								size="8" />							
+						<p:inputMask id="cep" value="#{participanteBean.logradouro.cep}"
+								size="8" mask="99999999" />							
 							
 						Tipo Endereco:
 					 	<p:selectOneMenu id="tipoLogr"
@@ -192,7 +196,7 @@
 								actionListener="#{participanteBean.salvarLogr(geralBean.municipio)}"
 								update="listaEndereco" />
 
-							<p:commandButton value="Cancelar" />
+							<p:commandButton value="Cancelar" ajax="enderecoPesFis" />
 						</h:panelGrid>
 
 					</p:dialog>
@@ -308,7 +312,7 @@
 					<br />
 					<p:dialog header="Telefones" widgetVar="dlg4" modal="true"
 						height="100" width="400">
-						<h:panelGrid columns="2">
+						<h:panelGrid id="gridTel" columns="2">
 						
 						Telefone:
 						<p:inputMask id="numTel" value="#{participanteBean.tel.numero}"
@@ -326,7 +330,7 @@
 							<p:commandButton id="incluirTelefone" icon="ui-icon-disk"
 								disabled="#{participanteBean.telefone}"
 								actionListener="#{participanteBean.salvarTelefone}"
-								update="listaTelefone" />
+								update="listaTelefone, gridTel" />
 
 							<p:tooltip id="toolTipTel" for="numTel" value="Mascara 99999999"
 								showEffect="clip" hideEffect="explode" />

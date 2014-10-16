@@ -92,6 +92,7 @@
 				<p:tab id="cadEmpresa" title="Informações Gerais">
 
 					<p:selectOneRadio id="tipoParticipante"
+						disabled="#{participanteBean.tipoParPerJur}"
 						value="#{participanteBean.tipoParticipante}">
 						<f:selectItem itemLabel="CLIENTE" itemValue="CLIENTE" />
 						<f:selectItem itemLabel="FORNECEDOR" itemValue="FORNECEDOR" />
@@ -105,6 +106,7 @@
 						
 					Inativa:
 					<p:selectBooleanCheckbox id="inativaEmp"
+							disabled="#{participanteBean.inaParPerJur}"
 							value="#{participanteBean.pessoaJuridica.status}" />
 			
 					Codigo:
@@ -113,22 +115,28 @@
 		
 					Nome Fantasia:
 					<p:inputText id="nomeFantasia"
+							disabled="#{participanteBean.nomeParPesJur}"
 							value="#{participanteBean.pessoaJuridica.fantasia}" size="40" />
 					
 					Razão Social:
 					<p:inputText id="razaoSocial"
+							disabled="#{participanteBean.razParPesJur}"
 							value="#{participanteBean.pessoaJuridica.razaoSocial}" size="40" />
 			
 					CNPJ:
-					<p:inputText id="cnpj"
-							value="#{participanteBean.pessoaJuridica.cnpj}" />
-					
+					<p:inputMask id="cnpj" disabled="#{participanteBean.cnpjParPesJur}"
+							value="#{participanteBean.pessoaJuridica.cnpj}"
+							mask="99999999999999" />
+
 					Inscrição estadual:
-					<p:inputText id="ie" value="#{participanteBean.pessoaJuridica.ie}" />
+					<p:inputMask id="ie" value="#{participanteBean.pessoaJuridica.ie}"
+							disabled="#{participanteBean.inscParPesJur}"
+							mask="99999999?999999" />
 					
 					CNAE:
-					<p:inputText id="cnae"
-							value="#{participanteBean.pessoaJuridica.cnae}" />
+					<p:inputMask id="cnae"
+							disabled="#{participanteBean.cnaeParPesJur}"
+							value="#{participanteBean.pessoaJuridica.cnae}" mask="9999999" />
 					</h:panelGrid>
 
 				</p:tab>
@@ -139,7 +147,7 @@
 						onclick="PF('dlg2').show();"
 						disabled="#{participanteBean.enderecos}" />
 
-					<p:dialog header=" Enderecos" widgetVar="dlg2" modal="true"
+					<p:dialog id="enderecoPesJur" header=" Enderecos" widgetVar="dlg2" modal="true"
 						height="300" width="400">
 
 
@@ -167,8 +175,8 @@
 								value="#{participanteBean.logradouro.numero}" size="15" />		
 						
 						CEP:
-						<p:inputText id="cep" value="#{participanteBean.logradouro.cep}"
-								size="8" />							
+						<p:inputMask id="cep" value="#{participanteBean.logradouro.cep}"
+								size="8" mask="99999999" />							
 							
 						Tipo Endereco:
 					 	<p:selectOneMenu id="tipoLogr"
@@ -203,7 +211,7 @@
 								actionListener="#{participanteBean.salvarLogr(geralBean.municipio)}"
 								update="listaEndereco" />
 
-							<p:commandButton value="Cancelar" />
+							<p:commandButton value="Cancelar" ajax="enderecoPesJur" />
 						</h:panelGrid>
 
 					</p:dialog>
@@ -320,8 +328,8 @@
 						height="100" width="400">
 						<h:panelGrid columns="2">
 						Telefone:
-						<p:inputMask id="numTel" value="#{participanteBean.tel.numero}" size="50"
-								mask="99999999" />
+						<p:inputMask id="numTel" value="#{participanteBean.tel.numero}"
+								size="50" mask="99999999" />
 						
 						Tipo telefone:
 						<p:selectOneMenu id="tipoTelefone"
@@ -337,9 +345,8 @@
 								actionListener="#{participanteBean.salvarTelefone}"
 								update="listaTelefone" />
 
-							<p:tooltip id="toolTipTel" for="numTel"
-								value="Mascara 99999999" showEffect="clip"
-								hideEffect="explode" />
+							<p:tooltip id="toolTipTel" for="numTel" value="Mascara 99999999"
+								showEffect="clip" hideEffect="explode" />
 
 						</h:panelGrid>
 
