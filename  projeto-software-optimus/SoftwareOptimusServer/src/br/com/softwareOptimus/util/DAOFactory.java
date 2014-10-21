@@ -65,6 +65,10 @@ import br.com.softwareOptimus.entidades.dao.participantes.ParticipanteDAO;
 import br.com.softwareOptimus.entidades.dao.participantes.ParticipanteDAOHibernate;
 import br.com.softwareOptimus.entidades.dao.usuario.UsuarioDAO;
 import br.com.softwareOptimus.entidades.dao.usuario.UsuarioDAOHibernate;
+import br.com.softwareOptimus.estoque.dao.InventarioDAO;
+import br.com.softwareOptimus.estoque.dao.InventarioDAOHibernate;
+import br.com.softwareOptimus.estoque.dao.ProdutoEstoqueDAO;
+import br.com.softwareOptimus.estoque.dao.ProdutoEstoqueDAOHibernate;
 
 public class DAOFactory {
 
@@ -417,4 +421,27 @@ public class DAOFactory {
 		}
 		return setorDAO;
 	}
+	
+	public static InventarioDAO criaInventarioDAO(){
+		InventarioDAOHibernate invenDAO = new InventarioDAOHibernate();
+		invenDAO.setSession(session);
+		try {
+			invenDAO.begin();
+		} catch (IOException | SQLException e) {
+			e.printStackTrace();
+		}
+		return invenDAO;
+	}
+	
+	public static ProdutoEstoqueDAO criaProdutoEstoqueDAO(){
+		ProdutoEstoqueDAOHibernate prodEstDAO = new ProdutoEstoqueDAOHibernate();
+		prodEstDAO.setSession(session);
+		try {
+			prodEstDAO.begin();
+		} catch (IOException | SQLException e) {
+			e.printStackTrace();
+		}
+		return prodEstDAO;
+	}
+	
 }
