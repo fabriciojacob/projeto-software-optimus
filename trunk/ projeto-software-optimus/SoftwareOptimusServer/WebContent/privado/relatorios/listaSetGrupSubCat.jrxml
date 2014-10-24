@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="listaSetGrupSubCat" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f88ccfe5-39de-42b8-a7d0-35635696d1b7">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\eclipse\\workspace\\SoftwareOptimusServer\\WebContent\\privado\\relatorios\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     TBSETOR."IDSETOR" AS TBSETOR_IDSETOR,
+     TBSETOR."DESCRICAO" AS TBSETOR_DESCRICAO
+FROM
+     "PROJETO"."TBSETOR" TBSETOR]]>
+	</queryString>
+	<field name="TBSETOR_IDSETOR" class="java.math.BigDecimal"/>
+	<field name="TBSETOR_DESCRICAO" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="48" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="28" width="555" height="20" uuid="6b32ce17-57f9-47e3-992c-d90e53a15cf0"/>
+				<box>
+					<pen lineWidth="1.5"/>
+					<topPen lineWidth="1.5"/>
+					<leftPen lineWidth="1.5"/>
+					<bottomPen lineWidth="1.5"/>
+					<rightPen lineWidth="1.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Constantia" size="14"/>
+				</textElement>
+				<text><![CDATA[Listagem dos Setores e Filhos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="28" uuid="f68cb546-e29e-4cc1-99a0-9ca4d06e5401"/>
+				<box>
+					<pen lineWidth="1.5"/>
+					<topPen lineWidth="1.5"/>
+					<leftPen lineWidth="1.5"/>
+					<bottomPen lineWidth="1.5"/>
+					<rightPen lineWidth="1.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Constantia" size="20"/>
+				</textElement>
+				<text><![CDATA[Optimus ERPrime]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="81" splitType="Stretch">
+			<staticText>
+				<reportElement x="39" y="0" width="100" height="20" uuid="f6c8b4a0-76d2-4a3a-8f02-579566501aee"/>
+				<box leftPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Constantia" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Código do Setor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="139" y="0" width="416" height="20" uuid="e045267b-5a9c-47f1-af04-b822124d0707"/>
+				<box leftPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Constantia" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Descrição do Setor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="85" y="20" width="100" height="20" uuid="8b799a54-523f-4625-9a70-0bdf60c3e5af"/>
+				<box leftPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Constantia" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Código do Grupo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="185" y="20" width="370" height="20" uuid="9ac84507-ce3e-4363-a89d-ef9dcaa878e7"/>
+				<box leftPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Constantia" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Descrição do Grupo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="120" y="40" width="112" height="20" uuid="c7b2efde-a6da-4f98-9e26-00e421d69254"/>
+				<box leftPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Constantia" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Código do SubGrupo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="232" y="40" width="323" height="20" uuid="570d29fb-d089-4cbc-8f64-0b52b0a73ba6"/>
+				<box leftPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Constantia" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Descrição do SubGrupo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="154" y="60" width="100" height="20" uuid="f2d383ed-b1d7-422c-bc8a-dd191049a98b"/>
+				<box leftPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Constantia" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Código da Categ.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="254" y="60" width="301" height="20" uuid="14b0b87b-bd3d-4d74-9b43-2395bbabbd0c"/>
+				<box leftPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Constantia" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Descrição da Categoria]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="40" splitType="Stretch">
+			<textField>
+				<reportElement x="39" y="0" width="100" height="20" uuid="accd3750-2f6e-4e4e-92f3-67b7b4ca7669"/>
+				<box leftPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{TBSETOR_IDSETOR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="139" y="0" width="416" height="20" uuid="2ea9d563-7085-498f-b82e-5cb57fc16027"/>
+				<box leftPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{TBSETOR_DESCRICAO}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="85" y="20" width="470" height="20" uuid="d53f5e34-71b5-4063-82cc-35a291ecc04c"/>
+				<subreportParameter name="idsetor">
+					<subreportParameterExpression><![CDATA[$F{TBSETOR_IDSETOR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "listaGrupo.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
