@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="listaCategoria" language="groovy" pageWidth="401" pageHeight="595" columnWidth="401" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="5b7075b6-699e-4da0-8b72-ee1683a2c215">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="idSubGrupo" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     TBCATEGORIA."IDCATEGORIA" AS TBCATEGORIA_IDCATEGORIA,
+     TBCATEGORIA."DESCRICAO" AS TBCATEGORIA_DESCRICAO,
+     TBCATEGORIA."SUBGRUPO_IDSUBGRUPO" AS TBCATEGORIA_SUBGRUPO_IDSUBGRUP
+FROM
+     "PROJETO"."TBCATEGORIA" TBCATEGORIA
+WHERE "PROJETO"."TBCATEGORIA".SUBGRUPO_IDSUBGRUPO = $P{idSubGrupo}]]>
+	</queryString>
+	<field name="TBCATEGORIA_IDCATEGORIA" class="java.math.BigDecimal"/>
+	<field name="TBCATEGORIA_DESCRICAO" class="java.lang.String"/>
+	<field name="TBCATEGORIA_SUBGRUPO_IDSUBGRUP" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="185" height="20" uuid="57ae0220-f843-44ed-97bc-741fc9b2daa4"/>
+				<box leftPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{TBCATEGORIA_IDCATEGORIA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="185" y="0" width="216" height="20" uuid="b003dcd4-745d-490e-bc8d-49ff3f4e2019"/>
+				<box leftPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{TBCATEGORIA_DESCRICAO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
