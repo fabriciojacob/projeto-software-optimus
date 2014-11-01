@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<persistence xmlns="http://java.sun.com/xml/ns/persistence"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
-	<persistence-unit name="SoftwareOptimusServer"
-		transaction-type="RESOURCE_LOCAL">
-		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	<persistence-unit name="SoftwareOptimusServer" transaction-type="RESOURCE_LOCAL">
+	<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<class>br.com.softwareOptimus.comercial.Comercial</class>
 		<class>br.com.softwareOptimus.comercial.ComercialFiscais</class>
 		<class>br.com.softwareOptimus.comercial.ComercialInfComp</class>
@@ -36,7 +33,7 @@
 		<class>br.com.softwareOptimus.estoque.Inventario</class>
 		<class>br.com.softwareOptimus.estoque.ProdutoEstoque</class>
 		<class>br.com.softwareOptimus.financeiro.Banco</class>
-		<class>br.com.softwareOptimus.financeiro.MovCaixa</class>
+		<class>br.com.softwareOptimus.financeiro.Caixa</class>
 		<class>br.com.softwareOptimus.financeiro.CondPgto</class>
 		<class>br.com.softwareOptimus.financeiro.Conta</class>
 		<class>br.com.softwareOptimus.financeiro.FormaPgto</class>
@@ -46,7 +43,7 @@
 		<class>br.com.softwareOptimus.fiscal.CodigoSituacaoTributaria</class>
 		<class>br.com.softwareOptimus.fiscal.CodTabelaGov</class>
 		<class>br.com.softwareOptimus.fiscal.FiguraFiscal</class>
-		<class>br.com.softwareOptimus.fiscal.GradeTributariaVigencia</class>
+		<class>br.com.softwareOptimus.fiscal.GradeTributaria</class>
 		<class>br.com.softwareOptimus.fiscal.Ncm</class>
 		<class>br.com.softwareOptimus.producao.Fases</class>
 		<class>br.com.softwareOptimus.producao.Impedimento</class>
@@ -55,30 +52,28 @@
 		<class>br.com.softwareOptimus.produto.Produto</class>
 		<class>br.com.softwareOptimus.produto.UnidMed</class>
 		<class>br.com.softwareOptimus.entidades.Pessoa</class>
-		<class>br.com.softwareOptimus.fiscal.VigenciaRegime</class>
-		<class>br.com.softwareOptimus.fiscal.PautaMVA</class>
-		<class>br.com.softwareOptimus.financeiro.Caixa</class>
-		<class>br.com.softwareOptimus.financeiro.ContaFilha</class>
-		<class>br.com.softwareOptimus.fiscal.Pauta</class>
-		<class>br.com.softwareOptimus.fiscal.GradeTributaria</class>
-		<class>br.com.softwareOptimus.fiscal.TipoProduto</class>
-		<class>br.com.softwareOptimus.financeiro.ContaBancaria</class>
-		<class>br.com.softwareOptimus.financeiro.ExtratoContaBancaria</class>
 		<class>br.com.softwareOptimus.produto.Categoria</class>
-		<class>br.com.softwareOptimus.produto.SubGrupo</class>
 		<class>br.com.softwareOptimus.produto.Grupo</class>
 		<class>br.com.softwareOptimus.produto.Setor</class>
+		<class>br.com.softwareOptimus.produto.SubGrupo</class>
+		<class>br.com.softwareOptimus.fiscal.Pauta</class>
+		<class>br.com.softwareOptimus.fiscal.PautaMVA</class>
+		<class>br.com.softwareOptimus.fiscal.TipoProduto</class>
+		<class>br.com.softwareOptimus.fiscal.VigenciaRegime</class>
+		<class>br.com.softwareOptimus.fiscal.GradeTributariaVigencia</class>
+		<class>br.com.softwareOptimus.financeiro.ContaBancaria</class>
+		<class>br.com.softwareOptimus.financeiro.ContaFilha</class>
+		<class>br.com.softwareOptimus.financeiro.ExtratoContaBancaria</class>
+		<class>br.com.softwareOptimus.financeiro.MovCaixa</class>
 		<properties>
-			<property name=" javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
-			<property name=" javax.persistence.jdbc.user" value="root" />
-			<property name=" javax.persistence.jdbc.password" value="133964612700854" />
-			<property name=" javax.persistence.jdbc.url"
-				value="jdbc:mysql://localhost:3306/SoftwareOptimusServer" />
-
+			<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:xe" />
+			<property name="javax.persistence.jdbc.user" value="projeto" />
+			<property name="javax.persistence.jdbc.password" value="123" />
+			<property name="javax.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver" />
+			
 			<property name="hibernate.hbm2ddl.auto" value="update" />
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.format_sql" value="true" />
 		</properties>
-
 	</persistence-unit>
 </persistence>
