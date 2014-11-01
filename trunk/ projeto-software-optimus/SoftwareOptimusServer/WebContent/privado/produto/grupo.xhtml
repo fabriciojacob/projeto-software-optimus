@@ -15,7 +15,7 @@
 		<h3 style="margin-top: 0">CADASTRO DE GRUPO</h3>
 		<div align="left">
 			<p:commandButton value="Novo" actionListener="#{grupoBean.novo}"
-				ajax="grid"/>
+				ajax="grid" />
 
 			<p:commandButton value="Salvar" disabled="#{grupoBean.sal}"
 				actionListener="#{grupoBean.salvar}" ajax="grid" />
@@ -99,7 +99,8 @@
 						<f:selectItem itemLabel="Código" itemValue="id" />
 						<f:selectItem itemLabel="Descrição" itemValue="desc" />
 						<f:selectItem itemLabel="Código do SubGrupo" itemValue="idSub" />
-						<f:selectItem itemLabel="Descrição do SubGrupo" itemValue="descSub" />
+						<f:selectItem itemLabel="Descrição do SubGrupo"
+							itemValue="descSub" />
 					</p:selectOneMenu>
 
 				</h:panelGrid>
@@ -116,8 +117,8 @@
 						</p:column>
 
 						<p:column headerText="Selecionar">
-							<p:commandLink id="link" value="Editar" ajax="data, grid, gridData1"
-								action="#{grupoBean.editGrupo}">
+							<p:commandLink id="link" value="Editar"
+								ajax="data, grid, gridData1" action="#{grupoBean.editGrupo}">
 								<f:setPropertyActionListener value="#{grupo.idGrupo}"
 									target="#{grupoBean.id}" />
 							</p:commandLink>

@@ -134,8 +134,7 @@
 							mask="99999999?999999" />
 					
 					CNAE:
-					<p:inputMask id="cnae"
-							disabled="#{participanteBean.cnaeParPesJur}"
+					<p:inputMask id="cnae" disabled="#{participanteBean.cnaeParPesJur}"
 							value="#{participanteBean.pessoaJuridica.cnae}" mask="9999999" />
 					</h:panelGrid>
 
@@ -147,8 +146,8 @@
 						onclick="PF('dlg2').show();"
 						disabled="#{participanteBean.enderecos}" />
 
-					<p:dialog id="enderecoPesJur" header=" Enderecos" widgetVar="dlg2" modal="true"
-						height="300" width="400">
+					<p:dialog id="enderecoPesJur" header=" Enderecos" widgetVar="dlg2"
+						modal="true" height="300" width="400">
 
 
 						<h:panelGrid columns="2" columnClasses="label, value">

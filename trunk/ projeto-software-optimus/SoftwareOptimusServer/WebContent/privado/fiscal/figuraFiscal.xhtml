@@ -41,7 +41,8 @@
 					value="#{figuraFiscalBean.figura.idFigura}" />
 					
 					Descrição da Figura:
-					<p:inputText id="desc" value="#{figuraFiscalBean.figura.descricao}" disabled="#{figuraFiscalBean.desc}"/>
+					<p:inputText id="desc" value="#{figuraFiscalBean.figura.descricao}"
+					disabled="#{figuraFiscalBean.desc}" />
 			</h:panelGrid>
 
 			<p:commandButton id="diGrade" value="Vincular Grade" type="button"
@@ -109,7 +110,8 @@
 						</p:column>
 
 						<p:column headerText="Selecionar">
-							<p:commandLink id="link" value="Editar" ajax="grid, dialog3, gridGrade"
+							<p:commandLink id="link" value="Editar"
+								ajax="grid, dialog3, gridGrade"
 								action="#{figuraFiscalBean.editFigura}">
 								<f:setPropertyActionListener value="#{listFigura.idFigura}"
 									target="#{figuraFiscalBean.id}" />

@@ -18,13 +18,13 @@
 
 
 			<p:commandButton value="+" type="button"
-				onclick="PF('titulo').show();" disabled="#{tituloBens.btAdicionar}"/>
+				onclick="PF('titulo').show();" disabled="#{tituloBens.btAdicionar}" />
 
 			<p:commandButton value="Empresa" type="button"
 				onclick="PF('empresa').show();" update="frmTitulo" />
 
 			<p:commandButton value="Participante" type="button"
-				onclick="PF('participante').show();" update="frmTitulo"/>
+				onclick="PF('participante').show();" update="frmTitulo" />
 
 
 			<p:messages id="messages" showDetail="true" autoUpdate="true"
@@ -32,7 +32,7 @@
 
 			<p:dialog header="Titulo" widgetVar="titulo" modal="true"
 				height="350" width="400" id="dialogTitulo">
-		
+
 				<h:panelGrid columns="2" id="dadosTitulo">
 				
 				Empresa:
@@ -71,23 +71,22 @@
 				
 				Saldo titulo:
 				<p:inputText />
-				
-				<p:selectOneRadio id="tipoTitulo"
-						value="#{tituloBens.tipo}">
+
+					<p:selectOneRadio id="tipoTitulo" value="#{tituloBens.tipo}">
 						<f:selectItem itemLabel="PAGAR" itemValue="PAGAR" />
 						<f:selectItem itemLabel="RECEBER" itemValue="RECEBER" />
 					</p:selectOneRadio>
-				
+
 					<h:panelGrid columns="2">
-						<p:commandButton id="btSalvar" value="Salvar" 
-						actionListener="#{tituloBens.salvarTitulo(condPgtoBens.condPgto,formaPgtoBens.formaPgto)}"
-						 update="frmTitulo"/>
+						<p:commandButton id="btSalvar" value="Salvar"
+							actionListener="#{tituloBens.salvarTitulo(condPgtoBens.condPgto,formaPgtoBens.formaPgto)}"
+							update="frmTitulo" />
 					</h:panelGrid>
 				</h:panelGrid>
 			</p:dialog>
 
 			<p:dialog header="Empresa" widgetVar="empresa" modal="true"
-				height="300" width="400" id="dialogEmpresa" >
+				height="300" width="400" id="dialogEmpresa">
 
 				<div align="right">
 					<h:panelGrid columns="1">
@@ -125,7 +124,7 @@
 					</p:column>
 
 					<p:column headerText="Selecionar">
-						<p:commandLink id="link" value="Editar" 
+						<p:commandLink id="link" value="Editar"
 							action="#{tituloBens.selecionaEmpresa}" ajax="dialogEmpresa">
 							<f:setPropertyActionListener value="#{pesEmpresa.idPessoa}"
 								target="#{tituloBens.empresaSelecionada}" />
@@ -178,7 +177,7 @@
 			<p:tab id="dados">
 				<h:panelGrid columns="15">
 					Empresa:
-					<p:outputLabel value="#{tituloBens.titulo.empresa.fantasia}"/>
+					<p:outputLabel value="#{tituloBens.titulo.empresa.fantasia}" />
 					
 					Participante:
 					<p:outputLabel value="#{tituloBens.titulo.pessoa.fantasia}" />

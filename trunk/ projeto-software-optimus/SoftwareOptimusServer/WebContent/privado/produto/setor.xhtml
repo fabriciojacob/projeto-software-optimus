@@ -14,9 +14,9 @@
 		<br />
 		<h3 style="margin-top: 0">CADASTRO DE SETOR</h3>
 		<div align="left">
-		
+
 			<p:commandButton value="Novo" actionListener="#{setorBean.novo}"
-				ajax="grid"/>
+				ajax="grid" />
 
 			<p:commandButton value="Salvar" disabled="#{setorBean.sal}"
 				actionListener="#{setorBean.salvar}" ajax="grid" />
@@ -117,8 +117,8 @@
 						</p:column>
 
 						<p:column headerText="Selecionar">
-							<p:commandLink id="link" value="Editar" ajax="data, grid, listGrupo"
-								action="#{setorBean.editSet}">
+							<p:commandLink id="link" value="Editar"
+								ajax="data, grid, listGrupo" action="#{setorBean.editSet}">
 								<f:setPropertyActionListener value="#{setor.idSetor}"
 									target="#{setorBean.id}" />
 							</p:commandLink>
@@ -133,8 +133,8 @@
 			</p:dialog>
 
 
-			<p:dialog id="dialog2" header="Grupo" widgetVar="dlg2"
-				modal="true" height="100" width="400">
+			<p:dialog id="dialog2" header="Grupo" widgetVar="dlg2" modal="true"
+				height="100" width="400">
 
 				<h:panelGrid id="gridGru" columns="2" columnClasses="label, value">
 				
@@ -142,8 +142,8 @@
 					<p:selectOneMenu id="setorChk" style="width:265px;"
 						value="#{setorBean.grupo}">
 						<f:selectItem itemLabel="Selecione um Grupo" />
-						<f:selectItems value="#{setorBean.listaGrupo}"
-							var="lisGrupo" itemValue="#{lisGrupo}"
+						<f:selectItems value="#{setorBean.listaGrupo}" var="lisGrupo"
+							itemValue="#{lisGrupo}"
 							itemLabel="#{lisGrupo.idGrupo} - #{lisGrupo.descricao}" />
 					</p:selectOneMenu>
 

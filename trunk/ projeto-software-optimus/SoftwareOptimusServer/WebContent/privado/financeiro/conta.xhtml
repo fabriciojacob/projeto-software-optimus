@@ -17,7 +17,7 @@
 		<div align="left">
 
 			<p:commandButton value="Novo" actionListener="#{contaBean.novo}"
-				disabled="#{contaBean.novo}" ajax="frmCadConta"  update="listaCFilha"/>
+				disabled="#{contaBean.novo}" ajax="frmCadConta" update="listaCFilha" />
 
 			<p:commandButton value="Salvar" actionListener="#{contaBean.gravar}"
 				update="frmCadConta" disabled="#{contaBean.desabilitarGravar}" />
@@ -100,8 +100,9 @@
 					</h:panelGrid>
 					<br />
 					<br />
-					<p:commandButton value="Cadastro Conta Filha" type="button" id="cadContaFilha"
-						onclick="PF('cadFilhaConta').show();" disabled="#{contaBean.cadastroContaFilha}" />
+					<p:commandButton value="Cadastro Conta Filha" type="button"
+						id="cadContaFilha" onclick="PF('cadFilhaConta').show();"
+						disabled="#{contaBean.cadastroContaFilha}" />
 
 					<p:dialog header="Cadastro Conta Filha" widgetVar="cadFilhaConta"
 						modal="true" height="100" width="300">
@@ -115,8 +116,7 @@
 
 							<p:commandButton value="Salvar"
 								actionListener="#{contaBean.salvarContaFilha}"
-								update="listaCFilha" 
-								ajax="dialog"/>
+								update="listaCFilha" ajax="dialog" />
 
 						</h:panelGrid>
 

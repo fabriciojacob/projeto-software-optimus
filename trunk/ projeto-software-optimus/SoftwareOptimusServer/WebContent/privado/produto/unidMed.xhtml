@@ -26,8 +26,9 @@
 			<p:commandButton value="Excluir" disabled="#{unidMedBean.rem}"
 				actionListener="#{unidMedBean.remUnid}" ajax="grid" />
 
-			<p:commandButton id="consulta" value="Consultar" type="button" ajax="dialog, grid"
-				onclick="PF('dlg3').show();" disabled="#{unidMedBean.disable}"
+			<p:commandButton id="consulta" value="Consultar" type="button"
+				ajax="dialog, grid" onclick="PF('dlg3').show();"
+				disabled="#{unidMedBean.disable}"
 				actionListener="#{unidMedBean.cancelar}" />
 
 			<p:commandButton value="Cancelar"
@@ -43,7 +44,7 @@
 		
 					Unidade Abreviada:
 					<p:inputText id="unid" value="#{unidMedBean.unidMed.unid}"
-					size="10" disabled="#{unidMedBean.unidAbre}"/>
+					size="10" disabled="#{unidMedBean.unidAbre}" />
 					
 					Descrição da Unidade:
 					<p:inputText id="descUnid" value="#{unidMedBean.unidMed.descUnid}"
