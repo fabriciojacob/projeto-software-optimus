@@ -16,24 +16,22 @@
 		<h3 style="margin-top: 0">CADASTRO DE EXEMPLO</h3>
 		<div align="left">
 
-			<p:commandButton value="Novo" actionListener=""
-				disabled="" update="frmCaixa" />
+			<p:commandButton value="Novo" actionListener="" disabled=""
+				update="frmCaixa" />
 
-			<p:commandButton value="Salvar" actionListener=""
-				update="" disabled="" />
-
-			<p:commandButton value="Editar" actionListener=""
+			<p:commandButton value="Salvar" actionListener="" update=""
 				disabled="" />
+
+			<p:commandButton value="Editar" actionListener="" disabled="" />
 
 			<p:commandButton value="Consulta" type="button"
 				onclick="PF('consulta').show();" />
 
-			<p:commandButton value="Cancelar" actionListener=""
-				disabled="" update="" />
+			<p:commandButton value="Cancelar" actionListener="" disabled=""
+				update="" />
 
 			<p:commandButton value="Excluir"
-				actionListener="#{caixaBean.excluir}"
-				disabled="" update="" />
+				actionListener="#{caixaBean.excluir}" disabled="" update="" />
 
 			<p:messages id="messages" showDetail="true" autoUpdate="true"
 				closable="true" />
@@ -45,13 +43,11 @@
 				Descrição:
 					<p:inputText value="" />
 
-					<p:commandButton value="Pesquisar" update=""
-						actionListener="" />
+					<p:commandButton value="Pesquisar" update="" actionListener="" />
 				</h:panelGrid>
 
 
-				<p:dataTable id="" paginator="true" rows="6"
-					value="" var="">
+				<p:dataTable id="" paginator="true" rows="6" value="" var="">
 
 					<p:column headerText="Codigo">
 						<h:outputText value="" />
@@ -62,10 +58,9 @@
 					</p:column>
 
 					<p:column headerText="Selecionar">
-						<p:commandLink id="link" value="Selecionar" ajax="dialog,frmExemplo"
-							action="" update="dados">
-							<f:setPropertyActionListener value=""
-								target="" />
+						<p:commandLink id="link" value="Selecionar"
+							ajax="dialog,frmExemplo" action="" update="dados">
+							<f:setPropertyActionListener value="" target="" />
 						</p:commandLink>
 					</p:column>
 
@@ -77,22 +72,18 @@
 
 				<p:tab id="dados" title="Cadastro">
 
-					<h:panelGrid id="" columns="2"
-						columnClasses="label, value">
+					<h:panelGrid id="" columns="2" columnClasses="label, value">
 						
 					Inativa:
-						<p:selectBooleanCheckbox id=""
-							value="" />
+						<p:selectBooleanCheckbox id="" value="" />
 					</h:panelGrid>
 					<h:panelGrid columns="2" columnClasses="label, value">
 					
 					Codigo:
-					<p:inputText id="" disabled="true"
-							value="" />
+					<p:inputText id="" disabled="true" value="" />
 					
 					Descrição:
-					<p:inputText id="" value=""
-							size="30" />
+					<p:inputText id="" value="" size="30" />
 
 					</h:panelGrid>
 

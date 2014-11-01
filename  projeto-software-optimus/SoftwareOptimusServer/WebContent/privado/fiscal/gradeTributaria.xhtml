@@ -46,7 +46,8 @@
 		
 					Descrição da Grade:
 					<p:inputText id="descGrade"
-					value="#{gradeTributariaBean.grade.descricao}" size="40" disabled="#{gradeTributariaBean.desc}"/>
+					value="#{gradeTributariaBean.grade.descricao}" size="40"
+					disabled="#{gradeTributariaBean.desc}" />
 
 			</h:panelGrid>
 
@@ -151,7 +152,8 @@
 						</p:column>
 
 						<p:column headerText="Selecionar">
-							<p:commandLink id="link" value="Editar" ajax="grid, dialog1, gridGradeVig"
+							<p:commandLink id="link" value="Editar"
+								ajax="grid, dialog1, gridGradeVig"
 								action="#{gradeTributariaBean.editGrade}">
 								<f:setPropertyActionListener value="#{grade.idGradeTrib}"
 									target="#{gradeTributariaBean.id}" />
@@ -232,8 +234,8 @@
 					<p:selectOneMenu id="pauta" style="width:200px;"
 							value="#{gradeTributariaBean.gradeVig.pauta}">
 							<f:selectItem itemLabel="Selecione uma Pauta" />
-							<f:selectItems value="#{gradeTributariaBean.listaPauta}" var="pautaList"
-								itemValue="#{pautaList}"
+							<f:selectItems value="#{gradeTributariaBean.listaPauta}"
+								var="pautaList" itemValue="#{pautaList}"
 								itemLabel="#{pautaList.idPauta} - #{pautaList.descricao}" />
 						</p:selectOneMenu>
 					</h:panelGrid>

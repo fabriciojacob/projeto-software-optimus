@@ -74,7 +74,8 @@
 						</p:column>
 
 						<p:column headerText="Selecionar">
-							<p:commandLink id="link" value="Editar" ajax="data, cadProduto, cadSetor"
+							<p:commandLink id="link" value="Editar"
+								ajax="data, cadProduto, cadSetor"
 								action="#{produtoBean.editProduto}">
 								<f:setPropertyActionListener value="#{produto.idProduto}"
 									target="#{produtoBean.id}" />
@@ -95,7 +96,8 @@
 					<h:panelGrid columns="2" columnClasses="label">
 				
 					Inativa:
-					<p:selectBooleanCheckbox id="inativaProd" disabled="#{produtoBean.sta}"
+					<p:selectBooleanCheckbox id="inativaProd"
+							disabled="#{produtoBean.sta}"
 							value="#{produtoBean.produto.status}" />
 					
 					Código do Produto:
@@ -103,16 +105,16 @@
 							value="#{produtoBean.produto.idProduto}" />
 		
 					Descrição do Produto:
-					<p:inputText id="descProd" value="#{produtoBean.produto.descProd}" disabled="#{produtoBean.desc}"
-							size="40" />
+					<p:inputText id="descProd" value="#{produtoBean.produto.descProd}"
+							disabled="#{produtoBean.desc}" size="40" />
 					
 					Código de Barra:
-					<p:inputText id="codBarra" value="#{produtoBean.produto.codBarra}" disabled="#{produtoBean.codBarra}"
-							size="40" />
+					<p:inputText id="codBarra" value="#{produtoBean.produto.codBarra}"
+							disabled="#{produtoBean.codBarra}" size="40" />
 			
 					Figura:
-					<p:selectOneMenu id="figura" value="#{produtoBean.produto.figura}" disabled="#{produtoBean.fig}"
-							style="width:265px;">
+					<p:selectOneMenu id="figura" value="#{produtoBean.produto.figura}"
+							disabled="#{produtoBean.fig}" style="width:265px;">
 							<f:selectItem itemLabel="Selecione uma Figura" />
 							<f:selectItems value="#{produtoBean.listaFigura}" var="listaFig"
 								itemValue="#{listaFig}"
@@ -129,7 +131,8 @@
 						</p:selectOneMenu>
 				
 					Tipo de Produto:
-					<p:selectOneMenu id="tipoProduto" disabled="#{produtoBean.tipoProd}"
+					<p:selectOneMenu id="tipoProduto"
+							disabled="#{produtoBean.tipoProd}"
 							value="#{produtoBean.produto.tipoProd}" style="width:265px;">
 							<f:selectItem itemLabel="Selecione um Tipo de Produto" />
 							<f:selectItems value="#{produtoBean.listaTipo}" var="listaTip"
@@ -137,8 +140,7 @@
 								itemLabel="#{listaTip.idTipoProd} - #{listaTip.descricao}" />
 						</p:selectOneMenu>
 
-						<p:tooltip id="toolTipDadosBas"
-							for="figura, unidMed, tipoProduto"
+						<p:tooltip id="toolTipDadosBas" for="figura, unidMed, tipoProduto"
 							value="Exibição 'Codigo' - 'Descrição'" showEffect="clip"
 							hideEffect="explode" />
 
@@ -148,8 +150,8 @@
 				<p:tab id="cadSetor" title="Setorização">
 					<h:panelGrid columns="2" columnClasses="label">
 				 Setor:
-					<p:selectOneMenu id="setor" value="#{produtoBean.produto.setor}" disabled="#{produtoBean.set}"
-							style="width:265px;">
+					<p:selectOneMenu id="setor" value="#{produtoBean.produto.setor}"
+							disabled="#{produtoBean.set}" style="width:265px;">
 							<f:selectItem itemLabel="Selecione um Setor" />
 							<f:selectItems value="#{produtoBean.listaSetor}" var="listaSetor"
 								itemValue="#{listaSetor}"
@@ -159,8 +161,8 @@
 						</p:selectOneMenu>
 					
 				 Grupo:
-					<p:selectOneMenu id="grupo" value="#{produtoBean.produto.grupo}" disabled="#{produtoBean.gru}"
-							style="width:265px;">
+					<p:selectOneMenu id="grupo" value="#{produtoBean.produto.grupo}"
+							disabled="#{produtoBean.gru}" style="width:265px;">
 							<f:selectItem itemLabel="Selecione um Grupo" />
 							<f:selectItems value="#{produtoBean.listaGrupo}" var="listaGrupo"
 								itemValue="#{listaGrupo}"
@@ -188,12 +190,12 @@
 								var="listaCategoria" itemValue="#{listaCategoria}"
 								itemLabel="#{listaCategoria.idCategoria} - #{listaCategoria.descricao}" />
 						</p:selectOneMenu>
-						
+
 						<p:tooltip id="toolTipSetor"
 							for="setor, grupo, subGrupo, categoria"
 							value="Exibição 'Codigo' - 'Descrição'" showEffect="clip"
 							hideEffect="explode" />
-							
+
 					</h:panelGrid>
 				</p:tab>
 			</p:tabView>
