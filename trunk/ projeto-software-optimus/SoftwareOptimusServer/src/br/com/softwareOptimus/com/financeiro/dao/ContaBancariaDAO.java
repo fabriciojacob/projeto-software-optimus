@@ -3,9 +3,7 @@ package br.com.softwareOptimus.com.financeiro.dao;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
-
 import br.com.softwareOptimus.financeiro.ContaBancaria;
-import br.com.softwareOptimus.financeiro.TipoContaBancaria;
 
 public interface ContaBancariaDAO {
 

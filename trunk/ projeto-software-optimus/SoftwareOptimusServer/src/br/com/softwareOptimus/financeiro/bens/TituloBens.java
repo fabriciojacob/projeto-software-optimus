@@ -1,6 +1,7 @@
 package br.com.softwareOptimus.financeiro.bens;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -11,6 +12,8 @@ import javax.faces.context.FacesContext;
 import br.com.softwareOptimus.entidades.Pessoa;
 import br.com.softwareOptimus.financeiro.CondPgto;
 import br.com.softwareOptimus.financeiro.FormaPgto;
+import br.com.softwareOptimus.financeiro.Rubrica;
+import br.com.softwareOptimus.financeiro.StatusConta;
 import br.com.softwareOptimus.financeiro.TipoTitulo;
 import br.com.softwareOptimus.financeiro.Titulo;
 import br.com.softwareOptimus.financeiro.RN.TituloRN;
@@ -20,14 +23,70 @@ import br.com.softwareOptimus.financeiro.RN.TituloRN;
 public class TituloBens {
 
 	private Titulo titulo = new Titulo();
-	private String nomePesquisa, tipo;
+	private String nomePesquisa, statusBaixa, tipoData, tipoTitulo, tipoTitulo2;
 	private Long empresaSelecionada, participanteSelecionado;
 	private List<Pessoa> participantes = new ArrayList<>();
-	private TituloRN regraNegocio = new TituloRN();
+	private List<Titulo> titulos = new ArrayList<>();
+	private TituloRN regraNegocio;
 	private Pessoa pessoa;
 	private Pessoa empresa;
 	private boolean btAdicionar = true;
 	private int verifica = 0;
+	private Date dataIni, dataFim;
+
+	public void pesquisaTitulo() {
+		Integer tipoTi;
+		regraNegocio = new TituloRN();
+		Integer status = 0;
+		if (statusBaixa.equals(StatusConta.BAIXADA.toString())) {
+			status = 0;
+		} else if (statusBaixa.equals(StatusConta.PENDENTE.toString())) {
+			status = 1;
+		} else {
+			status = 2;
+		}
+		try {
+			if (tipoData.equals("PAGAMENTO")) {
+				if (tipoTitulo2.equals(TipoTitulo.PAGAR.toString())) {
+					tipoTi = 0;
+					titulos = regraNegocio.pesquisaPagamento(dataIni, dataFim,
+							empresa, pessoa, tipoTi, status);
+				} else {
+					tipoTi = 1;
+					titulos = regraNegocio.pesquisaPagamento(dataIni, dataFim,
+							empresa, pessoa, tipoTi, status);
+				}
+			} else if (tipoData.equals("VENCIMENTO")) {
+				if (tipoTitulo2.equals(TipoTitulo.PAGAR.toString())) {
+					titulos = regraNegocio.pesquisaVencimento(dataIni, dataFim,
+							empresa, pessoa, 0, status);
+				} else {
+					titulos = regraNegocio.pesquisaVencimento(dataIni, dataFim,
+							empresa, pessoa, 1, status);
+				}
+			} else {
+				if (tipoTitulo2.equals(TipoTitulo.PAGAR.toString())) {
+					tipoTi = 0;
+					titulos = regraNegocio.pesquisaLancamento(dataIni, dataFim,
+							empresa, pessoa, 0, status);
+				} else {
+					tipoTi = 1;
+					titulos = regraNegocio.pesquisaLancamento(dataIni, dataFim,
+							empresa, pessoa, tipoTi, status);
+				}
+			}
+		} catch (Exception e) {
+			msgErro("Problemas na pesquisa do titulo", e);
+		}
+	}
+
+	public String getTipoTitulo2() {
+		return tipoTitulo2;
+	}
+
+	public void setTipoTitulo2(String tipoTitulo2) {
+		this.tipoTitulo2 = tipoTitulo2;
+	}
 
 	public void pesquisaParticipante() {
 		if (this.participantes != null) {
@@ -47,8 +106,8 @@ public class TituloBens {
 			this.empresa = this.regraNegocio.participante(empresaSelecionada);
 			this.titulo.setEmpresa(empresa);
 			msgAcerto("Empresa selecionada");
-			verifica= verifica + 1;
-			if(verifica == 2){
+			verifica = verifica + 1;
+			if (verifica >= 2) {
 				btAdicionar = false;
 			}
 		} catch (Exception e) {
@@ -61,14 +120,19 @@ public class TituloBens {
 		this.regraNegocio = new TituloRN();
 		titulo.setCondPgto(condPgto);
 		titulo.setFormaPgto(formaPgto);
-		if(tipo.equals("PAGAR")){
+		if (tipoTitulo.equals(TipoTitulo.PAGAR.toString())) {
 			titulo.setTipoTitulo(TipoTitulo.PAGAR);
-		}else{
+		} else {
 			titulo.setTipoTitulo(TipoTitulo.RECEBER);
 		}
-		try {
+		titulo.setRubrica(Rubrica.MANUAL);
+		titulo.setStatus(StatusConta.PENDENTE);
+		try {		
 			this.regraNegocio.salvar(titulo);
 			msgAcerto("Registro salvo com sucesso ");
+			this.titulo = new Titulo();
+			btAdicionar = true;
+			verifica = 0;
 		} catch (Exception e) {
 			msgErro("Problemas ao salvar o titulo ", e);
 		}
@@ -90,8 +154,8 @@ public class TituloBens {
 			this.pessoa = this.regraNegocio
 					.participante(participanteSelecionado);
 			this.titulo.setPessoa(this.pessoa);
-			verifica= verifica + 1;
-			if(verifica == 2){
+			verifica = verifica + 1;
+			if (verifica >= 2) {
 				btAdicionar = false;
 			}
 		} catch (Exception e) {
@@ -175,14 +239,6 @@ public class TituloBens {
 		this.empresa = empresa;
 	}
 
-	public String getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
-
 	public boolean isBtAdicionar() {
 		return btAdicionar;
 	}
@@ -198,6 +254,53 @@ public class TituloBens {
 	public void setVerifica(int verifica) {
 		this.verifica = verifica;
 	}
-	
+
+	public String getStatusBaixa() {
+		return statusBaixa;
+	}
+
+	public void setStatusBaixa(String statusBaixa) {
+		this.statusBaixa = statusBaixa;
+	}
+
+	public String getTipoData() {
+		return tipoData;
+	}
+
+	public void setTipoData(String tipoData) {
+		this.tipoData = tipoData;
+	}
+
+	public Date getDataIni() {
+		return dataIni;
+	}
+
+	public void setDataIni(Date dataIni) {
+		this.dataIni = dataIni;
+	}
+
+	public Date getDataFim() {
+		return dataFim;
+	}
+
+	public void setDataFim(Date dataFim) {
+		this.dataFim = dataFim;
+	}
+
+	public List<Titulo> getTitulos() {
+		return titulos;
+	}
+
+	public void setTitulos(List<Titulo> titulos) {
+		this.titulos = titulos;
+	}
+
+	public String getTipoTitulo() {
+		return tipoTitulo;
+	}
+
+	public void setTipoTitulo(String tipoTitulo) {
+		this.tipoTitulo = tipoTitulo;
+	}
 	
 }

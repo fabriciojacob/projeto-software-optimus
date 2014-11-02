@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
 	<persistence-unit name="SoftwareOptimusServer" transaction-type="RESOURCE_LOCAL">
 	<provider>org.hibernate.ejb.HibernatePersistence</provider>
+
 		<class>br.com.softwareOptimus.comercial.Comercial</class>
 		<class>br.com.softwareOptimus.comercial.ComercialFiscais</class>
 		<class>br.com.softwareOptimus.comercial.ComercialInfComp</class>
@@ -65,11 +65,13 @@
 		<class>br.com.softwareOptimus.financeiro.ContaFilha</class>
 		<class>br.com.softwareOptimus.financeiro.ExtratoContaBancaria</class>
 		<class>br.com.softwareOptimus.financeiro.MovCaixa</class>
+
 		<properties>
-			<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:xe" />
-			<property name="javax.persistence.jdbc.user" value="projeto" />
-			<property name="javax.persistence.jdbc.password" value="123" />
-			<property name="javax.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver" />
+
+			<property name=" javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+			<property name=" javax.persistence.jdbc.user" value="root" />
+			<property name=" javax.persistence.jdbc.password" value="1234" />
+			<property name=" javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/projeto" />
 			
 			<property name="hibernate.hbm2ddl.auto" value="update" />
 			<property name="hibernate.show_sql" value="true" />
