@@ -8,6 +8,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 import br.com.softwareOptimus.entidades.Pessoa;
+import br.com.softwareOptimus.financeiro.StatusConta;
+import br.com.softwareOptimus.financeiro.TipoTitulo;
 import br.com.softwareOptimus.financeiro.Titulo;
 
 public class TituloDAOHibernate implements TituloDAO {
@@ -19,6 +21,9 @@ public class TituloDAOHibernate implements TituloDAO {
 	@Override
 	public void salvar(Titulo titulo) throws Exception {
 		this.session.persist(titulo);
+		if(!this.transacao.isActive()){
+			this.transacao.begin();
+		}
 		this.transacao.commit();
 	}
 
@@ -95,8 +100,19 @@ public class TituloDAOHibernate implements TituloDAO {
 		consulta.setParameter("parDataFim", dataFim);
 		consulta.setParameter("parEmpresa", empresa);
 		consulta.setParameter("parParticipante", participante);
-		consulta.setParameter("parTipo", tipo);
-		consulta.setParameter("parStatus", status);
+		if(tipo == 0){
+			consulta.setParameter("parTipo", TipoTitulo.PAGAR);
+		}else{
+			consulta.setParameter("parTipo", TipoTitulo.RECEBER);
+		}
+		if(status == 0){
+			consulta.setParameter("parStatus", StatusConta.BAIXADA);
+		}else if (status == 1){
+			consulta.setParameter("parStatus", StatusConta.PENDENTE);
+		}else{
+			consulta.setParameter("parStatus", StatusConta.CANCELADA);
+		}
+		
 		return consulta.getResultList();
 	}
 

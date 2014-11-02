@@ -25,19 +25,19 @@ public class TituloRN {
 	public List<Titulo> pesquisaPagamento(Date dateIni, Date dataFim,
 			Pessoa empresa, Pessoa participante, Integer tipo, Integer status)
 			throws Exception {
-		return this.pesquisaPagamento(dateIni, dataFim, empresa, participante,
+		return this.titulo.pesquisaPagamento(dateIni, dataFim, empresa, participante,
 				tipo, status);
 	}
 
 	public List<Titulo> pesquisaLancamento(Date dataIni, Date dataFim,
 			Pessoa empresa, Pessoa particupante, Integer tipo, Integer status)
 			throws Exception {
-		return this.pesquisaLancamento(dataIni, dataFim, empresa, particupante,
+		return this.titulo.pesquisaLancamento(dataIni, dataFim, empresa, particupante,
 				tipo, status);
 	}
 
 	public List<Titulo> pesquisaPessoa(Pessoa empresa) throws Exception {
-		return this.pesquisaPessoa(empresa);
+		return this.titulo.pesquisaPessoa(empresa);
 	}
 
 	public void salvar(Titulo titulo) throws Exception {
