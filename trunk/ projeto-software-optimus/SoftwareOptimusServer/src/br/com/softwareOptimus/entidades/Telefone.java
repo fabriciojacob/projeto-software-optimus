@@ -1,6 +1,8 @@
 package br.com.softwareOptimus.entidades;
 
 import java.io.Serializable;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -20,7 +22,8 @@ public class Telefone implements Serializable{
 	@GeneratedValue
 	private Long idTelefone;
 	
-	private Integer numero;
+	@Column ( length = 11 , nullable = true , unique = false)
+	private String numero;
 	
 	private TipoTelefone tipoFone;
 	
@@ -42,12 +45,12 @@ public class Telefone implements Serializable{
 	public void setIdTelefone(Long idTelefone) {
 		this.idTelefone = idTelefone;
 	}
-
-	public Integer getNumero() {
+	
+	public String getNumero() {
 		return numero;
 	}
-
-	public void setNumero(Integer numero) {
+	
+	public void setNumero(String numero) {
 		this.numero = numero;
 	}
 

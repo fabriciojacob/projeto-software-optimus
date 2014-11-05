@@ -8,7 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import br.com.softwareOptimus.estoque.ProdutoEstoque;
 import br.com.softwareOptimus.fiscal.FiguraFiscal;
 import br.com.softwareOptimus.fiscal.TipoProduto;
 import br.com.softwareOptimus.producao.ProdutoFilho;
@@ -34,10 +33,7 @@ public class Produto implements Serializable{
 	private String descProd;
 	
 	private String codBarra;
-	
-	@OneToOne(mappedBy="produto")
-	private ProdutoEstoque estoque;
-	
+
 	@OneToOne(mappedBy = "produto")
 	private ProdutoFilho prodFilho;
 	
@@ -154,15 +150,6 @@ public class Produto implements Serializable{
 	public void setUnidMed(UnidMed unidMed) {
 		UnidMed = unidMed;
 	}
-
-	public ProdutoEstoque getEstoque() {
-		return estoque;
-	}
-	
-	public void setEstoque(ProdutoEstoque estoque) {
-		this.estoque = estoque;
-	}
-
 
 	public TipoProduto getTipoProd() {
 		return tipoProd;

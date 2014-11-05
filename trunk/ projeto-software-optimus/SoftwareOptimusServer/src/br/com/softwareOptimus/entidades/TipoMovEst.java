@@ -6,5 +6,6 @@ public enum TipoMovEst {
 	VENDA,
 	OUTRASAIDA,
 	OUTRAENTRADA,
-
+	MANUALENTRADA,
+	MANUALSAIDA
 }

@@ -56,4 +56,13 @@ public class EmailRN {
 		this.listaEmails = listaEmails;
 	}
 
+	public Integer validaCampoNulo(Email emails) {
+		if(emails.getEmail().isEmpty()){
+			return 1;
+		}
+		else{
+			return 0;
+		}
+	}
+
 }
