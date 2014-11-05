@@ -2,15 +2,14 @@ package br.com.softwareOptimus.estoque;
 
 import java.io.Serializable;
 import java.util.Calendar;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
+import br.com.softwareOptimus.entidades.Pessoa;
 import br.com.softwareOptimus.entidades.TipoMovEst;
 import br.com.softwareOptimus.produto.Produto;
 
@@ -37,6 +36,9 @@ public class ProdutoEstoque implements Serializable {
 	
 	private Double saldo;
 	
+	@ManyToOne
+	private Pessoa Empresa;
+	
 	@Temporal(TemporalType.DATE)
 	private Calendar data;
 	
@@ -46,7 +48,7 @@ public class ProdutoEstoque implements Serializable {
 	
 	private TipoMovEst tipoMovEst;
 	
-	@OneToOne
+	@ManyToOne
 	private Produto produto;
 	
 	private String justificativa;
@@ -135,6 +137,14 @@ public class ProdutoEstoque implements Serializable {
 		this.produto = produto;
 	}
 
+	public Pessoa getEmpresa() {
+		return Empresa;
+	}
+
+	public void setEmpresa(Pessoa empresa) {
+		Empresa = empresa;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -154,7 +164,7 @@ public class ProdutoEstoque implements Serializable {
 	
 	@SuppressWarnings("static-access")
 	public void setCustoMedio(TipoMovEst tipo) {
-		if(tipoMovEst.COMPRA.equals(tipo.COMPRA) && this.saldo <= 0){
+		if(tipoMovEst.COMPRA.equals(tipo.COMPRA) && this.saldo >= 0){
 			this.custoMedio = this.totalCusto / (this.quantEntrada + this.saldo);
 		}
 	}

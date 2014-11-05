@@ -35,7 +35,7 @@ public class EmpresaBean {
 	private String tipoRegime = null;
 	private String tipoConsulta = null;
 	private boolean disable = false;
-	private String filtro = null;
+	private String filtro = null, dddTel;
 	private List<PessoaJuridica> retornoListaPessoa = new ArrayList<>();
 	private List<Logradouro> listaEnd = new ArrayList<>();
 	private Long id, idReg, idLogr, idTel, idEmail;
@@ -54,6 +54,14 @@ public class EmpresaBean {
 
 	public boolean isIna() {
 		return ina;
+	}
+
+	public String getDddTel() {
+		return dddTel;
+	}
+
+	public void setDddTel(String dddTel) {
+		this.dddTel = dddTel;
 	}
 
 	public void setIna(boolean ina) {
@@ -429,15 +437,18 @@ public class EmpresaBean {
 		EmpresaRN empresaRN = new EmpresaRN();
 		String cnpj = "cnpj";
 		try {
-			if (filtro.equals(cnpj)) {
-				if (this.retornoListaPessoa != null) {
-					this.retornoListaPessoa.clear();
+			if (this.retornoListaPessoa != null) {
+				this.retornoListaPessoa.clear();
+			}
+			if (!tipoConsulta.equals("") && !filtro.equals("")) {
+				if (filtro.equals(cnpj)) {
+					this.retornoListaPessoa = empresaRN
+							.pesquisaCNPJ(tipoConsulta);
+				} else if (filtro.equals("nomeFantasia")) {
+					this.retornoListaPessoa = empresaRN
+							.pesquisaNome(tipoConsulta);
 				}
-				this.retornoListaPessoa = empresaRN.pesquisaCNPJ(tipoConsulta);
 			} else {
-				if (this.retornoListaPessoa != null) {
-					this.retornoListaPessoa.clear();
-				}
 				this.retornoListaPessoa = empresaRN.pesquisaNome(tipoConsulta);
 			}
 			this.salvar = false;
@@ -651,7 +662,7 @@ public class EmpresaBean {
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-								"Ja existe um email como padrï¿½o NFE"));
+								"Ja existe um email como padrão NFE"));
 			} else {
 				emails.setPessoa(pessoaJuridica);
 				if (padraoNFE) {
@@ -713,25 +724,33 @@ public class EmpresaBean {
 
 	public void salvarTelefone() {
 		TelefoneRN telefoneRN = new TelefoneRN();
-		String celular = "9";
 		if (tipoSelecionadoTel.equals(TipoTelefone.CELULAR.toString())) {
 			this.tel.setTipoFone(TipoTelefone.CELULAR);
-			celular = celular + tel.getNumero();
-			tel.setNumero(Integer.parseInt(celular));
 		} else if (tipoSelecionadoTel.equals(TipoTelefone.COMERCIAL.toString())) {
 			this.tel.setTipoFone(TipoTelefone.COMERCIAL);
-		} else {
+		} else if (tipoSelecionadoTel.equals(TipoTelefone.RESIDENCIAL
+				.toString())) {
 			this.tel.setTipoFone(TipoTelefone.RESIDENCIAL);
 		}
 		try {
-			this.tel.setPessoa(pessoaJuridica);
-			telefoneRN.salvar(tel);
-			this.tel = new Telefone();
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-							"Telefone salvo com sucesso"));
-			listaTelefone();
+			Integer retorno = telefoneRN.validaCampoNulo(this.tel, this.dddTel);
+			if (retorno == 0) {
+				this.tel.setNumero(this.dddTel + this.tel.getNumero());
+				this.tel.setPessoa(pessoaJuridica);
+				telefoneRN.salvar(this.tel);
+				this.dddTel = new String();
+				this.tel = new Telefone();
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
+								"Telefone salvo com sucesso"));
+				listaTelefone();
+			} else {
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+								"Existem campos nulos no formulário"));
+			}
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
 					null,

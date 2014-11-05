@@ -36,7 +36,7 @@ public class ParticipanteBean {
 	private Logradouro logradouro = new Logradouro();
 	private String tipoLogrSelecionado = null, selecionadaPessoa = null,
 			tipoParticipante = null, tipoPJ = null, filtro = null,
-			textoConsulta = null, tipoSelecionadoTel = null;
+			textoConsulta = null, tipoSelecionadoTel = null, dddTel;
 	private List<Telefone> listaTelefone = new ArrayList<>();
 	private boolean salvar = true, cancelar = true, enderecos = true,
 			salReg = true, email = true, telefone = true, padraoNFE,
@@ -188,12 +188,17 @@ public class ParticipanteBean {
 		this.participanteRN = new ParticipanteRN();
 		String cnpj = "cnpj";
 		try {
-			if (filtro.equals(cnpj)) {
-				if (this.listaPessoaJuridica != null) {
-					this.listaPessoaJuridica.clear();
+			if (this.listaPessoaJuridica != null) {
+				this.listaPessoaJuridica.clear();
+			}
+			if (!textoConsulta.equals("") && !filtro.equals("")) {
+				if (filtro.equals(cnpj)) {
+					this.listaPessoaJuridica = this.participanteRN
+							.listaPJCNPJ(textoConsulta);
+				} else {
+					this.listaPessoaJuridica = this.participanteRN
+							.listaPJNome(textoConsulta);
 				}
-				this.listaPessoaJuridica = this.participanteRN
-						.listaPJCNPJ(textoConsulta);
 			} else {
 				this.listaPessoaJuridica = this.participanteRN
 						.listaPJNome(textoConsulta);
@@ -214,16 +219,18 @@ public class ParticipanteBean {
 		this.participanteRN = new ParticipanteRN();
 		String cpf = "cpf";
 		try {
-			if (filtro.equals(cpf)) {
-				if (this.listaPessoaFisica != null) {
-					this.listaPessoaFisica.clear();
+			if (this.listaPessoaFisica != null) {
+				this.listaPessoaFisica.clear();
+			}
+			if (!textoConsulta.equals("") && !filtro.equals("")) {
+				if (filtro.equals(cpf)) {
+					this.listaPessoaFisica = this.participanteRN
+							.listaPFCPF(textoConsulta);
+				} else if (filtro.equals("nomeFantasia")) {
+					this.listaPessoaFisica = this.participanteRN
+							.listaPFNome(textoConsulta);
 				}
-				this.listaPessoaFisica = this.participanteRN
-						.listaPFCPF(textoConsulta);
 			} else {
-				if (this.listaPessoaFisica != null) {
-					this.listaPessoaFisica.clear();
-				}
 				this.listaPessoaFisica = this.participanteRN
 						.listaPFNome(textoConsulta);
 			}
@@ -339,19 +346,26 @@ public class ParticipanteBean {
 	public void salvarEmail() {
 		EmailRN emailRN = new EmailRN();
 		Integer pNfe = 0, checkNFe = 0;
-		try {
+		Integer retorno = emailRN.validaCampoNulo(this.emails);
+		if (retorno == 0) {
 			try {
-				if (this.pessoaFisica.getIdPessoa() == 0) {
+				try {
+					if (this.pessoaFisica.getIdPessoa() == 0) {
+						checkNFe = emailRN.validaEmailNFE(pessoaJuridica);
+					} else {
+						checkNFe = emailRN.validaEmailNFE(pessoaFisica);
+					}
+				} catch (NullPointerException e) {
 					checkNFe = emailRN.validaEmailNFE(pessoaJuridica);
-				} else {
-					checkNFe = emailRN.validaEmailNFE(pessoaFisica);
 				}
-			} catch (NullPointerException e) {
-				checkNFe = emailRN.validaEmailNFE(pessoaJuridica);
+			} catch (Exception e) {
+				msgErro("Problemas na validação do email", e);
 			}
-
 			if (padraoNFE && checkNFe == 1) {
-				msgErro("Ja existe um email como padrão NFE", null);
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+								"Ja existe um email como padrão NFE"));
 			} else {
 				try {
 					if (this.pessoaFisica.getIdPessoa() == 0) {
@@ -368,13 +382,20 @@ public class ParticipanteBean {
 				} else {
 					emails.setPadraoNFe(pNfe);
 				}
-				emailRN.salvar(emails);
-				msgAcerto("Email salvo com sucesso");
-				this.emails = new Email();
+				try {
+					emailRN.salvar(emails);
+					msgAcerto("Email salvo com sucesso");
+					this.emails = new Email();
+					listaEmail();
+				} catch (Exception e) {
+					msgErro("Problemas na inclusão do email", e);
+				}
 			}
-			listaEmail();
-		} catch (Exception e) {
-			msgErro("Problemas na exclusão do email", e);
+		} else {
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+							"Existem campos nulos no formulário"));
 		}
 	}
 
@@ -412,14 +433,12 @@ public class ParticipanteBean {
 
 	public void salvarTelefone() {
 		TelefoneRN telefoneRN = new TelefoneRN();
-		String celular = "9";
 		if (tipoSelecionadoTel.equals(TipoTelefone.CELULAR.toString())) {
 			this.tel.setTipoFone(TipoTelefone.CELULAR);
-			celular = celular + tel.getNumero();
-			tel.setNumero(Integer.parseInt(celular));
 		} else if (tipoSelecionadoTel.equals(TipoTelefone.COMERCIAL.toString())) {
 			this.tel.setTipoFone(TipoTelefone.COMERCIAL);
-		} else {
+		} else if (tipoSelecionadoTel.equals(TipoTelefone.RESIDENCIAL
+				.toString())) {
 			this.tel.setTipoFone(TipoTelefone.RESIDENCIAL);
 		}
 		try {
@@ -432,10 +451,20 @@ public class ParticipanteBean {
 			} catch (NullPointerException e) {
 				this.tel.setPessoa(pessoaJuridica);
 			}
-			telefoneRN.salvar(tel);
-			msgAcerto("Telefone salvo com sucesso");
-			listaTelefone();
-			this.tel = new Telefone();
+			Integer retorno = telefoneRN.validaCampoNulo(tel, dddTel);
+			if (retorno == 0) {
+				this.tel.setNumero(this.dddTel + this.tel.getNumero());
+				telefoneRN.salvar(tel);
+				msgAcerto("Telefone salvo com sucesso");
+				this.dddTel = new String();
+				listaTelefone();
+				this.tel = new Telefone();
+			} else {
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
+								"Existem campos nulos no formulário"));
+			}
 		} catch (Exception e) {
 			msgErro("Problemas em salvar o telefone", e);
 		}
@@ -471,6 +500,14 @@ public class ParticipanteBean {
 		this.cnpjParPesJur = true;
 		this.inscParPesJur = true;
 		this.cnaeParPesJur = true;
+	}
+
+	public String getDddTel() {
+		return dddTel;
+	}
+
+	public void setDddTel(String dddTel) {
+		this.dddTel = dddTel;
 	}
 
 	public ParticipanteRN getParticipanteRN() {

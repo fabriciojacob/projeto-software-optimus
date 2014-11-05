@@ -261,7 +261,7 @@
 					<br />
 					<p:dialog header="Emails" widgetVar="dlg3" modal="true"
 						height="100" width="400">
-						<h:panelGrid columns="2">
+						<h:panelGrid id="gridEmail" columns="2">
 						Email:
 						<p:inputText value="#{participanteBean.emails.email}" size="50" />
 						
@@ -271,7 +271,7 @@
 							<p:commandButton id="incluirEmail" icon="ui-icon-disk"
 								disabled="#{participanteBean.email}"
 								actionListener="#{participanteBean.salvarEmail}"
-								update="listaEmail" />
+								update="listaEmail, gridEmail" />
 
 						</h:panelGrid>
 
@@ -311,12 +311,16 @@
 					<br />
 					<br />
 					<p:dialog header="Telefones" widgetVar="dlg4" modal="true"
-						height="100" width="400">
+						height="150" width="350">
 						<h:panelGrid id="gridTel" columns="2">
+						
+						DDD:
+						<p:inputMask id="dddTel" value="#{participanteBean.dddTel}"
+								size="4" mask="99" />
 						
 						Telefone:
 						<p:inputMask id="numTel" value="#{participanteBean.tel.numero}"
-								size="50" mask="99999999" />
+								size="40" mask="99999999?9" />
 								
 						Tipo telefone:
 						<p:selectOneMenu id="tipoTelefone"
@@ -331,11 +335,8 @@
 								disabled="#{participanteBean.telefone}"
 								actionListener="#{participanteBean.salvarTelefone}"
 								update="listaTelefone, gridTel" />
-
-							<p:tooltip id="toolTipTel" for="numTel" value="Mascara 99999999"
-								showEffect="clip" hideEffect="explode" />
-
-						</h:panelGrid>
+ 
+ 						</h:panelGrid>
 
 					</p:dialog>
 					<p:dataTable id="listaTelefone"
