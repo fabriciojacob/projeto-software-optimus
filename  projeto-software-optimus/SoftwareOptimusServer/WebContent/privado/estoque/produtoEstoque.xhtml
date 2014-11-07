@@ -6,14 +6,139 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
+
 <h:head>
 
 </h:head>
-<body>
+<h:body>
 	<h:form id="frmMovEst">
 		<br />
-		<h3 style="margin-top: 0">MOVIMENTA ESTOQUE</h3>
-		<div align="left"></div>
+		<h3 style="margin-top: 0">MOVIMENTAÇÃO ESTOQUE</h3>
+		<div align="left">
+
+
+			<p:commandButton value="+" type="button" id="add"
+				onclick="PF('movEst').show();" />
+
+			<p:commandButton value="Empresa" type="button"
+				onclick="PF('empresa').show();" update="frmMovEst" />
+
+			<p:commandButton value="Produto" type="button"
+				onclick="PF('produto').show();" update="frmMovEst" />
+
+			<p:messages id="messages" showDetail="true" autoUpdate="true"
+				closable="true" />
+
+			<p:dialog header="Inclusão de Produto no Estoque" widgetVar="movEst"
+				modal="true" height="350" width="400" id="dialogEstoque">
+
+			</p:dialog>
+
+			<p:dialog header="Consulta Empresa" widgetVar="empresa"
+				modal="true" height="350" width="400" id="dialogEmpresa">
+
+			</p:dialog>
+			
+			<p:dialog header="Consulta Produto" widgetVar="produto"
+				modal="true" height="350" width="400" id="dialogProduto">
+
+			</p:dialog>
+
+			<p:tab id="incMov">
+				<h:panelGrid columns="15">
+					Empresa:
+					<p:outputLabel value="#{produtoEstoqueBean.produtoEstoque.empresa.fantasia}" />
+					
+					Produto:
+					<p:outputLabel value="#{produtoEstoqueBean.produtoEstoque.produto.descProd}" />
+					
+					 Data Inicio:
+					 <p:calendar size="5" value="#{produtoEstoqueBean.dataIni}" />
+					 
+					 Data Fim:
+					 <p:calendar size="5" value="#{produtoEstoqueBean.dataFim}" />
+
+					<p:selectOneMenu
+						value="#{produtoEstoqueBean.produtoEstoque.tipoMovEst}">
+						<f:selectItem itemLabel="Selecione tipo de movimento opcional" />
+						<f:selectItem itemLabel="COMPRA" itemValue="COMPRA" />
+						<f:selectItem itemLabel="VENDA" itemValue="VENDA" />
+						<f:selectItem itemLabel="OUTRA SAÍDA" itemValue="OUTRASAIDA" />
+						<f:selectItem itemLabel="OUTRA ENTRADA" itemValue="OUTRAENTRADA" />
+						<f:selectItem itemLabel="ENTRADA MANUAL" itemValue="MANUALENTRADA" />
+						<f:selectItem itemLabel="SAIDA MANUAL" itemValue="MANUALSAIDA" />
+					</p:selectOneMenu>
+
+					<p:commandButton value="Pesquisar" update="tabelaMovEst"
+						actionListener="#{produtoEstoqueBean.pesquisaMovEstoque}" />
+
+				</h:panelGrid>
+
+				<p:dataTable id="tabelaMovEst" paginator="true" rows="6"
+					resizableColumns="true" var="listaProdutoEstoque"
+					value="#{produtoEstoqueBean.listaProdutoEstoque}">
+
+					<f:facet name="header">
+            			Movimentação do Produto no Estoque
+        			</f:facet>
+
+					<p:column headerText="Código"
+						sortBy="#{listaProdutoEstoque.idProdEst}">
+						<h:outputLabel value="#{listaProdutoEstoque.idProdEst}" />
+					</p:column>
+
+					<p:column headerText="Descrição"
+						sortBy="#{listaProdutoEstoque.justificativa}">
+						<h:outputLabel value="#{listaProdutoEstoque.justificativa}" />
+					</p:column>
+
+					<p:column headerText="Data" sortBy="#{listaProdutoEstoque.data}">
+						<h:outputLabel value="#{listaProdutoEstoque.data}">
+							<f:convertDateTime type="date" dateStyle="medium" />
+						</h:outputLabel>
+					</p:column>
+
+					<p:column headerText="Tipo Movimento"
+						sortBy="#{listaProdutoEstoque.tipoMovEst}">
+						<h:outputLabel value="#{listaProdutoEstoque.tipoMovEst}" />
+					</p:column>
+
+					<p:column headerText="Produto"
+						sortBy="#{listaProdutoEstoque.produto.descProd}">
+						<h:outputLabel value="#{listaProdutoEstoque.produto.descProd}" />
+					</p:column>
+
+					<p:column headerText="Quantidade Anterior"
+						sortBy="#{listaProdutoEstoque.quantidade}">
+						<h:outputLabel value="#{listaProdutoEstoque.quantidade}" />
+					</p:column>
+
+					<p:column headerText="Quantidade Saida"
+						sortBy="#{listaProdutoEstoque.quantSaida}">
+						<h:outputLabel value="#{listaProdutoEstoque.quantSaida}" />
+					</p:column>
+
+					<p:column headerText="Quantidade Entrada"
+						sortBy="#{listaProdutoEstoque.quantEntrada}">
+						<h:outputLabel value="#{listaProdutoEstoque.quantEntrada}" />
+					</p:column>
+
+					<p:column headerText="Saldo" sortBy="#{listaProdutoEstoque.saldo}">
+						<h:outputLabel value="#{listaProdutoEstoque.saldo}" />
+					</p:column>
+
+					<p:column headerText="Custo Médio"
+						sortBy="#{listaProdutoEstoque.custoMedio}">
+						<h:outputLabel value="#{listaProdutoEstoque.custoMedio}" />
+					</p:column>
+
+					<p:column headerText="Total Custo"
+						sortBy="#{listaProdutoEstoque.totalCusto}">
+						<h:outputLabel value="#{listaProdutoEstoque.totalCusto}" />
+					</p:column>
+				</p:dataTable>
+			</p:tab>
+		</div>
 	</h:form>
-</body>
+</h:body>
 </html>
