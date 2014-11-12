@@ -21,12 +21,12 @@ public class TituloDAOHibernate implements TituloDAO {
 	@Override
 	public void salvar(Titulo titulo) throws Exception {
 		this.session.persist(titulo);
-		if(!this.transacao.isActive()){
+		if (!this.transacao.isActive()) {
 			this.transacao.begin();
 		}
 		this.transacao.commit();
 	}
-
+	
 	@Override
 	public void editar(Titulo titulo) throws Exception {
 		this.session.merge(titulo);
@@ -100,19 +100,19 @@ public class TituloDAOHibernate implements TituloDAO {
 		consulta.setParameter("parDataFim", dataFim);
 		consulta.setParameter("parEmpresa", empresa);
 		consulta.setParameter("parParticipante", participante);
-		if(tipo == 0){
+		if (tipo == 0) {
 			consulta.setParameter("parTipo", TipoTitulo.PAGAR);
-		}else{
+		} else {
 			consulta.setParameter("parTipo", TipoTitulo.RECEBER);
 		}
-		if(status == 0){
+		if (status == 0) {
 			consulta.setParameter("parStatus", StatusConta.BAIXADA);
-		}else if (status == 1){
+		} else if (status == 1) {
 			consulta.setParameter("parStatus", StatusConta.PENDENTE);
-		}else{
+		} else {
 			consulta.setParameter("parStatus", StatusConta.CANCELADA);
 		}
-		
+
 		return consulta.getResultList();
 	}
 
