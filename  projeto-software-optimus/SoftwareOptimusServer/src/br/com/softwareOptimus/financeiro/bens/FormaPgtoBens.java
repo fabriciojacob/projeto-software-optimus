@@ -51,6 +51,7 @@ public class FormaPgtoBens implements Geral {
 			msgAcerto("Registro salvo com sucesso");
 			this.btEditar = false;
 			this.btExcluir = false;
+			this.btNovo = false;
 		} catch (Exception e) {
 			msgErro("Problemas ao salvar ", e);
 		}
@@ -101,7 +102,6 @@ public class FormaPgtoBens implements Geral {
 	public void novo() {
 		this.formaPgto = new FormaPgto();
 		this.btSalvar = false;
-		this.btNovo = true;
 		this.btExcluir = true;
 
 	}

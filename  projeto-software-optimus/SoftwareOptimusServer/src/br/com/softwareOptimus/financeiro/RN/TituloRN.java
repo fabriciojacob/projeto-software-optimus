@@ -25,15 +25,15 @@ public class TituloRN {
 	public List<Titulo> pesquisaPagamento(Date dateIni, Date dataFim,
 			Pessoa empresa, Pessoa participante, Integer tipo, Integer status)
 			throws Exception {
-		return this.titulo.pesquisaPagamento(dateIni, dataFim, empresa, participante,
-				tipo, status);
+		return this.titulo.pesquisaPagamento(dateIni, dataFim, empresa,
+				participante, tipo, status);
 	}
 
 	public List<Titulo> pesquisaLancamento(Date dataIni, Date dataFim,
 			Pessoa empresa, Pessoa particupante, Integer tipo, Integer status)
 			throws Exception {
-		return this.titulo.pesquisaLancamento(dataIni, dataFim, empresa, particupante,
-				tipo, status);
+		return this.titulo.pesquisaLancamento(dataIni, dataFim, empresa,
+				particupante, tipo, status);
 	}
 
 	public List<Titulo> pesquisaPessoa(Pessoa empresa) throws Exception {
@@ -41,7 +41,16 @@ public class TituloRN {
 	}
 
 	public void salvar(Titulo titulo) throws Exception {
-		this.titulo.salvar(titulo);
+		Integer cont = 0, parcela;
+		parcela = titulo.getCondPgto().getParcela();
+		Titulo parcelas;
+		if (parcela > 1) {
+			while (cont < parcela) {
+				//passar para procedure e fazer em forma de pkg
+			}
+		} else {
+			this.titulo.salvar(titulo);
+		}
 	}
 
 	public void excluir(Titulo titulo) throws Exception {
