@@ -41,16 +41,7 @@ public class TituloRN {
 	}
 
 	public void salvar(Titulo titulo) throws Exception {
-		Integer cont = 0, parcela;
-		parcela = titulo.getCondPgto().getParcela();
-		Titulo parcelas;
-		if (parcela > 1) {
-			while (cont < parcela) {
-				//passar para procedure e fazer em forma de pkg
-			}
-		} else {
-			this.titulo.salvar(titulo);
-		}
+		this.titulo.salvar(titulo);
 	}
 
 	public void excluir(Titulo titulo) throws Exception {
