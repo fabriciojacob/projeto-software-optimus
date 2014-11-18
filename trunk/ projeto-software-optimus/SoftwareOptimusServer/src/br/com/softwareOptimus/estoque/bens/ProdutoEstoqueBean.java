@@ -68,6 +68,14 @@ public class ProdutoEstoqueBean {
 		}
 	}
 	
+	public void incluir(){
+		
+	}
+	
+	public void cancelar(){
+		
+	}
+	
 	public Double getQuantEntSai() {
 		return quantEntSai;
 	}

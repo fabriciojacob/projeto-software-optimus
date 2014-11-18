@@ -30,9 +30,9 @@
 				closable="true" />
 
 			<p:dialog header="Inclusão de Produto no Estoque" widgetVar="movEst"
-				modal="true" height="350" width="400" id="dialogEstoque">
+				modal="true" height="300" width="350" id="dialogEstoque">
 
-				<h:panelGrid columns="2" id="dadosTitulo">
+				<h:panelGrid columns="2" id="incProdEst">
 				
 				Código:
 				<p:inputText size="30" disabled="true" id="txtEmpresa"
@@ -73,6 +73,16 @@
 				<p:inputText size="15"
 						value="#{produtoEstoqueBean.produtoEstoque.totalCusto}" />
 
+				</h:panelGrid>
+
+				<h:panelGrid columns="2">
+					<p:commandButton id="btIncluir" value="Salvar"
+						actionListener="#{produtoEstoqueBean.incluir}"
+						update="frmMovEst,add" />
+						
+					<p:commandButton id="btCancelar" value="Cancelar"
+						actionListener="#{produtoEstoqueBean.cancelar}"
+						ajax="dialogEstoque"/>
 				</h:panelGrid>
 
 			</p:dialog>
