@@ -27,6 +27,7 @@ public class PautaBean {
 		this.sal = false;
 		this.alt = true;
 		this.rem = true;
+		this.vig = true;
 		habilita();
 		limpar();
 	}

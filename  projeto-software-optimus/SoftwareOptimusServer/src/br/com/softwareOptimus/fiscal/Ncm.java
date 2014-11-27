@@ -15,13 +15,13 @@ public class Ncm {
 	@Column ( length = 10 , nullable = true , unique = false)
 	private String ncm;
 	
-	@Column (length = 85 , nullable = true , unique = false)
+	@Column (length = 150 , nullable = true , unique = false)
 	private String descricaoNcm;
 	
 	@Column ( length = 3 , nullable = true , unique = false)
 	private String natRec;
 	
-	@Column (length = 85 , nullable = true , unique = false)
+	@Column (length = 150 , nullable = true , unique = false)
 	private String descNatRec;
 	
 	//Com Isenção, Com Suspencao etc
