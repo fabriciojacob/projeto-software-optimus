@@ -45,10 +45,10 @@
 					<p:inputText id="descPauta" value="#{pautaBean.pauta.descricao}"
 					size="40" disabled="#{pautaBean.desc}" />
 
-			</h:panelGrid>
+				<p:commandButton id="vincPauta" value="Vigência Pauta" type="button"
+					disabled="#{pautaBean.vig}" onclick="PF('dlg2').show();" />
 
-			<p:commandButton id="vincPauta" value="Vigência Pauta" type="button"
-				disabled="#{pautaBean.vig}" onclick="PF('dlg2').show();" />
+			</h:panelGrid>
 
 			<h:panelGrid id="gridPautaMVA" columns="1">
 				<p:blockUI block="gridPautaMVA" trigger="vincPauta" />
