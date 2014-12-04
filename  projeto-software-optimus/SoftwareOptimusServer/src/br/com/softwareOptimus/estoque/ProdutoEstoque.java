@@ -2,13 +2,18 @@ package br.com.softwareOptimus.estoque;
 
 import java.io.Serializable;
 import java.util.Calendar;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import br.com.softwareOptimus.comercial.Comercial;
 import br.com.softwareOptimus.entidades.Pessoa;
 import br.com.softwareOptimus.entidades.TipoMovEst;
 import br.com.softwareOptimus.produto.Produto;
@@ -28,6 +33,23 @@ public class ProdutoEstoque implements Serializable {
 	@GeneratedValue
 	private Long idProdEst;
 	
+	@ManyToOne
+	private Pessoa Empresa;
+	
+	@ManyToOne
+	private Produto produto;
+	
+	@Column(columnDefinition="double precision default '0'")
+	private Double custoNota;
+	
+	@Column(columnDefinition="double precision default '0'")
+	private Double notaTotal;
+	
+	@OneToOne(optional = true)
+	private Comercial origem;
+	
+	private String justificativa;
+	
 	private Double quantidade;
 	
 	private Double quantSaida;
@@ -35,9 +57,6 @@ public class ProdutoEstoque implements Serializable {
 	private Double quantEntrada;
 	
 	private Double saldo;
-	
-	@ManyToOne
-	private Pessoa Empresa;
 	
 	@Temporal(TemporalType.DATE)
 	private Calendar data;
@@ -47,11 +66,6 @@ public class ProdutoEstoque implements Serializable {
 	private Double totalCusto;
 	
 	private TipoMovEst tipoMovEst;
-	
-	@ManyToOne
-	private Produto produto;
-	
-	private String justificativa;
 	
 	public Double getCustoMedio() {
 		return custoMedio;
@@ -143,6 +157,31 @@ public class ProdutoEstoque implements Serializable {
 
 	public void setEmpresa(Pessoa empresa) {
 		Empresa = empresa;
+	}
+
+	
+	public Double getCustoNota() {
+		return custoNota;
+	}
+
+	public void setCustoNota(Double custoNota) {
+		this.custoNota = custoNota;
+	}
+
+	public Double getNotaTotal() {
+		return notaTotal;
+	}
+
+	public void setNotaTotal(Double notaTotal) {
+		this.notaTotal = notaTotal;
+	}
+
+	public Comercial getOrigem() {
+		return origem;
+	}
+
+	public void setOrigem(Comercial origem) {
+		this.origem = origem;
 	}
 
 	@Override
