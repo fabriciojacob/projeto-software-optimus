@@ -1,16 +1,17 @@
 package br.com.softwareOptimus.financeiro;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
 import br.com.softwareOptimus.entidades.Pessoa;
 
 @Entity
@@ -23,7 +24,8 @@ public class Titulo implements Serializable{
 	private static final long serialVersionUID = -6269276424422686896L;
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(generator="titulo_seq")
+	@SequenceGenerator(name="titulo_seq",sequenceName="titulo_seq", allocationSize=5) 
 	private Long idTitulo;
 	
 	private String descricao;
