@@ -15,6 +15,7 @@ public class Simulacao {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
+		
 
 	}
 

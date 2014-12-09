@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureQuery;
 import javax.persistence.TypedQuery;
 import br.com.softwareOptimus.entidades.Pessoa;
@@ -26,17 +27,19 @@ public class TituloDAOHibernate implements TituloDAO {
 			this.transacao.begin();
 		}
 		this.transacao.commit();
-		if(titulo.getCondPgto().getParcela() > 1){
-			salvarParcelas(titulo.getIdTitulo());
-		}
 	}
-	
+
 	public void salvarParcelas(Long titulo) throws Exception {
-		StoredProcedureQuery proc = session.createNamedStoredProcedureQuery("addParcelas(:idTitulo)");
+		if(!this.transacao.isActive()){
+			this.transacao.begin();
+		}
+		StoredProcedureQuery proc = session
+				.createStoredProcedureQuery("pkg_financeiro.addParcelas");
+		proc.registerStoredProcedureParameter("idTitulo", Long.class, ParameterMode.IN);
 		proc.setParameter("idTitulo", titulo);
 		proc.executeUpdate();
 	}
-	
+
 	@Override
 	public void editar(Titulo titulo) throws Exception {
 		this.session.merge(titulo);

@@ -5,8 +5,9 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedNativeQueries;
 import javax.persistence.Table;
-
+		
 @Entity
 @Table(name = "tbCaixa")
 public class Caixa implements Serializable {

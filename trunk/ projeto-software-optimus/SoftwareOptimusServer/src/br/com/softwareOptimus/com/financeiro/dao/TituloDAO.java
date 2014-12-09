@@ -34,5 +34,7 @@ public interface TituloDAO {
 	public void begin() throws IOException, SQLException;
 	
 	public Pessoa participante(Long id) throws Exception;
+	
+	public void salvarParcelas(Long titulo) throws Exception;
 
 }

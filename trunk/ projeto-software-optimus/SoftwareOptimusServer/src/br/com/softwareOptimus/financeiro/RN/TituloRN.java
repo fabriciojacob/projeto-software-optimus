@@ -42,6 +42,8 @@ public class TituloRN {
 
 	public void salvar(Titulo titulo) throws Exception {
 		this.titulo.salvar(titulo);
+		if(titulo.getCondPgto().getParcela() > 1)
+			this.titulo.salvarParcelas(titulo.getIdTitulo());
 	}
 
 	public void excluir(Titulo titulo) throws Exception {
