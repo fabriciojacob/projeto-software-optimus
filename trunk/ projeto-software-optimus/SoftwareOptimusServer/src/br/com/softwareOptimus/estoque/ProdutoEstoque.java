@@ -43,10 +43,27 @@ public class ProdutoEstoque implements Serializable {
 	private Double custoNota;
 	
 	@Column(columnDefinition="double precision default '0'")
-	private Double notaTotal;
+	private Double totalNota;
 	
 	@OneToOne(optional = true)
 	private Comercial origem;
+	
+	@Column(columnDefinition="double precision default '0'")
+	private Double pisCofinsNota;
+	
+	@Column(columnDefinition="double precision default '0'")
+	private Double freteNota;
+	
+	@Column(columnDefinition="double precision default '0'")
+	private Double ipiNota;
+	
+	//este engloba icms e ST
+	@Column(columnDefinition="double precision default '0'")
+	private Double icmsNota;
+	
+	//Despesas acessorias da nota
+	@Column(columnDefinition="double precision default '0'")
+	private Double despesaNota;
 	
 	private String justificativa;
 	
@@ -67,6 +84,54 @@ public class ProdutoEstoque implements Serializable {
 	
 	private TipoMovEst tipoMovEst;
 	
+	public Double getTotalNota() {
+		return totalNota;
+	}
+
+	public void setTotalNota(Double totalNota) {
+		this.totalNota = totalNota;
+	}
+
+	public Double getPisCofinsNota() {
+		return pisCofinsNota;
+	}
+
+	public void setPisCofinsNota(Double pisCofinsNota) {
+		this.pisCofinsNota = pisCofinsNota;
+	}
+
+	public Double getFreteNota() {
+		return freteNota;
+	}
+
+	public void setFreteNota(Double freteNota) {
+		this.freteNota = freteNota;
+	}
+
+	public Double getIpiNota() {
+		return ipiNota;
+	}
+
+	public void setIpiNota(Double ipiNota) {
+		this.ipiNota = ipiNota;
+	}
+
+	public Double getIcmsNota() {
+		return icmsNota;
+	}
+
+	public void setIcmsNota(Double icmsNota) {
+		this.icmsNota = icmsNota;
+	}
+
+	public Double getDespesaNota() {
+		return despesaNota;
+	}
+
+	public void setDespesaNota(Double despesaNota) {
+		this.despesaNota = despesaNota;
+	}
+
 	public Double getCustoMedio() {
 		return custoMedio;
 	}
@@ -169,11 +234,11 @@ public class ProdutoEstoque implements Serializable {
 	}
 
 	public Double getNotaTotal() {
-		return notaTotal;
+		return totalNota;
 	}
 
 	public void setNotaTotal(Double notaTotal) {
-		this.notaTotal = notaTotal;
+		this.totalNota = notaTotal;
 	}
 
 	public Comercial getOrigem() {
