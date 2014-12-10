@@ -37,6 +37,7 @@ public class TituloDAOHibernate implements TituloDAO {
 				.createStoredProcedureQuery("pkg_financeiro.addParcelas");
 		proc.registerStoredProcedureParameter("idTitulo", Long.class, ParameterMode.IN);
 		proc.setParameter("idTitulo", titulo);
+		proc.setParameter("operacao", 0);
 		proc.executeUpdate();
 	}
 

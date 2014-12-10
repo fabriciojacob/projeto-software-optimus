@@ -69,18 +69,21 @@
 				Valor:
 				<p:inputText value="#{tituloBens.titulo.valor}" />
 				
+				Valor Titulo:
+				<p:inputText value="#{tituloBens.titulo.valorTitulo}" />
+				
 				Saldo titulo:
 				<p:inputText />
-				
+
 					<h:panelGrid columns="2">
 
 						<p:selectOneRadio id="tipoTitulo" value="#{tituloBens.tipoTitulo}">
 							<f:selectItem itemLabel="PAGAR" itemValue="PAGAR" />
 							<f:selectItem itemLabel="RECEBER" itemValue="RECEBER" />
-						</p:selectOneRadio> 
-						
+						</p:selectOneRadio>
+
 					</h:panelGrid>
-					
+
 					<h:panelGrid columns="2">
 						<p:commandButton id="btSalvar" value="Salvar"
 							actionListener="#{tituloBens.salvarTitulo(condPgtoBens.condPgto,formaPgtoBens.formaPgto)}"
@@ -234,6 +237,10 @@
 						<h:outputLabel value="#{titulos.valor}" />
 					</p:column>
 
+					<p:column headerText="Valor Titulo">
+						<h:outputLabel value="#{titulos.valorTitulo}" />
+					</p:column>
+
 					<p:column headerText="Saldo titulo">
 						<h:outputLabel value="#{titulos.saldo}" />
 					</p:column>
@@ -272,9 +279,8 @@
 
 
 					<p:column headerText="Operar">
-						<p:commandLink id="linkBaixar" value="Baixar"
-							ajax="frmTitulo" update="tabelaTitulo"
-							onclick="PF('participante').show();">
+						<p:commandLink id="linkBaixar" value="Baixar" ajax="frmTitulo"
+							update="tabelaTitulo" onclick="PF('participante').show();">
 							<f:setPropertyActionListener value="" target="" />
 						</p:commandLink>
 					</p:column>

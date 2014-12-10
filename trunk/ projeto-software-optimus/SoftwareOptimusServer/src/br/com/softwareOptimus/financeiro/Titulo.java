@@ -38,6 +38,8 @@ public class Titulo implements Serializable{
 	
 	private Double valor;
 	
+	private Double valorTitulo;
+	
 	private Double saldo;
 	
 	private TipoTitulo tipoTitulo;
@@ -68,7 +70,7 @@ public class Titulo implements Serializable{
 	
 	@ManyToOne
 	private Pessoa empresa;
-	
+
 	public Rubrica getRubrica() {
 		return rubrica;
 	}
@@ -207,6 +209,14 @@ public class Titulo implements Serializable{
 
 	public void setDataPagamento(Date dataPagamento) {
 		this.dataPagamento = dataPagamento;
+	}
+
+	public Double getValorTitulo() {
+		return valorTitulo;
+	}
+
+	public void setValorTitulo(Double valorTitulo) {
+		this.valorTitulo = valorTitulo;
 	}
 
 	@Override
