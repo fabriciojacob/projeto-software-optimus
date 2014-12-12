@@ -1,9 +1,9 @@
 package br.com.softwareOptimus.contabilidade;
 
-import java.util.Collection;
-
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import br.com.softwareOptimus.entidades.CenCusto;
@@ -17,14 +17,16 @@ public class SaldoContasCC extends SaldoContas {
 	 * 
 	 */
 	private static final long serialVersionUID = -6191461201037988298L;
-	@ManyToMany
-	private Collection<CenCusto> cCusto;
+	
+	@ManyToOne
+	@JoinColumn(name = "cCusto", nullable = false, foreignKey = @ForeignKey(name = "fk_tbCCusto"))
+	private CenCusto cCusto;
 
-	public Collection<CenCusto> getcCusto() {
+	public CenCusto getcCusto() {
 		return cCusto;
 	}
-
-	public void setcCusto(Collection<CenCusto> cCusto) {
+	
+	public void setcCusto(CenCusto cCusto) {
 		this.cCusto = cCusto;
 	}
 }
