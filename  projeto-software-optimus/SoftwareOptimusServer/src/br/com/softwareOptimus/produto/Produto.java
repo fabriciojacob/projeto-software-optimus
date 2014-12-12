@@ -15,12 +15,9 @@ import br.com.softwareOptimus.fiscal.TipoProduto;
 import br.com.softwareOptimus.producao.ProdutoFilho;
 import br.com.softwareOptimus.producao.ProdutoPrincipal;
 
-
-
 @Entity
-@Table(name="tbProduto")
-public class Produto implements Serializable{
-
+@Table(name = "tbProduto")
+public class Produto implements Serializable {
 
 	/**
 	 * 
@@ -30,48 +27,48 @@ public class Produto implements Serializable{
 	@Id
 	@GeneratedValue
 	private Long idProduto;
-	
-	@Column ( length = 85 , nullable = true , unique = false)
+
+	@Column(length = 85, nullable = true, unique = false)
 	private String descProd;
-	
+
 	private String codBarra;
 
 	@OneToOne(mappedBy = "produto")
 	private ProdutoFilho prodFilho;
-	
+
 	@OneToOne(mappedBy = "produto")
 	private ProdutoPrincipal prodPrincipal;
 
 	@ManyToOne
 	@JoinColumn(name = "idFigura", nullable = false, foreignKey = @ForeignKey(name = "fk_tbFigura"))
 	private FiguraFiscal figura;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "idUnidMed", nullable = false, foreignKey = @ForeignKey(name = "fk_tbUnidMed"))
 	private UnidMed UnidMed;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "idTipoProduto", nullable = false, foreignKey = @ForeignKey(name = "fk_tbTipoProd"))
 	private TipoProduto tipoProd;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "idSetor", nullable = false, foreignKey = @ForeignKey(name = "fk_tbSetor2"))
 	private Setor setor;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "idGrupo", nullable = false, foreignKey = @ForeignKey(name = "fk_tbGrupo2"))
 	private Grupo grupo;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "idSubGrupo", nullable = false, foreignKey = @ForeignKey(name = "fk_tbSubGrupo2"))
 	private SubGrupo subGrupo;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "idCategoria", nullable = false, foreignKey = @ForeignKey(name = "fk_tbCategoria"))
 	private Categoria categoria;
-	
+
 	private boolean status;
-	
+
 	public Grupo getGrupo() {
 		return grupo;
 	}
@@ -107,15 +104,15 @@ public class Produto implements Serializable{
 	public ProdutoPrincipal getProdPrincipal() {
 		return prodPrincipal;
 	}
-	
+
 	public void setProdPrincipal(ProdutoPrincipal prodPrincipal) {
 		this.prodPrincipal = prodPrincipal;
 	}
-	
+
 	public ProdutoFilho getProdFilho() {
 		return prodFilho;
 	}
-	
+
 	public void setProdFilho(ProdutoFilho prodFilho) {
 		this.prodFilho = prodFilho;
 	}
@@ -123,11 +120,11 @@ public class Produto implements Serializable{
 	public FiguraFiscal getFigura() {
 		return figura;
 	}
-	
+
 	public void setFigura(FiguraFiscal figura) {
 		this.figura = figura;
 	}
-	
+
 	public Long getIdProduto() {
 		return idProduto;
 	}
@@ -167,11 +164,11 @@ public class Produto implements Serializable{
 	public void setTipoProd(TipoProduto tipoProd) {
 		this.tipoProd = tipoProd;
 	}
-	
+
 	public Setor getSetor() {
 		return setor;
 	}
-	
+
 	public void setSetor(Setor setor) {
 		this.setor = setor;
 	}
@@ -201,5 +198,5 @@ public class Produto implements Serializable{
 			return false;
 		return true;
 	}
-	
+
 }
