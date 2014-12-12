@@ -3,8 +3,10 @@ package br.com.softwareOptimus.produto;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -41,24 +43,31 @@ public class Produto implements Serializable{
 	private ProdutoPrincipal prodPrincipal;
 
 	@ManyToOne
+	@JoinColumn(name = "idFigura", nullable = false, foreignKey = @ForeignKey(name = "fk_tbFigura"))
 	private FiguraFiscal figura;
 	
 	@ManyToOne
+	@JoinColumn(name = "idUnidMed", nullable = false, foreignKey = @ForeignKey(name = "fk_tbUnidMed"))
 	private UnidMed UnidMed;
 	
 	@ManyToOne
+	@JoinColumn(name = "idTipoProduto", nullable = false, foreignKey = @ForeignKey(name = "fk_tbTipoProd"))
 	private TipoProduto tipoProd;
 	
 	@ManyToOne
+	@JoinColumn(name = "idSetor", nullable = false, foreignKey = @ForeignKey(name = "fk_tbSetor2"))
 	private Setor setor;
 	
 	@ManyToOne
+	@JoinColumn(name = "idGrupo", nullable = false, foreignKey = @ForeignKey(name = "fk_tbGrupo2"))
 	private Grupo grupo;
 	
 	@ManyToOne
+	@JoinColumn(name = "idSubGrupo", nullable = false, foreignKey = @ForeignKey(name = "fk_tbSubGrupo2"))
 	private SubGrupo subGrupo;
 	
 	@ManyToOne
+	@JoinColumn(name = "idCategoria", nullable = false, foreignKey = @ForeignKey(name = "fk_tbCategoria"))
 	private Categoria categoria;
 	
 	private boolean status;

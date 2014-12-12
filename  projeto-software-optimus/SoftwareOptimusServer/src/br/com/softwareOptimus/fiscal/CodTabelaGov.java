@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.ForeignKey;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -27,27 +29,34 @@ public class CodTabelaGov implements Serializable{
 	private Date vigencia;
 	
 	@ManyToOne
+	@JoinColumn(name = "idTipoProduto", nullable = false, foreignKey = @ForeignKey(name = "fk_tbTipoProduto"))
 	private TipoProduto tipoProduto;
 	
 	@ManyToOne
+	@JoinColumn(name = "idNcm", nullable = false, foreignKey = @ForeignKey(name = "fk_tbNcm"))
 	private Ncm ncm;
 	
 	@ManyToOne
+	@JoinColumn(name = "idAliqEntPis", nullable = false, foreignKey = @ForeignKey(name = "fk_tbAliqPis"))
 	private Aliquota entradaPis;
 	
 	@ManyToOne
+	@JoinColumn(name = "idAliqEntCofins", nullable = false, foreignKey = @ForeignKey(name = "fk_tbAliqCofins"))
 	private Aliquota entradaCofins;
 	
 	@ManyToOne
+	@JoinColumn(name = "idAliqSaiPis", nullable = false, foreignKey = @ForeignKey(name = "fk_tbAliqPis2"))
 	private Aliquota saidaPis;
 	
 	@ManyToOne
+	@JoinColumn(name = "idAliqSaiCofins", nullable = false, foreignKey = @ForeignKey(name = "fk_tbAliqCofins2"))
 	private Aliquota saidaCofins;
 	
 	//Campo 7 - 0200 valores fixos
 	private String tipoItem;
 	
 	@ManyToOne
+	@JoinColumn(name = "idAliqIpi", nullable = false, foreignKey = @ForeignKey(name = "fk_tbAliqIpi"))
 	private Aliquota aliquotaIpi;
 		
 	public Aliquota getAliquotaIpi() {

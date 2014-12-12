@@ -1,11 +1,12 @@
 package br.com.softwareOptimus.produto;
 
 import java.io.Serializable;
-
+import javax.persistence.ForeignKey;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -26,6 +27,7 @@ public class Categoria implements Serializable{
 	private String descricao;
 	
 	@ManyToOne
+	@JoinColumn(name = "idSubGrupo", nullable = false, foreignKey = @ForeignKey(name = "fk_tbSubGrupo"))
 	private SubGrupo subGrupo;
 	
 	public SubGrupo getSubGrupo() {

@@ -5,6 +5,8 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -31,6 +33,7 @@ public class VigenciaRegime implements Serializable{
 	private Regime regime;
 	
 	@ManyToOne
+	@JoinColumn(name = "idPessoaJuridica", nullable = false, foreignKey = @ForeignKey(name = "fk_tbPessoaJuridica"))
 	private PessoaJuridica pessoaJuridica;
 	
 	public PessoaJuridica getPessaoJuridica() {

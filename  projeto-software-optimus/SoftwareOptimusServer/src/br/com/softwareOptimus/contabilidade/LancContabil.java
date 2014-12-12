@@ -3,8 +3,10 @@ package br.com.softwareOptimus.contabilidade;
 import java.io.Serializable;
 import java.util.Calendar;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -30,6 +32,7 @@ public class LancContabil implements Serializable{
 	private Calendar DatLanc;
 	
 	@ManyToOne
+	@JoinColumn(name = "empresa", nullable = false, foreignKey = @ForeignKey(name = "fk_tbPessoa3"))
 	private Pessoa Empresa;
 	
 	@OneToOne

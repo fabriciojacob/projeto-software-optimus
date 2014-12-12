@@ -2,23 +2,22 @@ package br.com.softwareOptimus.comercial;
 
 import java.io.Serializable;
 import java.util.Collection;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
+import javax.persistence.ForeignKey;
 import br.com.softwareOptimus.fiscal.CodigoFiscalOperacao;
 import br.com.softwareOptimus.produto.Produto;
-
-
 
 @Entity
 @Table(name = "tbComItens")
 public class ComercialItens implements Serializable {
-	
+
 	/**
 	 * 
 	 */
@@ -27,40 +26,43 @@ public class ComercialItens implements Serializable {
 	@Id
 	@GeneratedValue
 	private Long idComItens;
-	
+
 	@ManyToOne
+	@JoinColumn(name = "idComercial", nullable = false, foreignKey = @ForeignKey(name = "fk_tbComercial"))
 	private Comercial Comercial;
-	
+
 	@ManyToMany
+	@JoinTable(name = "tbVincComProd", joinColumns = @JoinColumn(name = "Item"), inverseJoinColumns = @JoinColumn(name = "produto"))
 	private Collection<Produto> produto;
-	
+
 	private Double quant;
-	
+
 	private Double valItem;
-	
+
 	private Double valDesc;
-	
+
 	@ManyToMany
+	@JoinTable(name = "tbVincComCfop", joinColumns = @JoinColumn(name = "comCfop"), inverseJoinColumns = @JoinColumn(name = "cfop"))
 	private Collection<CodigoFiscalOperacao> cfop;
-	
+
 	private Double valBcIcms;
-	
+
 	private Double valIcms;
-	
+
 	private Double valBcIcmsSt;
-	
+
 	private Double valIcmsSt;
-	
+
 	private Double valBcIpi;
-	
+
 	private Double valIpi;
-	
+
 	private Double valBcPis;
-	
+
 	private Double valPis;
-	
+
 	private Double valBcCofins;
-	
+
 	private Double valCofins;
 
 	public Long getIdComItens() {
@@ -225,5 +227,4 @@ public class ComercialItens implements Serializable {
 		return true;
 	}
 
-	
 }

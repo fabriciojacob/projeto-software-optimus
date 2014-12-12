@@ -2,10 +2,12 @@ package br.com.softwareOptimus.comercial;
 
 import java.io.Serializable;
 import java.util.Collection;
-
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -28,9 +30,11 @@ public class PedidoFaturItens implements Serializable {
 	private Long idPedFatuItens;
 	
 	@ManyToOne
+	@JoinColumn(name = "idPedidoFatur", nullable = false, foreignKey = @ForeignKey(name = "fk_tbPedidoFatur"))
 	private PedidoFatur PedidoFatur;
 	
 	@ManyToMany
+	@JoinTable(name = "tbVincPedItemProd", joinColumns = @JoinColumn(name = "Item"), inverseJoinColumns = @JoinColumn(name = "produto"))
 	private Collection<Produto> produto;
 	
 	private Double custProd;

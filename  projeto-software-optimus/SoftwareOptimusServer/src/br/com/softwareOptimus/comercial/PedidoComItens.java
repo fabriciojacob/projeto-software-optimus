@@ -6,6 +6,9 @@ import java.util.Collection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -28,9 +31,11 @@ public class PedidoComItens implements Serializable{
 	private Long idPedidoComItens;
 	
 	@ManyToOne
+	@JoinColumn(name = "idPedidoCompra", nullable = false, foreignKey = @ForeignKey(name = "fk_tbPedidoCompra"))
 	private PedidoCompra PedidoCom;
 	
 	@ManyToMany
+	@JoinTable(name = "tbVincPedCompProd", joinColumns = @JoinColumn(name = "ItemPedido"), inverseJoinColumns = @JoinColumn(name = "produto"))
 	private Collection<Produto> produto;
 	
 	private Double custProd;
