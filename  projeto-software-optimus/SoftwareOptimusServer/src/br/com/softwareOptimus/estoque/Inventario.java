@@ -4,8 +4,11 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Collection;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -33,6 +36,7 @@ public class Inventario implements Serializable {
 	private String descricao;
 	
 	@ManyToMany
+	@JoinTable(name = "tbVincInvProd", joinColumns = @JoinColumn(name = "invetario"), inverseJoinColumns = @JoinColumn(name = "produto"))
 	private Collection<Produto> produtos;
 	
 	@Temporal(TemporalType.DATE)
@@ -43,9 +47,8 @@ public class Inventario implements Serializable {
 	private Double quantidadeAtual;
 	
 	@ManyToOne
-	private PessoaJuridica empresa;
-	
-	
+	@JoinColumn(name = "empresa", nullable = false, foreignKey = @ForeignKey(name = "fk_tbPessoaJuridica2"))
+	private PessoaJuridica empresa;	
 	
 	public Double getQuantidadeAtual() {
 		return quantidadeAtual;

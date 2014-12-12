@@ -2,12 +2,12 @@ package br.com.softwareOptimus.contabilidade;
 
 import java.io.Serializable;
 import java.util.Calendar;
-import java.util.Collection;
-
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -31,8 +31,13 @@ public class SaldoContas implements Serializable{
 	@Temporal(TemporalType.DATE)
 	private Calendar datSaldo;
 	
-	@ManyToMany
-	private Collection<Pessoa> empresa;
+	@ManyToOne
+	@JoinColumn(name = "empresa", nullable = false, foreignKey = @ForeignKey(name = "fk_tbPessoa5"))
+	private Pessoa empresa;
+	
+	@ManyToOne
+	@JoinColumn(name = "redutor", nullable = false, foreignKey = @ForeignKey(name = "fk_tbPlanoDeContas"))
+	private PlanoDeContas redutor;
 	
 	private Double saldoInicial;
 	
@@ -58,12 +63,21 @@ public class SaldoContas implements Serializable{
 		this.datSaldo = datSaldo;
 	}
 
-	public Collection<Pessoa> getEmpresa() {
+
+	public Pessoa getEmpresa() {
 		return empresa;
 	}
 
-	public void setEmpresa(Collection<Pessoa> empresa) {
+	public void setEmpresa(Pessoa empresa) {
 		this.empresa = empresa;
+	}
+
+	public PlanoDeContas getRedutor() {
+		return redutor;
+	}
+
+	public void setRedutor(PlanoDeContas redutor) {
+		this.redutor = redutor;
 	}
 
 	public Double getSaldoInicial() {

@@ -36,9 +36,11 @@ public class LancContabil implements Serializable{
 	private Pessoa Empresa;
 	
 	@OneToOne
+	@JoinColumn(name = "credito", nullable = false, foreignKey = @ForeignKey(name = "fk_tbPlanoDeContCredito"))
 	private PlanoDeContas credito;
 	
 	@OneToOne
+	@JoinColumn(name = "debito", nullable = false, foreignKey = @ForeignKey(name = "fk_tbPlanoDeContDebito"))
 	private PlanoDeContas debito;
 	
 	private Double valorPagamento;
