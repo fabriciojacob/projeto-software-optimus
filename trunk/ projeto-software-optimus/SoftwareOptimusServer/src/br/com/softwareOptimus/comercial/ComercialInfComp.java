@@ -4,8 +4,10 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -23,6 +25,7 @@ public class ComercialInfComp implements Serializable{
 	private Long idComInfComp;
 	
 	@ManyToOne
+	@JoinColumn(name = "idComercial", nullable = false, foreignKey = @ForeignKey(name = "fk_tbComercial2"))
 	private Comercial Comercial;
 	
 	private String textInfComp;

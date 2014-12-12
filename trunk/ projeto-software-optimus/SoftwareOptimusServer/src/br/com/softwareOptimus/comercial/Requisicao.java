@@ -7,6 +7,8 @@ import java.util.Collection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ForeignKey;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -34,6 +36,7 @@ public class Requisicao implements Serializable {
 	private Double numReq;
 	
 	@ManyToOne
+	@JoinColumn(name = "usuRequisita", nullable = false, foreignKey = @ForeignKey(name = "fk_tbUsuario"))
 	private Usuario UsuRequisita;
 	
 	@ManyToOne

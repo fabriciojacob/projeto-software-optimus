@@ -2,11 +2,12 @@ package br.com.softwareOptimus.produto;
 
 import java.io.Serializable;
 import java.util.Collection;
-
+import javax.persistence.JoinColumn;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -28,6 +29,7 @@ public class Grupo implements Serializable{
 	private String descricao;
 	
 	@ManyToMany
+	@JoinTable(name = "tbVincSubGrupo", joinColumns = @JoinColumn(name = "grupo"), inverseJoinColumns = @JoinColumn(name = "subGrupo"))
 	private Collection<SubGrupo> subGrupo;
 	
 	

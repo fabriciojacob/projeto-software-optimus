@@ -8,8 +8,10 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -31,6 +33,7 @@ public class Aliquota implements Serializable, Converter{
 	private Double reducao;
 	
 	@ManyToMany
+	@JoinTable(name = "tbVincAliqCst", joinColumns = @JoinColumn(name = "aliquota"), inverseJoinColumns = @JoinColumn(name = "cst"))
 	private Collection<CodigoSituacaoTributaria> cst;
 	
 	private TipoTrib tipo;

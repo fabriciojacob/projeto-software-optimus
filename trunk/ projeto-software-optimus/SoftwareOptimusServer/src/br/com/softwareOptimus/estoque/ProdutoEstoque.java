@@ -7,6 +7,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ForeignKey;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -34,9 +36,11 @@ public class ProdutoEstoque implements Serializable {
 	private Long idProdEst;
 	
 	@ManyToOne
+	@JoinColumn(name = "empresa", nullable = false, foreignKey = @ForeignKey(name = "fk_tbPessoa"))
 	private Pessoa Empresa;
 	
 	@ManyToOne
+	@JoinColumn(name = "produto", nullable = false, foreignKey = @ForeignKey(name = "fk_tbProduto"))
 	private Produto produto;
 	
 	@Column(columnDefinition="double precision default '0'")
@@ -46,6 +50,7 @@ public class ProdutoEstoque implements Serializable {
 	private Double totalNota;
 	
 	@OneToOne(optional = true)
+	@JoinColumn(name = "idComercial", foreignKey = @ForeignKey(name = "fk_tbComercial"))
 	private Comercial origem;
 	
 	@Column(columnDefinition="double precision default '0'")

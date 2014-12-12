@@ -6,6 +6,9 @@ import java.util.Collection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -30,9 +33,11 @@ public class Cotacao implements Serializable {
 	private Long idCotacao;
 	
 	@ManyToOne
+	@JoinColumn(name = "requisicao", nullable = false, foreignKey = @ForeignKey(name = "fk_tbRequisicao"))
 	private Requisicao Requisicao;
 	
 	@ManyToMany
+	@JoinTable(name = "tbVincForReq", joinColumns = @JoinColumn(name = "idRequisicao"), inverseJoinColumns = @JoinColumn(name = "idFornecedor"))
 	private Collection<Pessoa> fornecedor;
 	
 	@Temporal(TemporalType.DATE)

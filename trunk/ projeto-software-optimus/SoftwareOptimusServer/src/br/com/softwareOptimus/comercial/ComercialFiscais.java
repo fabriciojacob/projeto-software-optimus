@@ -4,19 +4,21 @@ import java.io.Serializable;
 import java.util.Collection;
 
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import br.com.softwareOptimus.fiscal.CodigoFiscalOperacao;
 
-
 @Entity
 @Table(name = "tbComFiscais")
 public class ComercialFiscais implements Serializable {
-	
+
 	/**
 	 * 
 	 */
@@ -25,23 +27,25 @@ public class ComercialFiscais implements Serializable {
 	@Id
 	@GeneratedValue
 	private Long idComFiscais;
-	
+
 	@ManyToOne
+	@JoinColumn(name = "idComercial", nullable = false, foreignKey = @ForeignKey(name = "fk_tbComercial2"))
 	private Comercial Comercial;
 
 	private Double valOper;
-	
+
 	@ManyToMany
+	@JoinTable(name = "tbVincComFis", joinColumns = @JoinColumn(name = "fiscais"), inverseJoinColumns = @JoinColumn(name = "cfop"))
 	private Collection<CodigoFiscalOperacao> cfop;
-	
+
 	private Double valBcIcms;
-	
+
 	private Double valIcms;
-	
+
 	private Double valBcIcmsSt;
-	
+
 	private Double valIcmsSt;
-	
+
 	private Double valRedBc;
 
 	public Long getIdComFiscais() {

@@ -7,6 +7,9 @@ import java.util.Collection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -30,9 +33,11 @@ public class CotacaoItens implements Serializable{
 	private Long idCotacaoItens;
 	
 	@ManyToOne
+	@JoinColumn(name = "idCotacao", nullable = false, foreignKey = @ForeignKey(name = "fk_tbCotacao"))
 	private Cotacao cotacao;
 	
 	@ManyToMany
+	@JoinTable(name = "tbVincCotItemProd", joinColumns = @JoinColumn(name = "idCotacaoItem"), inverseJoinColumns = @JoinColumn(name = "idProduto"))
 	private Collection<Produto> produto;
 	
 	private Double custProd;
@@ -41,7 +46,7 @@ public class CotacaoItens implements Serializable{
 	
 	private Double valTotProd;
 	//0-não comprado, 1-comprado
-	private int itemComprado;
+	private Integer itemComprado;
 	
 	@ManyToMany
 	private Collection<UnidMed> unidade;

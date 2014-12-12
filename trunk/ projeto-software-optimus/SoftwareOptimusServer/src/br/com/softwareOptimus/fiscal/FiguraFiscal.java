@@ -4,8 +4,10 @@ import java.io.Serializable;
 import java.util.Collection;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -30,6 +32,7 @@ public class FiguraFiscal implements Serializable {
 	private String descricao;
 	
 	@ManyToMany
+	@JoinTable(name = "tbVincGradeFigura", joinColumns = @JoinColumn(name = "figuraFiscal"), inverseJoinColumns = @JoinColumn(name = "grade"))
 	private Collection<GradeTributaria> grades;
 	
 	@OneToMany(mappedBy = "figura")

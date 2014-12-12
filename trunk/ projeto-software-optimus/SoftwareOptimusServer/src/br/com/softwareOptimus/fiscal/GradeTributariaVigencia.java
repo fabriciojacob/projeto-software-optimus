@@ -6,6 +6,8 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -29,13 +31,16 @@ public class GradeTributariaVigencia implements Serializable {
 	
 	private String descricao;
 
-	@ManyToOne 
+	@ManyToOne
+	@JoinColumn(name = "idEstOrigem", nullable = false, foreignKey = @ForeignKey(name = "fk_tbEstadoOr"))
 	private Estado origem;
 
 	@ManyToOne
+	@JoinColumn(name = "idEstDestino", nullable = false, foreignKey = @ForeignKey(name = "fk_tbEstadoDes"))
 	private Estado destino;
 
 	@ManyToOne
+	@JoinColumn(name = "idAliquota", nullable = false, foreignKey = @ForeignKey(name = "fk_tbAliquota"))
 	private Aliquota aliquota;
 
 	private IO io;
@@ -46,9 +51,11 @@ public class GradeTributariaVigencia implements Serializable {
 	private Date vigencia;
 
 	@ManyToOne
+	@JoinColumn(name = "idPauta", nullable = false, foreignKey = @ForeignKey(name = "fk_tbPauta"))
 	private Pauta pauta;
 	
 	@ManyToOne
+	@JoinColumn(name = "idGrade", nullable = false, foreignKey = @ForeignKey(name = "fk_tbGrade"))
 	private GradeTributaria grade;
 	
 	public GradeTributaria getGrade() {

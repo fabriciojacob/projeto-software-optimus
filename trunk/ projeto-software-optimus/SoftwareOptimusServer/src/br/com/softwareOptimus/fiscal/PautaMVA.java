@@ -5,7 +5,9 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.ForeignKey;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -39,6 +41,7 @@ public class PautaMVA implements Serializable {
 	private boolean mvaAjustada;
 	
 	@ManyToOne
+	@JoinColumn(name = "idPauta", nullable = false, foreignKey = @ForeignKey(name = "fk_tbPauta2"))
 	private Pauta pauta;
 
 	public Pauta getPauta() {
