@@ -6,20 +6,24 @@ create or replace package body pkg_financeiro is
     cursor c_titulo is(
       select t.* from tbTitulo t where t.idTitulo = id);
     v_parcela_condPgto tbcondpgto.parcela%type;
+    v_intervalo_dias   Tbcondpgto.Intervalodias%type;
+    v_acumula_dias tbcondPgto.Intervalodias%type;
   begin
     for titulo in c_titulo loop
       if (operacao = 0) then
         begin
-          select cond.parcela
-            into v_parcela_condPgto
+          select cond.parcela, cond.intervalodias
+            into v_parcela_condPgto, v_intervalo_dias
             from Tbcondpgto cond
            where cond.idcondpgto = titulo.condpgto_idcondpgto;
         exception
           when no_data_found then
             v_parcela_condPgto := 0;
         end;
+        v_acumula_dias := 0;
         for parcela in 1 .. v_parcela_condPgto loop
           begin
+            v_acumula_dias := v_acumula_dias + v_intervalo_dias;
             insert into tbTitulo
               (Idtitulo,
                Datalancamento,
@@ -47,7 +51,7 @@ create or replace package body pkg_financeiro is
                titulo.tipobaixa,
                titulo.tipoTitulo,
                round(titulo.valor / v_parcela_condPgto, 4),
-               titulo.vencimento,
+               titulo.Datalancamento + v_acumula_dias,
                titulo.Caixa_Idmovcaixa,
                titulo.Condpgto_Idcondpgto,
                titulo.Empresa_Idpessoa,

@@ -50,7 +50,7 @@
 				 <p:calendar size="15" value="#{tituloBens.titulo.dataLancamento}" />
 				 
 				 Data Vencimento:
-				 <p:calendar size="15" value="#{tituloBens.titulo.vencimento}" />
+				 <p:calendar size="15" value="#{tituloBens.titulo.vencimento}" disabled="true"/>
 				 
 				 Forma de pagamento:
 				<p:selectOneMenu id="pgto" value="#{formaPgtoBens.formaPgto}">
@@ -73,7 +73,7 @@
 				<p:inputText value="#{tituloBens.titulo.valorTitulo}" />
 				
 				Saldo titulo:
-				<p:inputText />
+				<p:outputLabel value="#{tituloBens.titulo.saldo}"/> 
 
 					<h:panelGrid columns="2">
 
