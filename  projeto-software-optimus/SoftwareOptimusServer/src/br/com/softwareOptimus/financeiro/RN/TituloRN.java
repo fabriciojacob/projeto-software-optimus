@@ -1,5 +1,6 @@
 package br.com.softwareOptimus.financeiro.RN;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import br.com.softwareOptimus.com.financeiro.dao.TituloDAO;
@@ -41,6 +42,16 @@ public class TituloRN {
 	}
 
 	public void salvar(Titulo titulo) throws Exception {
+		Date data;
+		Calendar c = Calendar.getInstance();
+		if(titulo.getCondPgto().getIntervaloDias() > 0){
+			data = titulo.getDataLancamento();
+			c.setTime(data);
+			c.add(Calendar.DATE, titulo.getCondPgto().getIntervaloDias());
+			titulo.setVencimento(c.getTime());
+		}else{
+			titulo.setVencimento(titulo.getDataLancamento());
+		}
 		this.titulo.salvar(titulo);
 		if(titulo.getCondPgto().getParcela() > 1)
 			this.titulo.salvarParcelas(titulo.getIdTitulo());
