@@ -50,7 +50,7 @@ public class ProdutoEstoque implements Serializable {
 	private Double totalNota;
 	
 	@OneToOne(optional = true)
-	@JoinColumn(name = "idComercial", foreignKey = @ForeignKey(name = "fk_tbComercial"))
+	@JoinColumn(name = "idComercial", foreignKey = @ForeignKey(name = "fk_tbComercial3"))
 	private Comercial origem;
 	
 	@Column(columnDefinition="double precision default '0'")
