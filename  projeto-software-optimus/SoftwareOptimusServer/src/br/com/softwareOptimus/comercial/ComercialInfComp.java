@@ -25,7 +25,7 @@ public class ComercialInfComp implements Serializable{
 	private Long idComInfComp;
 	
 	@ManyToOne
-	@JoinColumn(name = "idComercial", nullable = false, foreignKey = @ForeignKey(name = "fk_tbComercial2"))
+	@JoinColumn(name = "idComercial", nullable = false, foreignKey = @ForeignKey(name = "fk_tbComercial1"))
 	private Comercial Comercial;
 	
 	private String textInfComp;
