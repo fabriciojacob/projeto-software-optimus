@@ -34,7 +34,7 @@ public class PedidoFatur implements Serializable{
 	@ManyToMany
 	@JoinTable(name="tbVincCliEmp", 
 		joinColumns=@JoinColumn(name = "cliente"), 
-		inverseJoinColumns = @JoinColumn(name = "empresa"))
+		inverseJoinColumns = @JoinColumn(name = "idPessoa"))
 	private Collection<Pessoa> pessoas;
 	
 	@Temporal(TemporalType.DATE)

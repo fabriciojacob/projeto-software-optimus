@@ -37,7 +37,7 @@ public class Comercial implements Serializable {
 	@ManyToMany
 	@JoinTable(name="tbVincPesEmp", 
 		joinColumns=@JoinColumn(name = "pessoa"), 
-		inverseJoinColumns = @JoinColumn(name = "empresa"))
+		inverseJoinColumns = @JoinColumn(name = "idPessoa"))
 	private Collection<Pessoa> entidade;
 
 	// tabela 4.1.1

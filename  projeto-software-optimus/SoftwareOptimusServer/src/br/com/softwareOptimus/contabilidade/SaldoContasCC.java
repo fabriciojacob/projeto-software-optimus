@@ -19,7 +19,7 @@ public class SaldoContasCC extends SaldoContas {
 	private static final long serialVersionUID = -6191461201037988298L;
 	
 	@ManyToOne
-	@JoinColumn(name = "cCusto", nullable = false, foreignKey = @ForeignKey(name = "fk_tbCCusto"))
+	@JoinColumn(name = "idCenCusto", nullable = false, foreignKey = @ForeignKey(name = "fk_tbCCusto"))
 	private CenCusto cCusto;
 
 	public CenCusto getcCusto() {
