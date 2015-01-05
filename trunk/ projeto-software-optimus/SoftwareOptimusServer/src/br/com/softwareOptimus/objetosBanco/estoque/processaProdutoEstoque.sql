@@ -16,7 +16,7 @@ procedure processaProdutoEstoque(varCustoMedio    In Number,
                                                    varIpiNota       In Number,
                                                    varIcmsNota      In Number,
                                                    varDespesaNota   In Number,
-                                                   varSituacao      In Varchar2) is
+                                                   varSituacao      In Integer) is
   varQuantidade Numeric(16, 2);
   varSaldo      Numeric(16, 2);
   varTotalCusto Numeric(16, 2);
@@ -35,7 +35,10 @@ begin
     When No_Data_Found Then
       varQuantidade := 0;
   End;
-  if (Upper(varSituacao) = Upper('Insere')) then
+  /*1 - Insere
+    2 - Atualiza
+    3 - Deleta*/
+  if (varSituacao = 1) then
     if (varTipoMovEst IN (0, 3, 4)) then
       varSaldo := varQuantidade + varQuantEntrada;
     else
@@ -116,7 +119,7 @@ begin
        where Idprodest = tabProcess.Idprodest;
     End Loop;
   end if;
-  --if (Upper(varSituacao) = Upper('Atualiza')) then
+  --if (varSituacao = 2) then
 
   --end if;
 End;
