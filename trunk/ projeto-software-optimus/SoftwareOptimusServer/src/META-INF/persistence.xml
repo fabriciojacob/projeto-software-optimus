@@ -18,7 +18,6 @@
 		<class>br.com.softwareOptimus.contabilidade.PlanoDeContas</class>
 		<class>br.com.softwareOptimus.contabilidade.PlanoDeContasRef</class>
 		<class>br.com.softwareOptimus.contabilidade.SaldoContas</class>
-		<class>br.com.softwareOptimus.contabilidade.SaldoContasCC</class>
 		<class>br.com.softwareOptimus.entidades.CenCusto</class>
 		<class>br.com.softwareOptimus.entidades.Email</class>
 		<class>br.com.softwareOptimus.entidades.Estado</class>
@@ -65,6 +64,7 @@
 		<class>br.com.softwareOptimus.financeiro.ContaFilha</class>
 		<class>br.com.softwareOptimus.financeiro.ExtratoContaBancaria</class>
 		<class>br.com.softwareOptimus.financeiro.MovCaixa</class>
+		<class>br.com.softwareOptimus.contabilidade.SaldoContasCC</class>
 
 		<properties>
 

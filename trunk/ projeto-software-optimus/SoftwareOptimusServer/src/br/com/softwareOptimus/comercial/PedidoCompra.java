@@ -33,7 +33,7 @@ public class PedidoCompra implements Serializable {
 	@ManyToMany
 	@JoinTable(name="tbVincForEmp", 
 		joinColumns=@JoinColumn(name = "fornecedor"), 
-		inverseJoinColumns = @JoinColumn(name = "empresa"))
+		inverseJoinColumns = @JoinColumn(name = "idPessoa"))
 	private Collection<Pessoa> entidades;
 
 	@Temporal(TemporalType.DATE)

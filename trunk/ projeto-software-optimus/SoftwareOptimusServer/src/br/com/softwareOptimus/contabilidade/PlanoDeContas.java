@@ -4,10 +4,8 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Collection;
 import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -38,15 +36,11 @@ public class PlanoDeContas implements Serializable{
 	private String classificacao;
 	
 	@OneToMany
-	@JoinColumn(name = "empresa", nullable = false, foreignKey = @ForeignKey(name = "fk_tbPessoa4"))
 	private Collection<Pessoa> empresa;
 	
 	//Analitica e Sintetica
 	private TipoElemBas anaSin;
-	
-	//@ManyToMany
-	//private Collection<PlanoDeContasRef> planoRef;
-	
+
 	private TipoConta tipoConta;
 	
 	@Temporal(TemporalType.DATE)
@@ -115,14 +109,6 @@ public class PlanoDeContas implements Serializable{
 	public void setEmpresa(Collection<Pessoa> empresa) {
 		this.empresa = empresa;
 	}
-
-	//public Collection<PlanoDeContasRef> getPlanoRef() {
-	//	return planoRef;
-	//}
-
-	//public void setPlanoRef(Collection<PlanoDeContasRef> planoRef) {
-	//	this.planoRef = planoRef;
-	//}
 
 	public TipoConta getTipoConta() {
 		return tipoConta;
