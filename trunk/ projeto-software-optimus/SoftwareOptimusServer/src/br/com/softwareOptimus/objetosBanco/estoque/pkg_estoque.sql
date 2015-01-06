@@ -1,4 +1,4 @@
-create or replace package estoque is
+create or replace package pkg_estoque is
   procedure processaProdutoEstoque(varCustoMedio    In Number,
                                    varData          In Date,
                                    varJustificativa In VarChar2,
@@ -15,5 +15,5 @@ create or replace package estoque is
                                    varIpiNota       In Number,
                                    varIcmsNota      In Number,
                                    varDespesaNota   In Number,
-                                   varSituacao      In Varchar2);
-end estoque;
+                                   varSituacao      In Integer);
+end pkg_estoque;
