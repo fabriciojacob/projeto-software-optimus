@@ -1,4 +1,4 @@
-create or replace package body estoque as
+create or replace package body pkg_estoque as
   procedure processaProdutoEstoque(varCustoMedio    In Number,
                                    varData          In Date,
                                    varJustificativa In VarChar2,
@@ -19,6 +19,7 @@ create or replace package body estoque as
     varQuantidade Numeric(16, 2);
     varId         tbprodutoestoque.idprodest%type;
     varSaldo      Numeric(16, 2);
+    varDataAtual  tbprodutoestoque.data%type;
     varQEntr      tbprodutoestoque.quantEntrada%type;
     varQSai       tbprodutoestoque.quantsaida%type;
     varTotalCusto Numeric(16, 2);
@@ -168,10 +169,53 @@ create or replace package body estoque as
         When No_Data_Found then
           varQSai := 0;
       end;
-      /*if ((varQuantSaida > 0 and varQSai <> varQuantSaida) or
-         (varQuantEntrada > 0 varQEntr <> varQuantEntrada)) then
-         
-      end if;*/
+      if ((varQuantSaida > 0 and varQSai <> varQuantSaida) or
+         (varQuantEntrada > 0 and varQEntr <> varQuantEntrada)) then
+        varSaldo      := 0;
+        varTotalCusto := 0;
+        Begin
+          select p.quantidade
+            into varQuantidade
+            from tbProdutoEstoque p
+           where p.idprodest = varId;
+        Exception
+          When No_Data_Found then
+            varQuantidade := 0;
+        end;
+        if (varTipoMovEst = 0) then
+          varSaldo := varQuantidade + varQuantEntrada;
+        else
+          varSaldo := ABS(varQuantidade - varQuantSaida);
+        end if;
+        varTotalCusto := varSaldo * varCustoMedio;
+        update tbProdutoEstoque tbProEst
+           set tbProEst.Saldo      = varSaldo,
+               tbProEst.Totalcusto = varTotalCusto,
+               tbProEst.Customedio = varCustoMedio
+         where tbProEst.Idprodest = varId;
+        commit;
+        Begin
+          select p.data
+            into varDataAtual
+            from tbProdutoEstoque p
+           where p.idprodest = varId;
+        Exception
+          When No_Data_Found then
+            varDataAtual := Trunc(sysdate);
+        end;
+        For tabProcess In (SELECT Rownum, tb.*
+                             FROM (SELECT to_char(tbEst.data, 'DDMMYYYY') ||
+                                          tbEst.Idprodest,
+                                          tbEst.*
+                                     FROM tbProdutoEstoque tbEst
+                                    WHERE tbEst.produto = varProduto
+                                      AND tbEst.empresa = varEmpresa
+                                      AND tbEst.data > varDataAtual
+                                    order by to_char(tbEst.data, 'DDMMYYYY') ||
+                                             tbEst.Idprodest) tb) Loop
+           varSaldo :=0;
+        End Loop;
+      end if;
     end if;
   End;
-end estoque;
+end pkg_estoque;
