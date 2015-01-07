@@ -16,13 +16,14 @@ create or replace package body pkg_estoque as
                                    varIcmsNota      In Number,
                                    varDespesaNota   In Number,
                                    varSituacao      In Integer) is
-    varQuantidade Numeric(16, 2);
-    varId         tbprodutoestoque.idprodest%type;
-    varSaldo      Numeric(16, 2);
-    varDataAtual  tbprodutoestoque.data%type;
-    varQEntr      tbprodutoestoque.quantEntrada%type;
-    varQSai       tbprodutoestoque.quantsaida%type;
-    varTotalCusto Numeric(16, 2);
+    varQuantidade     Numeric(16, 2);
+    varId             tbprodutoestoque.idprodest%type;
+    varSaldo          Numeric(16, 2);
+    varDataAtual      tbprodutoestoque.data%type;
+    varQEntr          tbprodutoestoque.quantEntrada%type;
+    varQSai           tbprodutoestoque.quantsaida%type;
+    varCusMedAtualiza tbprodutoestoque.customedio%type;
+    varTotalCusto     Numeric(16, 2);
   begin
     Begin
       SELECT NVL(saldo, 0)
@@ -151,9 +152,7 @@ create or replace package body pkg_estoque as
         select p.quantentrada
           into varQEntr
           from tbProdutoEstoque p
-         where p.produto = varProduto
-           and p.empresa = varEmpresa
-           and p.idComercial = varOrigem;
+         where idprodest = varId;
       Exception
         When No_Data_Found then
           varQEntr := 0;
@@ -162,9 +161,7 @@ create or replace package body pkg_estoque as
         select p.quantsaida
           into varQSai
           from tbProdutoEstoque p
-         where p.produto = varProduto
-           and p.empresa = varEmpresa
-           and p.idComercial = varOrigem;
+         where idprodest = varId;
       Exception
         When No_Data_Found then
           varQSai := 0;
@@ -173,6 +170,7 @@ create or replace package body pkg_estoque as
          (varQuantEntrada > 0 and varQEntr <> varQuantEntrada)) then
         varSaldo      := 0;
         varTotalCusto := 0;
+        varCusMedAtualiza := varCustoMedio;
         Begin
           select p.quantidade
             into varQuantidade
@@ -182,7 +180,7 @@ create or replace package body pkg_estoque as
           When No_Data_Found then
             varQuantidade := 0;
         end;
-        if (varTipoMovEst = 0) then
+        if (varTipoMovEst IN (0, 3)) then
           varSaldo := varQuantidade + varQuantEntrada;
         else
           varSaldo := ABS(varQuantidade - varQuantSaida);
@@ -213,7 +211,25 @@ create or replace package body pkg_estoque as
                                       AND tbEst.data > varDataAtual
                                     order by to_char(tbEst.data, 'DDMMYYYY') ||
                                              tbEst.Idprodest) tb) Loop
-           varSaldo :=0;
+          if (tabProcess.Tipomovest = 0) then
+            varCusMedAtualiza := tabProcess.Customedio;
+          end if;
+          if (tabProcess.Rownum = 1) then
+            varQuantidade := varSaldo;
+          end if;
+          if (tabProcess.Tipomovest IN (0, 3, 4)) then
+            varSaldo := varQuantidade + tabProcess.Quantentrada;
+          else
+            varSaldo := ABS(varQuantidade - tabProcess.Quantsaida);
+          end if;
+          varTotalCusto := varSaldo * varCusMedAtualiza;
+          update tbProdutoEstoque tb
+             set tb.saldo      = varSaldo,
+                 tb.quantidade = varQuantidade,
+                 tb.totalcusto = varTotalCusto,
+                 tb.customedio = varCusMedAtualiza
+           where tb.idprodest = varId;
+          varQuantidade := varSaldo;
         End Loop;
       end if;
     end if;
