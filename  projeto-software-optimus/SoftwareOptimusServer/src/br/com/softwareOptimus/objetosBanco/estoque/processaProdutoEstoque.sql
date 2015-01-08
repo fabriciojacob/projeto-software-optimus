@@ -25,24 +25,25 @@ create or replace package body pkg_estoque as
     varCusMedAtualiza tbprodutoestoque.customedio%type;
     varTotalCusto     Numeric(16, 2);
   begin
-    Begin
-      SELECT NVL(saldo, 0)
-        INTO varQuantidade
-        FROM tbprodutoestoque
-       WHERE (to_char(data, 'DDMMYYYY') || Idprodest) IN
-             (SELECT MAX(to_char(tbEst.data, 'DDMMYYYY') || tbEst.Idprodest) AS data
-                FROM tbProdutoEstoque tbEst
-               WHERE tbEst.produto = varProduto
-                 AND tbEst.empresa = varEmpresa
-                 AND tbEst.data <= varData);
-    Exception
-      When No_Data_Found Then
-        varQuantidade := 0;
-    End;
     /*1 - Insere
     2 - Atualiza
     3 - Deleta*/
     if (varSituacao = 1) then
+      Begin
+        SELECT NVL(saldo, 0)
+          INTO varQuantidade
+          FROM tbprodutoestoque
+         WHERE (to_char(data, 'DDMMYYYY') || Idprodest) IN
+               (SELECT MAX(to_char(tbEst.data, 'DDMMYYYY') ||
+                           tbEst.Idprodest) AS data
+                  FROM tbProdutoEstoque tbEst
+                 WHERE tbEst.produto = varProduto
+                   AND tbEst.empresa = varEmpresa
+                   AND tbEst.data <= varData);
+      Exception
+        When No_Data_Found Then
+          varQuantidade := 0;
+      End;
       if (varTipoMovEst IN (0, 3, 4)) then
         varSaldo := varQuantidade + varQuantEntrada;
       else
@@ -168,8 +169,8 @@ create or replace package body pkg_estoque as
       end;
       if ((varQuantSaida > 0 and varQSai <> varQuantSaida) or
          (varQuantEntrada > 0 and varQEntr <> varQuantEntrada)) then
-        varSaldo      := 0;
-        varTotalCusto := 0;
+        varSaldo          := 0;
+        varTotalCusto     := 0;
         varCusMedAtualiza := varCustoMedio;
         Begin
           select p.quantidade
@@ -233,5 +234,8 @@ create or replace package body pkg_estoque as
         End Loop;
       end if;
     end if;
+/*    if (varSituacao = 3) then
+      
+    end if;*/
   End;
 end pkg_estoque;
