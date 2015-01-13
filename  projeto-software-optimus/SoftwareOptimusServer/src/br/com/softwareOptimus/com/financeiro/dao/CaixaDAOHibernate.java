@@ -23,18 +23,8 @@ public class CaixaDAOHibernate implements CaixaDAO {
 			this.transacao.isActive();
 		}
 		this.transacao.commit();
-		salvarParcelas(1);
 	}
-
-	public void salvarParcelas(Integer titulo) throws Exception {
-		StoredProcedureQuery storedProcedure = session
-				.createStoredProcedureQuery("addParcelas");
-		storedProcedure.registerStoredProcedureParameter("id", Integer.class,
-				ParameterMode.IN);
-		storedProcedure.setParameter("id", titulo);
-		storedProcedure.execute();
-	}
-
+	
 	@Override
 	public void begin() throws IOException, SQLException {
 		this.transacao = this.session.getTransaction();
