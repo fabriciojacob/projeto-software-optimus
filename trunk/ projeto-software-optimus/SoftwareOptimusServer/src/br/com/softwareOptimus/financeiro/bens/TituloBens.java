@@ -24,7 +24,7 @@ public class TituloBens {
 
 	private Titulo titulo = new Titulo();
 	private String nomePesquisa, statusBaixa, tipoData, tipoTitulo, tipoTitulo2;
-	private Long empresaSelecionada, participanteSelecionado;
+	private Long empresaSelecionada, participanteSelecionado,tituloSelecionado;
 	private List<Pessoa> participantes = new ArrayList<>();
 	private List<Titulo> titulos = new ArrayList<>();
 	private TituloRN regraNegocio;
@@ -161,6 +161,10 @@ public class TituloBens {
 		} catch (Exception e) {
 			msgErro("Problemas na seleção do participante ", e);
 		}
+	}
+	
+	public void selecionaTitulo(){
+		
 	}
 
 	public Titulo getTitulo() {
@@ -301,6 +305,14 @@ public class TituloBens {
 
 	public void setTipoTitulo(String tipoTitulo) {
 		this.tipoTitulo = tipoTitulo;
+	}
+
+	public Long getTituloSelecionado() {
+		return tituloSelecionado;
+	}
+
+	public void setTituloSelecionado(Long tituloSelecionado) {
+		this.tituloSelecionado = tituloSelecionado;
 	}
 	
 }
