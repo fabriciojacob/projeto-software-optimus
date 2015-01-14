@@ -50,7 +50,8 @@
 				 <p:calendar size="15" value="#{tituloBens.titulo.dataLancamento}" />
 				 
 				 Data Vencimento:
-				 <p:calendar size="15" value="#{tituloBens.titulo.vencimento}" disabled="true"/>
+				 <p:calendar size="15" value="#{tituloBens.titulo.vencimento}"
+						disabled="true" />
 				 
 				 Forma de pagamento:
 				<p:selectOneMenu id="pgto" value="#{formaPgtoBens.formaPgto}">
@@ -73,7 +74,7 @@
 				<p:inputText value="#{tituloBens.titulo.valorTitulo}" />
 				
 				Saldo titulo:
-				<p:outputLabel value="#{tituloBens.titulo.saldo}"/> 
+				<p:outputLabel value="#{tituloBens.titulo.saldo}" />
 
 					<h:panelGrid columns="2">
 
@@ -175,7 +176,57 @@
 				</p:dataTable>
 			</p:dialog>
 
-			<p:dialog header="Operações">
+			<p:dialog header="Operações" widgetVar="operacoes" modal="true"
+				height="300" width="400">
+				<h:panelGrid columns="2" id="dadosTituloOper">
+				
+				Empresa:
+				<p:inputText size="30" disabled="true"
+						value="#{tituloBens.titulo.empresa.fantasia}" />
+				
+				Participante:                       
+				<p:inputText size="30" disabled="true"
+						value="#{tituloBens.titulo.pessoa.fantasia}" />
+				
+				Descricao:
+				<p:inputText size="30" value="#{tituloBens.titulo.descricao}"
+						disabled="true" />
+				
+				Data lançamento:
+				 <p:calendar size="15" value="#{tituloBens.titulo.dataLancamento}"
+						disabled="true" />
+				 
+				 Data Vencimento:
+				 <p:calendar size="15" value="#{tituloBens.titulo.vencimento}"
+						disabled="true" />
+				 
+				 Forma de pagamento:
+				<p:selectOneMenu id="pgtoOPer" value="#{formaPgtoBens.formaPgto}">
+						<f:selectItem itemLabel="Selecione uma forma de pgto" />
+						<f:selectItems value="#{formaPgtoBens.lista}" var="listaPgto"
+							itemValue="#{listaPgto}" itemLabel="#{listaPgto.descricao}" />
+					</p:selectOneMenu>
+
+					
+				Valor:
+				<p:inputText value="#{tituloBens.titulo.valor}" />
+				
+				Valor Titulo:
+				<p:inputText value="#{tituloBens.titulo.valorTitulo}"
+						disabled='true' />
+				
+				Saldo titulo:
+				<p:inputText value="#{tituloBens.titulo.saldo}" disabled="true" />
+
+				Tipo titulo:	
+				<p:inputText value="#{tituloBens.titulo.tipoTitulo}" disabled="true" />
+
+					<h:panelGrid columns="2">
+						<p:commandButton id="btSalvarOper" value="Salvar"
+							actionListener="#{tituloBens.salvarTitulo(condPgtoBens.condPgto,formaPgtoBens.formaPgto)}"
+							update="frmTitulo,add" />
+					</h:panelGrid>
+				</h:panelGrid>
 
 
 			</p:dialog>
@@ -279,10 +330,13 @@
 
 
 					<p:column headerText="Operar">
-						<p:commandLink id="linkBaixar" value="Baixar" ajax="frmTitulo"
-							update="tabelaTitulo" onclick="PF('participante').show();">
-							<f:setPropertyActionListener value="" target="" />
+						<p:commandLink id="linkBaixar" value="operar"
+							onclick="PF('operacoes').show();"
+							action="#{tituloBens.selecionaTitulo}">
+							<f:setPropertyActionListener value="#{titulos.idTitulo}"
+								target="#{tituloBens.tituloSelecionado}" />
 						</p:commandLink>
+
 					</p:column>
 
 
