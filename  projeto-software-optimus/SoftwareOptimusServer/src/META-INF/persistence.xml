@@ -1,7 +1,9 @@
-<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
-	<persistence-unit name="SoftwareOptimusServer" transaction-type="RESOURCE_LOCAL">
-	<provider>org.hibernate.ejb.HibernatePersistence</provider>
-
+<persistence version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	<persistence-unit name="SoftwareOptimusServer"
+		transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<class>br.com.softwareOptimus.comercial.Comercial</class>
 		<class>br.com.softwareOptimus.comercial.ComercialFiscais</class>
 		<class>br.com.softwareOptimus.comercial.ComercialInfComp</class>
@@ -67,12 +69,10 @@
 		<class>br.com.softwareOptimus.contabilidade.SaldoContasCC</class>
 
 		<properties>
-
 			<property name=" javax.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver" />
 			<property name=" javax.persistence.jdbc.user" value="projeto" />
 			<property name=" javax.persistence.jdbc.password" value="123" />
-			<property name=" javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
-			
+			<property name=" javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:xe" />
 			<property name="hibernate.hbm2ddl.auto" value="update" />
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.format_sql" value="true" />
