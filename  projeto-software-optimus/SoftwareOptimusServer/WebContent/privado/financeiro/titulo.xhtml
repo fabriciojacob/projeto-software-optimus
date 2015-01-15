@@ -177,7 +177,7 @@
 			</p:dialog>
 
 			<p:dialog header="Operações" widgetVar="operacoes" modal="true"
-				height="300" width="400">
+				height="300" width="500">
 				<h:panelGrid columns="2" id="dadosTituloOper">
 				
 				Empresa:
@@ -221,10 +221,12 @@
 				Tipo titulo:	
 				<p:inputText value="#{tituloBens.titulo.tipoTitulo}" disabled="true" />
 
-					<h:panelGrid columns="2">
-						<p:commandButton id="btSalvarOper" value="Salvar"
+					<h:panelGrid columns="4">
+						<p:commandButton id="btSalvarOper" value="Baixar"
 							actionListener="#{tituloBens.salvarTitulo(condPgtoBens.condPgto,formaPgtoBens.formaPgto)}"
 							update="frmTitulo,add" />
+						<p:commandButton id="btExcluirOper" value="Excluir"/>
+						<p:commandButton id="btAlterarOper" value="Alterar"/>
 					</h:panelGrid>
 				</h:panelGrid>
 
