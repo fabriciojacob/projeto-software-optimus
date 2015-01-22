@@ -24,6 +24,7 @@ create or replace package body pkg_estoque as
     varQSai           tbprodutoestoque.quantsaida%type;
     varCusMedAtualiza tbprodutoestoque.customedio%type;
     varTotalCusto     Numeric(16, 2);
+  
   begin
     /*1 - Insere
     2 - Atualiza
@@ -234,8 +235,20 @@ create or replace package body pkg_estoque as
         End Loop;
       end if;
     end if;
-/*    if (varSituacao = 3) then
-      
-    end if;*/
+    if (varSituacao = 3) then
+    
+      declare
+        cursor estDeleta is
+          select to_char(tbEst.data, 'DDMMYYYY') || tbEst.Idprodest as id,
+                 tbEst.*
+            FROM tbProdutoEstoque tbEst
+           WHERE tbEst.idComercial = varOrigem
+           order by to_char(tbEst.data, 'DDMMYYYY') || tbEst.Idprodest;
+      begin
+        for estoque in estDeleta loop
+          null;
+        end loop;
+      end;
+    end if;
   End;
 end pkg_estoque;
