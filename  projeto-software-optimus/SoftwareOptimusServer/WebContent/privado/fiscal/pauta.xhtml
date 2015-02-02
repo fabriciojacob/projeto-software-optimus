@@ -11,6 +11,8 @@
 </h:head>
 <body>
 	<h:form id="frmCadPauta">
+
+
 		<br />
 		<h3 style="margin-top: 0">CADASTRO DA PAUTA</h3>
 		<div align="left">
@@ -35,75 +37,9 @@
 			<p:messages id="messages" showDetail="true" autoUpdate="true"
 				closable="true" />
 
-			<h:panelGrid id="grid" columns="2" columnClasses="label, value">
-				
-					Código da Pauta:
-					<p:inputText id="idPauta" disabled="true"
-					value="#{pautaBean.pauta.idPauta}" />
-		
-					Descrição da Pauta:
-					<p:inputText id="descPauta" value="#{pautaBean.pauta.descricao}"
-					size="40" disabled="#{pautaBean.desc}" />
+			<ui:include src="/privado/fiscal/panel/pautaPanel.xhtml" />
 
-				<p:commandButton id="vincPauta" value="Vigência Pauta" type="button"
-					disabled="#{pautaBean.vig}" onclick="PF('dlg2').show();" />
-
-			</h:panelGrid>
-
-			<h:panelGrid id="gridPautaMVA" columns="1">
-				<p:blockUI block="gridPautaMVA" trigger="vincPauta" />
-				<p:dataTable id="listaPautaMVA" value="#{pautaBean.listaPautaMVA}"
-					var="listaPautaMVA" paginator="true" rows="6">
-
-					<p:column headerText="Código da Vigência">
-						<h:outputText value="#{listaPautaMVA.idPautaMVA}" />
-					</p:column>
-
-					<p:column headerText="Descrição da Vigência">
-						<h:outputText value="#{listaPautaMVA.descricao}" />
-					</p:column>
-
-					<p:column headerText="Valor Pauta">
-						<h:outputText value="#{listaPautaMVA.valorPauta}" />
-					</p:column>
-
-					<p:column headerText="Valor MVA">
-						<h:outputText value="#{listaPautaMVA.valorMVa}" />
-					</p:column>
-
-					<p:column headerText="Vigência">
-						<h:outputText value="#{listaPautaMVA.vigencia}">
-							<f:convertDateTime type="date" dateStyle="medium" />
-						</h:outputText>
-					</p:column>
-
-					<p:column headerText="Incide Desconto">
-						<h:outputText value="#{listaPautaMVA.nincideDesconto}" />
-					</p:column>
-
-					<p:column headerText="Incide IPI">
-						<h:outputLabel value="#{listaPautaMVA.incideIPI}" />
-					</p:column>
-
-					<p:column headerText="MVA Ajustada">
-						<h:outputLabel value="#{listaPautaMVA.mvaAjustada}" />
-					</p:column>
-
-					<p:column headerText="Excluir">
-						<p:commandLink id="linkExcluiPautaMVA" value="Excluir"
-							ajax="dialog" action="#{pautaBean.excluirPautaMVA}"
-							update="listaPautaMVA">
-							<f:setPropertyActionListener value="#{listaPautaMVA.idPautaMVA}"
-								target="#{pautaBean.idPautaMVA}" />
-						</p:commandLink>
-					</p:column>
-
-				</p:dataTable>
-				<p:blockUI block="listaPautaMVA" trigger="listaPautaMVA">
-        				LOADING<br />
-					<p:graphicImage name="ajaxloader.gif" />
-				</p:blockUI>
-			</h:panelGrid>
+			<ui:include src="/privado/fiscal/dataTable/pautaDataTable.xhtml" />
 
 			<p:dialog id="dialog1" header="Consulta" widgetVar="dlg1"
 				modal="true" height="300" width="430">
@@ -194,8 +130,7 @@
 					</h:panelGrid>
 				</h:panelGrid>
 				<p:commandButton value="Incluir"
-					actionListener="#{pautaBean.incluirPautaMVA}"
-					update="listaPautaMVA, gridincEdi2" />
+					actionListener="#{pautaBean.incluirPautaMVA}" update="gridPautaMVA" />
 			</p:dialog>
 		</div>
 	</h:form>
