@@ -1,4 +1,4 @@
-package br.com.softwareOptimus.fiscal.bens;
+package br.com.softwareOptimus.fiscal.bens.converter;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;

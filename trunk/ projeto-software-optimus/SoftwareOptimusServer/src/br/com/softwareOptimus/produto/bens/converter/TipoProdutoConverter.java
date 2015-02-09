@@ -1,4 +1,4 @@
-package br.com.softwareOptimus.produto.bens;
+package br.com.softwareOptimus.produto.bens.converter;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
