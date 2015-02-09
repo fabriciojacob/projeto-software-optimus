@@ -1,20 +1,20 @@
-package br.com.softwareOptimus.produto.bens;
+package br.com.softwareOptimus.fiscal.bens.converter;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import br.com.softwareOptimus.produto.SubGrupo;
+import br.com.softwareOptimus.fiscal.Aliquota;
 
 //@FacesConverter(value = "ClassConverter")
-@FacesConverter(forClass = SubGrupo.class)
-public class SubGrupoConverter implements Converter{
-	
+@FacesConverter(forClass = Aliquota.class)
+public class AliquotaConverter implements Converter{
+
 	@Override
 	public Object getAsObject(FacesContext facesContext,
 			UIComponent uIComponent, String value) {
 		if (value != null && !value.isEmpty()) {
-			return (SubGrupo) uIComponent.getAttributes().get(
+			return (Aliquota) uIComponent.getAttributes().get(
 					value);
 		}
 		return null;
@@ -23,16 +23,15 @@ public class SubGrupoConverter implements Converter{
 	@Override
 	public String getAsString(FacesContext facesContext,
 			UIComponent uiComponent, Object value) {
-		if (value instanceof SubGrupo) {
-			SubGrupo entity = (SubGrupo) value;
-			if (entity != null && entity instanceof SubGrupo
-					&& entity.getIdSubGrupo() != null) {
-				uiComponent.getAttributes().put(entity.getIdSubGrupo().toString(),
+		if (value instanceof Aliquota) {
+			Aliquota entity = (Aliquota) value;
+			if (entity != null && entity instanceof Aliquota
+					&& entity.getIdAliq() != null) {
+				uiComponent.getAttributes().put(entity.getIdAliq().toString(),
 						entity);
-				return entity.getIdSubGrupo().toString();
+				return entity.getIdAliq().toString();
 			}
 		}
 		return "";
 	}
-
 }

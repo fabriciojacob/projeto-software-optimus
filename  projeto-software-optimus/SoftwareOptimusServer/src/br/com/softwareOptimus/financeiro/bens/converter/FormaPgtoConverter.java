@@ -1,4 +1,4 @@
-package br.com.softwareOptimus.financeiro.bens;
+package br.com.softwareOptimus.financeiro.bens.converter;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
