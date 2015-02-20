@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:panelGrid columns="15">
+		
+		Empresa:
+		<p:outputLabel 	value="#{produtoEstoqueBean.produtoEstoque.empresa.fantasia}" />
+		Produto:
+		<p:outputLabel value="#{produtoEstoqueBean.produtoEstoque.produto.descProd}" />
+		 Data Inicio:
+		 <p:calendar size="5" value="#{produtoEstoqueBean.dataIni}" />
+		 Data Fim:
+ 		 <p:calendar size="5" value="#{produtoEstoqueBean.dataFim}" />
+		<p:selectOneMenu value="#{produtoEstoqueBean.produtoEstoque.tipoMovEst}">
+			<f:selectItem itemLabel="Selecione tipo de movimento opcional" />
+			<f:selectItem itemLabel="COMPRA" itemValue="COMPRA" />
+			<f:selectItem itemLabel="VENDA" itemValue="VENDA" />
+			<f:selectItem itemLabel="OUTRA SAÍDA" itemValue="OUTRASAIDA" />
+			<f:selectItem itemLabel="OUTRA ENTRADA" itemValue="OUTRAENTRADA" />
+			<f:selectItem itemLabel="ENTRADA MANUAL" itemValue="MANUALENTRADA" />
+			<f:selectItem itemLabel="SAIDA MANUAL" itemValue="MANUALSAIDA" />
+		</p:selectOneMenu>
+
+		<p:commandButton value="Pesquisar" update="tabelaMovEst" actionListener="#{produtoEstoqueBean.pesquisaMovEstoque}" />
+</h:panelGrid>
+</html>

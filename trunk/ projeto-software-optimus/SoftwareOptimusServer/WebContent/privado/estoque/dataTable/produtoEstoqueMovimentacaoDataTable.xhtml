@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:panelGrid id="gridProdutoEstoqueDataTable" columns="1">
+	<p:dataTable id="tabelaMovEst" paginator="true" rows="6"
+		resizableColumns="true" var="listaProdutoEstoque"
+		value="#{produtoEstoqueBean.listaProdutoEstoque}">
+
+		<f:facet name="header">
+            			Movimentação do Produto no Estoque
+        			</f:facet>
+
+		<p:column headerText="Código"
+			sortBy="#{listaProdutoEstoque.idProdEst}">
+			<h:outputLabel value="#{listaProdutoEstoque.idProdEst}" />
+		</p:column>
+
+		<p:column headerText="Descrição"
+			sortBy="#{listaProdutoEstoque.justificativa}">
+			<h:outputLabel value="#{listaProdutoEstoque.justificativa}" />
+		</p:column>
+
+		<p:column headerText="Data" sortBy="#{listaProdutoEstoque.data}">
+			<h:outputLabel value="#{listaProdutoEstoque.data}">
+				<f:convertDateTime type="date" dateStyle="medium" />
+			</h:outputLabel>
+		</p:column>
+
+		<p:column headerText="Tipo Movimento"
+			sortBy="#{listaProdutoEstoque.tipoMovEst}">
+			<h:outputLabel value="#{listaProdutoEstoque.tipoMovEst}" />
+		</p:column>
+
+		<p:column headerText="Produto"
+			sortBy="#{listaProdutoEstoque.produto.descProd}">
+			<h:outputLabel value="#{listaProdutoEstoque.produto.descProd}" />
+		</p:column>
+
+		<p:column headerText="Quantidade Anterior"
+			sortBy="#{listaProdutoEstoque.quantidade}">
+			<h:outputLabel value="#{listaProdutoEstoque.quantidade}" />
+		</p:column>
+
+		<p:column headerText="Quantidade Saida"
+			sortBy="#{listaProdutoEstoque.quantSaida}">
+			<h:outputLabel value="#{listaProdutoEstoque.quantSaida}" />
+		</p:column>
+
+		<p:column headerText="Quantidade Entrada"
+			sortBy="#{listaProdutoEstoque.quantEntrada}">
+			<h:outputLabel value="#{listaProdutoEstoque.quantEntrada}" />
+		</p:column>
+
+		<p:column headerText="Saldo" sortBy="#{listaProdutoEstoque.saldo}">
+			<h:outputLabel value="#{listaProdutoEstoque.saldo}" />
+		</p:column>
+
+		<p:column headerText="Custo Médio"
+			sortBy="#{listaProdutoEstoque.custoMedio}">
+			<h:outputLabel value="#{listaProdutoEstoque.custoMedio}" />
+		</p:column>
+
+		<p:column headerText="Total Custo"
+			sortBy="#{listaProdutoEstoque.totalCusto}">
+			<h:outputLabel value="#{listaProdutoEstoque.totalCusto}" />
+		</p:column>
+	</p:dataTable>
+</h:panelGrid>
+</html>
