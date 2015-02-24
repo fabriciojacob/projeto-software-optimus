@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:panelGrid id="gridData5" columns="1">
+	<p:blockUI block="gridData5" trigger="gridData5" />
+	<p:dataTable id="listaTelefone" value="#{empresaBean.listaTelefone}"
+		paginator="true" rows="6" var="tels">
+
+		<p:column headerText="Codigo">
+			<h:outputLabel value="#{tels.idTelefone}" />
+		</p:column>
+
+		<p:column headerText="Numero">
+			<h:outputLabel value="#{tels.numero}" />
+		</p:column>
+
+		<p:column headerText="Tipo Fone">
+			<h:outputLabel value="#{tels.tipoFone}" />
+		</p:column>
+
+		<p:column headerText="Excluir">
+			<p:commandLink id="linkExcluirTelefone" value="Excluir" ajax="dialog"
+				action="#{empresaBean.excluirTelefone}" update="listaTelefone">
+				<f:setPropertyActionListener value="#{tels.idTelefone}"
+					target="#{empresaBean.idTel}" />
+			</p:commandLink>
+		</p:column>
+
+	</p:dataTable>
+	<p:blockUI block="listaTelefone" trigger="listaTelefone">
+        				LOADING<br />
+		<p:graphicImage name="ajaxloader.gif" />
+	</p:blockUI>
+</h:panelGrid>
+</html>

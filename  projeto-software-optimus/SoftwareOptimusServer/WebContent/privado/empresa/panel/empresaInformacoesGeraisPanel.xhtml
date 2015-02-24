@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:panelGrid id="cadastroEmpresa" columns="2" columnClasses="label, value">
+					
+		Inativa:
+		<p:selectBooleanCheckbox id="inativaEmp" disabled="#{empresaBean.ina}"
+		value="#{empresaBean.pessoaJuridica.status}" />
+		Codigo Empresa:
+		<p:inputText id="idEmpresa" disabled="true" value="#{empresaBean.pessoaJuridica.idPessoa}" />
+		Nome Fantasia:
+		<p:inputText id="nomeFantasia" disabled="#{empresaBean.nomeFant}" value="#{empresaBean.pessoaJuridica.fantasia}" size="40" />
+		Razão Social:
+		<p:inputText id="razaoSocial" disabled="#{empresaBean.nomeRaz}" value="#{empresaBean.pessoaJuridica.razaoSocial}" size="40" />
+		CNPJ:
+		<p:inputMask id="cnpj" value="#{empresaBean.pessoaJuridica.cnpj}" disabled="#{empresaBean.cnpj}" mask="99999999999999" />
+		Inscrição estadual:
+		<p:inputMask id="ie" value="#{empresaBean.pessoaJuridica.ie}" disabled="#{empresaBean.inscEst}" 
+		rendered="true" mask="99999999?999999" />
+		CNAE:
+		<p:inputMask id="cnae" value="#{empresaBean.pessoaJuridica.cnae}" disabled="#{empresaBean.cnae}" mask="9999999" />
+</h:panelGrid>
+</html>
