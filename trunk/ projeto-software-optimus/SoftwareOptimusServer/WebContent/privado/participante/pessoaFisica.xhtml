@@ -6,7 +6,6 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
-
 <h:head>
 
 </h:head>
@@ -77,13 +76,9 @@
 								target="#{participanteBean.id}" />
 						</p:commandLink>
 					</p:column>
-
 				</p:dataTable>
 
 			</p:dialog>
-
-
-
 			<p:tabView style="border: 0px">
 				<p:tab id="cadParticipante" title="Informações Gerais">
 
@@ -114,7 +109,6 @@
 							disabled="#{participanteBean.nomeParPesFis}"
 							value="#{participanteBean.pessoaFisica.fantasia}" size="40" />
 					
-				
 					CPF:
 					<p:inputMask value="#{participanteBean.pessoaFisica.cpf}"
 							disabled="#{participanteBean.cpfParPesFis}" mask="99999999999" />
@@ -124,7 +118,6 @@
 							disabled="#{participanteBean.rgParPesFis}" />
 
 					</h:panelGrid>
-
 				</p:tab>
 
 				<p:tab id="cadLogr" title="Lista de endereços">
@@ -134,7 +127,6 @@
 
 					<p:dialog id="enderecoPesFis" header=" Enderecos" widgetVar="dlg2"
 						modal="true" height="300" width="450">
-
 
 						<h:panelGrid columns="2" columnClasses="label, value">
 						
@@ -249,7 +241,6 @@
 									target="#{participanteBean.idLogr}" />
 							</p:commandLink>
 						</p:column>
-
 					</p:dataTable>
 
 				</p:tab>
@@ -262,17 +253,16 @@
 					<p:dialog header="Emails" widgetVar="dlg3" modal="true"
 						height="100" width="400">
 						<h:panelGrid id="gridEmail" columns="2">
-						Email:
-						<p:inputText value="#{participanteBean.emails.email}" size="50" />
+							Email:
+							<p:inputText value="#{participanteBean.emails.email}" size="50" />
 						
-						Padrão NF-e:
-						<p:selectBooleanCheckbox value="#{participanteBean.padraoNFE}" />
+							Padrão NF-e:
+							<p:selectBooleanCheckbox value="#{participanteBean.padraoNFE}" />
 
 							<p:commandButton id="incluirEmail" icon="ui-icon-disk"
 								disabled="#{participanteBean.email}"
 								actionListener="#{participanteBean.salvarEmail}"
 								update="listaEmail, gridEmail" />
-
 						</h:panelGrid>
 
 					</p:dialog>
@@ -299,8 +289,6 @@
 									target="#{participanteBean.idEmail}" />
 							</p:commandLink>
 						</p:column>
-
-
 					</p:dataTable>
 
 				</p:tab>
@@ -363,11 +351,8 @@
 									target="#{participanteBean.idTel}" />
 							</p:commandLink>
 						</p:column>
-
 					</p:dataTable>
-
 				</p:tab>
-
 			</p:tabView>
 		</div>
 	</h:form>
