@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:panelGrid id="empresaDadosFiscaisPanel" columns="2">
+	<h:panelGrid columns="2">
+			Data Inicio:
+			<p:calendar id="dataIni" value="#{empresaBean.regime.dataInicio}"
+					effect="fold" disabled="#{empresaBean.datIni}" />
+			Regime:
+			<p:selectOneMenu id="fConsult" value="#{empresaBean.tipoRegime}" disabled="#{empresaBean.reg}">
+				<f:selectItem itemLabel="SIMPLES" itemValue="SIMPLES" />
+				<f:selectItem itemLabel="REAL" itemValue="LUCROREAL" />
+				<f:selectItem itemLabel="PRESUMIDO" itemValue="LUCROPRESUMIDO" />
+			</p:selectOneMenu>
+			<p:commandButton id="incluirReg" icon="ui-icon-disk" disabled="#{empresaBean.salReg}"
+				actionListener="#{empresaBean.salvarRegime()}" update="listaRegime" />
+	</h:panelGrid>
+</h:panelGrid>
+</html>
