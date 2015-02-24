@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:panelGrid id="gridGradeVig" columns="1">
+	<p:blockUI block="gridGradeVig" trigger="vincGrade" />
+	<p:dataTable id="listaGradeVig"
+		value="#{gradeTributariaBean.listaGradeVig}" var="listaGradeVig"
+		paginator="true" rows="8">
+
+		<p:column headerText="Código da Vigência">
+			<h:outputText value="#{listaGradeVig.id}" />
+		</p:column>
+
+		<p:column headerText="Descrição da Vigência">
+			<h:outputText value="#{listaGradeVig.descricao}" />
+		</p:column>
+
+		<p:column headerText="Estado Origem">
+			<h:outputText value="#{listaGradeVig.origem.descricao}" />
+		</p:column>
+
+		<p:column headerText="Estado Destino">
+			<h:outputText value="#{listaGradeVig.destino.descricao}" />
+		</p:column>
+
+		<p:column headerText="Alíquota">
+			<h:outputText value="#{listaGradeVig.aliquota.aliquota}" />
+		</p:column>
+
+		<p:column headerText="Vigência">
+			<h:outputText value="#{listaGradeVig.vigencia}">
+				<f:convertDateTime type="date" dateStyle="medium" />
+			</h:outputText>
+		</p:column>
+
+		<p:column headerText="Ent/Sai">
+			<h:outputText value="#{listaGradeVig.io}" />
+		</p:column>
+
+		<p:column headerText="Tipo da Grade">
+			<h:outputLabel value="#{listaGradeVig.tipoGrade}" />
+		</p:column>
+
+		<p:column headerText="Pauta">
+			<h:outputLabel value="#{listaGradeVig.pauta.descricao}" />
+		</p:column>
+
+		<p:column headerText="Excluir">
+			<p:commandLink id="linkExcluiGradeVig" value="Excluir" ajax="dialog"
+				action="#{gradeTributariaBean.excluirGradeVig}"
+				update="listaGradeVig">
+				<f:setPropertyActionListener value="#{listaGradeVig.id}"
+					target="#{gradeTributariaBean.idGradeVig}" />
+			</p:commandLink>
+		</p:column>
+
+	</p:dataTable>
+	<p:blockUI block="listaGradeVig" trigger="listaGradeVig">
+        				LOADING<br />
+		<p:graphicImage name="ajaxloader.gif" />
+	</p:blockUI>
+</h:panelGrid>
+</html>

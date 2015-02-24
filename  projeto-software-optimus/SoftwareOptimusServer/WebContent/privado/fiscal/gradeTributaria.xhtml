@@ -7,7 +7,6 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
-
 </h:head>
 <body>
 	<h:form id="frmCadGrade">
@@ -55,65 +54,7 @@
 				update="gridincEdi2" disabled="#{gradeTributariaBean.vig}"
 				onclick="PF('dlg2').show();" />
 
-			<h:panelGrid id="gridGradeVig" columns="1">
-				<p:blockUI block="gridGradeVig" trigger="vincGrade" />
-				<p:dataTable id="listaGradeVig"
-					value="#{gradeTributariaBean.listaGradeVig}" var="listaGradeVig"
-					paginator="true" rows="8">
-
-					<p:column headerText="Código da Vigência">
-						<h:outputText value="#{listaGradeVig.id}" />
-					</p:column>
-
-					<p:column headerText="Descrição da Vigência">
-						<h:outputText value="#{listaGradeVig.descricao}" />
-					</p:column>
-
-					<p:column headerText="Estado Origem">
-						<h:outputText value="#{listaGradeVig.origem.descricao}" />
-					</p:column>
-
-					<p:column headerText="Estado Destino">
-						<h:outputText value="#{listaGradeVig.destino.descricao}" />
-					</p:column>
-
-					<p:column headerText="Alíquota">
-						<h:outputText value="#{listaGradeVig.aliquota.aliquota}" />
-					</p:column>
-
-					<p:column headerText="Vigência">
-						<h:outputText value="#{listaGradeVig.vigencia}">
-							<f:convertDateTime type="date" dateStyle="medium" />
-						</h:outputText>
-					</p:column>
-
-					<p:column headerText="Ent/Sai">
-						<h:outputText value="#{listaGradeVig.io}" />
-					</p:column>
-
-					<p:column headerText="Tipo da Grade">
-						<h:outputLabel value="#{listaGradeVig.tipoGrade}" />
-					</p:column>
-
-					<p:column headerText="Pauta">
-						<h:outputLabel value="#{listaGradeVig.pauta.descricao}" />
-					</p:column>
-
-					<p:column headerText="Excluir">
-						<p:commandLink id="linkExcluiGradeVig" value="Excluir"
-							ajax="dialog" action="#{gradeTributariaBean.excluirGradeVig}"
-							update="listaGradeVig">
-							<f:setPropertyActionListener value="#{listaGradeVig.id}"
-								target="#{gradeTributariaBean.idGradeVig}" />
-						</p:commandLink>
-					</p:column>
-
-				</p:dataTable>
-				<p:blockUI block="listaGradeVig" trigger="listaGradeVig">
-        				LOADING<br />
-					<p:graphicImage name="ajaxloader.gif" />
-				</p:blockUI>
-			</h:panelGrid>
+			<ui:include src="/privado/fiscal/dataTable/gradeTributariaVigenciaDataTable.xhtml" />
 
 			<p:dialog id="dialog1" header="Consulta" widgetVar="dlg1"
 				modal="true" height="300" width="430">
@@ -239,7 +180,6 @@
 								itemLabel="#{pautaList.idPauta} - #{pautaList.descricao}" />
 						</p:selectOneMenu>
 					</h:panelGrid>
-
 				</h:panelGrid>
 
 				<p:tooltip id="toolTipAliq" for="aliq"
