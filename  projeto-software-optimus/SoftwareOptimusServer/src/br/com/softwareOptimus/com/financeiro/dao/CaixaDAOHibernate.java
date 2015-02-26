@@ -5,8 +5,6 @@ import java.sql.SQLException;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
-import javax.persistence.ParameterMode;
-import javax.persistence.StoredProcedureQuery;
 import javax.persistence.TypedQuery;
 
 import br.com.softwareOptimus.financeiro.Caixa;

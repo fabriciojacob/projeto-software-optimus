@@ -1,6 +1,5 @@
 package br.com.softwareOptimus.entidades.RN;
 
-import java.util.ArrayList;
 import java.util.List;
 import br.com.softwareOptimus.entidades.Logradouro;
 import br.com.softwareOptimus.entidades.Pessoa;
@@ -13,7 +12,6 @@ import br.com.softwareOptimus.util.DAOFactory;
 public class ParticipanteRN {
 
 	private ParticipanteDAO participanteDAO;
-	private List<Logradouro> listaLogr = new ArrayList<>();
 	private LogradouroDAO logrDAO;
 
 	public ParticipanteRN() {
@@ -76,7 +74,7 @@ public class ParticipanteRN {
 	}
 
 	public List<Logradouro> listaLogr(Pessoa pessoa) throws Exception {
-		return this.listaLogr = logrDAO.listar(pessoa);
+		return logrDAO.listar(pessoa);
 	}
 
 	public PessoaFisica carregaIDPF(Long codigo) throws Exception {

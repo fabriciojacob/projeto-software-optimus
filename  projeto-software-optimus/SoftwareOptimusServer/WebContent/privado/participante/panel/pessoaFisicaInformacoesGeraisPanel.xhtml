@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:panelGrid id="cadastroPessoaFisica" columns="1"
+	columnClasses="label, value">
+	<p:selectOneRadio id="tipoParticipante"
+		disabled="#{participanteBean.tipoParPerFis}"
+		value="#{participanteBean.tipoParticipante}">
+		<f:selectItem itemLabel="CLIENTE" itemValue="CLIENTE" />
+		<f:selectItem itemLabel="FORNECEDOR" itemValue="FORNECEDOR" />
+		<f:selectItem itemLabel="TRANSPORTADORA" itemValue="TRANSPORTADORA" />
+		<f:selectItem itemLabel="CONTADOR" itemValue="CONTADOR" />
+	</p:selectOneRadio>
+
+	<h:panelGrid id="cadastroParticipante" columns="2"
+		columnClasses="label, value">
+						
+					Inativa:
+					<p:selectBooleanCheckbox id="inativaEmp"
+			disabled="#{participanteBean.inaParPerFis}"
+			value="#{participanteBean.pessoaFisica.status}" />
+			
+					Codigo:
+					<p:inputText id="idEmpresa" disabled="true"
+			value="#{participanteBean.pessoaFisica.idPessoa}" />
+		
+					Nome:
+					<p:inputText id="nomeFantasia"
+			disabled="#{participanteBean.nomeParPesFis}"
+			value="#{participanteBean.pessoaFisica.fantasia}" size="40" />
+					
+					CPF:
+					<p:inputMask value="#{participanteBean.pessoaFisica.cpf}"
+			disabled="#{participanteBean.cpfParPesFis}" mask="99999999999" />
+					
+					RG:
+					<p:inputText value="#{participanteBean.pessoaFisica.rg}"
+			disabled="#{participanteBean.rgParPesFis}" />
+
+	</h:panelGrid>
+
+</h:panelGrid>
+</html>

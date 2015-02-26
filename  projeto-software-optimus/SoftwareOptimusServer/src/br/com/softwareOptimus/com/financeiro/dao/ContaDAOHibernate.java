@@ -6,8 +6,6 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
-import javax.persistence.NamedStoredProcedureQuery;
-import javax.persistence.StoredProcedureQuery;
 import javax.persistence.TypedQuery;
 
 import br.com.softwareOptimus.financeiro.Conta;
