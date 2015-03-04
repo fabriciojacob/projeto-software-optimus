@@ -16,7 +16,6 @@
 		<h3 style="margin-top: 0">TITULOS</h3>
 		<div align="left">
 
-
 			<p:commandButton value="+" type="button" id="add"
 				onclick="PF('titulo').show();" disabled="#{tituloBens.btAdicionar}" />
 
@@ -33,64 +32,8 @@
 			<p:dialog header="Titulo" widgetVar="titulo" modal="true"
 				height="350" width="400" id="dialogTitulo">
 
-				<h:panelGrid columns="2" id="dadosTitulo">
-				
-				Empresa:
-				<p:inputText size="30" disabled="true" id="txtEmpresa"
-						value="#{tituloBens.titulo.empresa.fantasia}" />
-				
-				Participante:                       
-				<p:inputText size="30" disabled="true"
-						value="#{tituloBens.titulo.pessoa.fantasia}" />
-				
-				Descricao:
-				<p:inputText size="30" value="#{tituloBens.titulo.descricao}" />
-				
-				Data lançamento:
-				 <p:calendar size="15" value="#{tituloBens.titulo.dataLancamento}" />
-				 
-				 Data Vencimento:
-				 <p:calendar size="15" value="#{tituloBens.titulo.vencimento}"
-						disabled="true" />
-				 
-				 Forma de pagamento:
-				<p:selectOneMenu id="pgto" value="#{formaPgtoBens.formaPgto}">
-						<f:selectItem itemLabel="Selecione uma forma de pgto" />
-						<f:selectItems value="#{formaPgtoBens.lista}" var="listaPgto"
-							itemValue="#{listaPgto}" itemLabel="#{listaPgto.descricao}" />
-					</p:selectOneMenu>
-				 
-				 Condição de Pagamento:
-				 <p:selectOneMenu id="cond" value="#{condPgtoBens.condPgto}">
-						<f:selectItem itemLabel="Selecione uma condição de pgto" />
-						<f:selectItems value="#{condPgtoBens.lista}" var="listaCond"
-							itemValue="#{listaCond}" itemLabel="#{listaCond.descricao}" />
-					</p:selectOneMenu>
-					
-				Valor:
-				<p:inputText value="#{tituloBens.titulo.valor}" />
-				
-				Valor Titulo:
-				<p:inputText value="#{tituloBens.titulo.valorTitulo}" />
-				
-				Saldo titulo:
-				<p:outputLabel value="#{tituloBens.titulo.saldo}" />
+				<ui:include src="/privado/financeiro/inf_titulo/dadosTitulo.xhtml" />
 
-					<h:panelGrid columns="2">
-
-						<p:selectOneRadio id="tipoTitulo" value="#{tituloBens.tipoTitulo}">
-							<f:selectItem itemLabel="PAGAR" itemValue="PAGAR" />
-							<f:selectItem itemLabel="RECEBER" itemValue="RECEBER" />
-						</p:selectOneRadio>
-
-					</h:panelGrid>
-
-					<h:panelGrid columns="2">
-						<p:commandButton id="btSalvar" value="Salvar"
-							actionListener="#{tituloBens.salvarTitulo(condPgtoBens.condPgto,formaPgtoBens.formaPgto)}"
-							update="frmTitulo,add" />
-					</h:panelGrid>
-				</h:panelGrid>
 			</p:dialog>
 
 			<p:dialog header="Empresa" widgetVar="empresa" modal="true"
@@ -105,7 +48,6 @@
 				</div>
 
 				<h:panelGrid columns="2">
-
 					<p:inputText id="textoConsulta" size="40"
 						value="#{empresaBean.tipoConsulta}" />
 
@@ -113,8 +55,8 @@
 						<f:selectItem itemLabel="CNPJ" itemValue="cnpj" />
 						<f:selectItem itemLabel="Nome Fantasia" itemValue="nomeFantasia" />
 					</p:selectOneMenu>
-
 				</h:panelGrid>
+				
 				<p:dataTable id="dataPesquisa"
 					value="#{empresaBean.retornoListaPessoa}" var="pesEmpresa"
 					paginator="true" rows="6">
@@ -178,59 +120,7 @@
 
 			<p:dialog header="Operações" widgetVar="operacoes" modal="true"
 				height="300" width="500">
-				<h:panelGrid columns="2" id="dadosTituloOper">
-				
-				Empresa:
-				<p:inputText size="30" disabled="true"
-						value="#{tituloBens.titulo.empresa.fantasia}" />
-				
-				Participante:                       
-				<p:inputText size="30" disabled="true"
-						value="#{tituloBens.titulo.pessoa.fantasia}" />
-				
-				Descricao:
-				<p:inputText size="30" value="#{tituloBens.titulo.descricao}"
-						disabled="true" />
-				
-				Data lançamento:
-				 <p:calendar size="15" value="#{tituloBens.titulo.dataLancamento}"
-						disabled="true" />
-				 
-				 Data Vencimento:
-				 <p:calendar size="15" value="#{tituloBens.titulo.vencimento}"
-						disabled="true" />
-				 
-				 Forma de pagamento:
-				<p:selectOneMenu id="pgtoOPer" value="#{formaPgtoBens.formaPgto}">
-						<f:selectItem itemLabel="Selecione uma forma de pgto" />
-						<f:selectItems value="#{formaPgtoBens.lista}" var="listaPgto"
-							itemValue="#{listaPgto}" itemLabel="#{listaPgto.descricao}" />
-					</p:selectOneMenu>
-
-					
-				Valor:
-				<p:inputText value="#{tituloBens.titulo.valor}" />
-				
-				Valor Titulo:
-				<p:inputText value="#{tituloBens.titulo.valorTitulo}"
-						disabled='true' />
-				
-				Saldo titulo:
-				<p:inputText value="#{tituloBens.titulo.saldo}" disabled="true" />
-
-				Tipo titulo:	
-				<p:inputText value="#{tituloBens.titulo.tipoTitulo}" disabled="true" />
-
-					<h:panelGrid columns="4">
-						<p:commandButton id="btSalvarOper" value="Baixar"
-							actionListener="#{tituloBens.salvarTitulo(condPgtoBens.condPgto,formaPgtoBens.formaPgto)}"
-							update="frmTitulo,add" />
-						<p:commandButton id="btExcluirOper" value="Excluir"/>
-						<p:commandButton id="btAlterarOper" value="Alterar"/>
-					</h:panelGrid>
-				</h:panelGrid>
-
-
+				<ui:include	src="/privado/financeiro/inf_titulo/dadosTituloOper.xhtml"/>
 			</p:dialog>
 
 			<br />
@@ -275,74 +165,7 @@
 
 				</h:panelGrid>
 
-				<p:dataTable id="tabelaTitulo" paginator="true" rows="6"
-					var="titulos" value="#{tituloBens.titulos}">
-
-					<p:column headerText="Codigo">
-						<h:outputLabel value="#{titulos.idTitulo}" />
-					</p:column>
-
-					<p:column headerText="Descrição">
-						<h:outputLabel value="#{titulos.descricao}" />
-					</p:column>
-
-					<p:column headerText="Valor">
-						<h:outputLabel value="#{titulos.valor}" />
-					</p:column>
-
-					<p:column headerText="Valor Titulo">
-						<h:outputLabel value="#{titulos.valorTitulo}" />
-					</p:column>
-
-					<p:column headerText="Saldo titulo">
-						<h:outputLabel value="#{titulos.saldo}" />
-					</p:column>
-
-					<p:column headerText="Lançamento">
-						<h:outputLabel value="#{titulos.dataLancamento}" />
-					</p:column>
-
-					<p:column headerText="Vencimento">
-						<h:outputLabel value="#{titulos.vencimento}" />
-					</p:column>
-
-					<p:column headerText="Pagamento">
-						<h:outputLabel value="#{titulos.dataPagamento}" />
-					</p:column>
-
-					<p:column headerText="Forma pgto">
-						<h:outputLabel value="#{titulos.formaPgto.descricao}" />
-					</p:column>
-
-					<p:column headerText="Cond de pgto">
-						<h:outputLabel value="#{titulos.condPgto.descricao}" />
-					</p:column>
-
-					<p:column headerText="Tipo de titulo">
-						<h:outputLabel value="#{titulos.tipoTitulo}" />
-					</p:column>
-
-					<p:column headerText="Status">
-						<h:outputLabel value="#{titulos.status}" />
-					</p:column>
-
-					<p:column headerText="Rubrica">
-						<h:outputLabel value="#{titulos.rubrica}" />
-					</p:column>
-
-
-					<p:column headerText="Operar">
-						<p:commandLink id="linkBaixar" value="operar"
-							onclick="PF('operacoes').show();"
-							action="#{tituloBens.selecionaTitulo}">
-							<f:setPropertyActionListener value="#{titulos.idTitulo}"
-								target="#{tituloBens.tituloSelecionado}" />
-						</p:commandLink>
-
-					</p:column>
-
-
-				</p:dataTable>
+				<ui:include src="/privado/financeiro/inf_titulo/tabelaTitulo.xhtml"/>
 
 			</p:tab>
 

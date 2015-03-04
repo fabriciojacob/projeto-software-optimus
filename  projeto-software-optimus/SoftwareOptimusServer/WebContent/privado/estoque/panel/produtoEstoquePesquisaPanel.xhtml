@@ -9,23 +9,27 @@
 <h:panelGrid columns="15">
 		
 		Empresa:
-		<p:outputLabel 	value="#{produtoEstoqueBean.produtoEstoque.empresa.fantasia}" />
+		<p:outputLabel
+		value="#{produtoEstoqueBean.produtoEstoque.empresa.fantasia}" />
 		Produto:
-		<p:outputLabel value="#{produtoEstoqueBean.produtoEstoque.produto.descProd}" />
+		<p:outputLabel
+		value="#{produtoEstoqueBean.produtoEstoque.produto.descProd}" />
 		 Data Inicio:
 		 <p:calendar size="5" value="#{produtoEstoqueBean.dataIni}" />
 		 Data Fim:
  		 <p:calendar size="5" value="#{produtoEstoqueBean.dataFim}" />
-		<p:selectOneMenu value="#{produtoEstoqueBean.produtoEstoque.tipoMovEst}">
-			<f:selectItem itemLabel="Selecione tipo de movimento opcional" />
-			<f:selectItem itemLabel="COMPRA" itemValue="COMPRA" />
-			<f:selectItem itemLabel="VENDA" itemValue="VENDA" />
-			<f:selectItem itemLabel="OUTRA SAÍDA" itemValue="OUTRASAIDA" />
-			<f:selectItem itemLabel="OUTRA ENTRADA" itemValue="OUTRAENTRADA" />
-			<f:selectItem itemLabel="ENTRADA MANUAL" itemValue="MANUALENTRADA" />
-			<f:selectItem itemLabel="SAIDA MANUAL" itemValue="MANUALSAIDA" />
-		</p:selectOneMenu>
+	<p:selectOneMenu
+		value="#{produtoEstoqueBean.produtoEstoque.tipoMovEst}">
+		<f:selectItem itemLabel="Selecione tipo de movimento opcional" />
+		<f:selectItem itemLabel="COMPRA" itemValue="COMPRA" />
+		<f:selectItem itemLabel="VENDA" itemValue="VENDA" />
+		<f:selectItem itemLabel="OUTRA SAÍDA" itemValue="OUTRASAIDA" />
+		<f:selectItem itemLabel="OUTRA ENTRADA" itemValue="OUTRAENTRADA" />
+		<f:selectItem itemLabel="ENTRADA MANUAL" itemValue="MANUALENTRADA" />
+		<f:selectItem itemLabel="SAIDA MANUAL" itemValue="MANUALSAIDA" />
+	</p:selectOneMenu>
 
-		<p:commandButton value="Pesquisar" update="tabelaMovEst" actionListener="#{produtoEstoqueBean.pesquisaMovEstoque}" />
+	<p:commandButton value="Pesquisar" update="tabelaMovEst"
+		actionListener="#{produtoEstoqueBean.pesquisaMovEstoque}" />
 </h:panelGrid>
 </html>

@@ -24,11 +24,15 @@
 				onclick="PF('produto').show();" update="frmMovEst" />
 			<p:messages id="messages" showDetail="true" autoUpdate="true"
 				closable="true" />
-				
+
 			<p:dialog header="Inclusão de Produto no Estoque" widgetVar="movEst"
 				modal="true" height="300" width="350" id="dialogEstoque">
 
-				<ui:include src="/privado/estoque/panel/produtoEstoqueGerenciaRegistroPanel.xhtml" />
+				<ui:include
+					src="/privado/estoque/panel/produtoEstoqueGerenciaRegistroPanel.xhtml" />
+				<ui:include
+					src="/privado/estoque/panel/produtoEstoqueGerenciaRegistroPanel.xhtml" />
+
 
 			</p:dialog>
 
@@ -120,8 +124,10 @@
 			</p:dialog>
 
 			<p:tab id="incMov">
-				<ui:include src="/privado/estoque/panel/produtoEstoquePesquisaPanel.xhtml" />
-				<ui:include src="/privado/estoque/dataTable/produtoEstoqueMovimentacaoDataTable.xhtml" />
+				<ui:include
+					src="/privado/estoque/panel/produtoEstoquePesquisaPanel.xhtml" />
+				<ui:include
+					src="/privado/estoque/dataTable/produtoEstoqueMovimentacaoDataTable.xhtml" />
 			</p:tab>
 		</div>
 	</h:form>

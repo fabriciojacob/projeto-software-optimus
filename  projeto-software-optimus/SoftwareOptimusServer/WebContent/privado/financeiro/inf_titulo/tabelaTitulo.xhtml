@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<p:dataTable id="tabelaTitulo" paginator="true" rows="6" var="titulos"
+	value="#{tituloBens.titulos}">
+
+	<p:column headerText="Codigo">
+		<h:outputLabel value="#{titulos.idTitulo}" />
+	</p:column>
+
+	<p:column headerText="Descrição">
+		<h:outputLabel value="#{titulos.descricao}" />
+	</p:column>
+
+	<p:column headerText="Valor">
+		<h:outputLabel value="#{titulos.valor}" />
+	</p:column>
+
+	<p:column headerText="Valor Titulo">
+		<h:outputLabel value="#{titulos.valorTitulo}" />
+	</p:column>
+
+	<p:column headerText="Saldo titulo">
+		<h:outputLabel value="#{titulos.saldo}" />
+	</p:column>
+
+	<p:column headerText="Lançamento">
+		<h:outputLabel value="#{titulos.dataLancamento}" />
+	</p:column>
+
+	<p:column headerText="Vencimento">
+		<h:outputLabel value="#{titulos.vencimento}" />
+	</p:column>
+
+	<p:column headerText="Pagamento">
+		<h:outputLabel value="#{titulos.dataPagamento}" />
+	</p:column>
+
+	<p:column headerText="Forma pgto">
+		<h:outputLabel value="#{titulos.formaPgto.descricao}" />
+	</p:column>
+
+	<p:column headerText="Cond de pgto">
+		<h:outputLabel value="#{titulos.condPgto.descricao}" />
+	</p:column>
+
+	<p:column headerText="Tipo de titulo">
+		<h:outputLabel value="#{titulos.tipoTitulo}" />
+	</p:column>
+
+	<p:column headerText="Status">
+		<h:outputLabel value="#{titulos.status}" />
+	</p:column>
+
+	<p:column headerText="Rubrica">
+		<h:outputLabel value="#{titulos.rubrica}" />
+	</p:column>
+
+
+	<p:column headerText="Operar">
+		<p:commandLink id="linkBaixar" value="operar"
+			onclick="PF('operacoes').show();"
+			action="#{tituloBens.selecionaTitulo}">
+			<f:setPropertyActionListener value="#{titulos.idTitulo}"
+				target="#{tituloBens.tituloSelecionado}" />
+		</p:commandLink>
+
+	</p:column>
+
+
+</p:dataTable>
+</html>
