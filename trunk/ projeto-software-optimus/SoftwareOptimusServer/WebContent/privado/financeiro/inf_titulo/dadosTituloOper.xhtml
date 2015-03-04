@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:panelGrid columns="2" id="dadosTituloOper">
+				
+	Empresa:
+	<p:inputText size="30" disabled="true"
+		value="#{tituloBens.titulo.empresa.fantasia}" />
+				
+	Participante:                       
+	<p:inputText size="30" disabled="true"
+		value="#{tituloBens.titulo.pessoa.fantasia}" />
+				
+	Descricao:
+	<p:inputText size="30" value="#{tituloBens.titulo.descricao}"
+		disabled="true" />
+				
+	Data lançamento:
+	<p:calendar size="15" value="#{tituloBens.titulo.dataLancamento}"
+		disabled="true" />
+				 
+	Data Vencimento:
+	<p:calendar size="15" value="#{tituloBens.titulo.vencimento}"
+		disabled="true" />
+				 
+	Forma de pagamento:
+	<p:selectOneMenu id="pgtoOPer" value="#{formaPgtoBens.formaPgto}">
+		<f:selectItem itemLabel="Selecione uma forma de pgto" />
+		<f:selectItems value="#{formaPgtoBens.lista}" var="listaPgto"
+			itemValue="#{listaPgto}" itemLabel="#{listaPgto.descricao}" />
+	</p:selectOneMenu>
+
+					
+	Valor:
+	<p:inputText value="#{tituloBens.titulo.valor}" />
+				
+	Valor Titulo:
+	<p:inputText value="#{tituloBens.titulo.valorTitulo}"
+		disabled='true' />
+				
+	Saldo titulo:
+	<p:inputText value="#{tituloBens.titulo.saldo}" disabled="true" />
+
+	Tipo titulo:	
+	<p:inputText value="#{tituloBens.titulo.tipoTitulo}" disabled="true" />
+
+	<h:panelGrid columns="4">
+		<p:commandButton id="btSalvarOper" value="Baixar"
+			actionListener="#{tituloBens.salvarTitulo(condPgtoBens.condPgto,formaPgtoBens.formaPgto)}"
+			update="frmTitulo,add" />
+		<p:commandButton id="btExcluirOper" value="Excluir" />
+		<p:commandButton id="btAlterarOper" value="Alterar" />
+	</h:panelGrid>
+</h:panelGrid>
+</html>

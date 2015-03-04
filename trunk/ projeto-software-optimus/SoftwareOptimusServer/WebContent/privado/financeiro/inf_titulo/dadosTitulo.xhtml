@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:panelGrid columns="2" id="dadosTitulo">
+				
+	Empresa:
+	<p:inputText size="30" disabled="true" id="txtEmpresa"
+		value="#{tituloBens.titulo.empresa.fantasia}" />
+				
+	Participante:                       
+	<p:inputText size="30" disabled="true"
+		value="#{tituloBens.titulo.pessoa.fantasia}" />
+				
+	Descricao:
+	<p:inputText size="30" value="#{tituloBens.titulo.descricao}" />
+				
+	Data lançamento:
+	<p:calendar size="15" value="#{tituloBens.titulo.dataLancamento}" />
+				 
+	Data Vencimento:
+	<p:calendar size="15" value="#{tituloBens.titulo.vencimento}"
+		disabled="true" />
+				 
+	Forma de pagamento:
+	<p:selectOneMenu id="pgto" value="#{formaPgtoBens.formaPgto}">
+		<f:selectItem itemLabel="Selecione uma forma de pgto" />
+		<f:selectItems value="#{formaPgtoBens.lista}" var="listaPgto"
+			itemValue="#{listaPgto}" itemLabel="#{listaPgto.descricao}" />
+	</p:selectOneMenu>
+				 
+	Condição de Pagamento:
+	<p:selectOneMenu id="cond" value="#{condPgtoBens.condPgto}">
+		<f:selectItem itemLabel="Selecione uma condição de pgto" />
+		<f:selectItems value="#{condPgtoBens.lista}" var="listaCond"
+			itemValue="#{listaCond}" itemLabel="#{listaCond.descricao}" />
+	</p:selectOneMenu>
+					
+	Valor:
+	<p:inputText value="#{tituloBens.titulo.valor}" />
+				
+	Valor Titulo:
+	<p:inputText value="#{tituloBens.titulo.valorTitulo}" />
+				
+	Saldo titulo:
+	<p:outputLabel value="#{tituloBens.titulo.saldo}" />
+
+	<h:panelGrid columns="2">
+
+		<p:selectOneRadio id="tipoTitulo" value="#{tituloBens.tipoTitulo}">
+			<f:selectItem itemLabel="PAGAR" itemValue="PAGAR" />
+			<f:selectItem itemLabel="RECEBER" itemValue="RECEBER" />
+		</p:selectOneRadio>
+
+	</h:panelGrid>
+
+	<h:panelGrid columns="2">
+		<p:commandButton id="btSalvar" value="Salvar"
+			actionListener="#{tituloBens.salvarTitulo(condPgtoBens.condPgto,formaPgtoBens.formaPgto)}"
+			update="frmTitulo,add" />
+	</h:panelGrid>
+</h:panelGrid>
+</html>
