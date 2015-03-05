@@ -34,14 +34,12 @@
 		<f:selectItems value="#{formaPgtoBens.lista}" var="listaPgto"
 			itemValue="#{listaPgto}" itemLabel="#{listaPgto.descricao}" />
 	</p:selectOneMenu>
-
-					
+			
 	Valor:
 	<p:inputText value="#{tituloBens.titulo.valor}" />
 				
 	Valor Titulo:
-	<p:inputText value="#{tituloBens.titulo.valorTitulo}"
-		disabled='true' />
+	<p:inputText value="#{tituloBens.titulo.valorTitulo}" disabled='true' />
 				
 	Saldo titulo:
 	<p:inputText value="#{tituloBens.titulo.saldo}" disabled="true" />

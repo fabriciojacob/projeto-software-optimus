@@ -30,13 +30,15 @@ public class TituloDAOHibernate implements TituloDAO {
 	}
 
 	public void salvarParcelas(Long titulo) throws Exception {
-		if(!this.transacao.isActive()){
+		if (!this.transacao.isActive()) {
 			this.transacao.begin();
 		}
 		StoredProcedureQuery proc = session
 				.createStoredProcedureQuery("pkg_financeiro.addparcelas");
-		proc.registerStoredProcedureParameter("idTitulo", Long.class, ParameterMode.IN);
-		proc.registerStoredProcedureParameter("operacao", Integer.class, ParameterMode.IN);
+		proc.registerStoredProcedureParameter("idTitulo", Long.class,
+				ParameterMode.IN);
+		proc.registerStoredProcedureParameter("operacao", Integer.class,
+				ParameterMode.IN);
 		proc.setParameter("idTitulo", titulo);
 		proc.setParameter("operacao", 0);
 		proc.executeUpdate();
@@ -167,6 +169,14 @@ public class TituloDAOHibernate implements TituloDAO {
 	@Override
 	public Pessoa participante(Long id) throws Exception {
 		return this.session.find(Pessoa.class, id);
+	}
+
+	@Override
+	public Titulo retornaTitulo(Long id) throws Exception {
+		String jpql = "Select t from Titulo t where t.idTitulo = :id";
+		TypedQuery<Titulo> consulta = this.session.createQuery(jpql,Titulo.class);
+		consulta.setParameter("id", id);		
+		return consulta.getSingleResult();
 	}
 
 }

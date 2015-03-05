@@ -23,8 +23,10 @@ import br.com.softwareOptimus.financeiro.RN.TituloRN;
 public class TituloBens {
 
 	private Titulo titulo = new Titulo();
-	private String nomePesquisa, statusBaixa, tipoData, tipoTitulo, tipoTitulo2;
-	private Long empresaSelecionada, participanteSelecionado,tituloSelecionado;
+	private String nomePesquisa, statusBaixa, tipoData, tipoTitulo,
+			tipoTitulo2;
+	private Long empresaSelecionada, participanteSelecionado,
+			tituloSelecionado;
 	private List<Pessoa> participantes = new ArrayList<>();
 	private List<Titulo> titulos = new ArrayList<>();
 	private TituloRN regraNegocio;
@@ -127,7 +129,7 @@ public class TituloBens {
 		}
 		titulo.setRubrica(Rubrica.MANUAL);
 		titulo.setStatus(StatusConta.PENDENTE);
-		try {		
+		try {
 			this.regraNegocio.salvar(titulo);
 			msgAcerto("Registro salvo com sucesso ");
 			this.titulo = new Titulo();
@@ -162,9 +164,14 @@ public class TituloBens {
 			msgErro("Problemas na seleção do participante ", e);
 		}
 	}
-	
-	public void selecionaTitulo(){
-		
+
+	public void selecionaTitulo() {
+		this.titulo = new Titulo();
+		try {
+			this.titulo = regraNegocio.retornaTitulo(tituloSelecionado);
+		} catch (Exception e) {
+			msgErro("Problemas na pesquisa do titulo", e);
+		}
 	}
 
 	public Titulo getTitulo() {
@@ -314,5 +321,5 @@ public class TituloBens {
 	public void setTituloSelecionado(Long tituloSelecionado) {
 		this.tituloSelecionado = tituloSelecionado;
 	}
-	
+
 }

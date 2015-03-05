@@ -80,5 +80,10 @@ public class TituloRN {
 	public Pessoa participante(Long id) throws Exception {
 		return this.titulo.participante(id);
 	}
+	
+	public Titulo retornaTitulo(Long id) throws Exception {
+		return this.titulo.retornaTitulo(id);
+	}
+	
 
 }
