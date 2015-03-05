@@ -36,5 +36,7 @@ public interface TituloDAO {
 	public Pessoa participante(Long id) throws Exception;
 	
 	public void salvarParcelas(Long titulo) throws Exception;
+	
+	public Titulo retornaTitulo(Long id) throws Exception;
 
 }

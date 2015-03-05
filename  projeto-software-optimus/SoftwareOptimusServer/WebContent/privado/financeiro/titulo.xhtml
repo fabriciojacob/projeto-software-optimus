@@ -41,7 +41,6 @@
 
 				<div align="right">
 					<h:panelGrid columns="1">
-
 						<p:commandButton value="Pesquisar"
 							actionListener="#{empresaBean.pesquisa}" update="dataPesquisa" />
 					</h:panelGrid>
@@ -57,31 +56,7 @@
 					</p:selectOneMenu>
 				</h:panelGrid>
 				
-				<p:dataTable id="dataPesquisa"
-					value="#{empresaBean.retornoListaPessoa}" var="pesEmpresa"
-					paginator="true" rows="6">
-
-					<p:column headerText="Codigo">
-						<h:outputText value="#{pesEmpresa.idPessoa}" />
-					</p:column>
-
-					<p:column headerText="Nome Fantasia">
-						<h:outputText value="#{pesEmpresa.fantasia}" />
-					</p:column>
-
-					<p:column headerText="CNPJ">
-						<h:outputText value="#{pesEmpresa.cnpj}" />
-					</p:column>
-
-					<p:column headerText="Selecionar">
-						<p:commandLink id="link" value="Selecionar"
-							action="#{tituloBens.selecionaEmpresa}" ajax="dialogEmpresa">
-							<f:setPropertyActionListener value="#{pesEmpresa.idPessoa}"
-								target="#{tituloBens.empresaSelecionada}" />
-						</p:commandLink>
-					</p:column>
-
-				</p:dataTable>
+				<ui:include src="/privado/financeiro/inf_titulo/dataPesquisa.xhtml"/>
 
 			</p:dialog>
 
@@ -119,7 +94,7 @@
 			</p:dialog>
 
 			<p:dialog header="Operações" widgetVar="operacoes" modal="true"
-				height="300" width="500">
+				height="320" width="500" id="dialogOper">
 				<ui:include	src="/privado/financeiro/inf_titulo/dadosTituloOper.xhtml"/>
 			</p:dialog>
 
