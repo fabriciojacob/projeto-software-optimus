@@ -35,7 +35,7 @@
 
 	<error-page>
 		<exception-type>javax.faces.application.ViewExpiredException</exception-type>
-		<location>/privado/menu.xhtml</location>
+		<location>/publico/index.jsp</location>
 	</error-page>
 
 	<!-- DEFAULT PAGE -->
