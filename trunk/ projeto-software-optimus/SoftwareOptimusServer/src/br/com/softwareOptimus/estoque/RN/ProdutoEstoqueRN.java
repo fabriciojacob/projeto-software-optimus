@@ -6,7 +6,9 @@ import br.com.softwareOptimus.util.DAOFactory;
 
 public class ProdutoEstoqueRN {
 	
+	@SuppressWarnings("unused")
 	private InventarioDAO invetDAO;
+	@SuppressWarnings("unused")
 	private ProdutoEstoqueDAO prodDAO;
 	
 	public ProdutoEstoqueRN(){

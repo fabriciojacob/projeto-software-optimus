@@ -29,7 +29,8 @@ public class Usuario implements Serializable{
 	
 	private boolean adm;
 	
-	//ver permissão
+	//permissão
+	private String role;
 	
 	private String password;
 
@@ -50,8 +51,6 @@ public class Usuario implements Serializable{
 	public void setAdm(boolean adm) {
 		this.adm = adm;
 	}
-
-
 
 	@OneToMany(mappedBy ="UsuRequisita")
 	private Collection<Requisicao> requisicao;	
@@ -94,6 +93,15 @@ public class Usuario implements Serializable{
 
 	public void setRequisicao(Collection<Requisicao> requisicao) {
 		this.requisicao = requisicao;
+	}
+
+	
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 	@Override
