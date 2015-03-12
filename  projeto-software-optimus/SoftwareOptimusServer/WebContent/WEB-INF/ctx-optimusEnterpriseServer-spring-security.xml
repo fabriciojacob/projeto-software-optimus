@@ -9,6 +9,7 @@
 	<beans:bean id="customAuthenticationProvider"
 		class="br.com.softwareOptimus.entidades.bens.CustomAuthenticationProvider" />
 	<http auto-config="true" use-expressions="true">
+		<intercept-url pattern="j_spring_security_check" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
 		<intercept-url pattern="/publico/index.jsp" access="permitAll" />
 		<intercept-url pattern="/publico/login.jsf" access="permitAll" />
 		<intercept-url pattern="/publico/**" access="permitAll" />
@@ -16,7 +17,7 @@
 		<intercept-url pattern="/privado/**" access="hasAuthority('ROLE_USER')" />
 		<form-login login-page="/publico/login.jsf"
 			authentication-failure-url="/publico/login.jsf?erro=true"
-			default-target-url="/privado/menu.jsf" />
+			login-processing-url="/j_spring_security_check" default-target-url="/privado/menu.jsf" />
 		<logout logout-success-url="/publico/login.jsf" />
 	</http>
 	<authentication-manager>

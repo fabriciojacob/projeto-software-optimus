@@ -28,14 +28,17 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		super();
 	}
 
-	@SuppressWarnings("unused")
 	@Override
 	public Authentication authenticate(Authentication authentication)
 			throws AuthenticationException {
 		String username = authentication.getName();
 		String password = authentication.getCredentials().toString();
-		//acessar base para identificar se user e senha é valido 
-		Usuario user = null; //= this.userRepository.findByUsernameAndPassword(username, password);
+		Usuario user = null;
+		try {
+			user = userRepository.buscaPorLogin(username, password);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		if (user != null) {
 			List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
 			grantedAuthorities.add(new SimpleGrantedAuthority(user.getRole()));
