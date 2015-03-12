@@ -7,32 +7,38 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
-	<link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/resources/OptimusIco2.ico" />
+	<link rel="shortcut icon" type="image/x-icon"
+		href="#{request.contextPath}/resources/OptimusIco2.ico" />
 	<title>Login</title>
 </h:head>
-<h:body>
-	<h:form id="login">
-		<p:messages id="messages" showDetail="true" autoUpdate="true"
-			closable="true" />
-		<div align="center">
-			<h:messages />
-			<h:graphicImage value=".../resources/Optimusnovo.jpg" />
+<h:body onload="document.content.dialog.login.j_username.focus();">
+	<h:graphicImage value=".../resources/Optimusnovo.jpg" />
+	<p:dialog header="Faça o Login" id="dialog" minWidth="400" width="300"
+		modal="true" closable="false" position="center" showEffect="slide"
+		draggable="true" resizable="false" visible="true">
+		<h:form name='login' action="j_spring_security_check" method='post'>
 			<h:panelGrid columns="2" cellpadding="5">
 
-				<h:outputLabel for="login" value="Login: " />
-				<p:inputText id="login" value="#{usuarioBean.usuario.login}"
-					size="15" maxlength="15" required="true"
+				<h:outputLabel for="j_username" value="Login: " />
+				<p:inputText id="j_username" size="15" maxlength="15"
+					required="true" requiredMessage="Usuário é Obrigatorio!"
 					validadorMessage="Login requer no mínimo 5 e no máximo 15 caracteres">
 				</p:inputText>
 
-				<h:outputLabel for="senha" value="Senha: " />
-				<p:password id="senha" value="#{usuarioBean.usuario.password}"
-					size="15" maxlength="15" required="true" redisplay="true" />
+				<h:outputLabel for="j_password" value="Senha: " />
+				<p:password id="j_password" size="15" maxlength="15" required="true"
+					requiredMessage="Senha é Obrigatorio!" />
+
+				<f:facet name="footer">
+					<p:row>
+						<p:outputPanel style="width: 100%; text-align:center"
+							layout="block">
+							<input name="submit" type="submit" value="logar" />
+						</p:outputPanel>
+					</p:row>
+				</f:facet>
 			</h:panelGrid>
-			<p:commandButton value="logar"
-				action="#{loginBean.login(usuarioBean.usuario)}"
-				icon="ui-icon-check" />
-		</div>
-	</h:form>
+		</h:form>
+	</p:dialog>
 </h:body>
 </html>
