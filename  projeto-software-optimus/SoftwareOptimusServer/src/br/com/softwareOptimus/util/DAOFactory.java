@@ -78,7 +78,7 @@ public class DAOFactory {
 	
 	public static ExtratoContaDAO criaExtratoConta(){
 		ExtratoContaDAOHibernate extratoDAO = new ExtratoContaDAOHibernate();
-		extratoDAO.setSessao(session);
+		extratoDAO.setSecao(session);
 		try{
 			extratoDAO.begin();
 		}catch (IOException | SQLException e){
