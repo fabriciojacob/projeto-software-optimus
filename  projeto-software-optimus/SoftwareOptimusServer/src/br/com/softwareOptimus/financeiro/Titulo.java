@@ -56,10 +56,7 @@ public class Titulo implements Serializable{
 	private StatusConta status;
 	
 	private TipoBaixa tipoBaixa;
-	
-	@ManyToOne
-	private MovCaixa caixa;
-	
+
 	@ManyToOne
 	private Conta conta;
 	
@@ -77,14 +74,6 @@ public class Titulo implements Serializable{
 	
 	public void setRubrica(Rubrica rubrica) {
 		this.rubrica = rubrica;
-	}
-	
-	public MovCaixa getCaixa() {
-		return caixa;
-	}
-	
-	public void setCaixa(MovCaixa caixa) {
-		this.caixa = caixa;
 	}
 	
 	public TipoBaixa getTipoBaixa() {

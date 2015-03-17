@@ -13,6 +13,8 @@ import br.com.softwareOptimus.com.financeiro.dao.ContaBancariaDAO;
 import br.com.softwareOptimus.com.financeiro.dao.ContaBancariaDAOHibernate;
 import br.com.softwareOptimus.com.financeiro.dao.ContaDAO;
 import br.com.softwareOptimus.com.financeiro.dao.ContaDAOHibernate;
+import br.com.softwareOptimus.com.financeiro.dao.ExtratoContaDAO;
+import br.com.softwareOptimus.com.financeiro.dao.ExtratoContaDAOHibernate;
 import br.com.softwareOptimus.com.financeiro.dao.FormaPgtoDAO;
 import br.com.softwareOptimus.com.financeiro.dao.FormaPgtoHibernate;
 import br.com.softwareOptimus.com.financeiro.dao.TituloDAO;
@@ -73,6 +75,17 @@ import br.com.softwareOptimus.estoque.dao.ProdutoEstoqueDAOHibernate;
 public class DAOFactory {
 
 	private static EntityManager session = JpaUtil.getEntityManager();
+	
+	public static ExtratoContaDAO criaExtratoConta(){
+		ExtratoContaDAOHibernate extratoDAO = new ExtratoContaDAOHibernate();
+		extratoDAO.setSessao(session);
+		try{
+			extratoDAO.begin();
+		}catch (IOException | SQLException e){
+			e.printStackTrace();
+		}
+		return extratoDAO;
+	}
 	
 	public static TituloDAO criaTitulo(){
 		TituloDAOHibernate tituloDAO = new TituloDAOHibernate();
