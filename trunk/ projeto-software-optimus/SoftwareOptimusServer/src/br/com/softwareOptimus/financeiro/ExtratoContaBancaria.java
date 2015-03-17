@@ -36,6 +36,8 @@ public class ExtratoContaBancaria implements Serializable {
 	
 	private Double saldo;
 	
+	private Rubrica rubrica;
+	
 	public Collection<Titulo> getTitulo() {
 		return titulo;
 	}
@@ -91,6 +93,14 @@ public class ExtratoContaBancaria implements Serializable {
 
 	public void setContaBancaria(ContaBancaria contaBancaria) {
 		this.contaBancaria = contaBancaria;
+	}
+	
+	public Rubrica getRubrica() {
+		return rubrica;
+	}
+
+	public void setRubrica(Rubrica rubrica) {
+		this.rubrica = rubrica;
 	}
 
 	@Override

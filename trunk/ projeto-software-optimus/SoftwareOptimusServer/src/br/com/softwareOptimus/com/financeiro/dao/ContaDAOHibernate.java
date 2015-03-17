@@ -22,13 +22,11 @@ public class ContaDAOHibernate implements ContaDAO {
 		if (!this.transacao.isActive()) {
 			this.transacao.begin();
 		}
-
 	}
 
 	@Override
 	public void close() throws Exception {
 		this.session.close();
-
 	}
 
 	@Override

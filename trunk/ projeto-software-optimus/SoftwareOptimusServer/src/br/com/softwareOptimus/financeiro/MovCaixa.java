@@ -2,13 +2,10 @@ package br.com.softwareOptimus.financeiro;
 
 import java.io.Serializable;
 import java.util.Calendar;
-import java.util.Collection;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -39,17 +36,6 @@ public class MovCaixa implements Serializable {
 	
 	@ManyToOne
 	private Caixa caixa;
-	
-	@OneToMany(mappedBy = "caixa")
-	private Collection<Titulo> contas;
-	
-	public Collection<Titulo> getContas() {
-		return contas;
-	}
-	
-	public void setContas(Collection<Titulo> contas) {
-		this.contas = contas;
-	}
 
 	public Double getDebito() {
 		return debito;
