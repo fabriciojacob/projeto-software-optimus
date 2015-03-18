@@ -85,7 +85,10 @@
 					</p:submenu>
 
 					<f:facet name="options">
-						<p:commandButton type="button" value="Sair" icon="ui-icon-extlink" />
+						<h:outputLink
+							value="#{facesContext.externalContext.requestContextPath}/j_spring_security_logout">
+							<h:outputText value="Sair" />
+						</h:outputLink>
 					</f:facet>
 				</p:menubar>
 			</h:form>

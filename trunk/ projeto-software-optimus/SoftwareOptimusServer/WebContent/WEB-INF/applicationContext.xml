@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<b:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:b="http://www.springframework.org/schema/beans"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+ 						http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/security
+                        http://www.springframework.org/schema/security/spring-security-3.0.xsd">
+
+	<http auto-config="true" use-expressions="true">
+		<intercept-url pattern="/index.jsp" access="permitAll" />
+		<intercept-url pattern="/login.jsf" access="permitAll" />
+		<intercept-url pattern="/resources/**" access="permitAll" />
+		<intercept-url pattern="/privado/**" access="hasRole('ROLE_USER')" />
+		<form-login login-page="/login.jsf"
+			authentication-failure-url="/login.jsf?erro=true" default-target-url="/privado/menu.jsf" />
+	</http>
+
+	<authentication-manager>
+		<authentication-provider>
+			<jdbc-user-service data-source-ref="dataSourceJndi"
+				users-by-username-query="SELECT login as username, password, ativo as enable FROM tbusuario WHERE login=?"
+				authorities-by-username-query="SELECT login as username, role as authority FROM tbusuario WHERE login=?" />
+		</authentication-provider>
+	</authentication-manager>
+
+	<!-- DataSource via JNDI direto com Container -->
+	<b:bean id="dataSourceJndi" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<b:property name="jndiName" value="java:comp/DefaultDataSource" />
+	</b:bean>
+
+</b:beans>

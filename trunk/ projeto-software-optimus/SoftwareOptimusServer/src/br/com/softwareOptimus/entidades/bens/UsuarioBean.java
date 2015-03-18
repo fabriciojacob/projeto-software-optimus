@@ -1,14 +1,21 @@
 package br.com.softwareOptimus.entidades.bens;
 
+import java.io.Serializable;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+
 import br.com.softwareOptimus.entidades.Usuario;
 import br.com.softwareOptimus.entidades.RN.UsuarioRN;
 
 @ManagedBean(name = "usuarioBean")
-public class UsuarioBean {
-
+@SessionScoped
+public class UsuarioBean implements Serializable {
+	
+    private static final long serialVersionUID = -3280128356907200060L;
+ 
 	private Usuario usuario = new Usuario();
 	private String confirmarSenha;
 
