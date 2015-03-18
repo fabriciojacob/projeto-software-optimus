@@ -5,37 +5,48 @@ import java.sql.SQLException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
 
 import br.com.softwareOptimus.financeiro.ContaBancaria;
 import br.com.softwareOptimus.financeiro.ExtratoContaBancaria;
 
-public class ExtratoContaDAOHibernate implements ExtratoContaDAO{
-	
+public class ExtratoContaDAOHibernate implements ExtratoContaDAO {
+
 	private EntityManager secao;
 	private EntityTransaction transacao;
 
 	@Override
 	public void begin() throws IOException, SQLException {
-		// TODO Auto-generated method stub
-		
+		this.transacao = this.secao.getTransaction();
+		if (!this.transacao.isActive()) {
+			this.transacao.begin();
+		}
+
 	}
 
 	@Override
 	public void close() throws Exception {
-		// TODO Auto-generated method stub
-		
+		this.transacao.commit();
+		this.secao.close();
+
 	}
 
 	@Override
 	public void inclusao(ExtratoContaBancaria extrato) throws Exception {
-		// TODO Auto-generated method stub
-		
+		this.secao.persist(extrato);
+
 	}
 
 	@Override
 	public Double saldoReg(ContaBancaria contaBancaria) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		String jpql = "Select t.saldo from ExtratoContaBancaria t "
+				+ " where t.idExtratoC = (select max(t2.idExtratoC) "
+				+ " from ExtratoContaBancaria)"
+				+ "  and t.contaBancaria = :parConta ";
+		TypedQuery<Double> consulta = this.secao
+				.createQuery(jpql, Double.class);
+		consulta.setParameter("parConta", contaBancaria);
+		return consulta.getSingleResult();
 	}
 
 	public EntityManager getSecao() {
