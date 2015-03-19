@@ -55,8 +55,8 @@
 						<f:selectItem itemLabel="Nome Fantasia" itemValue="nomeFantasia" />
 					</p:selectOneMenu>
 				</h:panelGrid>
-				
-				<ui:include src="/privado/financeiro/inf_titulo/dataPesquisa.xhtml"/>
+
+				<ui:include src="/privado/financeiro/inf_titulo/dataPesquisa.xhtml" />
 
 			</p:dialog>
 
@@ -84,7 +84,8 @@
 					</p:column>
 
 					<p:column headerText="Selecionar">
-						<p:commandLink id="link" value="Utilizar" ajax="dialog,frmTitulo"
+						<p:commandLink id="link" value="Utilizar"
+							ajax="dialog,frmTitulo,dadosTituloOper"
 							action="#{tituloBens.selecionaParticipante}">
 							<f:setPropertyActionListener value="#{participantes.idPessoa}"
 								target="#{tituloBens.participanteSelecionado}" />
@@ -95,7 +96,8 @@
 
 			<p:dialog header="Operações" widgetVar="operacoes" modal="true"
 				height="320" width="500" id="dialogOper">
-				<ui:include	src="/privado/financeiro/inf_titulo/dadosTituloOper.xhtml"/>
+				<ui:include
+					src="/privado/financeiro/inf_titulo/dadosTituloOper.xhtml" />
 			</p:dialog>
 
 			<br />
@@ -140,7 +142,7 @@
 
 				</h:panelGrid>
 
-				<ui:include src="/privado/financeiro/inf_titulo/tabelaTitulo.xhtml"/>
+				<ui:include src="/privado/financeiro/inf_titulo/tabelaTitulo.xhtml" />
 
 			</p:tab>
 

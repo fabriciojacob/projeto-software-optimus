@@ -46,11 +46,26 @@
 
 	Tipo titulo:	
 	<p:inputText value="#{tituloBens.titulo.tipoTitulo}" disabled="true" />
+	
+	Tipo Baixa
+	<p:selectOneMenu id="tipoBaixa" value="#{tituloBens.tipoBaixa}">
+		<f:selectItem itemLabel="Selecione um tipo de baixa" />
+		<f:selectItem itemLabel="Caixa" itemValue="CAIXA" />
+		<f:selectItem itemLabel="Banco" itemValue="BANCO" />
+	</p:selectOneMenu>
+	
+	Conta Bancária:
+	<p:selectOneMenu id="tipoBaixaDados"
+		value="#{tituloBens.contaBancaria}">
+		<f:selectItem itemLabel="Selecione" />
+		<f:selectItems values="#{tituloBens.listaContas}"
+			var="listaContas" itemValue="#{listaContas}"
+			itemLabel="#{listaContas.descricao}" />
+	</p:selectOneMenu>
 
 	<h:panelGrid columns="4">
 		<p:commandButton id="btSalvarOper" value="Baixar"
-			actionListener="#{tituloBens.salvarTitulo(condPgtoBens.condPgto,formaPgtoBens.formaPgto)}"
-			update="frmTitulo,add" />
+			actionListener="#{tituloBens.baixa}" />
 		<p:commandButton id="btExcluirOper" value="Excluir" />
 		<p:commandButton id="btAlterarOper" value="Alterar" />
 	</h:panelGrid>

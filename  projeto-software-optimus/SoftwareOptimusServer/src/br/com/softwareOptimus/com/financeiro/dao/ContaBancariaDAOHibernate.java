@@ -111,4 +111,12 @@ public class ContaBancariaDAOHibernate implements ContaBancariaDAO {
 		return this.session.find(ContaBancaria.class, id);
 	}
 
+	@Override
+	public List<ContaBancaria> listaGeral() throws Exception {
+		String jpql = "Select e from ContaBancaria";
+		TypedQuery<ContaBancaria> lista = this.session.createQuery(jpql,
+				ContaBancaria.class);
+		return lista.getResultList();
+	}
+
 }
