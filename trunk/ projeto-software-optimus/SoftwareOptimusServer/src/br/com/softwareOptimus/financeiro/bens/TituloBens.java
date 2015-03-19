@@ -3,19 +3,20 @@ package br.com.softwareOptimus.financeiro.bens;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-
 import br.com.softwareOptimus.entidades.Pessoa;
 import br.com.softwareOptimus.financeiro.CondPgto;
+import br.com.softwareOptimus.financeiro.ContaBancaria;
 import br.com.softwareOptimus.financeiro.FormaPgto;
 import br.com.softwareOptimus.financeiro.Rubrica;
 import br.com.softwareOptimus.financeiro.StatusConta;
 import br.com.softwareOptimus.financeiro.TipoTitulo;
 import br.com.softwareOptimus.financeiro.Titulo;
+import br.com.softwareOptimus.financeiro.RN.ContaBancariaRN;
+import br.com.softwareOptimus.financeiro.RN.ExtratoContaRN;
 import br.com.softwareOptimus.financeiro.RN.TituloRN;
 
 @ManagedBean
@@ -29,12 +30,16 @@ public class TituloBens {
 			tituloSelecionado;
 	private List<Pessoa> participantes = new ArrayList<>();
 	private List<Titulo> titulos = new ArrayList<>();
+	private List<ContaBancaria> listaContas = new ArrayList<>();
+	private ContaBancaria contaBancaria = new ContaBancaria();
 	private TituloRN regraNegocio;
 	private Pessoa pessoa;
 	private Pessoa empresa;
 	private boolean btAdicionar = true;
 	private int verifica = 0;
 	private Date dataIni, dataFim;
+	private String tipoBaixa;
+	private boolean checktitulo = true;
 
 	public void pesquisaTitulo() {
 		Integer tipoTi;
@@ -82,15 +87,8 @@ public class TituloBens {
 		}
 	}
 
-	public String getTipoTitulo2() {
-		return tipoTitulo2;
-	}
-
-	public void setTipoTitulo2(String tipoTitulo2) {
-		this.tipoTitulo2 = tipoTitulo2;
-	}
-
 	public void pesquisaParticipante() {
+		this.regraNegocio = new TituloRN();
 		if (this.participantes != null) {
 			this.participantes.clear();
 		}
@@ -99,6 +97,15 @@ public class TituloBens {
 					.listaParticipante(this.nomePesquisa);
 		} catch (Exception e) {
 			msgErro("Problemas na pesquisa ", e);
+		}
+	}
+
+	public void listaContaBancaria() {
+		ContaBancariaRN contaRN = new ContaBancariaRN();
+		try {
+			listaContas = contaRN.listaGeral();
+		} catch (Exception e) {
+			msgErro("Problemas la lista das contas", e);
 		}
 	}
 
@@ -114,6 +121,17 @@ public class TituloBens {
 			}
 		} catch (Exception e) {
 			msgErro("Problemas na seleção da empresa ", e);
+		}
+
+	}
+
+	public void baixa() {
+		ExtratoContaRN extratoBanco;
+		setChecktitulo(true);
+		if (tipoBaixa.toString() == "BANCO") {
+			extratoBanco = new ExtratoContaRN();
+		} else {
+
 		}
 
 	}
@@ -169,6 +187,9 @@ public class TituloBens {
 		this.titulo = new Titulo();
 		try {
 			this.titulo = regraNegocio.retornaTitulo(tituloSelecionado);
+			msgAcerto("Titulo selecionado");
+			setChecktitulo(false);
+			listaContaBancaria();
 		} catch (Exception e) {
 			msgErro("Problemas na pesquisa do titulo", e);
 		}
@@ -320,6 +341,46 @@ public class TituloBens {
 
 	public void setTituloSelecionado(Long tituloSelecionado) {
 		this.tituloSelecionado = tituloSelecionado;
+	}
+
+	public String getTipoBaixa() {
+		return tipoBaixa;
+	}
+
+	public void setTipoBaixa(String tipoBaixa) {
+		this.tipoBaixa = tipoBaixa;
+	}
+
+	public String getTipoTitulo2() {
+		return tipoTitulo2;
+	}
+
+	public void setTipoTitulo2(String tipoTitulo2) {
+		this.tipoTitulo2 = tipoTitulo2;
+	}
+
+	public boolean isChecktitulo() {
+		return checktitulo;
+	}
+
+	public void setChecktitulo(boolean checktitulo) {
+		this.checktitulo = checktitulo;
+	}
+
+	public List<ContaBancaria> getListaContas() {
+		return listaContas;
+	}
+
+	public void setListaContas(List<ContaBancaria> listaContas) {
+		this.listaContas = listaContas;
+	}
+
+	public ContaBancaria getContaBancaria() {
+		return contaBancaria;
+	}
+
+	public void setContaBancaria(ContaBancaria contaBancaria) {
+		this.contaBancaria = contaBancaria;
 	}
 
 }

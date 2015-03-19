@@ -17,7 +17,11 @@ public class ContaBancariaRN {
 	public void salvar(ContaBancaria conta) throws Exception {
 		this.contaDAO.salvarConta(conta);
 	}
-	
+
+	public List<ContaBancaria> listaGeral() throws Exception {
+		return this.contaDAO.listaGeral();
+	}
+
 	public void alterar(ContaBancaria conta) throws Exception {
 		this.contaDAO.alterar(conta);
 	}
@@ -25,11 +29,11 @@ public class ContaBancariaRN {
 	public void excluirConta(ContaBancaria conta) throws Exception {
 		this.contaDAO.excluirConta(conta);
 	}
-	
+
 	public List<ContaBancaria> pesquisaTitular(String titular) throws Exception {
 		return this.contaDAO.pesquisaTitular(titular);
 	}
-	
+
 	public ContaBancaria pesquisaID(Long id) throws Exception {
 		return this.contaDAO.pesquisaID(id);
 	}

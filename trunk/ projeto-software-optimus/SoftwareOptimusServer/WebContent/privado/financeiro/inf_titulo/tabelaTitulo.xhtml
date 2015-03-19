@@ -60,19 +60,18 @@
 	<p:column headerText="Rubrica">
 		<h:outputLabel value="#{titulos.rubrica}" />
 	</p:column>
-	
+
 	<p:column headerText="Selecionar">
 		<p:commandLink id="linkSelect" value="selecionar"
-			action="#{tituloBens.selecionaTitulo}"
-			ajax="dadosTituloOper"> 
+			action="#{tituloBens.selecionaTitulo}" ajax="dadosTituloOper">
 			<f:setPropertyActionListener value="#{titulos.idTitulo}"
 				target="#{tituloBens.tituloSelecionado}" />
 		</p:commandLink>
 	</p:column>
 
-	<p:column headerText="Operar">
+	<p:column headerText="Operar" >
 		<p:commandLink id="linkBaixar" value="operar"
-			onclick="PF('operacoes').show();"/> 
+			onclick="PF('operacoes').show();" disabled="#{tituloBens.checktitulo}" />
 	</p:column>
 
 </p:dataTable>
