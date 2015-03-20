@@ -8,6 +8,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import br.com.softwareOptimus.entidades.Pessoa;
+import br.com.softwareOptimus.financeiro.Caixa;
 import br.com.softwareOptimus.financeiro.CondPgto;
 import br.com.softwareOptimus.financeiro.ContaBancaria;
 import br.com.softwareOptimus.financeiro.FormaPgto;
@@ -15,6 +16,7 @@ import br.com.softwareOptimus.financeiro.Rubrica;
 import br.com.softwareOptimus.financeiro.StatusConta;
 import br.com.softwareOptimus.financeiro.TipoTitulo;
 import br.com.softwareOptimus.financeiro.Titulo;
+import br.com.softwareOptimus.financeiro.RN.CaixaRN;
 import br.com.softwareOptimus.financeiro.RN.ContaBancariaRN;
 import br.com.softwareOptimus.financeiro.RN.ExtratoContaRN;
 import br.com.softwareOptimus.financeiro.RN.TituloRN;
@@ -39,7 +41,10 @@ public class TituloBens {
 	private int verifica = 0;
 	private Date dataIni, dataFim;
 	private String tipoBaixa;
-	private boolean checktitulo = true;
+	private boolean checktitulo = true, checkCaixa = true, checkBanco = true;;
+	private FormaPgto formaPgto;
+	private Caixa caixa = new Caixa();
+	private List<Caixa> listaCaixa = new ArrayList<>();
 
 	public void pesquisaTitulo() {
 		Integer tipoTi;
@@ -86,6 +91,17 @@ public class TituloBens {
 			msgErro("Problemas na pesquisa do titulo", e);
 		}
 	}
+	
+	public void ativaTipoBaixa(){
+		if(tipoBaixa.equals("BANCO")){
+			this.checkBanco = false;
+			this.checkCaixa = true;
+		}else{
+			this.checkCaixa = false;
+			this.checkBanco = true;
+		}
+	}
+	
 
 	public void pesquisaParticipante() {
 		this.regraNegocio = new TituloRN();
@@ -105,7 +121,16 @@ public class TituloBens {
 		try {
 			listaContas = contaRN.listaGeral();
 		} catch (Exception e) {
-			msgErro("Problemas la lista das contas", e);
+			msgErro("Problemas na listagem das contas", e);
+		}
+	}
+	
+	public void listaCaixa(){
+		CaixaRN caixaRN = new CaixaRN();
+		try{
+			listaCaixa = caixaRN.listaCaixa();
+		}catch (Exception e) {
+			msgErro("Problemas na listagem dos caixas", e);
 		}
 	}
 
@@ -190,6 +215,7 @@ public class TituloBens {
 			msgAcerto("Titulo selecionado");
 			setChecktitulo(false);
 			listaContaBancaria();
+			listaCaixa();
 		} catch (Exception e) {
 			msgErro("Problemas na pesquisa do titulo", e);
 		}
@@ -383,4 +409,43 @@ public class TituloBens {
 		this.contaBancaria = contaBancaria;
 	}
 
+	public FormaPgto getFormaPgto() {
+		return formaPgto;
+	}
+
+	public void setFormaPgto(FormaPgto formaPgto) {
+		this.formaPgto = formaPgto;
+	}
+
+	public Caixa getCaixa() {
+		return caixa;
+	}
+
+	public void setCaixa(Caixa caixa) {
+		this.caixa = caixa;
+	}
+
+	public List<Caixa> getListaCaixa() {
+		return listaCaixa;
+	}
+
+	public void setListaCaixa(List<Caixa> listaCaixa) {
+		this.listaCaixa = listaCaixa;
+	}
+
+	public boolean isCheckCaixa() {
+		return checkCaixa;
+	}
+
+	public void setCheckCaixa(boolean checkCaixa) {
+		this.checkCaixa = checkCaixa;
+	}
+
+	public boolean isCheckBanco() {
+		return checkBanco;
+	}
+
+	public void setCheckBanco(boolean checkBanco) {
+		this.checkBanco = checkBanco;
+	}
 }

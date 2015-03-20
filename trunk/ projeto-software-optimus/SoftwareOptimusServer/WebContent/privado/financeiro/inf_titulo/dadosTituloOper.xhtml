@@ -29,7 +29,7 @@
 		disabled="true" />
 				 
 	Forma de pagamento:
-	<p:selectOneMenu id="pgtoOPer" value="#{formaPgtoBens.formaPgto}">
+	<p:selectOneMenu id="pgtoOPer" value="#{tituloBens.formaPgto}">
 		<f:selectItem itemLabel="Selecione uma forma de pgto" />
 		<f:selectItems value="#{formaPgtoBens.lista}" var="listaPgto"
 			itemValue="#{listaPgto}" itemLabel="#{listaPgto.descricao}" />
@@ -52,15 +52,25 @@
 		<f:selectItem itemLabel="Selecione um tipo de baixa" />
 		<f:selectItem itemLabel="Caixa" itemValue="CAIXA" />
 		<f:selectItem itemLabel="Banco" itemValue="BANCO" />
+		<p:ajax update="idCaixa,idContaBancaria" event="change" 
+		listener="#{tituloBens.ativaTipoBaixa}" />
+	</p:selectOneMenu>
+	
+	Caixa:
+	<p:selectOneMenu id="idCaixa" value="#{tituloBens.caixa}"
+		disabled="#{tituloBens.checkCaixa}">
+		<f:selectItem itemLabel="Selecione o caixa" />
+		<f:selectItems value="#{tituloBens.listaCaixa}" var="listaCaixas"
+			itemValue="#{listaCaixas}" itemLabel="#{listaCaixas.descricao}" />
 	</p:selectOneMenu>
 	
 	Conta Bancária:
-	<p:selectOneMenu id="tipoBaixaDados"
-		value="#{tituloBens.contaBancaria}">
-		<f:selectItem itemLabel="Selecione" />
-		<f:selectItems values="#{tituloBens.listaContas}"
-			var="listaContas" itemValue="#{listaContas}"
-			itemLabel="#{listaContas.descricao}" />
+	<p:selectOneMenu id="idContaBancaria"
+		value="#{tituloBens.contaBancaria}"
+		disabled="#{tituloBens.checkBanco}">
+		<f:selectItem itemLabel="Selecione a conta bancária" />
+		<f:selectItems value="#{tituloBens.listaContas}" var="listaContas"
+			itemValue="#{listaContas}" itemLabel="#{listaContas.titular}" />
 	</p:selectOneMenu>
 
 	<h:panelGrid columns="4">

@@ -21,5 +21,7 @@ public interface CaixaDAO {
 	public void editar(Caixa caixa) throws Exception;
 	
 	public Caixa pesquisaID(Long id) throws Exception;
+	
+	public List<Caixa> listaCaixa() throws Exception;
 
 }
