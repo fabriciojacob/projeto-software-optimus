@@ -113,7 +113,7 @@ public class ContaBancariaDAOHibernate implements ContaBancariaDAO {
 
 	@Override
 	public List<ContaBancaria> listaGeral() throws Exception {
-		String jpql = "Select e from ContaBancaria";
+		String jpql = "Select conta from ContaBancaria conta";
 		TypedQuery<ContaBancaria> lista = this.session.createQuery(jpql,
 				ContaBancaria.class);
 		return lista.getResultList();

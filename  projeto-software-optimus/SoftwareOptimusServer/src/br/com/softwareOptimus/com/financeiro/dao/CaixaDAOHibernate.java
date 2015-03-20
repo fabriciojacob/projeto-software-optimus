@@ -22,7 +22,7 @@ public class CaixaDAOHibernate implements CaixaDAO {
 		}
 		this.transacao.commit();
 	}
-	
+
 	@Override
 	public void begin() throws IOException, SQLException {
 		this.transacao = this.session.getTransaction();
@@ -85,6 +85,14 @@ public class CaixaDAOHibernate implements CaixaDAO {
 	@Override
 	public Caixa pesquisaID(Long id) throws Exception {
 		return this.session.find(Caixa.class, id);
+	}
+
+	@Override
+	public List<Caixa> listaCaixa() throws Exception {
+		String jpql = "Select c from Caixa c";
+		TypedQuery<Caixa> lista = this.session.createQuery(jpql, Caixa.class);
+		return lista.getResultList();
+
 	}
 
 }
