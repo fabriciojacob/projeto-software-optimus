@@ -10,8 +10,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="tbExtratoConta")
-public class ExtratoContaBancaria implements Serializable {
+@Table(name="tbExtrato")
+public class Extrato implements Serializable {
 	
 	/**
 	 * 
@@ -20,10 +20,13 @@ public class ExtratoContaBancaria implements Serializable {
 
 	@Id
 	@GeneratedValue
-	private Long idExtratoC;
+	private Long idExtrato;
 	
 	@ManyToOne
 	private ContaBancaria contaBancaria;
+	
+	@ManyToOne
+	private Caixa caixa;
 	
 	@ManyToMany
 	private Collection<Titulo> titulo;
@@ -46,12 +49,12 @@ public class ExtratoContaBancaria implements Serializable {
 		this.titulo = titulo;
 	}
 
-	public Long getIdExtratoC() {
-		return idExtratoC;
+	public Long getIdExtrato() {
+		return idExtrato;
 	}
 
-	public void setIdExtratoC(Long idExtratoC) {
-		this.idExtratoC = idExtratoC;
+	public void setIdExtratoC(Long idExtrato) {
+		this.idExtrato = idExtrato;
 	}
 
 	public String getDescricao() {
@@ -103,12 +106,20 @@ public class ExtratoContaBancaria implements Serializable {
 		this.rubrica = rubrica;
 	}
 
+	public Caixa getCaixa() {
+		return caixa;
+	}
+
+	public void setCaixa(Caixa caixa) {
+		this.caixa = caixa;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
-				+ ((idExtratoC == null) ? 0 : idExtratoC.hashCode());
+				+ ((idExtrato == null) ? 0 : idExtrato.hashCode());
 		return result;
 	}
 
@@ -120,11 +131,11 @@ public class ExtratoContaBancaria implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ExtratoContaBancaria other = (ExtratoContaBancaria) obj;
-		if (idExtratoC == null) {
-			if (other.idExtratoC != null)
+		Extrato other = (Extrato) obj;
+		if (idExtrato == null) {
+			if (other.idExtrato != null)
 				return false;
-		} else if (!idExtratoC.equals(other.idExtratoC))
+		} else if (!idExtrato.equals(other.idExtrato))
 			return false;
 		return true;
 	}

@@ -7,10 +7,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 
+import br.com.softwareOptimus.financeiro.Caixa;
 import br.com.softwareOptimus.financeiro.ContaBancaria;
-import br.com.softwareOptimus.financeiro.ExtratoContaBancaria;
+import br.com.softwareOptimus.financeiro.Extrato;
 
-public class ExtratoContaDAOHibernate implements ExtratoContaDAO {
+public class ExtratoDAOHibernate implements ExtratoDAO {
 
 	private EntityManager secao;
 	private EntityTransaction transacao;
@@ -32,20 +33,26 @@ public class ExtratoContaDAOHibernate implements ExtratoContaDAO {
 	}
 
 	@Override
-	public void inclusao(ExtratoContaBancaria extrato) throws Exception {
+	public void inclusao(Extrato extrato) throws Exception {
 		this.secao.persist(extrato);
+		if (!this.transacao.isActive()) {
+			this.transacao.begin();
+		}
+		this.transacao.commit();
 
 	}
 
 	@Override
-	public Double saldoReg(ContaBancaria contaBancaria) throws Exception {
-		String jpql = "Select t.saldo from ExtratoContaBancaria t "
-				+ " where t.idExtratoC = (select max(t2.idExtratoC) "
-				+ " from ExtratoContaBancaria)"
-				+ "  and t.contaBancaria = :parConta ";
+	public Double saldoReg(ContaBancaria contaBancaria, Caixa caixa)
+			throws Exception {
+		String jpql = "Select t.saldo from Extrato t "
+				+ " where t.idExtrato = (select max(t2.idExtrato) "
+				+ " from Extrato t2"
+				+ "  where t2.contaBancaria = :parConta or t2.caixa = :parCaixa) ";
 		TypedQuery<Double> consulta = this.secao
 				.createQuery(jpql, Double.class);
 		consulta.setParameter("parConta", contaBancaria);
+		consulta.setParameter("parCaixa", caixa);
 		return consulta.getSingleResult();
 	}
 
