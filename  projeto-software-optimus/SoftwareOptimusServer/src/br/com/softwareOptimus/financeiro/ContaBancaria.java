@@ -34,7 +34,7 @@ public class ContaBancaria implements Serializable {
 	private boolean inativa;
 	
 	@OneToMany(mappedBy = "contaBancaria")
-	private Collection<ExtratoContaBancaria> extrato;
+	private Collection<Extrato> extrato;
 	
 	private TipoContaBancaria tipoContaBancaria;
 	
@@ -46,11 +46,11 @@ public class ContaBancaria implements Serializable {
 		this.titular = titular;
 	}
 	
-	public Collection<ExtratoContaBancaria> getExtrato() {
+	public Collection<Extrato> getExtrato() {
 		return extrato;
 	}
 	
-	public void setExtrato(Collection<ExtratoContaBancaria> extrato) {
+	public void setExtrato(Collection<Extrato> extrato) {
 		this.extrato = extrato;
 	}
 

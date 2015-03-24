@@ -18,7 +18,7 @@ import br.com.softwareOptimus.financeiro.TipoTitulo;
 import br.com.softwareOptimus.financeiro.Titulo;
 import br.com.softwareOptimus.financeiro.RN.CaixaRN;
 import br.com.softwareOptimus.financeiro.RN.ContaBancariaRN;
-import br.com.softwareOptimus.financeiro.RN.ExtratoContaRN;
+import br.com.softwareOptimus.financeiro.RN.ExtratoRN;
 import br.com.softwareOptimus.financeiro.RN.TituloRN;
 
 @ManagedBean
@@ -151,10 +151,10 @@ public class TituloBens {
 	}
 
 	public void baixa() {
-		ExtratoContaRN extratoBanco;
+		ExtratoRN extrato;
 		setChecktitulo(true);
 		if (tipoBaixa.toString() == "BANCO") {
-			extratoBanco = new ExtratoContaRN();
+			extrato = new ExtratoRN();
 		} else {
 
 		}
