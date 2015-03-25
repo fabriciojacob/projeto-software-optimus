@@ -2,11 +2,14 @@ package br.com.softwareOptimus.financeiro;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -28,8 +31,8 @@ public class Extrato implements Serializable {
 	@ManyToOne
 	private Caixa caixa;
 	
-	@ManyToMany
-	private Collection<Titulo> titulo;
+	@ManyToOne
+	private Titulo titulo;
 	
 	private String descricao;
 	
@@ -41,11 +44,13 @@ public class Extrato implements Serializable {
 	
 	private Rubrica rubrica;
 	
-	public Collection<Titulo> getTitulo() {
+	private Date data;
+	
+	public Titulo getTitulo() {
 		return titulo;
 	}
 	
-	public void setTitulo(Collection<Titulo> titulo) {
+	public void setTitulo(Titulo titulo) {
 		this.titulo = titulo;
 	}
 
@@ -112,6 +117,14 @@ public class Extrato implements Serializable {
 
 	public void setCaixa(Caixa caixa) {
 		this.caixa = caixa;
+	}
+
+	public Date getData() {
+		return data;
+	}
+
+	public void setData(Date data) {
+		this.data = data;
 	}
 
 	@Override

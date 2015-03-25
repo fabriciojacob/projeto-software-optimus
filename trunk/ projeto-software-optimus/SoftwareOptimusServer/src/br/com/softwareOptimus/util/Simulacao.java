@@ -22,14 +22,12 @@ public class Simulacao {
 		ContaBancariaRN contaRN =  new ContaBancariaRN();
 		try{
 			conta = contaRN.pesquisaID((long) 41);
-			titulo = tituloRN.retornaTitulo((long) 41);
+			titulo = tituloRN.retornaTitulo((long) 43);
 			titulos.add(titulo);
 			extratoRN.inclusao(titulos, conta, null);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		
-
 	}
 
 }

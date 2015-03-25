@@ -79,8 +79,18 @@ public class TituloDAOHibernate implements TituloDAO {
 		consulta.setParameter("parDataFim", dataFim);
 		consulta.setParameter("parEmpresa", empresa);
 		consulta.setParameter("parParticipante", participante);
-		consulta.setParameter("parTipo", tipo);
-		consulta.setParameter("parStatus", status);
+		if (tipo == 0) {
+			consulta.setParameter("parTipo", TipoTitulo.PAGAR);
+		} else {
+			consulta.setParameter("parTipo", TipoTitulo.RECEBER);
+		}
+		if (status == 0) {
+			consulta.setParameter("parStatus", StatusConta.BAIXADA);
+		} else if (status == 1) {
+			consulta.setParameter("parStatus", StatusConta.PENDENTE);
+		} else {
+			consulta.setParameter("parStatus", StatusConta.CANCELADA);
+		}
 		return consulta.getResultList();
 	}
 
@@ -98,8 +108,18 @@ public class TituloDAOHibernate implements TituloDAO {
 		consulta.setParameter("parDataFim", dataFim);
 		consulta.setParameter("parEmpresa", empresa);
 		consulta.setParameter("parParticipante", participante);
-		consulta.setParameter("parTipo", tipo);
-		consulta.setParameter("parStatus", status);
+		if (tipo == 0) {
+			consulta.setParameter("parTipo", TipoTitulo.PAGAR);
+		} else {
+			consulta.setParameter("parTipo", TipoTitulo.RECEBER);
+		}
+		if (status == 0) {
+			consulta.setParameter("parStatus", StatusConta.BAIXADA);
+		} else if (status == 1) {
+			consulta.setParameter("parStatus", StatusConta.PENDENTE);
+		} else {
+			consulta.setParameter("parStatus", StatusConta.CANCELADA);
+		}
 		return consulta.getResultList();
 	}
 
@@ -173,10 +193,21 @@ public class TituloDAOHibernate implements TituloDAO {
 
 	@Override
 	public Titulo retornaTitulo(Long id) throws Exception {
-		String jpql = "Select t from Titulo t where t.idTitulo = :id";
-		TypedQuery<Titulo> consulta = this.session.createQuery(jpql,Titulo.class);
-		consulta.setParameter("id", id);		
+		String jpql = "Select t from Titulo t where t.idTitulo = :id"
+				+ " and t.status = 1";
+		TypedQuery<Titulo> consulta = this.session.createQuery(jpql,
+				Titulo.class);
+		consulta.setParameter("id", id);
 		return consulta.getSingleResult();
+	}
+
+	@Override
+	public void atualizaTitulo(Titulo titulo) throws Exception {
+		if (!this.transacao.isActive()) {
+			this.transacao.begin();
+		}
+		this.session.merge(titulo);
+
 	}
 
 }
