@@ -37,6 +37,10 @@ public class TituloRN {
 				particupante, tipo, status);
 	}
 
+	public void atualizaTitulo(Titulo titulo) throws Exception {
+		this.titulo.atualizaTitulo(titulo);
+	}
+
 	public List<Titulo> pesquisaPessoa(Pessoa empresa) throws Exception {
 		return this.titulo.pesquisaPessoa(empresa);
 	}
@@ -44,16 +48,16 @@ public class TituloRN {
 	public void salvar(Titulo titulo) throws Exception {
 		Date data;
 		Calendar c = Calendar.getInstance();
-		if(titulo.getCondPgto().getIntervaloDias() > 0){
+		if (titulo.getCondPgto().getIntervaloDias() > 0) {
 			data = titulo.getDataLancamento();
 			c.setTime(data);
 			c.add(Calendar.DATE, titulo.getCondPgto().getIntervaloDias());
 			titulo.setVencimento(c.getTime());
-		}else{
+		} else {
 			titulo.setVencimento(titulo.getDataLancamento());
 		}
 		this.titulo.salvar(titulo);
-		if(titulo.getCondPgto().getParcela() > 1)
+		if (titulo.getCondPgto().getParcela() > 1)
 			this.titulo.salvarParcelas(titulo.getIdTitulo());
 	}
 
@@ -80,10 +84,9 @@ public class TituloRN {
 	public Pessoa participante(Long id) throws Exception {
 		return this.titulo.participante(id);
 	}
-	
+
 	public Titulo retornaTitulo(Long id) throws Exception {
 		return this.titulo.retornaTitulo(id);
 	}
-	
 
 }

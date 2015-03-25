@@ -38,5 +38,7 @@ public interface TituloDAO {
 	public void salvarParcelas(Long titulo) throws Exception;
 	
 	public Titulo retornaTitulo(Long id) throws Exception;
+	
+	public void atualizaTitulo(Titulo titulo) throws Exception;
 
 }
