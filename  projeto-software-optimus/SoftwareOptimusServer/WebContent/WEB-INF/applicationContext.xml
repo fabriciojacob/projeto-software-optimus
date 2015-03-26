@@ -25,7 +25,7 @@
 
 	<!-- DataSource via JNDI direto com Container -->
 	<b:bean id="dataSourceJndi" class="org.springframework.jndi.JndiObjectFactoryBean">
-		<b:property name="jndiName" value="java:comp/DefaultDataSource" />
+		<b:property name="jndiName" value="/DataSourceSoftwareOptimusServer" />
 	</b:bean>
 
 </b:beans>
