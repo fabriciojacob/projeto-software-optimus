@@ -17,18 +17,26 @@
 		<div align="left">
 
 			<p:commandButton value="+" type="button" id="add"
-				onclick="PF('movEst').show();" />
+				onclick="PF('movEst').show();"
+				disabled="#{produtoEstoqueBean.btnAdicionar}" />
+
 			<p:commandButton value="Empresa" type="button"
 				onclick="PF('empresa').show();" update="frmMovEst" />
+
 			<p:commandButton id="prod" value="Produto" type="button"
 				onclick="PF('produto').show();" update="frmMovEst" />
+
+			<p:commandButton value="Cancelar" update="frmMovEst"
+				actionListener="#{produtoEstoqueBean.limparInfPesquisa}" />
+
 			<p:messages id="messages" showDetail="true" autoUpdate="true"
 				closable="true" />
 
 			<p:dialog header="Inclusão de Produto no Estoque" widgetVar="movEst"
 				modal="true" height="300" width="350" id="dialogEstoque">
 
-				<ui:include	src="/privado/estoque/panel/produtoEstoqueGerenciaRegistroPanel.xhtml" />
+				<ui:include
+					src="/privado/estoque/panel/produtoEstoqueGerenciaRegistroPanel.xhtml" />
 			</p:dialog>
 
 			<p:dialog header="Consulta Empresa" widgetVar="empresa" modal="true"
@@ -75,7 +83,7 @@
 			</p:dialog>
 
 			<p:dialog header="Consulta Produto" widgetVar="produto" modal="true"
-				height="350" width="400" id="dialogProduto">
+				height="350" width="440" id="dialogProduto">
 				<div align="right">
 					<h:panelGrid columns="1">
 						<p:commandButton value="Pesquisar"
@@ -119,8 +127,10 @@
 			</p:dialog>
 
 			<p:tab id="incMov">
-				<ui:include	src="/privado/estoque/panel/produtoEstoquePesquisaPanel.xhtml" />
-				<ui:include src="/privado/estoque/dataTable/produtoEstoqueMovimentacaoDataTable.xhtml" />
+				<ui:include
+					src="/privado/estoque/panel/produtoEstoquePesquisaPanel.xhtml" />
+				<ui:include
+					src="/privado/estoque/dataTable/produtoEstoqueMovimentacaoDataTable.xhtml" />
 			</p:tab>
 		</div>
 	</h:form>

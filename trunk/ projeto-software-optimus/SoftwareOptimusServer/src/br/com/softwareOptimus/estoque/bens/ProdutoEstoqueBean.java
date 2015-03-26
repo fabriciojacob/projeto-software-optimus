@@ -17,19 +17,23 @@ import br.com.softwareOptimus.produto.RN.ProdutoRN;
 @ViewScoped
 public class ProdutoEstoqueBean {
 	
-	private ProdutoEstoque produtoEstoque = new ProdutoEstoque();
-	private List<ProdutoEstoque> listaProdutoEstoque = new ArrayList<ProdutoEstoque>();
-	private Produto produto = new Produto();
-	private List<Produto> listaProduto = new ArrayList<Produto>();
+	private ProdutoEstoque produtoEstoque;
+	private List<ProdutoEstoque> listaProdutoEstoque;
+	private Produto produto;
+	private List<Produto> listaProduto;
 	private Date dataIni, dataFim;
 	private Double quantEntSai;
 	private EmpresaRN empRN;
 	private ProdutoRN prodRN;
 	private Pessoa empresa;
+	private boolean btnAdicionar = true;
+	private Integer verifica =0;
 	private Long empresaSelecionada, produtoSelecionado;
 	
 	public void pesquisaMovEstoque(){
+		Integer Teste = 0;
 		
+		Teste++;
 	}
 	
 	public void selecionaEmpresa() {
@@ -41,6 +45,10 @@ public class ProdutoEstoqueBean {
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
 							"Empresa selecionada"));
+			this.verifica = this.verifica + 1;
+			if(this.getVerifica() >= 2){
+				this.btnAdicionar = false;
+			}
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
@@ -59,6 +67,10 @@ public class ProdutoEstoqueBean {
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
 							"Produto selecionado"));
+			this.verifica = this.verifica + 1;
+			if(this.getVerifica() >= 2){
+				this.btnAdicionar = false;
+			}
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
@@ -74,6 +86,17 @@ public class ProdutoEstoqueBean {
 	
 	public void cancelar(){
 		
+	}
+	
+	public void limparInfPesquisa(){
+		this.setEmpresa(null);
+		this.setProduto(null);
+		this.setDataFim(null);
+		this.setDataIni(null);
+		this.setProdutoEstoque(null);
+		this.setListaProdutoEstoque(null);
+		this.setVerifica(0);
+		this.setBtnAdicionar(true);
 	}
 	
 	public Double getQuantEntSai() {
@@ -93,6 +116,9 @@ public class ProdutoEstoqueBean {
 	}
 
 	public Pessoa getEmpresa() {
+		if(this.empresa == null){
+			this.empresa = new Pessoa();			
+		}
 		return empresa;
 	}
 
@@ -121,27 +147,55 @@ public class ProdutoEstoqueBean {
 		this.dataFim = dataFim;
 	}
 	public ProdutoEstoque getProdutoEstoque() {
+		if(this.produtoEstoque == null){
+			this.produtoEstoque = new ProdutoEstoque();
+		}
 		return produtoEstoque;
 	}
 	public void setProdutoEstoque(ProdutoEstoque produtoEstoque) {
 		this.produtoEstoque = produtoEstoque;
 	}
 	public List<ProdutoEstoque> getListaProdutoEstoque() {
+		if(this.listaProdutoEstoque == null){
+			this.listaProdutoEstoque = new ArrayList<ProdutoEstoque>();	
+		}
 		return listaProdutoEstoque;
 	}
 	public void setListaProdutoEstoque(List<ProdutoEstoque> listaProdutoEstoque) {
 		this.listaProdutoEstoque = listaProdutoEstoque;
 	}
 	public Produto getProduto() {
+		if(this.produto == null){
+			this.produto = new Produto();			
+		}
 		return produto;
 	}
 	public void setProduto(Produto produto) {
 		this.produto = produto;
 	}
 	public List<Produto> getListaProduto() {
+		if(this.listaProduto == null){
+			this.listaProduto = new ArrayList<Produto>();			
+		}
 		return listaProduto;
 	}
 	public void setListaProduto(List<Produto> listaProduto) {
 		this.listaProduto = listaProduto;
+	}
+
+	public boolean isBtnAdicionar() {
+		return btnAdicionar;
+	}
+
+	public void setBtnAdicionar(boolean btnAdicionar) {
+		this.btnAdicionar = btnAdicionar;
+	}
+
+	public Integer getVerifica() {
+		return verifica;
+	}
+
+	public void setVerifica(Integer verifica) {
+		this.verifica = verifica;
 	}
 }
