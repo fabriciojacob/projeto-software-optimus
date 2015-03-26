@@ -47,6 +47,7 @@ public class TituloRN {
 
 	public void salvar(Titulo titulo) throws Exception {
 		Date data;
+		Double valor;
 		Calendar c = Calendar.getInstance();
 		if (titulo.getCondPgto().getIntervaloDias() > 0) {
 			data = titulo.getDataLancamento();
@@ -56,9 +57,13 @@ public class TituloRN {
 		} else {
 			titulo.setVencimento(titulo.getDataLancamento());
 		}
-		this.titulo.salvar(titulo);
-		if (titulo.getCondPgto().getParcela() > 1)
+		
+		if (titulo.getCondPgto().getParcela() > 1){
 			this.titulo.salvarParcelas(titulo.getIdTitulo());
+		}else{
+			titulo.setSaldo(titulo.getValorTitulo());
+			this.titulo.salvar(titulo);
+		}
 	}
 
 	public void excluir(Titulo titulo) throws Exception {
