@@ -22,10 +22,23 @@ public class ExtratoRN {
 	private ExtratoDAO extratoDAO;
 	private Extrato extrato;
 	private TituloRN tituloRN;
+	private int fase;
 
 	public ExtratoRN() {
 		extratoDAO = DAOFactory.criaExtratoConta();
 		extrato = new Extrato();
+	}
+
+	public int verificaSaldoTitulo(Titulo titulo, Double valor) {
+		Double valorCheck = titulo.getSaldo() - valor;
+		if (valorCheck < 0.0) {
+			fase = 1;
+		} else if (valorCheck == 0.0) {
+			fase = 2;
+		} else {
+			fase = 3;
+		}
+		return fase;
 	}
 
 	public void inclusao(List<Titulo> titulos, ContaBancaria contaBancaria,
@@ -83,6 +96,14 @@ public class ExtratoRN {
 
 	public void setExtrato(Extrato extrato) {
 		this.extrato = extrato;
+	}
+
+	public int getFase() {
+		return fase;
+	}
+
+	public void setFase(int fase) {
+		this.fase = fase;
 	}
 
 }
