@@ -41,7 +41,7 @@ public class TituloBens {
 	private int verifica = 0;
 	private Date dataIni, dataFim;
 	private String tipoBaixa;
-	private boolean checktitulo = true, checkCaixa = true, checkBanco = true;;
+	private boolean checktitulo = true, checkCaixa = true, checkBanco = true;
 	private FormaPgto formaPgto;
 	private Caixa caixa = new Caixa();
 	private List<Caixa> listaCaixa = new ArrayList<>();
@@ -91,17 +91,16 @@ public class TituloBens {
 			msgErro("Problemas na pesquisa do titulo", e);
 		}
 	}
-	
-	public void ativaTipoBaixa(){
-		if(tipoBaixa.equals("BANCO")){
+
+	public void ativaTipoBaixa() {
+		if (tipoBaixa.equals("BANCO")) {
 			this.checkBanco = false;
 			this.checkCaixa = true;
-		}else{
+		} else {
 			this.checkCaixa = false;
 			this.checkBanco = true;
 		}
 	}
-	
 
 	public void pesquisaParticipante() {
 		this.regraNegocio = new TituloRN();
@@ -124,12 +123,12 @@ public class TituloBens {
 			msgErro("Problemas na listagem das contas", e);
 		}
 	}
-	
-	public void listaCaixa(){
+
+	public void listaCaixa() {
 		CaixaRN caixaRN = new CaixaRN();
-		try{
+		try {
 			listaCaixa = caixaRN.listaCaixa();
-		}catch (Exception e) {
+		} catch (Exception e) {
 			msgErro("Problemas na listagem dos caixas", e);
 		}
 	}
@@ -448,4 +447,5 @@ public class TituloBens {
 	public void setCheckBanco(boolean checkBanco) {
 		this.checkBanco = checkBanco;
 	}
+	
 }

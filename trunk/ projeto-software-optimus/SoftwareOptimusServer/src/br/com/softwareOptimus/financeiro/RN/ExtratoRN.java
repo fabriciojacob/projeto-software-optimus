@@ -49,11 +49,11 @@ public class ExtratoRN {
 			}
 			if (titulo.getTipoTitulo().toString() == TipoTitulo.PAGAR
 					.toString()) {
-				extrato.setDebito(titulo.getValorTitulo());
-				saldo = saldo - titulo.getValorTitulo();
+				extrato.setDebito(titulo.getValor());
+				saldo = saldo - titulo.getValor();
 			} else {
-				extrato.setCredito(titulo.getValorTitulo());
-				saldo = saldo + titulo.getValorTitulo();
+				extrato.setCredito(titulo.getValor());
+				saldo = saldo + titulo.getValor();
 			}
 			extrato.setTitulo(titulo);
 			extrato.setContaBancaria(contaBancaria);
@@ -61,6 +61,7 @@ public class ExtratoRN {
 			extrato.setDescricao(titulo.getDescricao());
 			extrato.setSaldo(saldo);
 			extrato.setData(date);
+			titulo.setSaldo(titulo.getSaldo() - titulo.getValor());
 			titulo.setDataPagamento(date);
 			titulo.setStatus(StatusConta.BAIXADA);
 			this.tituloRN.atualizaTitulo(titulo);
