@@ -57,12 +57,9 @@ public class TituloRN {
 		} else {
 			titulo.setVencimento(titulo.getDataLancamento());
 		}
-		
+		this.titulo.salvar(titulo);
 		if (titulo.getCondPgto().getParcela() > 1){
 			this.titulo.salvarParcelas(titulo.getIdTitulo());
-		}else{
-			titulo.setSaldo(titulo.getValorTitulo());
-			this.titulo.salvar(titulo);
 		}
 	}
 
