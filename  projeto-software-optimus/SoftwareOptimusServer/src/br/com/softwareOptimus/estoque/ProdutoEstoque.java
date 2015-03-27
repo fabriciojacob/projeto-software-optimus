@@ -37,7 +37,7 @@ public class ProdutoEstoque implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name = "empresa", nullable = false, foreignKey = @ForeignKey(name = "fk_tbPessoa"))
-	private Pessoa Empresa;
+	private Pessoa empresa;
 	
 	@ManyToOne
 	@JoinColumn(name = "produto", nullable = false, foreignKey = @ForeignKey(name = "fk_tbProduto"))
@@ -222,11 +222,11 @@ public class ProdutoEstoque implements Serializable {
 	}
 
 	public Pessoa getEmpresa() {
-		return Empresa;
+		return empresa;
 	}
 
-	public void setEmpresa(Pessoa empresa) {
-		Empresa = empresa;
+	public void setEmpresa(Pessoa Empresa) {
+		empresa = Empresa;
 	}
 
 	

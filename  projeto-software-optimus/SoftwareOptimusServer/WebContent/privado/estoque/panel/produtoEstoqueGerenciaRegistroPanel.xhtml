@@ -34,7 +34,8 @@
 			<p:inputText size="15" value="#{produtoEstoqueBean.quantEntSai}" />
 
 			Custo Médio:
-			<p:inputText size="15" value="#{produtoEstoqueBean.produtoEstoque.custoMedio}" />
+			<p:inputText readonly="#{produtoEstoqueBean.txtCustoMedio}" size="15" 
+					value="#{produtoEstoqueBean.produtoEstoque.custoMedio}" />
 			
 			Total:
 			<p:inputText size="15" value="#{produtoEstoqueBean.produtoEstoque.totalCusto}" />

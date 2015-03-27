@@ -16,8 +16,8 @@
 		<h3 style="margin-top: 0">MOVIMENTAÇÃO ESTOQUE</h3>
 		<div align="left">
 
-			<p:commandButton value="+" type="button" id="add"
-				onclick="PF('movEst').show();"
+			<p:commandButton value="+" id="add" action="#{produtoEstoqueBean.buscaCustoMedio}"
+				onclick="PF('movEst').show();" 
 				disabled="#{produtoEstoqueBean.btnAdicionar}" />
 
 			<p:commandButton value="Empresa" type="button"
