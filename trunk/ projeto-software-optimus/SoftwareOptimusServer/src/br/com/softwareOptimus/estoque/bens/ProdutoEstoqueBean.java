@@ -2,14 +2,18 @@ package br.com.softwareOptimus.estoque.bens;
 
 import java.util.ArrayList;
 import java.util.Date;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+
 import java.util.List;
+
 import br.com.softwareOptimus.entidades.Pessoa;
 import br.com.softwareOptimus.entidades.RN.EmpresaRN;
 import br.com.softwareOptimus.estoque.ProdutoEstoque;
+import br.com.softwareOptimus.estoque.RN.ProdutoEstoqueRN;
 import br.com.softwareOptimus.produto.Produto;
 import br.com.softwareOptimus.produto.RN.ProdutoRN;
 
@@ -25,8 +29,9 @@ public class ProdutoEstoqueBean {
 	private Double quantEntSai;
 	private EmpresaRN empRN;
 	private ProdutoRN prodRN;
+	private ProdutoEstoqueRN prodEstRN;
 	private Pessoa empresa;
-	private boolean btnAdicionar = true;
+	private boolean btnAdicionar = true, txtCustoMedio = true;
 	private Integer verifica =0;
 	private Long empresaSelecionada, produtoSelecionado;
 	
@@ -36,11 +41,15 @@ public class ProdutoEstoqueBean {
 		Teste++;
 	}
 	
+	public void buscaCustoMedio(){
+		
+		this.getProdutoEstoque().setCustoMedio(this.getProdEstRN().retCustoMedioProduto(produtoEstoque));		
+	}
+	
 	public void selecionaEmpresa() {
-		this.empRN = new EmpresaRN();
 		try {
-			this.empresa = this.empRN.pesquisaId(this.empresaSelecionada);
-			this.produtoEstoque.setEmpresa(empresa);
+			this.setEmpresa(this.getEmpRN().pesquisaId(this.empresaSelecionada));
+			this.getProdutoEstoque().setEmpresa(empresa);
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
@@ -59,10 +68,9 @@ public class ProdutoEstoqueBean {
 	}
 	
 	public void selecionaProduto() {
-		this.prodRN = new ProdutoRN();
 		try {
-			this.produto = this.prodRN.editPro(this.produtoSelecionado);
-			this.produtoEstoque.setProduto(produto);
+			this.setProduto(this.getProdRN().editPro(this.produtoSelecionado));
+			this.getProdutoEstoque().setProduto(produto);
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
@@ -197,5 +205,46 @@ public class ProdutoEstoqueBean {
 
 	public void setVerifica(Integer verifica) {
 		this.verifica = verifica;
+	}
+
+	public boolean isTxtCustoMedio() {
+		return txtCustoMedio;
+	}
+
+	public void setTxtCustoMedio(boolean txtCustoMedio) {
+		this.txtCustoMedio = txtCustoMedio;
+	}
+
+	public EmpresaRN getEmpRN() {
+		if(this.empRN == null){
+			this.empRN = new EmpresaRN();			
+		}
+		return empRN;
+	}
+
+	public void setEmpRN(EmpresaRN empRN) {
+		this.empRN = empRN;
+	}
+
+	public ProdutoRN getProdRN() {
+		if(this.prodRN == null){
+			this.prodRN = new ProdutoRN();
+		}
+		return prodRN;
+	}
+
+	public void setProdRN(ProdutoRN prodRN) {
+		this.prodRN = prodRN;
+	}
+
+	public ProdutoEstoqueRN getProdEstRN() {
+		if(this.prodEstRN == null){
+			this.prodEstRN = new ProdutoEstoqueRN();			
+		}
+		return prodEstRN;
+	}
+
+	public void setProdEstRN(ProdutoEstoqueRN prodEstRN) {
+		this.prodEstRN = prodEstRN;
 	}
 }
