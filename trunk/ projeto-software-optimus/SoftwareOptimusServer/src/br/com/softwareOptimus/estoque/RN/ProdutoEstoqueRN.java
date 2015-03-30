@@ -19,11 +19,11 @@ public class ProdutoEstoqueRN {
 	}
 
 	public Double retCustoMedioProduto(ProdutoEstoque produtoEstoque) {
-		//ProdutoEstoque produtoEstoqueCustoMedio;
-		List<Object[]> result;
-		
+		List<ProdutoEstoque> result;
 		result = prodDAO.retCustoMedioProduto(produtoEstoque);
-		
+		if(result.size() > 0){
+			return result.get(0).getCustoMedio();
+		}
 		return 0.0;
 	}
 

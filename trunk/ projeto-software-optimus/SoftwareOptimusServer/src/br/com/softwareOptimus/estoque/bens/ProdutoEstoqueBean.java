@@ -42,8 +42,12 @@ public class ProdutoEstoqueBean {
 	}
 	
 	public void buscaCustoMedio(){
-		
-		this.getProdutoEstoque().setCustoMedio(this.getProdEstRN().retCustoMedioProduto(produtoEstoque));		
+		this.getProdutoEstoque().setCustoMedio(this.getProdEstRN().retCustoMedioProduto(this.getProdutoEstoque()));
+		if(this.getProdutoEstoque().getCustoMedio() == 0){
+			this.setTxtCustoMedio(false);
+		}else{
+			this.setTxtCustoMedio(true);
+		}
 	}
 	
 	public void selecionaEmpresa() {
