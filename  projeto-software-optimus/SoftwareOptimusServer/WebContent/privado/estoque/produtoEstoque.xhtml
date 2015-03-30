@@ -17,7 +17,7 @@
 		<div align="left">
 
 			<p:commandButton value="+" id="add" action="#{produtoEstoqueBean.buscaCustoMedio}"
-				onclick="PF('movEst').show();" 
+				onclick="PF('movEst').show();" update="custoMedio"
 				disabled="#{produtoEstoqueBean.btnAdicionar}" />
 
 			<p:commandButton value="Empresa" type="button"
@@ -72,7 +72,7 @@
 					</p:column>
 
 					<p:column headerText="Selecionar">
-						<p:commandLink id="link" value="Selecionar"
+						<p:commandLink id="link" value="Selecionar" 
 							action="#{produtoEstoqueBean.selecionaEmpresa}"
 							ajax="dialogEmpresa, frmMovEst">
 							<f:setPropertyActionListener value="#{pesEmpresa.idPessoa}"

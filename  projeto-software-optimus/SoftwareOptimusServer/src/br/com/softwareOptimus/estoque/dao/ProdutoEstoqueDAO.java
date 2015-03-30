@@ -10,5 +10,5 @@ public interface ProdutoEstoqueDAO {
 
 	public void begin() throws IOException, SQLException;
 	public void close() throws Exception;
-	public List<Object[]> retCustoMedioProduto(ProdutoEstoque produtoEstoque);
+	public List<ProdutoEstoque> retCustoMedioProduto(ProdutoEstoque produtoEstoque);
 }

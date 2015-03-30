@@ -3,6 +3,7 @@ package br.com.softwareOptimus.estoque.dao;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -48,23 +49,24 @@ public class ProdutoEstoqueDAOHibernate implements ProdutoEstoqueDAO{
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Object[]> retCustoMedioProduto(ProdutoEstoque produtoEstoque) {
-		Calendar dataHoje = Calendar.getInstance();
-		
-		String jpql = "Select max(p.data), p.custoMedio From ProdutoEstoque p "
+	public List<ProdutoEstoque> retCustoMedioProduto(ProdutoEstoque produtoEstoque) {
+		Calendar dataHoje = new GregorianCalendar();
+
+		String jpql = "Select p From ProdutoEstoque p "
 				   + " where p.empresa = :empresa " 
 				   + " and p.produto = :produto "
 				   + " and p.data <= :dataHoje "
-				   + " and p.tipoMovEst = :compra ";
+				   + " and p.tipoMovEst = :compra "
+				   + " order by p.data desc ";
 		Query qry = this.session.createQuery(jpql);
 		qry.setParameter("empresa", produtoEstoque.getEmpresa());
 		qry.setParameter("produto", produtoEstoque.getProduto());
-		qry.setParameter("dataHoje", dataHoje.DATE);
+		qry.setParameter("dataHoje", dataHoje);
 		qry.setParameter("compra", TipoMovEst.COMPRA);
 		
-		List<Object[]> result = qry.getResultList();
-	
-		return result;
+		List<ProdutoEstoque> lista = qry.getResultList();
+		
+		return lista;
 	}
 
 }
