@@ -2,11 +2,9 @@ package br.com.softwareOptimus.com.financeiro.dao;
 
 import java.io.IOException;
 import java.sql.SQLException;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
-
 import br.com.softwareOptimus.financeiro.Caixa;
 import br.com.softwareOptimus.financeiro.ContaBancaria;
 import br.com.softwareOptimus.financeiro.Extrato;
@@ -71,5 +69,6 @@ public class ExtratoDAOHibernate implements ExtratoDAO {
 	public void setTransacao(EntityTransaction transacao) {
 		this.transacao = transacao;
 	}
+
 
 }

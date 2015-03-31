@@ -172,7 +172,7 @@ public class TituloBens {
 		titulo.setRubrica(Rubrica.MANUAL);
 		titulo.setStatus(StatusConta.PENDENTE);
 		try {
-			this.regraNegocio.salvar(titulo);
+			this.regraNegocio.salvar(titulo,1);
 			msgAcerto("Registro salvo com sucesso ");
 			this.titulo = new Titulo();
 			btAdicionar = true;

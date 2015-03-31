@@ -45,9 +45,8 @@ public class TituloRN {
 		return this.titulo.pesquisaPessoa(empresa);
 	}
 
-	public void salvar(Titulo titulo) throws Exception {
+	public void salvar(Titulo titulo, int oper) throws Exception {
 		Date data;
-		Double valor;
 		Calendar c = Calendar.getInstance();
 		if (titulo.getCondPgto().getIntervaloDias() > 0) {
 			data = titulo.getDataLancamento();
@@ -58,8 +57,19 @@ public class TituloRN {
 			titulo.setVencimento(titulo.getDataLancamento());
 		}
 		this.titulo.salvar(titulo);
-		if (titulo.getCondPgto().getParcela() > 1){
-			this.titulo.salvarParcelas(titulo.getIdTitulo());
+		if (oper != 0) {
+			if (titulo.getCondPgto().getParcela() > 1) {
+				this.titulo.salvarParcelas(titulo.getIdTitulo());
+			}
+		}
+	}
+
+	public int checkBaixaTitulo(Long id) {
+		try {
+			this.titulo.checkStatusBaixaTitulo(id);
+			return 1;
+		} catch (Exception e) {
+			return 0;
 		}
 	}
 
@@ -89,6 +99,10 @@ public class TituloRN {
 
 	public Titulo retornaTitulo(Long id) throws Exception {
 		return this.titulo.retornaTitulo(id);
+	}
+	
+	public Titulo retornaTituloBaixado(Long id) throws Exception {
+		return this.titulo.retornaTituloBaixado(id);
 	}
 
 }
