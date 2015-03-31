@@ -29,7 +29,6 @@ create or replace package body pkg_financeiro is
                Datalancamento,
                Descricao,
                Rubrica,
-               Saldo,
                Status,
                Tipobaixa,
                tipoTitulo,
@@ -46,18 +45,17 @@ create or replace package body pkg_financeiro is
                titulo.Datalancamento,
                titulo.descricao,
                titulo.rubrica,
-               titulo.saldo,
                titulo.status,
                titulo.tipobaixa,
                titulo.tipoTitulo,
-               round(titulo.valor / v_parcela_condPgto, 4),
+               titulo.valor,
                titulo.Datalancamento + v_acumula_dias,
                titulo.Caixa_Idmovcaixa,
                titulo.Condpgto_Idcondpgto,
                titulo.Empresa_Idpessoa,
                titulo.Formapgto_Idformapg,
                titulo.Pessoa_Idpessoa,
-               titulo.valor);
+               round(titulo.valortitulo / v_parcela_condPgto, 4));
             commit;
           exception
             when others then

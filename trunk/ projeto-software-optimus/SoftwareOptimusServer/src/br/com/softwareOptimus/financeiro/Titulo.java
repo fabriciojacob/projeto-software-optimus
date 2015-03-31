@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
@@ -24,8 +25,8 @@ public class Titulo implements Serializable{
 	private static final long serialVersionUID = -6269276424422686896L;
 	
 	@Id
-	@GeneratedValue(generator="titulo_seq")
-	@SequenceGenerator(name="titulo_seq",sequenceName="titulo_seq", allocationSize=5) 
+	@GeneratedValue(strategy= GenerationType.SEQUENCE,generator="TITULO_SEQ")
+	@SequenceGenerator(name="TITULO_SEQ",sequenceName="TITULO_SEQ", allocationSize=1) 
 	private Long idTitulo;
 	
 	private String descricao;
@@ -36,12 +37,12 @@ public class Titulo implements Serializable{
 	@ManyToOne
 	private CondPgto condPgto;
 	
+	private Long idTituloPai;
+	
 	private Double valor;
 	
 	private Double valorTitulo;
-	
-	private Double saldo;
-	
+
 	private TipoTitulo tipoTitulo;
 	
 	@Temporal(TemporalType.DATE)
@@ -140,14 +141,6 @@ public class Titulo implements Serializable{
 		this.valor = valor;
 	}
 
-	public Double getSaldo() {
-		return saldo;
-	}
-
-	public void setSaldo(Double saldo) {
-		this.saldo = saldo;
-	}
-
 	public Pessoa getPessoa() {
 		return pessoa;
 	}
@@ -206,6 +199,14 @@ public class Titulo implements Serializable{
 
 	public void setValorTitulo(Double valorTitulo) {
 		this.valorTitulo = valorTitulo;
+	}
+
+	public Long getIdTituloPai() {
+		return idTituloPai;
+	}
+
+	public void setIdTituloPai(Long idTituloPai) {
+		this.idTituloPai = idTituloPai;
 	}
 
 	@Override
