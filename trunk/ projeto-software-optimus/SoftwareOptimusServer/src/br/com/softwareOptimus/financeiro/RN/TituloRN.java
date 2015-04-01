@@ -72,6 +72,10 @@ public class TituloRN {
 			return 0;
 		}
 	}
+	
+	public void closed() throws Exception {
+		this.titulo.closed();
+	}
 
 	public void excluir(Titulo titulo) throws Exception {
 		this.titulo.excluir(titulo);

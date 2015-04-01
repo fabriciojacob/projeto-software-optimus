@@ -232,4 +232,11 @@ public class TituloDAOHibernate implements TituloDAO {
 		return consulta.getSingleResult();
 	}
 
+	@Override
+	public void closed() throws Exception {
+		this.transacao.commit();
+		this.session.close();
+		
+	}
+
 }

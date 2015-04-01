@@ -11,6 +11,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="tbExtrato")
@@ -44,6 +46,7 @@ public class Extrato implements Serializable {
 	
 	private Rubrica rubrica;
 	
+	@Temporal(TemporalType.DATE)
 	private Date data;
 	
 	public Titulo getTitulo() {
