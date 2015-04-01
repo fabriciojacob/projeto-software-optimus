@@ -31,6 +31,8 @@ public class Titulo implements Serializable{
 	
 	private String descricao;
 	
+	private String descEstorno;
+	
 	@ManyToOne
 	private FormaPgto formaPgto;
 	
@@ -207,6 +209,14 @@ public class Titulo implements Serializable{
 
 	public void setIdTituloPai(Long idTituloPai) {
 		this.idTituloPai = idTituloPai;
+	}
+
+	public String getDescEstorno() {
+		return descEstorno;
+	}
+
+	public void setDescEstorno(String descEstorno) {
+		this.descEstorno = descEstorno;
 	}
 
 	@Override
