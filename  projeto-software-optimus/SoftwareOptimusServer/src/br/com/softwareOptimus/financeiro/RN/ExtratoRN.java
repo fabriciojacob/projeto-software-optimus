@@ -1,7 +1,10 @@
 package br.com.softwareOptimus.financeiro.RN;
 
+import java.text.DecimalFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.NoResultException;
 
 import br.com.softwareOptimus.com.financeiro.dao.ExtratoDAO;
@@ -42,6 +45,7 @@ public class ExtratoRN {
 			throws Exception {
 		tituloRN = new TituloRN();
 		Double valor;
+		Double temp = 0.0;
 		valor = titulo.getValor();
 		Double saldoExt = this.extratoDAO.saldoReg(contaBancaria, caixa);
 		if (titulo.getTipoTitulo().toString() == TipoTitulo.PAGAR.toString()) {
@@ -55,6 +59,14 @@ public class ExtratoRN {
 			extrato.setCaixa(caixa);
 		} else {
 			extrato.setContaBancaria(contaBancaria);
+		}
+
+		if (titulo.getValorTitulo() != titulo.getValor()) {
+			temp = titulo.getValorTitulo();
+			DecimalFormat df = new DecimalFormat("#.00");
+			titulo.setDescricao("Valor original do titulo: "
+					+ df.format(temp));
+			titulo.setValorTitulo(titulo.getValor());
 		}
 		titulo.setValor(0.0);
 		titulo.setStatus(StatusConta.PENDENTE);
@@ -70,6 +82,8 @@ public class ExtratoRN {
 			Caixa caixa) throws Exception {
 		Double saldo = 0.0, saldoTitulo = 0.0;
 		Date date = new Date();
+		Calendar c = Calendar.getInstance();
+		c.setTime(date);
 		tituloRN = new TituloRN();
 		try {
 			saldo = this.extratoDAO.saldoReg(contaBancaria, caixa);
@@ -98,21 +112,27 @@ public class ExtratoRN {
 			extrato.setCaixa(caixa);
 			extrato.setDescricao(titulo.getDescricao());
 			extrato.setSaldo(saldo);
-			extrato.setData(date);
+			extrato.setData(c.getTime());
 			saldoTitulo = titulo.getValorTitulo() - titulo.getValor();
-			titulo.setDataPagamento(date);
+			titulo.setDataPagamento(c.getTime());
 			titulo.setStatus(StatusConta.BAIXADA);
 			this.tituloRN.atualizaTitulo(titulo);
 			this.extratoDAO.inclusao(extrato);
 			if (saldoTitulo > 0) {
 				titulo.setIdTituloPai(titulo.getIdTitulo());
 				titulo.setValorTitulo(saldoTitulo);
+				titulo.setValor(0.0);
+				titulo.setDataPagamento(null);
 				titulo.setStatus(StatusConta.PENDENTE);
 				titulo.setDescricao("Saldo do titulo " + titulo.getIdTitulo());
 				titulo.setIdTitulo(null);
-				tituloRN.salvar(titulo,0);
+				tituloRN.salvar(titulo, 0);
 			}
 		}
+	}
+	
+	public void closed() throws Exception {
+		this.extratoDAO.close();
 	}
 
 	public ExtratoDAO getExtratoDAO() {

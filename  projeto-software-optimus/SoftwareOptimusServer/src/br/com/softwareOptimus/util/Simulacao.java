@@ -22,19 +22,26 @@ public class Simulacao {
 		ContaBancariaRN contaRN = new ContaBancariaRN();
 		try {
 			conta = contaRN.pesquisaID((long) 41);
-			//int check = tituloRN.checkBaixaTitulo((long) 106);
-			titulo = tituloRN.retornaTituloBaixado((long) 99);
+			//int check = tituloRN.checkBaixaTitulo((long) 132);
+			titulo = tituloRN.retornaTituloBaixado((long) 132);
 			extratoRN.estorno(titulo, conta, null);
 			/*if (check == 0) {
-				titulo = tituloRN.retornaTitulo((long) 106);
+				titulo = tituloRN.retornaTitulo((long) 132);
 
-				titulo.setValor(25.00);
+				titulo.setValor(2.88);
 				titulos.add(titulo);
 				extratoRN.inclusao(titulos, conta, null);
 			}*/
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		try{
+			tituloRN.closed();
+			extratoRN.closed();
+		}catch (Exception e){
+		
+		}
+		
 	}
 
 }
