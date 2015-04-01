@@ -27,4 +27,23 @@ public class ProdutoEstoqueRN {
 		return 0.0;
 	}
 
+	public Integer validaCampoNulo(ProdutoEstoque produtoEstoque, Double quantEntSai) {
+		Integer retorno = 0;
+		
+		if(produtoEstoque.getJustificativa() == "" || produtoEstoque.getData() == null || 
+		   produtoEstoque.getTipoMovEst() == null || quantEntSai == null || produtoEstoque.getCustoMedio() == null ||
+		   produtoEstoque.getTotalCusto() == null){
+			retorno =1;
+		}
+		if(quantEntSai <= 0 || produtoEstoque.getTotalCusto() <= 0 || produtoEstoque.getCustoMedio() <= 0){
+			retorno=1;
+		}
+		
+		return retorno;
+	}
+
+	public void salvar(ProdutoEstoque produtoEstoque, Integer i) {
+		prodDAO.salvarProdEstoque(produtoEstoque, i);
+	}
+
 }

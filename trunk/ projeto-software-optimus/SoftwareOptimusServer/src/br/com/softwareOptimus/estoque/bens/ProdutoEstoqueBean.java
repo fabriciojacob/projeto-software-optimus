@@ -11,6 +11,7 @@ import javax.faces.context.FacesContext;
 import java.util.List;
 
 import br.com.softwareOptimus.entidades.Pessoa;
+import br.com.softwareOptimus.entidades.TipoMovEst;
 import br.com.softwareOptimus.entidades.RN.EmpresaRN;
 import br.com.softwareOptimus.estoque.ProdutoEstoque;
 import br.com.softwareOptimus.estoque.RN.ProdutoEstoqueRN;
@@ -31,6 +32,7 @@ public class ProdutoEstoqueBean {
 	private ProdutoRN prodRN;
 	private ProdutoEstoqueRN prodEstRN;
 	private Pessoa empresa;
+	private String tipoMovEstoque;
 	private boolean btnAdicionar = true, txtCustoMedio = true;
 	private Integer verifica =0;
 	private Long empresaSelecionada, produtoSelecionado;
@@ -94,6 +96,33 @@ public class ProdutoEstoqueBean {
 	
 	public void incluir(){
 		
+		if(this.getTipoMovEstoque().equals(TipoMovEst.MANUALENTRADA.toString())){
+			this.getProdutoEstoque().setTipoMovEst(TipoMovEst.MANUALENTRADA);
+			this.getProdutoEstoque().setQuantEntrada(this.getQuantEntSai());
+			this.getProdutoEstoque().setQuantSaida(0.0);
+		}else if(this.getTipoMovEstoque().equals(TipoMovEst.MANUALSAIDA.toString())){
+			this.getProdutoEstoque().setTipoMovEst(TipoMovEst.MANUALSAIDA);
+			this.getProdutoEstoque().setQuantSaida(this.getQuantEntSai());
+			this.getProdutoEstoque().setQuantEntrada(0.0);
+			
+		}
+		
+		Integer retorno = this.getProdEstRN().validaCampoNulo(this.getProdutoEstoque(), quantEntSai);
+		if (retorno == 0){
+			this.getProdutoEstoque().setDespesaNota(0.0);
+			this.getProdutoEstoque().setFreteNota(0.0);
+			this.getProdutoEstoque().setIcmsNota(0.0);
+			this.getProdutoEstoque().setIpiNota(0.0);
+			this.getProdutoEstoque().setPisCofinsNota(0.0);
+			this.getProdutoEstoque().setCustoNota(this.getProdutoEstoque().getCustoMedio());
+			this.getProdEstRN().salvar(this.getProdutoEstoque(), 1);
+		}else{
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR,
+							"Info",
+							"Existem campos nulos no formulário ou zerado! Verifique!"));
+		}
 	}
 	
 	public void cancelar(){
@@ -250,5 +279,13 @@ public class ProdutoEstoqueBean {
 
 	public void setProdEstRN(ProdutoEstoqueRN prodEstRN) {
 		this.prodEstRN = prodEstRN;
+	}
+
+	public String getTipoMovEstoque() {
+		return tipoMovEstoque;
+	}
+
+	public void setTipoMovEstoque(String tipoMovEstoque) {
+		this.tipoMovEstoque = tipoMovEstoque;
 	}
 }
