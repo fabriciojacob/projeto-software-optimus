@@ -21,10 +21,10 @@
 			<p:inputText size="30" value="#{produtoEstoqueBean.produtoEstoque.justificativa}" />
 			
 			Data:
-			<p:calendar size="15" value="#{produtoEstoqueBean.produtoEstoque.data}" />
+			<p:calendar size="15" value="#{produtoEstoqueBean.produtoEstoque.data}"  effect="fold"/>
 			
 			Tipo Movimento:
-			<p:selectOneMenu id="tipMov" value="#{produtoEstoqueBean.produtoEstoque.tipoMovEst}">
+			<p:selectOneMenu id="tipMov" value="#{produtoEstoqueBean.tipoMovEstoque}">
 				<f:selectItem itemLabel="Selecione um Tipo " />
 				<f:selectItem itemLabel="Entrada" itemValue="MANUALENTRADA" />
 				<f:selectItem itemLabel="Saida" itemValue="MANUALSAIDA" />
@@ -43,7 +43,7 @@
 
 <h:panelGrid columns="2">
 	<p:commandButton id="btIncluir" value="Salvar"
-		actionListener="#{produtoEstoqueBean.incluir}" update="frmMovEst,add" />
+		actionListener="#{produtoEstoqueBean.incluir}" update="incProdEst,add" />
 	<p:commandButton id="btCancelar" value="Cancelar"
 		actionListener="#{produtoEstoqueBean.cancelar}" ajax="dialogEstoque" />
 </h:panelGrid>

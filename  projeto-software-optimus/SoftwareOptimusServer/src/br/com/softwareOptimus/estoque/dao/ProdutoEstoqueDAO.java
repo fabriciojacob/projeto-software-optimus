@@ -11,4 +11,5 @@ public interface ProdutoEstoqueDAO {
 	public void begin() throws IOException, SQLException;
 	public void close() throws Exception;
 	public List<ProdutoEstoque> retCustoMedioProduto(ProdutoEstoque produtoEstoque);
+	public void salvarProdEstoque(ProdutoEstoque produtoEstoque, Integer Situacao);
 }

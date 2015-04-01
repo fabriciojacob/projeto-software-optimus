@@ -1,14 +1,14 @@
 package br.com.softwareOptimus.estoque;
 
 import java.io.Serializable;
-import java.util.Calendar;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ForeignKey;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -79,9 +79,9 @@ public class ProdutoEstoque implements Serializable {
 	private Double quantEntrada;
 	
 	private Double saldo;
-	
+
 	@Temporal(TemporalType.DATE)
-	private Calendar data;
+	private Date data;
 	
 	private Double custoMedio;
 	
@@ -157,14 +157,14 @@ public class ProdutoEstoque implements Serializable {
 		this.tipoMovEst = tipoMovEst;
 	}
 	
-	public Calendar getData() {
+	public Date getData() {
 		return data;
 	}
-	
-	public void setData(Calendar data) {
+
+	public void setData(Date data) {
 		this.data = data;
 	}
-	
+
 	public String getJustificativa() {
 		return justificativa;
 	}

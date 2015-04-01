@@ -12,6 +12,7 @@ import br.com.softwareOptimus.financeiro.RN.TituloRN;
 
 public class Simulacao {
 
+	@SuppressWarnings("unused")
 	public static void main(String[] args) {
 		Extrato extrato = new Extrato();
 		Titulo titulo = new Titulo();
