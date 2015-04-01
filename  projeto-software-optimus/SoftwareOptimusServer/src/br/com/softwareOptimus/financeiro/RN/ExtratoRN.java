@@ -64,7 +64,7 @@ public class ExtratoRN {
 		if (titulo.getValorTitulo() != titulo.getValor()) {
 			temp = titulo.getValorTitulo();
 			DecimalFormat df = new DecimalFormat("#.00");
-			titulo.setDescricao("Valor original do titulo: "
+			titulo.setDescEstorno("Valor original do titulo: "
 					+ df.format(temp));
 			titulo.setValorTitulo(titulo.getValor());
 		}
