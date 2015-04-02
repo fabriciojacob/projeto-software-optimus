@@ -64,9 +64,9 @@
 		<class>br.com.softwareOptimus.fiscal.GradeTributariaVigencia</class>
 		<class>br.com.softwareOptimus.financeiro.ContaBancaria</class>
 		<class>br.com.softwareOptimus.financeiro.ContaFilha</class>
-		<class>br.com.softwareOptimus.financeiro.ExtratoContaBancaria</class>
 		<class>br.com.softwareOptimus.financeiro.MovCaixa</class>
 		<class>br.com.softwareOptimus.contabilidade.SaldoContasCC</class>
+		<class>br.com.softwareOptimus.financeiro.Extrato</class>
 
 		 <properties>
 			<property name=" javax.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver" />
