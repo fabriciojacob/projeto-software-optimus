@@ -35,15 +35,15 @@ public class ProdutoEstoqueRN {
 		   produtoEstoque.getTotalCusto() == null){
 			retorno =1;
 		}
-		if(quantEntSai <= 0 || produtoEstoque.getTotalCusto() <= 0 || produtoEstoque.getCustoMedio() <= 0){
+		if(quantEntSai <= 0 || produtoEstoque.getTotalNota() <= 0 || produtoEstoque.getCustoMedio() <= 0){
 			retorno=1;
 		}
 		
 		return retorno;
 	}
 
-	public void salvar(ProdutoEstoque produtoEstoque, Integer i) {
-		prodDAO.salvarProdEstoque(produtoEstoque, i);
+	public void salvar(ProdutoEstoque produtoEstoque, Integer i, Long tipoMovEst) {
+		prodDAO.salvarProdEstoque(produtoEstoque, i, tipoMovEst);
 	}
 
 }
