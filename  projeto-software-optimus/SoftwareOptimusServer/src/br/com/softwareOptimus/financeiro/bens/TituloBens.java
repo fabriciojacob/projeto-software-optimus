@@ -150,11 +150,19 @@ public class TituloBens {
 	}
 
 	public void baixa() {
-		ExtratoRN extrato;
+		ExtratoRN extrato = new ExtratoRN();
+		List<Titulo> titulos = new ArrayList<>();
 		setChecktitulo(true);
-		if (tipoBaixa.toString() == "BANCO") {
-			extrato = new ExtratoRN();
-		} else {
+		titulos.add(titulo);
+		try {
+			if (tipoBaixa.toString().equals("BANCO")) { 
+				extrato.inclusao(titulos, contaBancaria, null);
+			} else {
+				extrato.inclusao(titulos, null, caixa);
+			}
+			msgAcerto("Conta baixada com sucesso");
+		} catch (Exception e) {
+			msgErro("Problemas na baixa do titulo", e);
 
 		}
 
@@ -172,7 +180,7 @@ public class TituloBens {
 		titulo.setRubrica(Rubrica.MANUAL);
 		titulo.setStatus(StatusConta.PENDENTE);
 		try {
-			this.regraNegocio.salvar(titulo,1);
+			this.regraNegocio.salvar(titulo, 1);
 			msgAcerto("Registro salvo com sucesso ");
 			this.titulo = new Titulo();
 			btAdicionar = true;
@@ -447,5 +455,5 @@ public class TituloBens {
 	public void setCheckBanco(boolean checkBanco) {
 		this.checkBanco = checkBanco;
 	}
-	
+
 }
