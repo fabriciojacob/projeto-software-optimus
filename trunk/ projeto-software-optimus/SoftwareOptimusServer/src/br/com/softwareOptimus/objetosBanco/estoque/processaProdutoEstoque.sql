@@ -19,16 +19,23 @@ create or replace package body pkg_estoque as
     varQuantidade     Numeric(16, 2);
     varId             tbprodutoestoque.idprodest%type;
     varSaldo          Numeric(16, 2);
+    varComercial      tbprodutoestoque.idcomercial%type;
     varDataAtual      tbprodutoestoque.data%type;
     varQEntr          tbprodutoestoque.quantEntrada%type;
     varQSai           tbprodutoestoque.quantsaida%type;
     varCusMedAtualiza tbprodutoestoque.customedio%type;
     varTotalCusto     Numeric(16, 2);
-  
+
   begin
     /*1 - Insere
     2 - Atualiza
     3 - Deleta*/
+    if (varOrigem = 0) then
+      varComercial := null;
+    else
+      varComercial := varOrigem;       
+    end if;
+    
     if (varSituacao = 1) then
       Begin
         SELECT NVL(saldo, 0)
@@ -88,7 +95,7 @@ create or replace package body pkg_estoque as
          varEmpresa,
          varTotalNota,
          varCustoNota,
-         varOrigem,
+         varComercial,
          varDespesaNota,
          varIcmsNota,
          varIpiNota,
@@ -112,7 +119,7 @@ create or replace package body pkg_estoque as
         update Tbprodutoestoque
            set quantidade = varQuantidade
          where Idprodest = tabProcess.Idprodest;
-      
+
         if (tabProcess.Tipomovest IN (0, 3, 4)) then
           varSaldo := varQuantidade + tabProcess.Quantentrada;
         else
@@ -120,7 +127,7 @@ create or replace package body pkg_estoque as
         end if;
         varQuantidade := varSaldo;
         varTotalCusto := varSaldo * tabProcess.Customedio;
-      
+
         update tbProdutoEstoque
            set saldo = varSaldo, totalcusto = varTotalCusto
          where Idprodest = tabProcess.Idprodest;
@@ -134,7 +141,7 @@ create or replace package body pkg_estoque as
           from tbProdutoEstoque p
          where p.produto = varProduto
            and p.empresa = varEmpresa
-           and p.idComercial = varOrigem;
+           and p.idComercial = varComercial;
       Exception
         When No_Data_Found then
           varId := 0;
@@ -236,13 +243,14 @@ create or replace package body pkg_estoque as
       end if;
     end if;
     if (varSituacao = 3) then
-    
+
       declare
         cursor estDeleta is
           select to_char(tbEst.data, 'DDMMYYYY') || tbEst.Idprodest as id,
                  tbEst.*
             FROM tbProdutoEstoque tbEst
-           WHERE tbEst.idComercial = varOrigem
+           WHERE tbEst.idComercial = varComercial
+           --AND tbEst.produto = varProduto
            order by to_char(tbEst.data, 'DDMMYYYY') || tbEst.Idprodest;
       begin
         for estoque in estDeleta loop
