@@ -22,12 +22,12 @@ public class TituloDAOHibernate implements TituloDAO {
 
 	@Override
 	public void salvar(Titulo titulo) throws Exception {
-		this.session.clear();
 		this.session.persist(titulo);
 		if (!this.transacao.isActive()) {
 			this.transacao.begin();
 		}
 		this.transacao.commit();
+		this.session.clear();
 	}
 
 	public void salvarParcelas(Long titulo) throws Exception {
