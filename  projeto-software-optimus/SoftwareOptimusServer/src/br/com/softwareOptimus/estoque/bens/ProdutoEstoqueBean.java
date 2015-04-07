@@ -1,5 +1,6 @@
 package br.com.softwareOptimus.estoque.bens;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -21,8 +22,9 @@ import br.com.softwareOptimus.produto.RN.ProdutoRN;
 
 @ManagedBean(name = "produtoEstoqueBean")
 @ViewScoped
-public class ProdutoEstoqueBean {
+public class ProdutoEstoqueBean implements Serializable{
 	
+	private static final long serialVersionUID = -1958596637728666102L;
 	private ProdutoEstoque produtoEstoque;
 	private List<ProdutoEstoque> listaProdutoEstoque;
 	private Produto produto;
@@ -39,9 +41,18 @@ public class ProdutoEstoqueBean {
 	private Long empresaSelecionada, produtoSelecionado;
 	
 	public void pesquisaMovEstoque(){
-		Integer Teste = 0;
-		
-		Teste++;
+		Integer retorno = this.getProdEstRN().validaCamposPesquisa(this.getProduto(), this.getEmpresa(),
+										 						   this.getDataFim(), this.getDataIni());
+		if(retorno == 0){
+			this.setListaProdutoEstoque(this.getProdEstRN().buscaMovProduto(this.getProduto(), this.getEmpresa(),
+					   								this.getDataFim(), this.getDataIni(), this.getProdutoEstoque()));
+		}else{
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR,
+							"Info",
+							"Para pesquisa é necessário Produto, Empresa, Data Inicial e Final!"));
+		}
 	}
 	
 	public void buscaCustoMedio(){
@@ -55,8 +66,8 @@ public class ProdutoEstoqueBean {
 	
 	public void selecionaEmpresa() {
 		try {
-			this.setEmpresa(this.getEmpRN().pesquisaId(this.empresaSelecionada));
-			this.getProdutoEstoque().setEmpresa(empresa);
+			this.setEmpresa(this.getEmpRN().pesquisaId(this.getEmpresaSelecionada()));
+			this.getProdutoEstoque().setEmpresa(this.getEmpresa());
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
@@ -76,8 +87,8 @@ public class ProdutoEstoqueBean {
 	
 	public void selecionaProduto() {
 		try {
-			this.setProduto(this.getProdRN().editPro(this.produtoSelecionado));
-			this.getProdutoEstoque().setProduto(produto);
+			this.setProduto(this.getProdRN().editPro(this.getProdutoSelecionado()));
+			this.getProdutoEstoque().setProduto(this.getProduto());
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",

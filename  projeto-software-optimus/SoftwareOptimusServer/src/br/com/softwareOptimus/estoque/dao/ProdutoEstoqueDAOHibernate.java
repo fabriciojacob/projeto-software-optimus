@@ -12,8 +12,10 @@ import javax.persistence.ParameterMode;
 import javax.persistence.Query;
 import javax.persistence.StoredProcedureQuery;
 
+import br.com.softwareOptimus.entidades.Pessoa;
 import br.com.softwareOptimus.entidades.TipoMovEst;
 import br.com.softwareOptimus.estoque.ProdutoEstoque;
+import br.com.softwareOptimus.produto.Produto;
 
 public class ProdutoEstoqueDAOHibernate implements ProdutoEstoqueDAO{
 	
@@ -110,5 +112,26 @@ public class ProdutoEstoqueDAOHibernate implements ProdutoEstoqueDAO{
 		proc.setParameter("varDespesaNota", produtoEstoque.getDespesaNota());
 		proc.setParameter("varSituacao", Situacao);
 		proc.executeUpdate();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ProdutoEstoque> buscaMovProdutoEstoque(Produto produto, 
+			Pessoa empresa, Date dataFim, Date dataIni,	ProdutoEstoque produtoEstoque) {
+		String jpql = "Select p From ProdutoEstoque p "
+				   + " where p.empresa = :empresa " 
+				   + " and p.produto = :produto "
+				   + " and p.data between :dataIni "
+				   + " and :dataFim"
+				   + " order by p.data, p.idProdEst";
+		Query qry = this.session.createQuery(jpql);
+		qry.setParameter("empresa", empresa);
+		qry.setParameter("produto", produto);
+		qry.setParameter("dataIni", dataIni);
+		qry.setParameter("dataFim", dataFim);
+		
+		List<ProdutoEstoque> lista = qry.getResultList();
+		
+		return lista;
 	}
 }
