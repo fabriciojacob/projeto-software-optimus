@@ -1,11 +1,14 @@
 package br.com.softwareOptimus.fiscal.bens;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+
 import br.com.softwareOptimus.entidades.TipoPessoaJuridica;
 import br.com.softwareOptimus.fiscal.Aliquota;
 import br.com.softwareOptimus.fiscal.GradeTributaria;
@@ -18,8 +21,9 @@ import br.com.softwareOptimus.fiscal.RN.PautaRN;
 
 @ManagedBean(name = "gradeTributariaBean")
 @ViewScoped
-public class GradeTributariaBean {
+public class GradeTributariaBean implements Serializable {
 
+	private static final long serialVersionUID = -1841419801185722787L;
 	private GradeTributaria grade = new GradeTributaria();
 	private GradeTributariaVigencia gradeVig = new GradeTributariaVigencia();
 	private List<GradeTributaria> listaGrade = new ArrayList<GradeTributaria>();

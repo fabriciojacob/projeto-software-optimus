@@ -1,11 +1,14 @@
 package br.com.softwareOptimus.produto.bens;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+
 import br.com.softwareOptimus.produto.Grupo;
 import br.com.softwareOptimus.produto.Setor;
 import br.com.softwareOptimus.produto.RN.GrupoRN;
@@ -13,8 +16,9 @@ import br.com.softwareOptimus.produto.RN.SetorRN;
 
 @ManagedBean(name = "setorBean")
 @ViewScoped
-public class SetorBean {
+public class SetorBean implements Serializable{
 
+	private static final long serialVersionUID = -6889204545055216922L;
 	private Setor setor = new Setor();
 	private Grupo grupo = new Grupo();
 	private List<Setor> listaSetor = new ArrayList<Setor>();

@@ -1,11 +1,14 @@
 package br.com.softwareOptimus.entidades.bens;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+
 import br.com.softwareOptimus.entidades.Email;
 import br.com.softwareOptimus.entidades.Logradouro;
 import br.com.softwareOptimus.entidades.Municipio;
@@ -22,8 +25,9 @@ import br.com.softwareOptimus.entidades.RN.geral.TelefoneRN;
 
 @ManagedBean
 @ViewScoped
-public class ParticipanteBean {
+public class ParticipanteBean implements Serializable{
 
+	private static final long serialVersionUID = 8728030689995236693L;
 	private PessoaFisica pessoaFisica = new PessoaFisica();
 	private PessoaJuridica pessoaJuridica = new PessoaJuridica();
 	private Long id, idLogr, idTel, idEmail;

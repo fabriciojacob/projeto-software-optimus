@@ -1,11 +1,14 @@
 package br.com.softwareOptimus.produto.bens;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+
 import br.com.softwareOptimus.fiscal.FiguraFiscal;
 import br.com.softwareOptimus.fiscal.TipoProduto;
 import br.com.softwareOptimus.fiscal.RN.FiguraFiscalRN;
@@ -24,8 +27,9 @@ import br.com.softwareOptimus.produto.RN.UnidMedRN;
 
 @ManagedBean(name = "produtoBean")
 @ViewScoped
-public class ProdutoBean {
+public class ProdutoBean implements Serializable{
 
+	private static final long serialVersionUID = 8953487771453312466L;
 	private Produto produto = new Produto();
 	private List<FiguraFiscal> listaFigura = new ArrayList<FiguraFiscal>();
 	private List<UnidMed> listaUnidade = new ArrayList<UnidMed>();

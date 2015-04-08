@@ -1,19 +1,23 @@
 package br.com.softwareOptimus.produto.bens;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+
 import br.com.softwareOptimus.produto.Categoria;
 import br.com.softwareOptimus.produto.SubGrupo;
 import br.com.softwareOptimus.produto.RN.SubGrupoRN;
 
 @ManagedBean(name = "subGrupoBean")
 @ViewScoped
-public class SubGrupoBean {
+public class SubGrupoBean implements Serializable{
 
+	private static final long serialVersionUID = 6025267193479395126L;
 	private SubGrupo subGrupo = new SubGrupo();
 	private Categoria categoria = new Categoria();
 	private List<Categoria> listaCategoria = new ArrayList<Categoria>();

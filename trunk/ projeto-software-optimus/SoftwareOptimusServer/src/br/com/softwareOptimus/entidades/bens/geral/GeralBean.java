@@ -1,6 +1,8 @@
 package br.com.softwareOptimus.entidades.bens.geral;
 
+import java.io.Serializable;
 import java.util.List;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
@@ -11,8 +13,9 @@ import br.com.softwareOptimus.entidades.RN.geral.MunicipioRN;
 
 @ManagedBean(name = "geralBean")
 @SessionScoped
-public class GeralBean {
+public class GeralBean implements Serializable{
 
+	private static final long serialVersionUID = -2566411116709206423L;
 	private List<Estado> estados;
 	private List<Municipio> municipios;
 	private EstadoRN estadoRN = new EstadoRN();

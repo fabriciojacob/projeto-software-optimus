@@ -118,20 +118,34 @@ public class ProdutoEstoqueDAOHibernate implements ProdutoEstoqueDAO{
 	@Override
 	public List<ProdutoEstoque> buscaMovProdutoEstoque(Produto produto, 
 			Pessoa empresa, Date dataFim, Date dataIni,	ProdutoEstoque produtoEstoque) {
-		String jpql = "Select p From ProdutoEstoque p "
-				   + " where p.empresa = :empresa " 
-				   + " and p.produto = :produto "
-				   + " and p.data between :dataIni "
-				   + " and :dataFim"
-				   + " order by p.data, p.idProdEst";
-		Query qry = this.session.createQuery(jpql);
+		StringBuilder sql = new StringBuilder();
+		sql.append("Select p From ProdutoEstoque p ");
+		this.definiCondicoes(sql, produtoEstoque);
+		sql.append(" order by p.data, p.idProdEst");
+		Query qry = this.session.createQuery(sql.toString());
+		this.definiParametros(qry, produto, empresa, dataFim, dataIni, produtoEstoque);
+		List<ProdutoEstoque> lista = qry.getResultList();
+		return lista;
+	}
+
+	private void definiParametros(Query qry, Produto produto, Pessoa empresa,
+			Date dataFim, Date dataIni, ProdutoEstoque produtoEstoque) {
 		qry.setParameter("empresa", empresa);
 		qry.setParameter("produto", produto);
 		qry.setParameter("dataIni", dataIni);
 		qry.setParameter("dataFim", dataFim);
-		
-		List<ProdutoEstoque> lista = qry.getResultList();
-		
-		return lista;
+		if(produtoEstoque.getTipoMovEst() != null){
+			qry.setParameter("tipoMovEst", produtoEstoque.getTipoMovEst());
+		}
+	}
+
+	private void definiCondicoes(StringBuilder sql, ProdutoEstoque produtoEstoque) {
+			sql.append(" where p.empresa = :empresa")
+			   .append(" and p.produto = :produto")
+			   .append(" and p.data between :dataIni")
+			   .append(" and :dataFim");
+		if(produtoEstoque.getTipoMovEst() != null){
+			sql.append(" and tipoMovEst = :tipoMovEst");
+		}
 	}
 }
