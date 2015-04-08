@@ -1,5 +1,6 @@
 package br.com.softwareOptimus.entidades.bens;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -26,8 +27,9 @@ import br.com.softwareOptimus.fiscal.VigenciaRegime;
 
 @ManagedBean(name = "empresaBean")
 @ViewScoped
-public class EmpresaBean {
+public class EmpresaBean implements Serializable {
 
+	private static final long serialVersionUID = 8428074836380205888L;
 	private PessoaJuridica pessoaJuridica = new PessoaJuridica();
 	private Logradouro logradouro = new Logradouro();
 	private String tipoSelecionado = null;

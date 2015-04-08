@@ -1,19 +1,23 @@
 package br.com.softwareOptimus.fiscal.bens;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+
 import br.com.softwareOptimus.fiscal.Pauta;
 import br.com.softwareOptimus.fiscal.PautaMVA;
 import br.com.softwareOptimus.fiscal.RN.PautaRN;
 
 @ManagedBean(name = "pautaBean")
 @ViewScoped
-public class PautaBean {
+public class PautaBean implements Serializable{
 
+	private static final long serialVersionUID = -7205875322346314575L;
 	private Pauta pauta = new Pauta();
 	private PautaMVA pautaMVA = new PautaMVA();
 	private Boolean sal = true, alt = true, rem = true, vig = true,

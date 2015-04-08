@@ -1,9 +1,12 @@
 package br.com.softwareOptimus.fiscal.bens;
 
+import java.io.Serializable;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+
 import br.com.softwareOptimus.fiscal.CodigoSituacaoTributaria;
 import br.com.softwareOptimus.fiscal.IO;
 import br.com.softwareOptimus.fiscal.TipoCst;
@@ -13,7 +16,9 @@ import br.com.softwareOptimus.fiscal.RN.CodigoSituacaoTributariaRN;
 
 @ManagedBean(name = "aliquotaBean")
 @ViewScoped
-public class AliquotaBean extends AliquotaBeanAbstract{
+public class AliquotaBean extends AliquotaBeanAbstract implements Serializable{
+
+	private static final long serialVersionUID = 4885878609265619359L;
 
 	public void novo() {
 		this.setSal(false);

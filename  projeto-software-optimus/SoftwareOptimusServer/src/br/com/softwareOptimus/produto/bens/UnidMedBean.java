@@ -1,5 +1,6 @@
 package br.com.softwareOptimus.produto.bens;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,13 +8,15 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+
 import br.com.softwareOptimus.produto.UnidMed;
 import br.com.softwareOptimus.produto.RN.UnidMedRN;
 
 @ManagedBean(name = "unidMedBean")
 @ViewScoped
-public class UnidMedBean {
+public class UnidMedBean implements Serializable{
 
+	private static final long serialVersionUID = -3988883087479983925L;
 	private UnidMed unidMed = new UnidMed();
 	private boolean disable = false;
 	private List<UnidMed> unidMedLis = new ArrayList<UnidMed>();

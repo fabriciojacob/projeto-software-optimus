@@ -1,11 +1,14 @@
 package br.com.softwareOptimus.produto.bens;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+
 import br.com.softwareOptimus.fiscal.Aliquota;
 import br.com.softwareOptimus.fiscal.CodTabelaGov;
 import br.com.softwareOptimus.fiscal.Ncm;
@@ -17,8 +20,9 @@ import br.com.softwareOptimus.fiscal.RN.TipoProdutoRN;
 
 @ManagedBean(name = "tipoProdutoBean")
 @ViewScoped
-public class TipoProdutoBean {
+public class TipoProdutoBean implements Serializable{
 
+	private static final long serialVersionUID = -2984908303662738172L;
 	private TipoProduto tipo = new TipoProduto();
 	private CodTabelaGov tbGov = new CodTabelaGov();
 	private Ncm ncm = new Ncm();

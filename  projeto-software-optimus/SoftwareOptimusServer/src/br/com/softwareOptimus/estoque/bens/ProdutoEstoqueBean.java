@@ -123,16 +123,27 @@ public class ProdutoEstoqueBean implements Serializable{
 		
 		Integer retorno = this.getProdEstRN().validaCampoNulo(this.getProdutoEstoque(), quantEntSai);
 		if (retorno == 0){
-
-			this.getProdutoEstoque().setDespesaNota(0.0);
-			this.getProdutoEstoque().setFreteNota(0.0);
-			this.getProdutoEstoque().setIcmsNota(0.0);
-			this.getProdutoEstoque().setIpiNota(0.0);
-			this.getProdutoEstoque().setPisCofinsNota(0.0);
-			this.getProdutoEstoque().setCustoNota(this.getProdutoEstoque().getCustoMedio());
-			this.getProdutoEstoque().setOrigem(new Comercial());
-			this.getProdutoEstoque().getOrigem().setIdComercial(new Long(0));
-			this.getProdEstRN().salvar(this.getProdutoEstoque(), 1, tipoMovEst);
+			try {
+				this.getProdutoEstoque().setDespesaNota(0.0);
+				this.getProdutoEstoque().setFreteNota(0.0);
+				this.getProdutoEstoque().setIcmsNota(0.0);
+				this.getProdutoEstoque().setIpiNota(0.0);
+				this.getProdutoEstoque().setPisCofinsNota(0.0);
+				this.getProdutoEstoque().setCustoNota(this.getProdutoEstoque().getCustoMedio());
+				this.getProdutoEstoque().setOrigem(new Comercial());
+				this.getProdutoEstoque().getOrigem().setIdComercial(new Long(0));
+				this.getProdEstRN().salvar(this.getProdutoEstoque(), 1, tipoMovEst);
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
+								"Dados salvo com sucesso!"));
+			} catch (Exception e) {
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR,
+								"Info",
+								"Falha ao salvar movimentação de estoque " + e.getMessage()));
+			}
 		}else{
 			FacesContext.getCurrentInstance().addMessage(
 					null,
