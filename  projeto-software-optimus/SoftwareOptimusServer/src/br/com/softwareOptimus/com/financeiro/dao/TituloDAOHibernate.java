@@ -62,6 +62,9 @@ public class TituloDAOHibernate implements TituloDAO {
 
 	@Override
 	public void excluir(Titulo titulo) throws Exception {
+		if(!this.transacao.isActive()){
+			this.transacao.begin();
+		}
 		this.session.remove(titulo);
 		this.transacao.commit();
 	}
@@ -237,6 +240,15 @@ public class TituloDAOHibernate implements TituloDAO {
 		this.transacao.commit();
 		this.session.close();
 		
+	}
+
+	@Override
+	public Titulo retornaTituloGeral(Long id) throws Exception {
+		String jpql = "Select t from Titulo t where t.idTitulo = :id";
+		TypedQuery<Titulo> consulta = this.session.createQuery(jpql,
+				Titulo.class);
+		consulta.setParameter("id", id);
+		return consulta.getSingleResult();
 	}
 
 }
