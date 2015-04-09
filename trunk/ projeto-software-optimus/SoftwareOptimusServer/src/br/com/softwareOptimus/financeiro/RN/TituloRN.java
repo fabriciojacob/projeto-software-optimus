@@ -5,6 +5,10 @@ import java.util.Date;
 import java.util.List;
 import br.com.softwareOptimus.com.financeiro.dao.TituloDAO;
 import br.com.softwareOptimus.entidades.Pessoa;
+import br.com.softwareOptimus.financeiro.Rubrica;
+import br.com.softwareOptimus.financeiro.StatusConta;
+import br.com.softwareOptimus.financeiro.TipoMov;
+import br.com.softwareOptimus.financeiro.TipoTitulo;
 import br.com.softwareOptimus.financeiro.Titulo;
 import br.com.softwareOptimus.util.DAOFactory;
 
@@ -72,13 +76,20 @@ public class TituloRN {
 			return 0;
 		}
 	}
-	
-	public void closed() throws Exception {
-		this.titulo.closed();
+
+	public int excluirTitulo(Titulo titulo) throws Exception {
+		int ret = 0;
+		if (titulo.getRubrica().equals(Rubrica.MANUAL)
+				&& titulo.getStatus().equals(StatusConta.PENDENTE)) {
+			this.titulo.excluir(titulo);
+		} else {
+			ret = 1;
+		}
+		return ret;
 	}
 
-	public void excluir(Titulo titulo) throws Exception {
-		this.titulo.excluir(titulo);
+	public void closed() throws Exception {
+		this.titulo.closed();
 	}
 
 	public void editar(Titulo titulo) throws Exception {
@@ -105,6 +116,10 @@ public class TituloRN {
 		return this.titulo.retornaTitulo(id);
 	}
 	
+	public Titulo retornaTituloGeral(Long id) throws Exception {
+		return this.titulo.retornaTituloGeral(id);
+	}
+
 	public Titulo retornaTituloBaixado(Long id) throws Exception {
 		return this.titulo.retornaTituloBaixado(id);
 	}
