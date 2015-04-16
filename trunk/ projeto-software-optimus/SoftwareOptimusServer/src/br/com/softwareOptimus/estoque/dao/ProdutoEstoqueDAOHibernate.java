@@ -148,4 +148,16 @@ public class ProdutoEstoqueDAOHibernate implements ProdutoEstoqueDAO{
 			sql.append(" and tipoMovEst = :tipoMovEst");
 		}
 	}
+	
+	@Override
+	public Integer countMovProdutoEstoque(Produto produto, Pessoa empresa, Date dataFim, Date dataIni,	ProdutoEstoque produtoEstoque) {
+		StringBuilder sql = new StringBuilder();
+		sql.append("Select count(p) From ProdutoEstoque p ");
+		this.definiCondicoes(sql, produtoEstoque);
+		Query qry = this.session.createQuery(sql.toString());
+		this.definiParametros(qry, produto, empresa, dataFim, dataIni, produtoEstoque);
+		Integer count = (Integer) qry.getSingleResult();
+		return count;
+	}
+
 }
