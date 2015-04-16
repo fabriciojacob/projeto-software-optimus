@@ -9,6 +9,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.event.data.PageEvent;
+import org.primefaces.model.LazyDataModel;
+
 import java.util.List;
 
 import br.com.softwareOptimus.comercial.Comercial;
@@ -22,11 +25,12 @@ import br.com.softwareOptimus.produto.RN.ProdutoRN;
 
 @ManagedBean(name = "produtoEstoqueBean")
 @ViewScoped
-public class ProdutoEstoqueBean implements Serializable{
+public class ProdutoEstoqueBean extends LazyDataModel<ProdutoEstoque> implements Serializable{
 	
 	private static final long serialVersionUID = -1958596637728666102L;
 	private ProdutoEstoque produtoEstoque;
-	private List<ProdutoEstoque> listaProdutoEstoque;
+	private LazyDataModel<ProdutoEstoque> listaProdutoEstoque;
+	//private List<ProdutoEstoque> listaProdutoEstoque;
 	private Produto produto;
 	private List<Produto> listaProduto;
 	private Date dataIni, dataFim;
@@ -35,17 +39,20 @@ public class ProdutoEstoqueBean implements Serializable{
 	private ProdutoRN prodRN;
 	private ProdutoEstoqueRN prodEstRN;
 	private Pessoa empresa;
+	private PesquisaEstoquePojo dadosPesquisa;
 	private String tipoMovEstoque;
 	private boolean btnAdicionar = true, txtCustoMedio = true;
 	private Integer verifica =0;
 	private Long empresaSelecionada, produtoSelecionado;
 	
+	@SuppressWarnings("unchecked")
 	public void pesquisaMovEstoque(){
 		Integer retorno = this.getProdEstRN().validaCamposPesquisa(this.getProduto(), this.getEmpresa(),
 										 						   this.getDataFim(), this.getDataIni());
 		if(retorno == 0){
-			this.setListaProdutoEstoque(this.getProdEstRN().buscaMovProduto(this.getProduto(), this.getEmpresa(),
+			this.setListaProdutoEstoque((LazyDataModel<ProdutoEstoque>) this.getProdEstRN().buscaMovProduto(this.getProduto(), this.getEmpresa(),
 					   								this.getDataFim(), this.getDataIni(), this.getProdutoEstoque()));
+			
 		}else{
 			FacesContext.getCurrentInstance().addMessage(
 					null,
@@ -53,6 +60,10 @@ public class ProdutoEstoqueBean implements Serializable{
 							"Info",
 							"Para pesquisa é necessário Produto, Empresa, Data Inicial e Final!"));
 		}
+	}
+	
+	public void onPaginate(PageEvent event){
+		
 	}
 	
 	public void buscaCustoMedio(){
@@ -224,7 +235,8 @@ public class ProdutoEstoqueBean implements Serializable{
 	public void setProdutoEstoque(ProdutoEstoque produtoEstoque) {
 		this.produtoEstoque = produtoEstoque;
 	}
-	public List<ProdutoEstoque> getListaProdutoEstoque() {
+	
+	/**public List<ProdutoEstoque> getListaProdutoEstoque() {
 		if(this.listaProdutoEstoque == null){
 			this.listaProdutoEstoque = new ArrayList<ProdutoEstoque>();	
 		}
@@ -232,13 +244,26 @@ public class ProdutoEstoqueBean implements Serializable{
 	}
 	public void setListaProdutoEstoque(List<ProdutoEstoque> listaProdutoEstoque) {
 		this.listaProdutoEstoque = listaProdutoEstoque;
-	}
+	}*/
+	
 	public Produto getProduto() {
 		if(this.produto == null){
 			this.produto = new Produto();			
 		}
 		return produto;
 	}
+	
+	public LazyDataModel<ProdutoEstoque> getListaProdutoEstoque() {
+		if(this.listaProdutoEstoque == null){
+			this.listaProdutoEstoque = new LazyDataModel<ProdutoEstoque>() {
+				private static final long serialVersionUID = -2723365858528358209L;};}
+		return this.listaProdutoEstoque;
+	}
+
+	public void setListaProdutoEstoque(LazyDataModel<ProdutoEstoque> listaProdutoEstoque) {
+		this.listaProdutoEstoque = listaProdutoEstoque;
+	}
+
 	public void setProduto(Produto produto) {
 		this.produto = produto;
 	}
@@ -316,4 +341,13 @@ public class ProdutoEstoqueBean implements Serializable{
 	public void setTipoMovEstoque(String tipoMovEstoque) {
 		this.tipoMovEstoque = tipoMovEstoque;
 	}
+
+	public PesquisaEstoquePojo getDadosPesquisa() {
+		return dadosPesquisa;
+	}
+
+	public void setDadosPesquisa(PesquisaEstoquePojo dadosPesquisa) {
+		this.dadosPesquisa = dadosPesquisa;
+	}
 }
+

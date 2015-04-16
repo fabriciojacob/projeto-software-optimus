@@ -16,4 +16,5 @@ public interface ProdutoEstoqueDAO {
 	public List<ProdutoEstoque> retCustoMedioProduto(ProdutoEstoque produtoEstoque);
 	public void salvarProdEstoque(ProdutoEstoque produtoEstoque, Integer Situacao, Long tipoMovEst);
 	public List<ProdutoEstoque> buscaMovProdutoEstoque(Produto produto,	Pessoa empresa, Date dataFim, Date dataIni,	ProdutoEstoque produtoEstoque);
+	public Integer countMovProdutoEstoque(Produto produto, Pessoa empresa, Date dataFim, Date dataIni, ProdutoEstoque produtoEstoque);
 }
