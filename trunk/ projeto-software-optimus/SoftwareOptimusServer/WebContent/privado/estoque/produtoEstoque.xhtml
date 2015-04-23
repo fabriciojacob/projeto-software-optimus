@@ -21,10 +21,10 @@
 				disabled="#{produtoEstoqueBean.btnAdicionar}" />
 
 			<p:commandButton value="Empresa" type="button"
-				onclick="PF('empresa').show();" update="frmMovEst" />
+				onclick="PF('empresa').show();" update="gridInfPesquisa" />
 
 			<p:commandButton id="prod" value="Produto" type="button"
-				onclick="PF('produto').show();" update="frmMovEst" />
+				onclick="PF('produto').show();" update="gridInfPesquisa" />
 
 			<p:commandButton value="Cancelar" update="frmMovEst"
 				actionListener="#{produtoEstoqueBean.limparInfPesquisa}" />

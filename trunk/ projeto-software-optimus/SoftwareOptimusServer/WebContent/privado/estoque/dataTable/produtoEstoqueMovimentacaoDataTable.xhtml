@@ -7,14 +7,12 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 <h:panelGrid id="gridProdutoEstoqueDataTable" columns="1">
-	<p:dataTable id="tabelaMovEst" paginator="true" rows="20" resizableColumns="true" var="listaProdutoEstoque"
-		value="#{produtoEstoqueBean.listaProdutoEstoque}" rowsPerPageTemplate="5,10,20"
-		paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
-		<p:ajax event="page" listener="#{produtoEstoqueBean.onPaginate}" update="tabelaMovEst" />
-		
-		<f:facet name="header">
-            			Movimentação do Produto no Estoque
-        			</f:facet>
+	<p:dataTable id="tabelaMovEst" paginator="true" rows="5" resizableColumns="true" var="listaProdutoEstoque"
+		value="#{produtoEstoqueBean.listaProdutoEstoque}" rowsPerPageTemplate="5,10,20" lazy="true"
+		paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+		border="1" paginatorPosition="bottom" cellpadding="2" cellspacing="0" >
+				
+		<f:facet name="header">Movimentação do Produto no Estoque</f:facet>
 
 		<p:column headerText="Código"
 			sortBy="#{listaProdutoEstoque.idProdEst}">
