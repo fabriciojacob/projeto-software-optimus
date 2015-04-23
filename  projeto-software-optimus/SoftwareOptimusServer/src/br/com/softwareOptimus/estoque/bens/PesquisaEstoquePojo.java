@@ -16,8 +16,13 @@ public class PesquisaEstoquePojo implements Serializable {
 	private Date dataIni;
 	private Date dataFim;
 	private TipoMovEst tipoMovEst;
+	private Integer primeiroRegistro;
+	private Integer quantidadeRegistros;
 
 	public Produto getProduto() {
+		if(this.produto == null){
+			this.produto = new Produto();
+		}
 		return produto;
 	}
 
@@ -26,6 +31,9 @@ public class PesquisaEstoquePojo implements Serializable {
 	}
 
 	public Pessoa getEmpresa() {
+		if(this.empresa == null){
+			this.empresa = new Pessoa();			
+		}
 		return empresa;
 	}
 
@@ -55,5 +63,21 @@ public class PesquisaEstoquePojo implements Serializable {
 
 	public void setTipoMovEst(TipoMovEst tipoMovEst) {
 		this.tipoMovEst = tipoMovEst;
+	}
+
+	public Integer getPrimeiroRegistro() {
+		return primeiroRegistro;
+	}
+
+	public void setPrimeiroRegistro(Integer primeiroRegistro) {
+		this.primeiroRegistro = primeiroRegistro;
+	}
+
+	public Integer getQuantidadeRegistros() {
+		return quantidadeRegistros;
+	}
+
+	public void setQuantidadeRegistros(Integer quantidadeRegistros) {
+		this.quantidadeRegistros = quantidadeRegistros;
 	}
 }

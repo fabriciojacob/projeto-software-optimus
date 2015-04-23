@@ -10,16 +10,16 @@
 		
 		Empresa:
 		<p:outputLabel
-		value="#{produtoEstoqueBean.produtoEstoque.empresa.fantasia}" />
+		value="#{produtoEstoqueBean.dadosPesquisa.empresa.fantasia}" />
 		Produto:
 		<p:outputLabel
-		value="#{produtoEstoqueBean.produtoEstoque.produto.descProd}" />
+		value="#{produtoEstoqueBean.dadosPesquisa.produto.descProd}" />
 		 Data Inicio:
-		 <p:calendar size="5" value="#{produtoEstoqueBean.dataIni}" />
+		 <p:calendar size="5" value="#{produtoEstoqueBean.dadosPesquisa.dataIni}" />
 		 Data Fim:
- 		 <p:calendar size="5" value="#{produtoEstoqueBean.dataFim}" />
+ 		 <p:calendar size="5" value="#{produtoEstoqueBean.dadosPesquisa.dataFim}" />
 	<p:selectOneMenu
-		value="#{produtoEstoqueBean.produtoEstoque.tipoMovEst}">
+		value="#{produtoEstoqueBean.dadosPesquisa.tipoMovEst}">
 		<f:selectItem itemLabel="Selecione tipo de movimento opcional" />
 		<f:selectItem itemLabel="COMPRA" itemValue="COMPRA" />
 		<f:selectItem itemLabel="VENDA" itemValue="VENDA" />
@@ -29,7 +29,6 @@
 		<f:selectItem itemLabel="SAIDA MANUAL" itemValue="MANUALSAIDA" />
 	</p:selectOneMenu>
 
-	<p:commandButton value="Pesquisar" update="tabelaMovEst"
-		actionListener="#{produtoEstoqueBean.pesquisaMovEstoque}" />
+	<p:commandButton value="Pesquisar" actionListener="#{produtoEstoqueBean.pesquisaMovEstoque}" update="tabelaMovEst" />
 </h:panelGrid>
 </html>

@@ -2,20 +2,18 @@ package br.com.softwareOptimus.estoque.bens;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
-import org.primefaces.event.data.PageEvent;
 import org.primefaces.model.LazyDataModel;
-
-import java.util.List;
+import org.primefaces.model.SortOrder;
 
 import br.com.softwareOptimus.comercial.Comercial;
-import br.com.softwareOptimus.entidades.Pessoa;
 import br.com.softwareOptimus.entidades.TipoMovEst;
 import br.com.softwareOptimus.entidades.RN.EmpresaRN;
 import br.com.softwareOptimus.estoque.ProdutoEstoque;
@@ -25,45 +23,57 @@ import br.com.softwareOptimus.produto.RN.ProdutoRN;
 
 @ManagedBean(name = "produtoEstoqueBean")
 @ViewScoped
-public class ProdutoEstoqueBean extends LazyDataModel<ProdutoEstoque> implements Serializable{
+public class ProdutoEstoqueBean implements Serializable{
 	
 	private static final long serialVersionUID = -1958596637728666102L;
 	private ProdutoEstoque produtoEstoque;
-	private LazyDataModel<ProdutoEstoque> listaProdutoEstoque;
 	//private List<ProdutoEstoque> listaProdutoEstoque;
-	private Produto produto;
+	private LazyDataModel<ProdutoEstoque> listaProdutoEstoque;
+	private PesquisaEstoquePojo dadosPesquisa = new PesquisaEstoquePojo();
 	private List<Produto> listaProduto;
-	private Date dataIni, dataFim;
 	private Double quantEntSai;
 	private EmpresaRN empRN;
 	private ProdutoRN prodRN;
-	private ProdutoEstoqueRN prodEstRN;
-	private Pessoa empresa;
-	private PesquisaEstoquePojo dadosPesquisa;
+	private ProdutoEstoqueRN prodEstRN = new ProdutoEstoqueRN();
 	private String tipoMovEstoque;
 	private boolean btnAdicionar = true, txtCustoMedio = true;
 	private Integer verifica =0;
 	private Long empresaSelecionada, produtoSelecionado;
 	
-	@SuppressWarnings("unchecked")
-	public void pesquisaMovEstoque(){
-		Integer retorno = this.getProdEstRN().validaCamposPesquisa(this.getProduto(), this.getEmpresa(),
-										 						   this.getDataFim(), this.getDataIni());
-		if(retorno == 0){
-			this.setListaProdutoEstoque((LazyDataModel<ProdutoEstoque>) this.getProdEstRN().buscaMovProduto(this.getProduto(), this.getEmpresa(),
-					   								this.getDataFim(), this.getDataIni(), this.getProdutoEstoque()));
+
+	
+	public ProdutoEstoqueBean(){
+		listaProdutoEstoque = new LazyDataModel<ProdutoEstoque>() {
+
+			private static final long serialVersionUID = 1L;
 			
-		}else{
+			@Override
+			public List<ProdutoEstoque> load(int first, int pageSize, String sortField, SortOrder sortOrder, 
+						Map<String, Object> filters) {
+				Integer retorno = prodEstRN.validaCamposPesquisa(dadosPesquisa);
+				if(retorno == 0){
+					dadosPesquisa.setPrimeiroRegistro(first);
+					dadosPesquisa.setQuantidadeRegistros(pageSize);
+					
+					setRowCount(prodEstRN.countMovProdutoEstoque(dadosPesquisa));
+					
+					return prodEstRN.buscaMovProduto(dadosPesquisa);					
+				}else{
+					return null;
+				}
+			}
+		};
+	}
+	
+	public void pesquisaMovEstoque(){
+		Integer retorno = this.getProdEstRN().validaCamposPesquisa(this.getDadosPesquisa());
+		if(retorno != 0){
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR,
 							"Info",
 							"Para pesquisa é necessário Produto, Empresa, Data Inicial e Final!"));
 		}
-	}
-	
-	public void onPaginate(PageEvent event){
-		
 	}
 	
 	public void buscaCustoMedio(){
@@ -77,8 +87,8 @@ public class ProdutoEstoqueBean extends LazyDataModel<ProdutoEstoque> implements
 	
 	public void selecionaEmpresa() {
 		try {
-			this.setEmpresa(this.getEmpRN().pesquisaId(this.getEmpresaSelecionada()));
-			this.getProdutoEstoque().setEmpresa(this.getEmpresa());
+			this.getDadosPesquisa().setEmpresa(this.getEmpRN().pesquisaId(this.getEmpresaSelecionada()));
+			this.getProdutoEstoque().setEmpresa(this.getDadosPesquisa().getEmpresa());
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
@@ -98,8 +108,8 @@ public class ProdutoEstoqueBean extends LazyDataModel<ProdutoEstoque> implements
 	
 	public void selecionaProduto() {
 		try {
-			this.setProduto(this.getProdRN().editPro(this.getProdutoSelecionado()));
-			this.getProdutoEstoque().setProduto(this.getProduto());
+			this.getDadosPesquisa().setProduto(this.getProdRN().editPro(this.getProdutoSelecionado()));
+			this.getProdutoEstoque().setProduto(this.getDadosPesquisa().getProduto());
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
@@ -169,12 +179,9 @@ public class ProdutoEstoqueBean extends LazyDataModel<ProdutoEstoque> implements
 	}
 	
 	public void limparInfPesquisa(){
-		this.setEmpresa(null);
-		this.setProduto(null);
-		this.setDataFim(null);
-		this.setDataIni(null);
+		this.setDadosPesquisa(null);
 		this.setProdutoEstoque(null);
-		this.setListaProdutoEstoque(null);
+		//this.setListaProdutoEstoque(null);
 		this.setVerifica(0);
 		this.setBtnAdicionar(true);
 	}
@@ -195,17 +202,6 @@ public class ProdutoEstoqueBean extends LazyDataModel<ProdutoEstoque> implements
 		this.produtoSelecionado = produtoSelecionado;
 	}
 
-	public Pessoa getEmpresa() {
-		if(this.empresa == null){
-			this.empresa = new Pessoa();			
-		}
-		return empresa;
-	}
-
-	public void setEmpresa(Pessoa empresa) {
-		this.empresa = empresa;
-	}
-
 	public Long getEmpresaSelecionada() {
 		return empresaSelecionada;
 	}
@@ -214,18 +210,6 @@ public class ProdutoEstoqueBean extends LazyDataModel<ProdutoEstoque> implements
 		this.empresaSelecionada = empresaSelecionada;
 	}
 
-	public Date getDataIni() {
-		return dataIni;
-	}
-	public void setDataIni(Date dataIni) {
-		this.dataIni = dataIni;
-	}
-	public Date getDataFim() {
-		return dataFim;
-	}
-	public void setDataFim(Date dataFim) {
-		this.dataFim = dataFim;
-	}
 	public ProdutoEstoque getProdutoEstoque() {
 		if(this.produtoEstoque == null){
 			this.produtoEstoque = new ProdutoEstoque();
@@ -235,44 +219,14 @@ public class ProdutoEstoqueBean extends LazyDataModel<ProdutoEstoque> implements
 	public void setProdutoEstoque(ProdutoEstoque produtoEstoque) {
 		this.produtoEstoque = produtoEstoque;
 	}
-	
-	/**public List<ProdutoEstoque> getListaProdutoEstoque() {
-		if(this.listaProdutoEstoque == null){
-			this.listaProdutoEstoque = new ArrayList<ProdutoEstoque>();	
-		}
-		return listaProdutoEstoque;
-	}
-	public void setListaProdutoEstoque(List<ProdutoEstoque> listaProdutoEstoque) {
-		this.listaProdutoEstoque = listaProdutoEstoque;
-	}*/
-	
-	public Produto getProduto() {
-		if(this.produto == null){
-			this.produto = new Produto();			
-		}
-		return produto;
-	}
-	
-	public LazyDataModel<ProdutoEstoque> getListaProdutoEstoque() {
-		if(this.listaProdutoEstoque == null){
-			this.listaProdutoEstoque = new LazyDataModel<ProdutoEstoque>() {
-				private static final long serialVersionUID = -2723365858528358209L;};}
-		return this.listaProdutoEstoque;
-	}
 
-	public void setListaProdutoEstoque(LazyDataModel<ProdutoEstoque> listaProdutoEstoque) {
-		this.listaProdutoEstoque = listaProdutoEstoque;
-	}
-
-	public void setProduto(Produto produto) {
-		this.produto = produto;
-	}
 	public List<Produto> getListaProduto() {
 		if(this.listaProduto == null){
 			this.listaProduto = new ArrayList<Produto>();			
 		}
 		return listaProduto;
 	}
+	
 	public void setListaProduto(List<Produto> listaProduto) {
 		this.listaProduto = listaProduto;
 	}
@@ -343,11 +297,17 @@ public class ProdutoEstoqueBean extends LazyDataModel<ProdutoEstoque> implements
 	}
 
 	public PesquisaEstoquePojo getDadosPesquisa() {
+		if(this.dadosPesquisa == null){
+			this.dadosPesquisa = new PesquisaEstoquePojo();
+		}
 		return dadosPesquisa;
 	}
 
 	public void setDadosPesquisa(PesquisaEstoquePojo dadosPesquisa) {
 		this.dadosPesquisa = dadosPesquisa;
 	}
-}
 
+	public LazyDataModel<ProdutoEstoque> getListaProdutoEstoque() {
+		return listaProdutoEstoque;
+	}
+}

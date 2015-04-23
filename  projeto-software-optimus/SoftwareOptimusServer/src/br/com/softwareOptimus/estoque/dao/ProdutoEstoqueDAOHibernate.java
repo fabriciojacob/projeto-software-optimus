@@ -12,13 +12,12 @@ import javax.persistence.ParameterMode;
 import javax.persistence.Query;
 import javax.persistence.StoredProcedureQuery;
 
-import br.com.softwareOptimus.entidades.Pessoa;
 import br.com.softwareOptimus.entidades.TipoMovEst;
 import br.com.softwareOptimus.estoque.ProdutoEstoque;
-import br.com.softwareOptimus.produto.Produto;
+import br.com.softwareOptimus.estoque.bens.PesquisaEstoquePojo;
 
-public class ProdutoEstoqueDAOHibernate implements ProdutoEstoqueDAO{
-	
+public class ProdutoEstoqueDAOHibernate implements ProdutoEstoqueDAO {
+
 	private EntityManager session;
 	private EntityTransaction transaction;
 
@@ -57,43 +56,41 @@ public class ProdutoEstoqueDAOHibernate implements ProdutoEstoqueDAO{
 		Calendar data = Calendar.getInstance();
 		Date dataHoje = data.getTime();
 		String jpql = "Select max(p) From ProdutoEstoque p "
-				   + " where p.empresa = :empresa " 
-				   + " and p.produto = :produto "
-				   + " and p.data <= :dataHoje "
-				   + " and p.tipoMovEst = :compra "
-				   + " order by p.data desc ";
+				+ " where p.empresa = :empresa " + " and p.produto = :produto "
+				+ " and p.data <= :dataHoje " + " and p.tipoMovEst = :compra "
+				+ " order by p.data desc ";
 		Query qry = this.session.createQuery(jpql);
 		qry.setParameter("empresa", produtoEstoque.getEmpresa());
 		qry.setParameter("produto", produtoEstoque.getProduto());
 		qry.setParameter("dataHoje", dataHoje);
 		qry.setParameter("compra", TipoMovEst.COMPRA);
-		
+
 		List<ProdutoEstoque> lista = qry.getResultList();
-		
+
 		return lista;
 	}
-	
+
 	@Override
-	public void salvarProdEstoque(ProdutoEstoque produtoEstoque, Integer Situacao, Long tipoMovEst){
+	public void salvarProdEstoque(ProdutoEstoque produtoEstoque,Integer Situacao, Long tipoMovEst) {
 		StoredProcedureQuery proc = session.createStoredProcedureQuery("pkg_estoque.processaProdutoEstoque");
-		proc.registerStoredProcedureParameter("varCustoMedio", Double.class ,ParameterMode.IN);
-		proc.registerStoredProcedureParameter("varData", Date.class ,ParameterMode.IN);
-		proc.registerStoredProcedureParameter("varJustificativa", String.class ,ParameterMode.IN);
-		proc.registerStoredProcedureParameter("varQuantEntrada", Double.class ,ParameterMode.IN);
-		proc.registerStoredProcedureParameter("varQuantSaida", Double.class ,ParameterMode.IN);
-		proc.registerStoredProcedureParameter("varTipoMovEst", Long.class ,ParameterMode.IN);
-		proc.registerStoredProcedureParameter("varProduto", Long.class ,ParameterMode.IN);
-		proc.registerStoredProcedureParameter("varEmpresa", Long.class ,ParameterMode.IN);
-		proc.registerStoredProcedureParameter("varCustoNota", Double.class ,ParameterMode.IN);
-		proc.registerStoredProcedureParameter("varTotalNota", Double.class ,ParameterMode.IN);
-		proc.registerStoredProcedureParameter("varOrigem", Long.class ,ParameterMode.IN);
-		proc.registerStoredProcedureParameter("varPisCofinsNota", Double.class ,ParameterMode.IN);
-		proc.registerStoredProcedureParameter("varFreteNota", Double.class ,ParameterMode.IN);
-		proc.registerStoredProcedureParameter("varIpiNota", Double.class ,ParameterMode.IN);				
-		proc.registerStoredProcedureParameter("varIcmsNota", Double.class ,ParameterMode.IN);
-		proc.registerStoredProcedureParameter("varDespesaNota", Double.class ,ParameterMode.IN);
-		proc.registerStoredProcedureParameter("varSituacao", Integer.class ,ParameterMode.IN);
-		
+		proc.registerStoredProcedureParameter("varCustoMedio", Double.class,ParameterMode.IN);
+		proc.registerStoredProcedureParameter("varData", Date.class,ParameterMode.IN);
+		proc.registerStoredProcedureParameter("varJustificativa", String.class,ParameterMode.IN);
+		proc.registerStoredProcedureParameter("varQuantEntrada", Double.class,ParameterMode.IN);
+		proc.registerStoredProcedureParameter("varQuantSaida", Double.class,ParameterMode.IN);
+		proc.registerStoredProcedureParameter("varTipoMovEst", Long.class,ParameterMode.IN);
+		proc.registerStoredProcedureParameter("varProduto", Long.class,ParameterMode.IN);
+		proc.registerStoredProcedureParameter("varEmpresa", Long.class,ParameterMode.IN);
+		proc.registerStoredProcedureParameter("varCustoNota", Double.class,ParameterMode.IN);
+		proc.registerStoredProcedureParameter("varTotalNota", Double.class,ParameterMode.IN);
+		proc.registerStoredProcedureParameter("varOrigem", Long.class,ParameterMode.IN);
+		proc.registerStoredProcedureParameter("varPisCofinsNota", Double.class,ParameterMode.IN);
+		proc.registerStoredProcedureParameter("varFreteNota", Double.class,ParameterMode.IN);
+		proc.registerStoredProcedureParameter("varIpiNota", Double.class,ParameterMode.IN);
+		proc.registerStoredProcedureParameter("varIcmsNota", Double.class,ParameterMode.IN);
+		proc.registerStoredProcedureParameter("varDespesaNota", Double.class,ParameterMode.IN);
+		proc.registerStoredProcedureParameter("varSituacao", Integer.class,ParameterMode.IN);
+
 		proc.setParameter("varCustoMedio", produtoEstoque.getCustoMedio());
 		proc.setParameter("varData", produtoEstoque.getData());
 		proc.setParameter("varJustificativa", produtoEstoque.getJustificativa());
@@ -116,48 +113,48 @@ public class ProdutoEstoqueDAOHibernate implements ProdutoEstoqueDAO{
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<ProdutoEstoque> buscaMovProdutoEstoque(Produto produto, 
-			Pessoa empresa, Date dataFim, Date dataIni,	ProdutoEstoque produtoEstoque) {
+	public List<ProdutoEstoque> buscaMovProdutoEstoque(PesquisaEstoquePojo dadosPesquisaEstoquePojo) {
 		StringBuilder sql = new StringBuilder();
 		sql.append("Select p From ProdutoEstoque p ");
-		this.definiCondicoes(sql, produtoEstoque);
+		this.definiCondicoes(sql, dadosPesquisaEstoquePojo);
 		sql.append(" order by p.data, p.idProdEst");
 		Query qry = this.session.createQuery(sql.toString());
-		this.definiParametros(qry, produto, empresa, dataFim, dataIni, produtoEstoque);
+		this.definiParametros(qry, dadosPesquisaEstoquePojo);
+		qry.setFirstResult(dadosPesquisaEstoquePojo.getPrimeiroRegistro());
+		qry.setMaxResults(dadosPesquisaEstoquePojo.getQuantidadeRegistros());
 		List<ProdutoEstoque> lista = qry.getResultList();
 		return lista;
 	}
 
-	private void definiParametros(Query qry, Produto produto, Pessoa empresa,
-			Date dataFim, Date dataIni, ProdutoEstoque produtoEstoque) {
-		qry.setParameter("empresa", empresa);
-		qry.setParameter("produto", produto);
-		qry.setParameter("dataIni", dataIni);
-		qry.setParameter("dataFim", dataFim);
-		if(produtoEstoque.getTipoMovEst() != null){
-			qry.setParameter("tipoMovEst", produtoEstoque.getTipoMovEst());
+	private void definiParametros(Query qry, PesquisaEstoquePojo dadosPesquisaEstoquePojo) {
+		qry.setParameter("empresa", dadosPesquisaEstoquePojo.getEmpresa());
+		qry.setParameter("produto", dadosPesquisaEstoquePojo.getProduto());
+		qry.setParameter("dataIni", dadosPesquisaEstoquePojo.getDataIni());
+		qry.setParameter("dataFim", dadosPesquisaEstoquePojo.getDataFim());
+		if (dadosPesquisaEstoquePojo.getTipoMovEst() != null) {
+			qry.setParameter("tipoMovEst",
+					dadosPesquisaEstoquePojo.getTipoMovEst());
 		}
 	}
 
-	private void definiCondicoes(StringBuilder sql, ProdutoEstoque produtoEstoque) {
-			sql.append(" where p.empresa = :empresa")
-			   .append(" and p.produto = :produto")
-			   .append(" and p.data between :dataIni")
-			   .append(" and :dataFim");
-		if(produtoEstoque.getTipoMovEst() != null){
+	private void definiCondicoes(StringBuilder sql, PesquisaEstoquePojo dadosPesquisaEstoquePojo) {
+		sql.append(" where p.empresa = :empresa")
+				.append(" and p.produto = :produto")
+				.append(" and p.data between :dataIni").append(" and :dataFim");
+		if (dadosPesquisaEstoquePojo.getTipoMovEst() != null) {
 			sql.append(" and tipoMovEst = :tipoMovEst");
 		}
 	}
-	
+
 	@Override
-	public Integer countMovProdutoEstoque(Produto produto, Pessoa empresa, Date dataFim, Date dataIni,	ProdutoEstoque produtoEstoque) {
+	public int countMovProdutoEstoque(PesquisaEstoquePojo dadosPesquisaEstoquePojo) {
 		StringBuilder sql = new StringBuilder();
 		sql.append("Select count(p) From ProdutoEstoque p ");
-		this.definiCondicoes(sql, produtoEstoque);
+		this.definiCondicoes(sql, dadosPesquisaEstoquePojo);
 		Query qry = this.session.createQuery(sql.toString());
-		this.definiParametros(qry, produto, empresa, dataFim, dataIni, produtoEstoque);
-		Integer count = (Integer) qry.getSingleResult();
-		return count;
+		this.definiParametros(qry, dadosPesquisaEstoquePojo);
+		Number count = (Number) qry.getSingleResult();
+		return count.intValue();
 	}
 
 }
