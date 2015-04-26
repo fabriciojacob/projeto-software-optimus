@@ -12,85 +12,85 @@
 <h:body>
 	<h:form>
 		<div align="center">
-			<h:form>
-				<p:menubar>
-					<p:submenu label="Cadastros Gerais">
-						<p:menuitem value="Usuario"
-							url="/privado/usuario/cadastroUsuario.xhtml" />
-						<p:menuitem value="Empresa"
-							url="/privado/empresa/cadastroEmpresa.xhtml" />
-						<p:submenu label="Participantes">
-							<p:menuitem value="Pessoa Física"
-								url="/privado/participante/cadastroPF.xhtml" />
-							<p:menuitem value="Pessoa Jurídica"
-								url="/privado/participante/cadastroPJ.xhtml" />
-							<p:separator />
+			<p:menubar>
+				<p:menuitem value="Menu Inicial" url="/privado/menu.xhtml" />
 
-						</p:submenu>
-
-					</p:submenu>
-
-					<p:submenu label="Cadastros Financeiros">
-						<p:menuitem value="Conta financeira"
-							url="/privado/financeiro/cadastroConta.xhtml" />
-						<p:menuitem value="Contas bancárias"
-							url="/privado/financeiro/cadastroContaBancaria.xhtml" />
-						<p:menuitem value="Caixa"
-							url="/privado/financeiro/cadastroCaixa.xhtml" />
-						<p:menuitem value="Forma Pgto"
-							url="/privado/financeiro/cadastroFormaPgto.xhtml" />
-						<p:menuitem value="Cond Pgto"
-							url="/privado/financeiro/cadastroCondPgto.xhtml" />
-					</p:submenu>
-
-					<p:submenu label="Movimentações Financeiras">
-						<p:menuitem value="Titulos"
-							url="/privado/financeiro/lancamentoTitulo.xhtml" />
-						<p:menuitem value="Extrato Caixa"
-							url="/privado/financeiro/formExtratoCaixa.xhtml" />
-						<p:menuitem value="Extrato Bancário" url="" />
+				<p:submenu label="Cadastros Gerais">
+					<p:menuitem value="Usuario"
+						url="/privado/usuario/cadastroUsuario.xhtml" />
+					<p:menuitem value="Empresa"
+						url="/privado/empresa/cadastroEmpresa.xhtml" />
+					<p:submenu label="Participantes">
+						<p:menuitem value="Pessoa Física"
+							url="/privado/participante/cadastroPF.xhtml" />
+						<p:menuitem value="Pessoa Jurídica"
+							url="/privado/participante/cadastroPJ.xhtml" />
 						<p:separator />
-					</p:submenu>
-
-					<p:submenu label="Estoque">
-						<p:menuitem value="Movimentação Estoque"
-							url="/privado/estoque/movimentoProdutoEstoque.xhtml" />
-					</p:submenu>
-
-					<p:submenu label="Cadastro de Produto">
-						<p:menuitem value="Unidade de Medida"
-							url="/privado/produto/cadastroUnidMed.xhtml" />
-						<p:menuitem value="Tipo de Produto"
-							url="/privado/produto/cadastroTipoProduto.xhtml" />
-						<p:menuitem value="SubGrupo"
-							url="/privado/produto/cadastroSubGrupo.xhtml" />
-						<p:menuitem value="Grupo"
-							url="/privado/produto/cadastroGrupo.xhtml" />
-						<p:menuitem value="Setor"
-							url="/privado/produto/cadastroSetor.xhtml" />
-						<p:menuitem value="Produto"
-							url="/privado/produto/cadastroProduto.xhtml" />
 
 					</p:submenu>
 
-					<p:submenu label="Cadastros Fiscais">
-						<p:menuitem value="Alíquota"
-							url="/privado/fiscal/cadastroAliquota.xhtml" />
-						<p:menuitem value="Pauta"
-							url="/privado/fiscal/cadastroPauta.xhtml" />
-						<p:menuitem value="Grade Tributaria"
-							url="/privado/fiscal/cadastroGradeTributaria.xhtml" />
-						<p:menuitem value="Figura Fiscal"
-							url="/privado/fiscal/cadastroFiguraFiscal.xhtml" />
-					</p:submenu>
+				</p:submenu>
 
-					<f:facet name="options">
-						<h:outputLink value="#{facesContext.externalContext.requestContextPath}/j_spring_security_logout">
-							<h:outputText value="Sair" />
-						</h:outputLink>
-					</f:facet>
-				</p:menubar>
-			</h:form>
+				<p:submenu label="Cadastros Financeiros">
+					<p:menuitem value="Conta financeira"
+						url="/privado/financeiro/cadastroConta.xhtml" />
+					<p:menuitem value="Contas bancárias"
+						url="/privado/financeiro/cadastroContaBancaria.xhtml" />
+					<p:menuitem value="Caixa"
+						url="/privado/financeiro/cadastroCaixa.xhtml" />
+					<p:menuitem value="Forma Pgto"
+						url="/privado/financeiro/cadastroFormaPgto.xhtml" />
+					<p:menuitem value="Cond Pgto"
+						url="/privado/financeiro/cadastroCondPgto.xhtml" />
+				</p:submenu>
+
+				<p:submenu label="Movimentações Financeiras">
+					<p:menuitem value="Titulos"
+						url="/privado/financeiro/lancamentoTitulo.xhtml" />
+					<p:menuitem value="Extrato Caixa"
+						url="/privado/financeiro/formExtratoCaixa.xhtml" />
+					<p:menuitem value="Extrato Bancário" url="" />
+					<p:separator />
+				</p:submenu>
+
+				<p:submenu label="Estoque">
+					<p:menuitem value="Movimentação Estoque"
+						url="/privado/estoque/movimentoProdutoEstoque.xhtml" />
+				</p:submenu>
+
+				<p:submenu label="Cadastro de Produto">
+					<p:menuitem value="Unidade de Medida"
+						url="/privado/produto/cadastroUnidMed.xhtml" />
+					<p:menuitem value="Tipo de Produto"
+						url="/privado/produto/cadastroTipoProduto.xhtml" />
+					<p:menuitem value="SubGrupo"
+						url="/privado/produto/cadastroSubGrupo.xhtml" />
+					<p:menuitem value="Grupo"
+						url="/privado/produto/cadastroGrupo.xhtml" />
+					<p:menuitem value="Setor"
+						url="/privado/produto/cadastroSetor.xhtml" />
+					<p:menuitem value="Produto"
+						url="/privado/produto/cadastroProduto.xhtml" />
+
+				</p:submenu>
+
+				<p:submenu label="Cadastros Fiscais">
+					<p:menuitem value="Alíquota"
+						url="/privado/fiscal/cadastroAliquota.xhtml" />
+					<p:menuitem value="Pauta" url="/privado/fiscal/cadastroPauta.xhtml" />
+					<p:menuitem value="Grade Tributaria"
+						url="/privado/fiscal/cadastroGradeTributaria.xhtml" />
+					<p:menuitem value="Figura Fiscal"
+						url="/privado/fiscal/cadastroFiguraFiscal.xhtml" />
+				</p:submenu>
+
+				<f:facet name="options">
+					<h:outputLink
+						value="#{facesContext.externalContext.requestContextPath}/j_spring_security_logout">
+						<h:outputText value="Sair" />
+					</h:outputLink>
+				</f:facet>
+			</p:menubar>
 		</div>
 	</h:form>
 </h:body>
