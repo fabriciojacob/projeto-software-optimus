@@ -13,7 +13,7 @@
 	<h:form id="frmCadAliquota">
 		<br />
 		<h3 style="margin-top: 0">CADASTRO DE ALÍQUOTA</h3>
-		<div align="left">
+		<div id="divGeral" align="left">
 			<p:commandButton value="Novo" actionListener="#{aliquotaBean.novo}"
 				ajax="grid" />
 
@@ -23,8 +23,11 @@
 			<p:commandButton value="Alterar" disabled="#{aliquotaBean.alt}"
 				actionListener="#{aliquotaBean.alterar}" ajax="grid" />
 
-			<p:commandButton value="Excluir" disabled="#{aliquotaBean.rem}"
-				actionListener="#{aliquotaBean.remover}" ajax="grid" />
+			<p:commandButton value="Excluir" process="@this" disabled="#{aliquotaBean.rem}"
+				action="#{aliquotaBean.remover()}" update="frmCadAliquota" >
+					<p:confirm icon="ui-icon-alert" header="Confirmação de exclusão" 
+							message="Tem certeza que deseja excluir a alíquota?" />
+			</p:commandButton>
 
 			<p:commandButton id="consulta" value="Consultar" type="button"
 				ajax="dialog, grid" onclick="PF('dlg3').show();"

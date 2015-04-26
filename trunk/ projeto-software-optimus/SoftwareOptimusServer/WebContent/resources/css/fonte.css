@@ -5,3 +5,17 @@
 	font-family: Trebuchet MS;
 	color: #000000;
 }
+
+footer {
+	border-top: 5px solid #ccc;
+	padding: 5px 8px;
+	margin-top: 20px;
+	margin-bottom: 10px
+}
+
+body {
+	font-size: 12px;
+	font-family: Arial, Helvetica, sans-serif;
+	margin: 10px;
+	font-weight: normal
+}

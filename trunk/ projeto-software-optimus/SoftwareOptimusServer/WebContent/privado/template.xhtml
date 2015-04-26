@@ -9,18 +9,29 @@
 
 <f:view encoding="UTF-8">
 	<h:head>
+		<link rel="shortcut icon" type="image/x-icon"
+			href="#{request.contextPath}/resources/OptimusIco2.ico" />
+		<title><ui:insert name="titulo">Optimus ErPrime</ui:insert></title>
 		<h:outputStylesheet library="css" name="fonte.css" />
 	</h:head>
 </f:view>
 <h:body>
 	<div align="center">
-		<ui:insert name="cabecalho">
-			<ui:include src="/privado/menu.xhtml" />
-		</ui:insert>
+		<h:form>
+			<ui:insert name="cabecalho">
+				<ui:include src="/privado/menu.xhtml" />
+			</ui:insert>
+			<p:confirmDialog global="true">
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			</p:confirmDialog>
+		</h:form>
 	</div>
 	<div align="center">
-		<ui:insert name="conteudo">
-		</ui:insert>
+		<ui:insert name="conteudo" />
 	</div>
+	<footer> ERP - Optimus </footer>
 </h:body>
 </html>
