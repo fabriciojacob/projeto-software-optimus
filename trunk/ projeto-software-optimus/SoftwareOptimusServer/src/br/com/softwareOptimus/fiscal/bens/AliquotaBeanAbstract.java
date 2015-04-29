@@ -3,11 +3,15 @@ package br.com.softwareOptimus.fiscal.bens;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
 import br.com.softwareOptimus.fiscal.Aliquota;
 import br.com.softwareOptimus.fiscal.CodigoSituacaoTributaria;
+import br.com.softwareOptimus.util.FacesUtil;
 
-public abstract class AliquotaBeanAbstract {
+public abstract class AliquotaBeanAbstract extends FacesUtil{
 	
+	private static final long serialVersionUID = 1L;
+
 	public abstract void novo();
 	public abstract void salvar();
 	public abstract void alterar();
