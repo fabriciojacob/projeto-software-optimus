@@ -15,11 +15,11 @@ public class FacesUtil implements Serializable {
 		FacesMessage msg = new FacesMessage(message);
 		msg.setSeverity(severity);
 		
-		context.addMessage(null, msg);
+		context.addMessage(null, new FacesMessage(severity,"Info",message) );
 	}
 	
 	public void info(String message) {
-		add(message, FacesMessage. SEVERITY_INFO);
+		add(message, FacesMessage.SEVERITY_INFO);
 	}
 	
 	public void error(String message) {

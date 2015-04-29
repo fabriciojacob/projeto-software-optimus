@@ -2,10 +2,8 @@ package br.com.softwareOptimus.fiscal.bens;
 
 import java.io.Serializable;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 
 import br.com.softwareOptimus.fiscal.CodigoSituacaoTributaria;
 import br.com.softwareOptimus.fiscal.IO;
@@ -59,26 +57,16 @@ public class AliquotaBean extends AliquotaBeanAbstract implements Serializable{
 			Integer retorno = aliqRN.validaCampoNulo(this.getAliquota(),this.getColCst(), this.getTipTrib(), this.getTipCst());
 			if (retorno == 0) {
 				aliqRN.salva(this.getAliquota());
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-								"Alíquota salva com sucesso"));
+				this.info("Alíquota salva com sucesso");
 				this.setSal(true);
 				this.setVinculo(true);
 				limpa();
 				desabilita();
 			} else {
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-								"Existem campos nulos no formulário"));
+				this.error("Existem campos nulos no formulário");
 			}
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na gravacao da Alíquota "
-									+ e.getMessage()));
+			this.error("Problemas na gravacao da Alíquota " + e.getMessage());
 		}
 	}
 
@@ -114,38 +102,20 @@ public class AliquotaBean extends AliquotaBeanAbstract implements Serializable{
 				Integer retorno = aliqRN.validaCampoNulo(this.getAliquota(),this.getColCst(), this.getTipTrib(), this.getTipCst());
 				if (retorno == 0) {
 					aliqRN.altAliq(this.getAliquota());
-					FacesContext.getCurrentInstance().addMessage(
-							null,
-							new FacesMessage(FacesMessage.SEVERITY_INFO,
-									"Info", "Alíquota alterada com sucesso"));
+					this.info("Alíquota alterada com sucesso");
 					this.setAlt(true);
 					this.setRem(true);
 					this.setVinculo(true);
 					limpa();
 					desabilita();
 				} else {
-					FacesContext.getCurrentInstance().addMessage(
-							null,
-							new FacesMessage(FacesMessage.SEVERITY_ERROR,
-									"Info",
-									"Existem campos nulos no formulário"));
+					this.error("Existem campos nulos no formulário");
 				}
 			} else {
-				FacesContext
-						.getCurrentInstance()
-						.addMessage(
-								null,
-								new FacesMessage(
-										FacesMessage.SEVERITY_ERROR,
-										"Info",
-										"Alteração de Cst não permitida. Vincule o tipo de Cst correto para a alíquota que se deseja alterar ou cadastre outra."));
+				this.error("Alteração de Cst não permitida. Vincule o tipo de Cst correto para a alíquota que se deseja alterar ou cadastre outra.");
 			}
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na alteração da Alíquota "
-									+ e.getMessage()));
+			this.error("Problemas na alteração da Alíquota " + e.getMessage());
 		}
 	}
 
@@ -155,30 +125,17 @@ public class AliquotaBean extends AliquotaBeanAbstract implements Serializable{
 			Integer retorno = aliqRN.ValidaRemocao(this.getAliquota());
 			if (retorno == 0) {
 				aliqRN.remove(this.getAliquota().getIdAliq());
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-								"Alíquota removida com sucesso"));
+				this.info("Alíquota removida com sucesso");
 				this.setAlt(true);
 				this.setRem(true);
 				this.setVinculo(true);
 				limpa();
 				desabilita();
 			} else {
-				FacesContext
-						.getCurrentInstance()
-						.addMessage(
-								null,
-								new FacesMessage(FacesMessage.SEVERITY_ERROR,
-										"Info",
-										"Remoção não permitida! Existem registros vinculados a esta alíquota. "));
+				this.error("Remoção não permitida! Existem registros vinculados a esta alíquota. ");
 			}
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na remoção da Alíquota "
-									+ e.getMessage()));
+			this.error("Problemas na remoção da Alíquota " + e.getMessage());
 		}
 	}
 
