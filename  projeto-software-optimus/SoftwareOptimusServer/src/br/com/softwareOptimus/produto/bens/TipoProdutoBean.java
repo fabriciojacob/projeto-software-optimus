@@ -4,10 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 
 import br.com.softwareOptimus.fiscal.Aliquota;
 import br.com.softwareOptimus.fiscal.CodTabelaGov;
@@ -17,10 +15,11 @@ import br.com.softwareOptimus.fiscal.TipoCst;
 import br.com.softwareOptimus.fiscal.TipoProduto;
 import br.com.softwareOptimus.fiscal.RN.AliquotaRN;
 import br.com.softwareOptimus.fiscal.RN.TipoProdutoRN;
+import br.com.softwareOptimus.util.FacesUtil;
 
 @ManagedBean(name = "tipoProdutoBean")
 @ViewScoped
-public class TipoProdutoBean implements Serializable{
+public class TipoProdutoBean extends FacesUtil implements Serializable{
 
 	private static final long serialVersionUID = -2984908303662738172L;
 	private TipoProduto tipo = new TipoProduto();
@@ -63,26 +62,16 @@ public class TipoProdutoBean implements Serializable{
 			Integer retorno = tipoRN.validaCampoNulo(this.tipo);
 			if (retorno == 0) {
 				tipoRN.salvar(this.tipo);
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-								"Tipo de Produto salvo com sucesso"));
+				this.info("Tipo de Produto salvo com sucesso");
 				this.vig = false;
 				this.sal = true;
 				this.alt = false;
 				this.rem = false;
 			} else {
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-								"Existem campos nulos no formulário"));
+				this.error("Existem campos nulos no formulário");
 			}
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na gravacao do Tipo de Produto "
-									+ e.getMessage()));
+			this.error("Problemas na gravação do Tipo de Produto " 	+ e.getMessage());
 		}
 	}
 
@@ -92,27 +81,17 @@ public class TipoProdutoBean implements Serializable{
 			Integer retorno = tipoRN.validaCampoNulo(this.tipo);
 			if (retorno == 0) {
 				tipoRN.altTipo(this.tipo);
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-								"Tipo de Produto alterado com sucesso"));
+				this.info("Tipo de Produto alterado com sucesso");
 				this.alt = true;
 				this.rem = true;
 				this.vig = true;
 				limpar();
 				desabilita();
 			} else {
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-								"Existem campos nulos no formulário"));
+				this.error("Existem campos nulos no formulário");
 			}
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na alteração do Tipo de Produto "
-									+ e.getMessage()));
+			this.error("Problemas na alteração do Tipo de Produto " + e.getMessage());
 		}
 	}
 
@@ -122,30 +101,17 @@ public class TipoProdutoBean implements Serializable{
 			Integer retorno = tipoRN.verificaRemocao(this.tipo);
 			if (retorno == 0) {
 				tipoRN.remover(this.tipo);
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-								"Tipo de Produto removido com sucesso"));
+				this.info("Tipo de Produto removido com sucesso");
 				this.alt = true;
 				this.rem = true;
 				this.vig = true;
 				limpar();
 				desabilita();
 			} else {
-				FacesContext
-						.getCurrentInstance()
-						.addMessage(
-								null,
-								new FacesMessage(FacesMessage.SEVERITY_ERROR,
-										"Info",
-										"Remoção não permitida! Existem Produtos vinculados a este Tipo. "));
+				this.error("Remoção não permitida! Existem Produtos vinculados a este Tipo. ");
 			}
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na remoção do Tipo de Produto "
-									+ e.getMessage()));
+			this.error("Problemas na remoção do Tipo de Produto " + e.getMessage());
 		}
 	}
 
@@ -173,10 +139,7 @@ public class TipoProdutoBean implements Serializable{
 				this.listaNcm = tipoRN.consultaTbDesc(busca);
 			}
 		} else {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Para listar os NCM inclua um parâmentro."));
+			this.error("Para listar os NCM inclua um parâmentro.");
 		}
 	}
 
@@ -184,11 +147,7 @@ public class TipoProdutoBean implements Serializable{
 		TipoProdutoRN tipoRN = new TipoProdutoRN();
 		this.ncm = tipoRN.consultaNCMId(this.idNcm);
 		this.tbGov.setNcm(ncm);
-		FacesContext.getCurrentInstance().addMessage(
-				null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-						"Ncm Vinculado ao Tipo!"));
-
+		this.info("Ncm Vinculado ao Tipo!");
 	}
 
 	public void excluirVigTip() {
@@ -196,19 +155,9 @@ public class TipoProdutoBean implements Serializable{
 			TipoProdutoRN tipoRN = new TipoProdutoRN();
 			tipoRN.removerVig(this.idVig);
 			listaVigencia();
-			FacesContext
-					.getCurrentInstance()
-					.addMessage(
-							null,
-							new FacesMessage(FacesMessage.SEVERITY_INFO,
-									"Info",
-									"Vigência do tipo de produto removido com sucesso"));
+			this.info("Vigência do tipo de produto removido com sucesso");
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na remoção da vigência do tipo de produto "
-									+ e.getMessage()));
+			this.error("Problemas na remoção da vigência do tipo de produto " + e.getMessage());
 		}
 	}
 
@@ -217,11 +166,7 @@ public class TipoProdutoBean implements Serializable{
 			TipoProdutoRN tipoRN = new TipoProdutoRN();
 			this.tbGov = tipoRN.editVig(this.idVig);
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na remoção da vigência do tipo de produto "
-									+ e.getMessage()));
+			this.error("Problemas na remoção da vigência do tipo de produto " + e.getMessage());
 		}
 	}
 
@@ -261,42 +206,24 @@ public class TipoProdutoBean implements Serializable{
 				if (retorno == 0) {
 					tipoRN.salvaVig(this.tbGov);
 					listaVigencia();
-					FacesContext.getCurrentInstance().addMessage(
-							null,
-							new FacesMessage(FacesMessage.SEVERITY_INFO,
-									"Info", "Vigência salva com sucesso"));
+					this.info("Vigência salva com sucesso");
 					this.tbGov = new CodTabelaGov();
 				} else {
-					FacesContext.getCurrentInstance().addMessage(
-							null,
-							new FacesMessage(FacesMessage.SEVERITY_ERROR,
-									"Info",
-									"Existem campos nulos no formulário"));
+					this.error("Existem campos nulos no formulário");
 				}
 			} else {
 				Integer retorno = tipoRN.validaCampoNuloVig(this.tbGov);
 				if (retorno == 0) {
 					tipoRN.salvaVig2(this.tbGov);
 					listaVigencia();
-					FacesContext.getCurrentInstance().addMessage(
-							null,
-							new FacesMessage(FacesMessage.SEVERITY_INFO,
-									"Info", "Vigência salva com sucesso"));
+					this.info("Vigência salva com sucesso");
 					this.tbGov = new CodTabelaGov();
 				} else {
-					FacesContext.getCurrentInstance().addMessage(
-							null,
-							new FacesMessage(FacesMessage.SEVERITY_ERROR,
-									"Info",
-									"Existem campos nulos no formulário"));
+					this.error("Existem campos nulos no formulário");
 				}
 			}
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na gravacao da Vigência "
-									+ e.getMessage()));
+			this.error("Problemas na gravacao da Vigência " + e.getMessage());
 		}
 	}
 
@@ -321,13 +248,8 @@ public class TipoProdutoBean implements Serializable{
 			}
 			this.listaTbGov = tipoRN.listarVig(this.tipo);
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas ao listar as Vigências "
-									+ e.getMessage()));
+			this.error("Problemas ao listar as Vigências " + e.getMessage());
 		}
-
 	}
 
 	public void habilita() {

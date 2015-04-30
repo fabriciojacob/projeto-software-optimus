@@ -5,10 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
@@ -20,14 +18,14 @@ import br.com.softwareOptimus.estoque.ProdutoEstoque;
 import br.com.softwareOptimus.estoque.RN.ProdutoEstoqueRN;
 import br.com.softwareOptimus.produto.Produto;
 import br.com.softwareOptimus.produto.RN.ProdutoRN;
+import br.com.softwareOptimus.util.FacesUtil;
 
 @ManagedBean(name = "produtoEstoqueBean")
 @ViewScoped
-public class ProdutoEstoqueBean implements Serializable{
+public class ProdutoEstoqueBean extends FacesUtil implements Serializable{
 	
 	private static final long serialVersionUID = -1958596637728666102L;
 	private ProdutoEstoque produtoEstoque;
-	//private List<ProdutoEstoque> listaProdutoEstoque;
 	private LazyDataModel<ProdutoEstoque> listaProdutoEstoque;
 	private PesquisaEstoquePojo dadosPesquisa = new PesquisaEstoquePojo();
 	private List<Produto> listaProduto;
@@ -68,11 +66,7 @@ public class ProdutoEstoqueBean implements Serializable{
 	public void pesquisaMovEstoque(){
 		Integer retorno = this.getProdEstRN().validaCamposPesquisa(this.getDadosPesquisa());
 		if(retorno != 0){
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR,
-							"Info",
-							"Para pesquisa é necessário Produto, Empresa, Data Inicial e Final!"));
+			this.error("Para pesquisa é necessário Produto, Empresa, Data Inicial e Final!");
 		}
 	}
 	
@@ -89,20 +83,13 @@ public class ProdutoEstoqueBean implements Serializable{
 		try {
 			this.getDadosPesquisa().setEmpresa(this.getEmpRN().pesquisaId(this.getEmpresaSelecionada()));
 			this.getProdutoEstoque().setEmpresa(this.getDadosPesquisa().getEmpresa());
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-							"Empresa selecionada"));
+			this.info("Empresa selecionada");
 			this.verifica = this.verifica + 1;
 			if(this.getVerifica() >= 2){
 				this.btnAdicionar = false;
 			}
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na seleção da empresa "
-									+ e.getMessage()));
+			this.error("Problemas na seleção da empresa " + e.getMessage());
 		}
 	}
 	
@@ -110,20 +97,13 @@ public class ProdutoEstoqueBean implements Serializable{
 		try {
 			this.getDadosPesquisa().setProduto(this.getProdRN().editPro(this.getProdutoSelecionado()));
 			this.getProdutoEstoque().setProduto(this.getDadosPesquisa().getProduto());
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-							"Produto selecionado"));
+			this.info("Produto selecionado");
 			this.verifica = this.verifica + 1;
 			if(this.getVerifica() >= 2){
 				this.btnAdicionar = false;
 			}
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na seleção do Produto "
-									+ e.getMessage()));
+			this.error("Problemas na seleção do Produto " + e.getMessage());
 		}
 	}
 	
@@ -154,23 +134,12 @@ public class ProdutoEstoqueBean implements Serializable{
 				this.getProdutoEstoque().setOrigem(new Comercial());
 				this.getProdutoEstoque().getOrigem().setIdComercial(new Long(0));
 				this.getProdEstRN().salvar(this.getProdutoEstoque(), 1, tipoMovEst);
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-								"Dados salvo com sucesso!"));
+				this.info("Dados salvo com sucesso!");
 			} catch (Exception e) {
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR,
-								"Info",
-								"Falha ao salvar movimentação de estoque " + e.getMessage()));
+				this.error("Falha ao salvar movimentação de estoque " + e.getMessage());
 			}
 		}else{
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR,
-							"Info",
-							"Existem campos nulos no formulário ou zerado! Verifique!"));
+			this.error("Existem campos nulos no formulário ou zerado! Verifique!");
 		}
 	}
 	
@@ -181,7 +150,6 @@ public class ProdutoEstoqueBean implements Serializable{
 	public void limparInfPesquisa(){
 		this.setDadosPesquisa(null);
 		this.setProdutoEstoque(null);
-		//this.setListaProdutoEstoque(null);
 		this.setVerifica(0);
 		this.setBtnAdicionar(true);
 	}

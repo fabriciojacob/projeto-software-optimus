@@ -4,18 +4,17 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 
 import br.com.softwareOptimus.produto.Categoria;
 import br.com.softwareOptimus.produto.SubGrupo;
 import br.com.softwareOptimus.produto.RN.SubGrupoRN;
+import br.com.softwareOptimus.util.FacesUtil;
 
 @ManagedBean(name = "subGrupoBean")
 @ViewScoped
-public class SubGrupoBean implements Serializable{
+public class SubGrupoBean extends FacesUtil implements Serializable{
 
 	private static final long serialVersionUID = 6025267193479395126L;
 	private SubGrupo subGrupo = new SubGrupo();
@@ -42,27 +41,17 @@ public class SubGrupoBean implements Serializable{
 			Integer retorno = subRN.validaCampoNulo(this.subGrupo);
 			if (retorno == 0) {
 				subRN.altSub(this.subGrupo);
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-								"SubGrupo alterado com sucesso"));
+				this.info("SubGrupo alterado com sucesso");
 				this.alt = true;
 				this.rem = true;
 				this.vig = true;
 				limpar();
 				desabilita();
 			} else {
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-								"Existem campos nulos no formulário"));
+				this.error("Existem campos nulos no formulário");
 			}
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na alteração do SubGrupo "
-									+ e.getMessage()));
+			this.error("Problemas na alteração do SubGrupo " + e.getMessage());
 		}
 	}
 
@@ -89,26 +78,16 @@ public class SubGrupoBean implements Serializable{
 			Integer retorno = subRN.validaCampoNulo(this.subGrupo);
 			if (retorno == 0) {
 				subRN.salvar(this.subGrupo);
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-								"SubGrupo salvo com sucesso"));
+				this.info("SubGrupo salvo com sucesso");
 				this.vig = false;
 				this.sal = true;
 				this.alt = false;
 				this.rem = false;
 			} else {
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-								"Existem campos nulos no formulário"));
+				this.error("Existem campos nulos no formulário");
 			}
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na gravacao do SubGrupo "
-									+ e.getMessage()));
+			this.error("Problemas na gravação do SubGrupo " + e.getMessage());
 		}
 	}
 
@@ -118,31 +97,17 @@ public class SubGrupoBean implements Serializable{
 			Integer retorno = subRN.verificaRemocao(this.subGrupo);
 			if (retorno == 0) {
 				subRN.remover(this.subGrupo);
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-								"SubGrupo removido com sucesso"));
+				this.info("SubGrupo removido com sucesso");
 				this.alt = true;
 				this.rem = true;
 				this.vig = true;
 				limpar();
 				desabilita();
 			} else {
-				FacesContext
-						.getCurrentInstance()
-						.addMessage(
-								null,
-								new FacesMessage(
-										FacesMessage.SEVERITY_ERROR,
-										"Info",
-										"Remoção não permitida! Existem Grupos ou Produtos vinculados a este SubGrupo. "));
+				this.error("Remoção não permitida! Existem Grupos ou Produtos vinculados a este SubGrupo. ");
 			}
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na remoção do SubGrupo "
-									+ e.getMessage()));
+			this.error("Problemas na remoção do SubGrupo " + e.getMessage());
 		}
 	}
 
@@ -168,26 +133,12 @@ public class SubGrupoBean implements Serializable{
 			if (retorno == 0) {
 				subRN.removerCat(this.idCateg);
 				listaCategoria();
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-								"Categoria removida com sucesso"));
+				this.info("Categoria removida com sucesso");
 			} else {
-				FacesContext
-						.getCurrentInstance()
-						.addMessage(
-								null,
-								new FacesMessage(
-										FacesMessage.SEVERITY_ERROR,
-										"Info",
-										"Remoção não permitida! Existem Produtos vinculados a este SubGrupo e Categoria. "));
+				this.error("Remoção não permitida! Existem Produtos vinculados a este SubGrupo e Categoria. ");
 			}
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na remoção da Categoria "
-									+ e.getMessage()));
+			this.error("Problemas na remoção da Categoria " + e.getMessage());
 		}
 	}
 
@@ -212,22 +163,12 @@ public class SubGrupoBean implements Serializable{
 				subRN.salvarCategoria(this.categoria);
 				listaCategoria();
 				this.categoria = new Categoria();
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-								"Categoria salva com sucesso"));
+				this.info("Categoria salva com sucesso");
 			} else {
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-								"Existem campos nulos no formulário"));
+				this.error("Existem campos nulos no formulário");
 			}
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na gravacao do SubGrupo "
-									+ e.getMessage()));
+			this.error("Problemas na gravacao do SubGrupo " + e.getMessage());
 		}
 	}
 
@@ -239,11 +180,7 @@ public class SubGrupoBean implements Serializable{
 			}
 			this.listaCategoria = subRN.listarCatg(this.subGrupo);
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas ao listar as Categorias "
-									+ e.getMessage()));
+			this.error("Problemas ao listar as Categorias " + e.getMessage());
 		}
 	}
 
