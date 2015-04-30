@@ -4,19 +4,18 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 
 import br.com.softwareOptimus.produto.Grupo;
 import br.com.softwareOptimus.produto.SubGrupo;
 import br.com.softwareOptimus.produto.RN.GrupoRN;
 import br.com.softwareOptimus.produto.RN.SubGrupoRN;
+import br.com.softwareOptimus.util.FacesUtil;
 
 @ManagedBean(name = "grupoBean")
 @ViewScoped
-public class GrupoBean implements Serializable{
+public class GrupoBean extends FacesUtil implements Serializable{
 
 	private static final long serialVersionUID = -8440394944937003096L;
 	private Grupo grupo = new Grupo();
@@ -53,27 +52,16 @@ public class GrupoBean implements Serializable{
 			if (retorno == 0) {
 				this.grupo.setSubGrupo(this.listaSubGrupoExib);
 				gruRN.salvar(this.grupo);
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-								"Grupo salvo com sucesso"));
+				this.info("Grupo salvo com sucesso");
 				this.vig = false;
 				this.sal = true;
 				this.alt = false;
 				this.rem = false;
 			} else {
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-								"Existem campos nulos no formulário"));
+				this.error("Existem campos nulos no formulário");
 			}
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance()
-					.addMessage(
-							null,
-							new FacesMessage(FacesMessage.SEVERITY_ERROR,
-									"Info", "Problemas na gravacao do Grupo "
-											+ e.getMessage()));
+			this.error("Problemas na gravacao do Grupo " + e.getMessage());
 		}
 	}
 
@@ -85,10 +73,7 @@ public class GrupoBean implements Serializable{
 			if (retorno == 0) {
 				this.grupo.setSubGrupo(this.listaSubGrupoExib);
 				gruRN.altGru(this.grupo);
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-								"Grupo alterado com sucesso"));
+				this.info("Grupo alterado com sucesso");
 				this.alt = true;
 				this.rem = true;
 				this.vig = true;
@@ -96,18 +81,10 @@ public class GrupoBean implements Serializable{
 				limpar();
 				desabilita();
 			} else {
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-								"Existem campos nulos no formulário"));
+				this.error("Existem campos nulos no formulário");
 			}
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance()
-					.addMessage(
-							null,
-							new FacesMessage(FacesMessage.SEVERITY_ERROR,
-									"Info", "Problemas na alteração do Grupo "
-											+ e.getMessage()));
+			this.error("Problemas na alteração do Grupo " + e.getMessage());
 		}
 	}
 
@@ -117,29 +94,17 @@ public class GrupoBean implements Serializable{
 			Integer retorno = gruRN.verificaRemocao(this.grupo);
 			if (retorno == 0) {
 				gruRN.remover(this.grupo);
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-								"Grupo removido com sucesso"));
+				this.info("Grupo removido com sucesso");
 				this.alt = true;
 				this.rem = true;
 				this.vig = true;
 				limpar();
 				desabilita();
 			} else {
-				FacesContext
-						.getCurrentInstance()
-						.addMessage(
-								null,
-								new FacesMessage(FacesMessage.SEVERITY_ERROR,
-										"Info",
-										"Remoção não permitida! Existem Setores ou Produtos vinculados a este Grupo. "));
+				this.error("Remoção não permitida! Existem Setores ou Produtos vinculados a este Grupo. ");
 			}
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na remoção do Grupo " + e.getMessage()));
+			this.error("Problemas na remoção do Grupo " + e.getMessage());
 		}
 	}
 
@@ -191,13 +156,7 @@ public class GrupoBean implements Serializable{
 			this.listaSubGrupoExib = new ArrayList<SubGrupo>();
 			this.listaSubGrupoExib.addAll(listaSubNovo);
 		} else {
-			FacesContext
-					.getCurrentInstance()
-					.addMessage(
-							null,
-							new FacesMessage(FacesMessage.SEVERITY_ERROR,
-									"Info",
-									"Remoção não permitida! Existem Produtos vinculados a este Grupo e SubGrupo. "));
+			this.error("Remoção não permitida! Existem Produtos vinculados a este Grupo e SubGrupo. ");
 		}
 	}
 
@@ -219,16 +178,10 @@ public class GrupoBean implements Serializable{
 			if (retorno == 0) {
 				this.listaSubGrupoExib.add(this.subGrupo);
 			} else {
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-								"SubGrupo já vinculado no Grupo!"));
+				this.error("SubGrupo já vinculado no Grupo!");
 			}
 		} else {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Escolha uma SubGrupo para incluir."));
+			this.error("Escolha uma SubGrupo para incluir.");
 		}
 	}
 

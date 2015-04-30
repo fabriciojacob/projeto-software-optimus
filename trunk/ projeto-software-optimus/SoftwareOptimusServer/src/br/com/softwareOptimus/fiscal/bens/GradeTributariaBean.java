@@ -4,10 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 
 import br.com.softwareOptimus.entidades.TipoPessoaJuridica;
 import br.com.softwareOptimus.fiscal.Aliquota;
@@ -18,10 +16,11 @@ import br.com.softwareOptimus.fiscal.Pauta;
 import br.com.softwareOptimus.fiscal.RN.AliquotaRN;
 import br.com.softwareOptimus.fiscal.RN.GradeTributariaRN;
 import br.com.softwareOptimus.fiscal.RN.PautaRN;
+import br.com.softwareOptimus.util.FacesUtil;
 
 @ManagedBean(name = "gradeTributariaBean")
 @ViewScoped
-public class GradeTributariaBean implements Serializable {
+public class GradeTributariaBean extends FacesUtil implements Serializable {
 
 	private static final long serialVersionUID = -1841419801185722787L;
 	private GradeTributaria grade = new GradeTributaria();
@@ -60,27 +59,16 @@ public class GradeTributariaBean implements Serializable {
 			Integer retorno = gradeRN.validaCampoNulo(this.grade);
 			if (retorno == 0) {
 				gradeRN.salvar(this.grade);
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-								"Grade salva com sucesso"));
+				this.info("Grade salva com sucesso");
 				this.vig = false;
 				this.sal = true;
 				this.alt = true;
 				this.rem = true;
 			} else {
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-								"Existem campos nulos no formulário"));
+				this.error("Existem campos nulos no formulário");
 			}
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance()
-					.addMessage(
-							null,
-							new FacesMessage(FacesMessage.SEVERITY_ERROR,
-									"Info", "Problemas na gravacao da Grade "
-											+ e.getMessage()));
+			this.error("Problemas na gravacao da Grade " + e.getMessage());
 		}
 	}
 
@@ -90,28 +78,17 @@ public class GradeTributariaBean implements Serializable {
 			Integer retorno = gradeRN.validaCampoNulo(this.grade);
 			if (retorno == 0) {
 				gradeRN.altGrade(this.grade);
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-								"Grade alterada com sucesso"));
+				this.info("Grade alterada com sucesso");
 				this.alt = true;
 				this.rem = true;
 				this.vig = true;
 				limpar();
 				desabilita();
 			} else {
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-								"Existem campos nulos no formulário"));
+				this.error("Existem campos nulos no formulário");
 			}
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance()
-					.addMessage(
-							null,
-							new FacesMessage(FacesMessage.SEVERITY_ERROR,
-									"Info", "Problemas na alteração da Grade "
-											+ e.getMessage()));
+			this.error("Problemas na alteração da Grade " + e.getMessage());
 		}
 	}
 
@@ -121,26 +98,17 @@ public class GradeTributariaBean implements Serializable {
 			Integer retorno = gradeRN.verificaRemocao(this.grade);
 			if (retorno == 0) {
 				gradeRN.remover(this.grade);
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-								"Grade removida com sucesso"));
+				this.info("Grade removida com sucesso");
 				this.alt = true;
 				this.rem = true;
 				this.vig = true;
 				limpar();
 				desabilita();
 			} else {
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-								"Remoção não permitida! Existem Figuras vinculadas a esta grade. "));
+				this.error("Remoção não permitida! Existem Figuras vinculadas a esta grade. ");
 			}
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na remoção da Grade " + e.getMessage()));
+			this.error("Problemas na remoção da Grade " + e.getMessage());
 		}
 	}
 
@@ -190,16 +158,9 @@ public class GradeTributariaBean implements Serializable {
 			GradeTributariaRN gradeRN = new GradeTributariaRN();
 			gradeRN.removerVig(this.idGradeVig);
 			listaVigencia();
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-							"Vigência da Grade removida com sucesso"));
+			this.info("Vigência da Grade removida com sucesso");
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na remoção da vigência da Grade "
-									+ e.getMessage()));
+			this.error("Problemas na remoção da vigência da Grade " + e.getMessage());
 		}
 	}
 
@@ -233,37 +194,19 @@ public class GradeTributariaBean implements Serializable {
 				if (retorno == 0) {
 					gradeRN.salvaVig(this.gradeVig);
 					listaVigencia();
-					FacesContext.getCurrentInstance().addMessage(
-							null,
-							new FacesMessage(FacesMessage.SEVERITY_INFO,
-									"Info", "Vigência salva com sucesso"));
+					this.info("Vigência salva com sucesso");
 					this.gradeVig = new GradeTributariaVigencia();
 					this.tipoEntSai = new String();
 					this.tipoGrade = new String();
 				} else {
-					FacesContext.getCurrentInstance().addMessage(
-							null,
-							new FacesMessage(FacesMessage.SEVERITY_ERROR,
-									"Info",
-									"Existem campos nulos no formulário"));
+					this.error("Existem campos nulos no formulário");
 				}
 			} else {
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-								"Já existe uma Grade com estas caracteristicas Código: "
-										+ gradeValida.get(0).getGrade()
-												.getIdGradeTrib()
-										+ " Descrição: "
-										+ gradeValida.get(0).getGrade()
-												.getDescricao()));
+				this.error("Já existe uma Grade com estas caracteristicas Código: "	+ gradeValida.get(0).getGrade().getIdGradeTrib()
+										+ " Descrição: " + gradeValida.get(0).getGrade().getDescricao());
 			}
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na gravacao da Vigência "
-									+ e.getMessage()));
+			this.error("Problemas na gravacao da Vigência " + e.getMessage());
 		}
 	}
 
@@ -275,13 +218,8 @@ public class GradeTributariaBean implements Serializable {
 			}
 			this.listaGradeVig = gradeRN.listarVig(this.grade);
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas ao listar as Vigências "
-									+ e.getMessage()));
+			this.error("Problemas ao listar as Vigências " + e.getMessage());
 		}
-
 	}
 
 	public void habilita() {

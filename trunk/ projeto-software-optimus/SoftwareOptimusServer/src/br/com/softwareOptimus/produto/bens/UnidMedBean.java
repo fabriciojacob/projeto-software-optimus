@@ -4,17 +4,16 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 
 import br.com.softwareOptimus.produto.UnidMed;
 import br.com.softwareOptimus.produto.RN.UnidMedRN;
+import br.com.softwareOptimus.util.FacesUtil;
 
 @ManagedBean(name = "unidMedBean")
 @ViewScoped
-public class UnidMedBean implements Serializable{
+public class UnidMedBean extends FacesUtil implements Serializable {
 
 	private static final long serialVersionUID = -3988883087479983925L;
 	private UnidMed unidMed = new UnidMed();
@@ -33,25 +32,15 @@ public class UnidMedBean implements Serializable{
 			Integer retorno = unidRN.validaCampoNulo(this.unidMed);
 			if (retorno == 0) {
 				unidRN.salvar(unidMed);
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-								"Unidade salva com sucesso"));
+				this.info("Unidade salva com sucesso");
 				this.sal = true;
 				limpa();
 				desabilita();
 			} else {
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-								"Existem campos nulos no formulário"));
+				this.error("Existem campos nulos no formulário");
 			}
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na gravacao da Unidade "
-									+ e.getMessage()));
+			this.error("Problemas na gravacao da Unidade " + e.getMessage());
 		}
 	}
 
@@ -98,26 +87,16 @@ public class UnidMedBean implements Serializable{
 			Integer retorno = unidRN.validaCampoNulo(this.unidMed);
 			if (retorno == 0) {
 				unidRN.altUnid(unidMed);
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-								"Unidade alterada com sucesso"));
+				this.info("Unidade alterada com sucesso");
 				this.alt = true;
 				this.rem = true;
 				limpa();
 				desabilita();
 			} else {
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-								"Existem campos nulos no formulário"));
+				this.error("Existem campos nulos no formulário");
 			}
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na alteraÃ§Ã£o da Unidade "
-									+ e.getMessage()));
+			this.error("Problemas na alteraÃ§Ã£o da Unidade " + e.getMessage());
 		}
 	}
 
@@ -134,22 +113,14 @@ public class UnidMedBean implements Serializable{
 		UnidMedRN unidRN = new UnidMedRN();
 		try {
 			unidRN.remove(unidMed.getIdUnidMed());
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-							"Unidade removida com sucesso"));
+			this.info("Unidade removida com sucesso");
 			this.alt = true;
 			this.rem = true;
 			limpa();
 			desabilita();
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na remoï¿½ï¿½o da Unidade "
-									+ e.getMessage()));
+			this.error("Problemas na remoção da Unidade " + e.getMessage());
 		}
-
 	}
 
 	public void habilita() {

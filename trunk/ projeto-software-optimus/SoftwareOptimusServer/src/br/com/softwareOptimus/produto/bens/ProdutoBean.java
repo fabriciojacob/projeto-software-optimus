@@ -4,10 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 
 import br.com.softwareOptimus.fiscal.FiguraFiscal;
 import br.com.softwareOptimus.fiscal.TipoProduto;
@@ -24,10 +22,11 @@ import br.com.softwareOptimus.produto.RN.ProdutoRN;
 import br.com.softwareOptimus.produto.RN.SetorRN;
 import br.com.softwareOptimus.produto.RN.SubGrupoRN;
 import br.com.softwareOptimus.produto.RN.UnidMedRN;
+import br.com.softwareOptimus.util.FacesUtil;
 
 @ManagedBean(name = "produtoBean")
 @ViewScoped
-public class ProdutoBean implements Serializable{
+public class ProdutoBean extends FacesUtil implements Serializable{
 
 	private static final long serialVersionUID = 8953487771453312466L;
 	private Produto produto = new Produto();
@@ -65,28 +64,17 @@ public class ProdutoBean implements Serializable{
 			Integer retorno = proRN.validaCampoNulo(this.produto);
 			if (retorno == 0) {
 				proRN.salvar(this.produto);
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-								"Produto salvo com sucesso"));
+				this.info("Produto salvo com sucesso");
 				this.sal = true;
 				this.alt = true;
 				this.rem = true;
 				limpar();
 				desabilita();
 			} else {
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-								"Existem campos nulos no formulário"));
+				this.error("Existem campos nulos no formulário");
 			}
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance()
-					.addMessage(
-							null,
-							new FacesMessage(FacesMessage.SEVERITY_ERROR,
-									"Info", "Problemas na gravacao do Produto "
-											+ e.getMessage()));
+			this.error("Problemas na gravacao do Produto " + e.getMessage());
 		}
 	}
 
@@ -104,28 +92,17 @@ public class ProdutoBean implements Serializable{
 			Integer retorno = prodRN.validaCampoNulo(this.produto);
 			if (retorno == 0) {
 				prodRN.altPro(this.produto);
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-								"Produto alterado com sucesso"));
+				this.info("Produto alterado com sucesso");
 				this.alt = true;
 				this.rem = true;
 				this.sal = true;
 				limpar();
 				desabilita();
 			} else {
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-								"Existem campos nulos no formulário"));
+				this.error("Existem campos nulos no formulário");
 			}
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance()
-					.addMessage(
-							null,
-							new FacesMessage(FacesMessage.SEVERITY_ERROR,
-									"Info", "Problemas na alteração do Produto "
-											+ e.getMessage()));
+			this.error("Problemas na alteração do Produto ");
 		}
 	}
 
@@ -135,28 +112,16 @@ public class ProdutoBean implements Serializable{
 			Integer retorno = proRN.verificaRemocao(this.produto);
 			if (retorno == 0) {
 				proRN.remover(this.produto);
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-								"Produto removido com sucesso"));
+				this.info("Produto removido com sucesso");
 				this.alt = true;
 				this.rem = true;
 				limpar();
 				desabilita();
 			} else {
-				FacesContext
-						.getCurrentInstance()
-						.addMessage(
-								null,
-								new FacesMessage(FacesMessage.SEVERITY_ERROR,
-										"Info",
-										"Remoção não permitida! Existem Registros vinculados a este Produto. "));
+				this.error("Remoção não permitida! Existem Registros vinculados a este Produto. ");
 			}
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na remoção do Produto " + e.getMessage()));
+			this.error("Problemas na remoção do Produto " + e.getMessage());
 		}
 	}
 	
@@ -450,5 +415,4 @@ public class ProdutoBean implements Serializable{
 	public void setProduto(Produto produto) {
 		this.produto = produto;
 	}
-
 }

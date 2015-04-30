@@ -4,19 +4,18 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 
 import br.com.softwareOptimus.produto.Grupo;
 import br.com.softwareOptimus.produto.Setor;
 import br.com.softwareOptimus.produto.RN.GrupoRN;
 import br.com.softwareOptimus.produto.RN.SetorRN;
+import br.com.softwareOptimus.util.FacesUtil;
 
 @ManagedBean(name = "setorBean")
 @ViewScoped
-public class SetorBean implements Serializable{
+public class SetorBean extends FacesUtil implements Serializable{
 
 	private static final long serialVersionUID = -6889204545055216922L;
 	private Setor setor = new Setor();
@@ -52,27 +51,16 @@ public class SetorBean implements Serializable{
 			if (retorno == 0) {
 				this.setor.setGrupo(this.listaGrupoExib);
 				setRN.salvar(this.setor);
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-								"Setor salvo com sucesso"));
+				this.info("Setor salvo com sucesso");
 				this.vig = false;
 				this.sal = true;
 				this.alt = false;
 				this.rem = false;
 			} else {
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-								"Existem campos nulos no formulário"));
+				this.error("Existem campos nulos no formulário");
 			}
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance()
-					.addMessage(
-							null,
-							new FacesMessage(FacesMessage.SEVERITY_ERROR,
-									"Info", "Problemas na gravacao do Setor "
-											+ e.getMessage()));
+			this.error("Problemas na gravacao do Setor " + e.getMessage());
 		}
 	}
 
@@ -83,10 +71,7 @@ public class SetorBean implements Serializable{
 			if (retorno == 0) {
 				this.setor.setGrupo(this.listaGrupoExib);
 				setRN.altSet(this.setor);
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-								"Setor alterado com sucesso"));
+				this.info("Setor alterado com sucesso");
 				this.alt = true;
 				this.rem = true;
 				this.vig = true;
@@ -94,18 +79,10 @@ public class SetorBean implements Serializable{
 				limpar();
 				desabilita();
 			} else {
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-								"Existem campos nulos no formulário"));
+				this.error("Existem campos nulos no formulário");
 			}
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance()
-					.addMessage(
-							null,
-							new FacesMessage(FacesMessage.SEVERITY_ERROR,
-									"Info", "Problemas na alteração do Setor "
-											+ e.getMessage()));
+			this.error("Problemas na alteração do Setor " + e.getMessage());
 		}
 	}
 
@@ -131,29 +108,17 @@ public class SetorBean implements Serializable{
 			Integer retorno = setRN.verificaRemocao(this.setor);
 			if (retorno == 0) {
 				setRN.remover(this.setor);
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-								"Setor removido com sucesso"));
+				this.info("Setor removido com sucesso");
 				this.alt = true;
 				this.rem = true;
 				this.vig = true;
 				limpar();
 				desabilita();
 			} else {
-				FacesContext
-						.getCurrentInstance()
-						.addMessage(
-								null,
-								new FacesMessage(FacesMessage.SEVERITY_ERROR,
-										"Info",
-										"Remoção não permitida! Existem Produtos vinculados a este Setor. "));
+				this.error("Remoção não permitida! Existem Produtos vinculados a este Setor. ");
 			}
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na remoção do Setor " + e.getMessage()));
+			this.error("Problemas na remoção do Setor " + e.getMessage());
 		}
 	}
 
@@ -189,13 +154,7 @@ public class SetorBean implements Serializable{
 			this.listaGrupoExib = new ArrayList<Grupo>();
 			this.listaGrupoExib.addAll(listaGruNovo);
 		} else {
-			FacesContext
-					.getCurrentInstance()
-					.addMessage(
-							null,
-							new FacesMessage(FacesMessage.SEVERITY_ERROR,
-									"Info",
-									"Remoção não permitida! Existem Produtos vinculados a este Setor e Grupo. "));
+			this.error("Remoção não permitida! Existem Produtos vinculados a este Setor e Grupo. ");
 		}
 	}
 
@@ -217,16 +176,10 @@ public class SetorBean implements Serializable{
 			if (retorno == 0) {
 				this.listaGrupoExib.add(this.grupo);
 			} else {
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-								"Grupo já vinculado no Setor!"));
+				this.error("Grupo já vinculado no Setor!");
 			}
 		} else {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Escolha uma Grupo para incluir."));
+			this.error("Escolha uma Grupo para incluir.");
 		}
 	}
 
@@ -358,5 +311,4 @@ public class SetorBean implements Serializable{
 	public void setIdGrup(Long idGrup) {
 		this.idGrup = idGrup;
 	}
-
 }

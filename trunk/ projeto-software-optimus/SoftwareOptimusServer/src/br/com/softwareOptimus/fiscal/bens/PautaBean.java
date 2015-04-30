@@ -4,18 +4,17 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 
 import br.com.softwareOptimus.fiscal.Pauta;
 import br.com.softwareOptimus.fiscal.PautaMVA;
 import br.com.softwareOptimus.fiscal.RN.PautaRN;
+import br.com.softwareOptimus.util.FacesUtil;
 
 @ManagedBean(name = "pautaBean")
 @ViewScoped
-public class PautaBean implements Serializable{
+public class PautaBean extends FacesUtil implements Serializable{
 
 	private static final long serialVersionUID = -7205875322346314575L;
 	private Pauta pauta = new Pauta();
@@ -42,28 +41,17 @@ public class PautaBean implements Serializable{
 			Integer retorno = pautaRN.validaCampoNulo(this.pauta);
 			if (retorno == 0) {
 				pautaRN.altPauta(this.pauta);
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-								"Pauta alterada com sucesso"));
+				this.info("Pauta alterada com sucesso");
 				this.alt = true;
 				this.rem = true;
 				this.vig = true;
 				limpar();
 				desabilita();
 			} else {
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-								"Existem campos nulos no formulário"));
+				this.error("Existem campos nulos no formulário");
 			}
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance()
-					.addMessage(
-							null,
-							new FacesMessage(FacesMessage.SEVERITY_ERROR,
-									"Info", "Problemas na alteração da Pauta "
-											+ e.getMessage()));
+			this.error("Problemas na alteração da Pauta " + e.getMessage());
 		}
 	}
 
@@ -73,26 +61,17 @@ public class PautaBean implements Serializable{
 			Integer retorno = pautaRN.verificaRemocao(this.pauta);
 			if (retorno == 0) {
 				pautaRN.remover(this.pauta);
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-								"Pauta removida com sucesso"));
+				this.info("Pauta removida com sucesso");
 				this.alt = true;
 				this.rem = true;
 				this.vig = true;
 				limpar();
 				desabilita();
 			} else {
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-								"Remoção não permitida! Existem grades vinculadas a esta pauta."));
+				this.error("Remoção não permitida! Existem grades vinculadas a esta pauta.");
 			}
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na remoção da Pauta " + e.getMessage()));
+			this.error("Problemas na remoção da Pauta " + e.getMessage());
 		}
 	}
 
@@ -112,27 +91,16 @@ public class PautaBean implements Serializable{
 			Integer retorno = pautaRN.validaCampoNulo(this.pauta);
 			if (retorno == 0) {
 				pautaRN.salvar(this.pauta);
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-								"Pauta salva com sucesso"));
+				this.info("Pauta salva com sucesso");
 				this.vig = false;
 				this.sal = true;
 				this.alt = true;
 				this.rem = true;
 			} else {
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-								"Existem campos nulos no formulário"));
+				this.error("Existem campos nulos no formulário");
 			}
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance()
-					.addMessage(
-							null,
-							new FacesMessage(FacesMessage.SEVERITY_ERROR,
-									"Info", "Problemas na gravacao da Pauta "
-											+ e.getMessage()));
+			this.error("Problemas na gravacao da Pauta " + e.getMessage());
 		}
 	}
 
@@ -145,23 +113,13 @@ public class PautaBean implements Serializable{
 			if (retorno == 0) {
 				pautaRN.salvaVig(this.pautaMVA);
 				listaVigencia();
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-								"Vigência salva com sucesso"));
+				this.info("Vigência salva com sucesso");
 				this.pautaMVA = new PautaMVA();
 			} else {
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-								"Existem campos nulos no formulário"));
+				this.error("Existem campos nulos no formulário");
 			}
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na gravacao da Vigência "
-									+ e.getMessage()));
+			this.error("Problemas na gravacao da Vigência " + e.getMessage());
 		}
 	}
 
@@ -173,11 +131,7 @@ public class PautaBean implements Serializable{
 			}
 			this.listaPautaMVA = pautaRN.listar(this.pauta);
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas ao listar as Vigências "
-									+ e.getMessage()));
+			this.error("Problemas ao listar as Vigências " + e.getMessage());
 		}
 
 	}
@@ -221,16 +175,9 @@ public class PautaBean implements Serializable{
 			PautaRN pautaRN = new PautaRN();
 			pautaRN.removerVig(this.idPautaMVA);
 			listaVigencia();
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-							"Vigência da Pauta removida com sucesso"));
+			this.info("Vigência da Pauta removida com sucesso");
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na remoção da vigência da Pauta "
-									+ e.getMessage()));
+			this.error("Problemas na remoção da vigência da Pauta " + e.getMessage());
 		}
 	}
 
