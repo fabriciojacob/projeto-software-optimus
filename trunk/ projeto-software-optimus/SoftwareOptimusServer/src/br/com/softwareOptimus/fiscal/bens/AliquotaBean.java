@@ -9,7 +9,6 @@ import br.com.softwareOptimus.fiscal.CodigoSituacaoTributaria;
 import br.com.softwareOptimus.fiscal.IO;
 import br.com.softwareOptimus.fiscal.TipoCst;
 import br.com.softwareOptimus.fiscal.TipoTrib;
-import br.com.softwareOptimus.fiscal.RN.AliquotaRN;
 import br.com.softwareOptimus.fiscal.RN.CodigoSituacaoTributariaRN;
 
 @ManagedBean(name = "aliquotaBean")
@@ -29,7 +28,6 @@ public class AliquotaBean extends AliquotaBeanAbstract implements Serializable{
 
 	public void salvar() {
 		try {
-			AliquotaRN aliqRN = new AliquotaRN();
 			this.setColCst(null);
 			this.getColCst();
 			this.getAliquota().setIdAliq(null);
@@ -54,14 +52,14 @@ public class AliquotaBean extends AliquotaBeanAbstract implements Serializable{
 				}
 				this.getAliquota().setCst(this.getColCst());
 			}
-			Integer retorno = aliqRN.validaCampoNulo(this.getAliquota(),this.getColCst(), this.getTipTrib(), this.getTipCst());
+			Integer retorno = this.getAliqRN().validaCampoNulo(this.getAliquota(),this.getColCst(), this.getTipTrib(), this.getTipCst());
 			if (retorno == 0) {
-				aliqRN.salva(this.getAliquota());
+				this.getAliqRN().salva(this.getAliquota());
 				this.info("Alíquota salva com sucesso");
 				this.setSal(true);
 				this.setVinculo(true);
-				limpa();
-				desabilita();
+				this.limpa();
+				this.desabilita();
 			} else {
 				this.error("Existem campos nulos no formulário");
 			}
@@ -76,7 +74,6 @@ public class AliquotaBean extends AliquotaBeanAbstract implements Serializable{
 				this.getAliquota().setCst(null);
 				this.setColCst(null);
 				this.getColCst();
-				AliquotaRN aliqRN = new AliquotaRN();
 				if (this.getTipCst().equals(TipoCst.ICMS.toString())) {
 					if (this.getTipTrib().equals(TipoTrib.ISENTO.toString())) {
 						this.getAliquota().setTipo(TipoTrib.ISENTO);
@@ -99,9 +96,9 @@ public class AliquotaBean extends AliquotaBeanAbstract implements Serializable{
 					}
 					this.getAliquota().setCst(this.getColCst());
 				}
-				Integer retorno = aliqRN.validaCampoNulo(this.getAliquota(),this.getColCst(), this.getTipTrib(), this.getTipCst());
+				Integer retorno = this.getAliqRN().validaCampoNulo(this.getAliquota(),this.getColCst(), this.getTipTrib(), this.getTipCst());
 				if (retorno == 0) {
-					aliqRN.altAliq(this.getAliquota());
+					this.getAliqRN().altAliq(this.getAliquota());
 					this.info("Alíquota alterada com sucesso");
 					this.setAlt(true);
 					this.setRem(true);
@@ -120,11 +117,10 @@ public class AliquotaBean extends AliquotaBeanAbstract implements Serializable{
 	}
 
 	public void remover() {
-		AliquotaRN aliqRN = new AliquotaRN();
 		try {
-			Integer retorno = aliqRN.ValidaRemocao(this.getAliquota());
+			Integer retorno = this.getAliqRN().ValidaRemocao(this.getAliquota());
 			if (retorno == 0) {
-				aliqRN.remove(this.getAliquota().getIdAliq());
+				this.getAliqRN().remove(this.getAliquota().getIdAliq());
 				this.info("Alíquota removida com sucesso");
 				this.setAlt(true);
 				this.setRem(true);
@@ -150,25 +146,23 @@ public class AliquotaBean extends AliquotaBeanAbstract implements Serializable{
 
 	public void buscaAliq() {
 		limpa();
-		AliquotaRN aliqRN = new AliquotaRN();
 		if (!this.getBusca().equals("") && !this.getFiltro().equals("")) {
 			if (this.getFiltro().equals("id")) {
-				this.setAliqList(aliqRN.consultaId(Long.parseLong(this.getBusca())));
+				this.setAliqList(this.getAliqRN().consultaId(Long.parseLong(this.getBusca())));
 			} else if (this.getFiltro().equals("aliq")) {
-				this.setAliqList(aliqRN.consultaAliq(Double.parseDouble(this.getBusca())));
+				this.setAliqList(this.getAliqRN().consultaAliq(Double.parseDouble(this.getBusca())));
 			} else if (this.getFiltro().equals("red")) {
-				this.setAliqList(aliqRN.consultaRed(Double.parseDouble(this.getBusca())));
+				this.setAliqList(this.getAliqRN().consultaRed(Double.parseDouble(this.getBusca())));
 			}
 		} else {
-			this.setAliqList(aliqRN.lista());
+			this.setAliqList(this.getAliqRN().lista());
 		}
 	}
 
 	public void editAliq() {
 		this.setTipCstFixo("");
-		AliquotaRN aliqRN = new AliquotaRN();
 		CodigoSituacaoTributariaRN cstRN = new CodigoSituacaoTributariaRN();
-		this.setAliquota(aliqRN.editUnid(this.getId()));
+		this.setAliquota(this.getAliqRN().editUnid(this.getId()));
 		this.setColCst(this.getAliquota().getCst());
 		if (this.getAliquota().getTipo() != null) {
 			for (CodigoSituacaoTributaria Cst : this.getColCst()) {

@@ -5,10 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 
 import br.com.softwareOptimus.entidades.Email;
 import br.com.softwareOptimus.entidades.Logradouro;
@@ -24,10 +22,11 @@ import br.com.softwareOptimus.entidades.RN.geral.LogradouroRN;
 import br.com.softwareOptimus.entidades.RN.geral.TelefoneRN;
 import br.com.softwareOptimus.fiscal.Regime;
 import br.com.softwareOptimus.fiscal.VigenciaRegime;
+import br.com.softwareOptimus.util.FacesUtil;
 
 @ManagedBean(name = "empresaBean")
 @ViewScoped
-public class EmpresaBean implements Serializable {
+public class EmpresaBean extends FacesUtil implements Serializable {
 
 	private static final long serialVersionUID = 8428074836380205888L;
 	private PessoaJuridica pessoaJuridica;
@@ -65,11 +64,7 @@ public class EmpresaBean implements Serializable {
 			if (retorno == 0) {
 				this.getPessoaJuridica().setTipoPessoaJuridica(TipoPessoaJuridica.FABRICANTE);
 				this.getEmpresaRN().salvar(this.getPessoaJuridica());
-
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-								"Empresa salva com sucesso"));
+				this.info("Empresa salva com sucesso");
 				setDisable(false);
 				this.setNovo(false);
 				this.setEnderecos(false);
@@ -77,17 +72,10 @@ public class EmpresaBean implements Serializable {
 				this.setEmail(false);
 				this.setTelefone(false);
 			} else {
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-								"Existem campos nulos no formulário"));
+				this.error("Existem campos nulos no formulário");
 			}
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na gravacao da empresa "
-									+ e.getMessage()));
+			this.error("Problemas na gravacao da empresa " + e.getMessage());
 		}
 	}
 
@@ -109,18 +97,11 @@ public class EmpresaBean implements Serializable {
 			logr.setPessoa(this.getPessoaJuridica());
 			logr.setMunicipio(municipio);
 			this.getLogrRN().salvar(logr);
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-							"Endereço salvo com sucesso"));
+			this.info("Endereço salvo com sucesso");
 			listaLogradouro();
 			this.logradouro = new Logradouro();
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na gravacao do endereço "
-									+ e.getMessage()));
+			this.error("Problemas na gravacao do endereço " + e.getMessage());
 		}
 	}
 
@@ -146,11 +127,7 @@ public class EmpresaBean implements Serializable {
 			this.setEmail(false);
 			this.setTelefone(false);
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na consulta do registro "
-									+ e.getMessage()));
+			this.error("Problemas na consulta do registro " + e.getMessage());
 		}
 	}
 
@@ -169,24 +146,14 @@ public class EmpresaBean implements Serializable {
 			try {
 				this.getRegime().setPessaoJuridica(this.getPessoaJuridica());
 				this.getEmpresaRN().salvarRegime(this.getRegime());
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-								"Regime salvo com sucesso"));
+				this.info("Regime salvo com sucesso");
 				listaRegime();
 				this.setRegime(null);
 			} catch (Exception e) {
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-								"Problemas na gravacao do regime"
-										+ e.getMessage()));
+				this.error("Problemas na gravacao do regime" + e.getMessage());
 			}
 		} else {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Ja existe esse regime cadastrado"));
+			this.error("Ja existe esse regime cadastrado");
 		}
 
 	}
@@ -203,11 +170,7 @@ public class EmpresaBean implements Serializable {
 				retorno = 1;
 			}
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na verificação do regime"
-									+ e.getMessage()));
+			this.error("Problemas na verificação do regime" + e.getMessage());
 			retorno = 1;
 		}
 		return retorno;
@@ -223,11 +186,7 @@ public class EmpresaBean implements Serializable {
 			this.getListaReg().clear();
 			this.setListaReg(this.getEmpresaRN().listaReg(this.getPessoaJuridica()));
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na listagem dos regimes"
-									+ e.getMessage()));
+			this.error("Problemas na listagem dos regimes" + e.getMessage());
 		}
 	}
 
@@ -265,35 +224,20 @@ public class EmpresaBean implements Serializable {
 	public void excluirRegime() {
 		try {
 			this.getEmpresaRN().excluirVigReg(this.getIdReg());
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-							"Regime excluido com sucesso"));
+			this.info("Regime excluido com sucesso");
 			listaRegime();
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance()
-					.addMessage(
-							null,
-							new FacesMessage(FacesMessage.SEVERITY_ERROR,
-									"Info", "Problemas na exclusão do regime"
-											+ e.getMessage()));
+			this.error("Problemas na exclusão do regime" + e.getMessage());
 		}
 	}
 
 	public void excluirLogr() {
 		try {
 			this.getLogrRN().excluirLogr(idLogr);
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-							"Logradouro excluido com sucesso"));
+			this.info("Logradouro excluido com sucesso");
 			listaLogradouro();
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na exclusão do logradouro"
-									+ e.getMessage()));
+			this.error("Problemas na exclusão do logradouro" + e.getMessage());
 		}
 	}
 
@@ -302,28 +246,17 @@ public class EmpresaBean implements Serializable {
 			this.getListaEmail().clear();
 			this.setListaEmail(this.getEmailRN().listaEmail(this.getPessoaJuridica()));
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance()
-					.addMessage(
-							null,
-							new FacesMessage(FacesMessage.SEVERITY_ERROR,
-									"Info", "Problemas na listagem de emails"
-											+ e.getMessage()));
+			this.error("Problemas na listagem de emails" + e.getMessage());
 		}
 	}
 
 	public void excluirEmail() {
 		try {
 			this.getEmailRN().excluir(this.getIdEmail());
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-							"Email excluido com sucesso"));
+			this.info("Email excluido com sucesso");
 			listaEmail();
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na exclusão do email" + e.getMessage()));
+			this.error("Problemas na exclusão do email" + e.getMessage());
 		}
 	}
 
@@ -332,10 +265,7 @@ public class EmpresaBean implements Serializable {
 		try {
 			checkNFe = this.getEmailRN().validaEmailNFE(this.getPessoaJuridica());
 			if (this.isPadraoNFE() && checkNFe == 1) {
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-								"Ja existe um email como padrão NFE"));
+				this.error("Ja existe um email como padrão NFE");
 			} else {
 				this.getEmails().setPessoa(this.getPessoaJuridica());
 				if (this.isPadraoNFE()) {
@@ -345,35 +275,22 @@ public class EmpresaBean implements Serializable {
 					this.getEmails().setPadraoNFe(pNfe);
 				}
 				this.getEmailRN().salvar(this.getEmails());
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-								"Email salvo com sucesso"));
+				this.info("Email salvo com sucesso");
 				this.setEmails(null);
 			}
 			listaEmail();
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na exclusão do email" + e.getMessage()));
+			this.error("Problemas na exclusão do email" + e.getMessage());
 		}
 	}
 
 	public void excluirTelefone() {
 		try {
 			this.getTelefoneRN().excluir(this.getIdTel());
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-							"Telefone excluido com sucesso"));
+			this.info("Telefone excluido com sucesso");
 			listaTelefone();
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas na exclusão do telefone"
-									+ e.getMessage()));
+			this.error("Problemas na exclusão do telefone" + e.getMessage());
 		}
 	}
 
@@ -382,12 +299,7 @@ public class EmpresaBean implements Serializable {
 			this.getListaTelefone().clear();
 			this.setListaTelefone(this.getTelefoneRN().listaTelefone(this.getPessoaJuridica()));
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance()
-					.addMessage(
-							null,
-							new FacesMessage(FacesMessage.SEVERITY_ERROR,
-									"Info", "Problemas em listar os telefones"
-											+ e.getMessage()));
+			this.error("Problemas em listar os telefones" + e.getMessage());
 		}
 	}
 
@@ -407,22 +319,13 @@ public class EmpresaBean implements Serializable {
 				this.getTelefoneRN().salvar(this.getTel());
 				this.setDddTel(null);
 				this.setTel(null);
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-								"Telefone salvo com sucesso"));
+				this.info("Telefone salvo com sucesso");
 				listaTelefone();
 			} else {
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-								"Existem campos nulos no formulário"));
+				this.error("Existem campos nulos no formulário");
 			}
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Problemas em salvar o telefone" + e.getMessage()));
+			this.error("Problemas em salvar o telefone" + e.getMessage());
 		}
 	}
 

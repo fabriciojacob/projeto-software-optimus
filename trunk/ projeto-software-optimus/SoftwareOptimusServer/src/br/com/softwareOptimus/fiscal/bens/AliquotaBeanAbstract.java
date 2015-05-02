@@ -6,6 +6,7 @@ import java.util.List;
 
 import br.com.softwareOptimus.fiscal.Aliquota;
 import br.com.softwareOptimus.fiscal.CodigoSituacaoTributaria;
+import br.com.softwareOptimus.fiscal.RN.AliquotaRN;
 import br.com.softwareOptimus.util.FacesUtil;
 
 public abstract class AliquotaBeanAbstract extends FacesUtil{
@@ -25,6 +26,7 @@ public abstract class AliquotaBeanAbstract extends FacesUtil{
 	public abstract void desabilita();
 	
 	private Aliquota aliquota;
+	private AliquotaRN aliqRN;
 	private CodigoSituacaoTributaria cst;
 	private CodigoSituacaoTributaria cstEnt;
 	private CodigoSituacaoTributaria cstSai;
@@ -270,7 +272,19 @@ public abstract class AliquotaBeanAbstract extends FacesUtil{
 		}
 		return tipCstFixo;
 	}
+	
 	public void setTipCstFixo(String tipCstFixo) {
 		this.tipCstFixo = tipCstFixo;
+	}
+	
+	public AliquotaRN getAliqRN() {
+		if(this.aliqRN == null){
+			this.aliqRN = new AliquotaRN();
+		}
+		return aliqRN;
+	}
+	
+	public void setAliqRN(AliquotaRN aliqRN) {
+		this.aliqRN = aliqRN;
 	}
 }
