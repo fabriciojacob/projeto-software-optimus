@@ -4,10 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 
 import br.com.softwareOptimus.entidades.Email;
 import br.com.softwareOptimus.entidades.Logradouro;
@@ -22,26 +20,29 @@ import br.com.softwareOptimus.entidades.RN.ParticipanteRN;
 import br.com.softwareOptimus.entidades.RN.geral.EmailRN;
 import br.com.softwareOptimus.entidades.RN.geral.LogradouroRN;
 import br.com.softwareOptimus.entidades.RN.geral.TelefoneRN;
+import br.com.softwareOptimus.util.FacesUtil;
 
 @ManagedBean
 @ViewScoped
-public class ParticipanteBean implements Serializable{
+public class ParticipanteBean extends FacesUtil implements Serializable{
 
 	private static final long serialVersionUID = 8728030689995236693L;
-	private PessoaFisica pessoaFisica = new PessoaFisica();
-	private PessoaJuridica pessoaJuridica = new PessoaJuridica();
+	private PessoaFisica pessoaFisica;
+	private PessoaJuridica pessoaJuridica;
 	private Long id, idLogr, idTel, idEmail;
-	private List<Email> listaEmail = new ArrayList<>();
-	private List<Logradouro> listaEnd = new ArrayList<>();
-	public List<PessoaFisica> listaPessoaFisica = new ArrayList<>();
-	public List<PessoaJuridica> listaPessoaJuridica = new ArrayList<>();
+	private List<Email> listaEmail;
+	private List<Logradouro> listaEnd;
+	public List<PessoaFisica> listaPessoaFisica;
+	public List<PessoaJuridica> listaPessoaJuridica;
 	private ParticipanteRN participanteRN;
 	private LogradouroRN logrRN;
-	private Logradouro logradouro = new Logradouro();
+	private EmailRN emailRN;
+	private TelefoneRN telefoneRN;
+	private Logradouro logradouro;
 	private String tipoLogrSelecionado = null, selecionadaPessoa = null,
 			tipoParticipante = null, tipoPJ = null, filtro = null,
 			textoConsulta = null, tipoSelecionadoTel = null, dddTel;
-	private List<Telefone> listaTelefone = new ArrayList<>();
+	private List<Telefone> listaTelefone;
 	private boolean salvar = true, cancelar = true, enderecos = true,
 			salReg = true, email = true, telefone = true, padraoNFE,
 			novo = false, consulta = false, tipoParPerFis = true,
@@ -49,464 +50,395 @@ public class ParticipanteBean implements Serializable{
 			rgParPesFis = true, tipoParPerJur = true, inaParPerJur = true,
 			nomeParPesJur = true, razParPesJur = true, cnpjParPesJur = true,
 			inscParPesJur = true, cnaeParPesJur = true;
-	private Telefone tel = new Telefone();
-	private Email emails = new Email();
+	private Telefone tel;
+	private Email emails;
 
 	public void salvarPJ() {
-		this.participanteRN = new ParticipanteRN();
-		if (tipoParticipante.equals(NaturezaPessoa.FORNECEDOR.toString())) {
-			this.pessoaJuridica.setNaturezaPessoa(NaturezaPessoa.FORNECEDOR);
-		} else if (tipoParticipante.equals(NaturezaPessoa.CLIENTE.toString())) {
-			this.pessoaJuridica.setNaturezaPessoa(NaturezaPessoa.CLIENTE);
-		} else if (tipoParticipante.equals(NaturezaPessoa.TRANSPORTADORA
-				.toString())) {
-			this.pessoaJuridica.equals(NaturezaPessoa.TRANSPORTADORA);
+		if (this.getTipoParticipante().equals(NaturezaPessoa.FORNECEDOR.toString())) {
+			this.getPessoaJuridica().setNaturezaPessoa(NaturezaPessoa.FORNECEDOR);
+		} else if (this.getTipoParticipante().equals(NaturezaPessoa.CLIENTE.toString())) {
+			this.getPessoaJuridica().setNaturezaPessoa(NaturezaPessoa.CLIENTE);
+		} else if (this.getTipoParticipante().equals(NaturezaPessoa.TRANSPORTADORA.toString())) {
+			this.getPessoaJuridica().setNaturezaPessoa(NaturezaPessoa.TRANSPORTADORA);
 		} else {
-			this.pessoaJuridica.equals(NaturezaPessoa.CONTADOR);
+			this.getPessoaJuridica().setNaturezaPessoa(NaturezaPessoa.CONTADOR);
 		}
-		Integer retorno = this.participanteRN.validaCampoNuloPJ(pessoaJuridica);
+		Integer retorno = this.getParticipanteRN().validaCampoNuloPJ(this.getPessoaJuridica());
 		if (retorno == 0) {
 			try {
-				participanteRN.salvarPJ(pessoaJuridica);
-				msgAcerto("Registro salvo com sucesso");
-				this.novo = false;
-				this.enderecos = false;
-				this.salReg = false;
-				this.email = false;
-				this.telefone = false;
+				this.getParticipanteRN().salvarPJ(this.getPessoaJuridica());
+				this.info("Registro salvo com sucesso");
+				this.setNovo(false);
+				this.setEnderecos(false);
+				this.setSalReg(false);
+				this.setEmail(false);
+				this.setTelefone(false);
 			} catch (Exception e) {
-				msgErro("Problemas na gravacao ", e);
+				this.error("Problemas na gravacao " + e.getMessage());
 			}
-
 		} else {
-			msgNull("Existem campos Nulo no Formulário");
+			this.error("Existem campos Nulo no Formulário");
 		}
 	}
 
 	public void salvarPF() {
 		try {
-			participanteRN = new ParticipanteRN();
-			if (tipoParticipante.equals(NaturezaPessoa.FORNECEDOR.toString())) {
-				this.pessoaFisica.setNaturezaPessoa(NaturezaPessoa.FORNECEDOR);
-			} else if (tipoParticipante.equals(NaturezaPessoa.CLIENTE
-					.toString())) {
-				this.pessoaFisica.setNaturezaPessoa(NaturezaPessoa.CLIENTE);
-			} else if (tipoParticipante.equals(NaturezaPessoa.TRANSPORTADORA
-					.toString())) {
-				this.pessoaFisica
-						.setNaturezaPessoa(NaturezaPessoa.TRANSPORTADORA);
+			if (this.getTipoParticipante().equals(NaturezaPessoa.FORNECEDOR.toString())) {
+				this.getPessoaFisica().setNaturezaPessoa(NaturezaPessoa.FORNECEDOR);
+			} else if (this.getTipoParticipante().equals(NaturezaPessoa.CLIENTE.toString())) {
+				this.getPessoaFisica().setNaturezaPessoa(NaturezaPessoa.CLIENTE);
+			} else if (this.getTipoParticipante().equals(NaturezaPessoa.TRANSPORTADORA.toString())) {
+				this.getPessoaFisica().setNaturezaPessoa(NaturezaPessoa.TRANSPORTADORA);
 			} else {
-				this.pessoaFisica.setNaturezaPessoa(NaturezaPessoa.CONTADOR);
+				this.getPessoaFisica().setNaturezaPessoa(NaturezaPessoa.CONTADOR);
 			}
-			Integer retorno = this.participanteRN
-					.validaCampoNuloPF(this.pessoaFisica);
+			Integer retorno = this.getParticipanteRN().validaCampoNuloPF(this.getPessoaFisica());
 			if (retorno == 0) {
-				participanteRN.salvarPF(pessoaFisica);
-				msgAcerto("Registro salvo com sucesso");
-				this.novo = false;
-				this.enderecos = false;
-				this.salReg = false;
-				this.email = false;
-				this.telefone = false;
+				this.getParticipanteRN().salvarPF(this.getPessoaFisica());
+				this.info("Registro salvo com sucesso");
+				this.setNovo(false);
+				this.setEnderecos(false);
+				this.setSalReg(false);
+				this.setEmail(false);
+				this.setTelefone(false);
 			} else {
-				msgErro("Existem campos não preenchidos", null);
+				this.error("Existem campos não preenchidos");
 			}
 		} catch (Exception e) {
-			msgErro("Problemas ao salvar", e);
+			this.error("Problemas ao salvar" + e.getMessage());
 		}
 	}
 
 	public void salvarLogr(Municipio municipio) {
-		logradouro.setIdEndereco(null);
-		if (tipoLogrSelecionado.equals(TipoLogradouro.COBRANCA.toString())) {
-			logradouro.setTipoLogr(TipoLogradouro.COBRANCA);
-		} else if (tipoLogrSelecionado
-				.equals(TipoLogradouro.ENTREGA.toString())) {
-			logradouro.setTipoLogr(TipoLogradouro.ENTREGA);
-		} else if (tipoLogrSelecionado.equals(TipoLogradouro.COMERCIAL
-				.toString())) {
-			logradouro.setTipoLogr(TipoLogradouro.COMERCIAL);
+		this.getLogradouro().setIdEndereco(null);
+		if (this.getTipoLogrSelecionado().equals(TipoLogradouro.COBRANCA.toString())) {
+			this.getLogradouro().setTipoLogr(TipoLogradouro.COBRANCA);
+		} else if (this.getTipoLogrSelecionado().equals(TipoLogradouro.ENTREGA.toString())) {
+			this.getLogradouro().setTipoLogr(TipoLogradouro.ENTREGA);
+		} else if (this.getTipoLogrSelecionado().equals(TipoLogradouro.COMERCIAL.toString())) {
+			this.getLogradouro().setTipoLogr(TipoLogradouro.COMERCIAL);
 		} else {
-			logradouro.setTipoLogr(TipoLogradouro.RESIDENCIAL);
+			this.getLogradouro().setTipoLogr(TipoLogradouro.RESIDENCIAL);
 		}
-
 		try {
-			logrRN = new LogradouroRN();
 			try {
-				if (this.pessoaFisica.getIdPessoa() == null) {
-					logradouro.setPessoa(this.pessoaJuridica);
+				if (this.getPessoaFisica().getIdPessoa() == null) {
+					this.getLogradouro().setPessoa(this.getPessoaJuridica());
 				} else {
-					logradouro.setPessoa(this.pessoaFisica);
+					this.getLogradouro().setPessoa(this.getPessoaFisica());
 				}
 			} catch (NullPointerException e) {
-				logradouro.setPessoa(this.pessoaJuridica);
+				this.getLogradouro().setPessoa(this.getPessoaJuridica());
 			}
-			logradouro.setMunicipio(municipio);
-			logrRN.salvar(logradouro);
-			msgAcerto("Logradouro salvo com sucesso");
+			this.getLogradouro().setMunicipio(municipio);
+			this.getLogrRN().salvar(this.getLogradouro());
+			this.info("Logradouro salvo com sucesso");
 			listaLogradouro();
-			this.logradouro = new Logradouro();
+			this.setLogradouro(null);
 		} catch (Exception e) {
-			msgErro("Problemas na gravacao do endereço", e);
+			this.error("Problemas na gravacao do endereço"+ e.getMessage());
 		}
 	}
 
 	public void listaLogradouro() {
-		this.participanteRN = new ParticipanteRN();
-		if (this.listaEnd != null) {
-			this.listaEnd.clear();
-		}
+		this.getListaEnd().clear();
 		try {
 			try {
-				if (this.pessoaFisica.getIdPessoa() == 0) {
-					this.listaEnd = participanteRN
-							.listaLogr(this.pessoaJuridica);
+				if (this.getPessoaFisica().getIdPessoa() == 0) {
+					this.setListaEnd(this.getParticipanteRN().listaLogr(this.getPessoaJuridica()));
 				} else {
-					this.listaEnd = participanteRN.listaLogr(this.pessoaFisica);
+					this.setListaEnd(this.getParticipanteRN().listaLogr(this.getPessoaFisica()));
 				}
 			} catch (NullPointerException e) {
-				this.listaEnd = participanteRN.listaLogr(this.pessoaJuridica);
+				this.setListaEnd(this.getParticipanteRN().listaLogr(this.getPessoaFisica()));
 			}
 		} catch (Exception e) {
-			msgErro("Problemas na listagem dos logradouros", e);
+			this.error("Problemas na listagem dos logradouros"+ e.getMessage());
 		}
 	}
 
 	public void novo() {
-		this.pessoaJuridica = new PessoaJuridica();
-		this.pessoaFisica = new PessoaFisica();
-		this.listaEnd = new ArrayList<>();
-		this.listaEmail = new ArrayList<>();
-		this.listaTelefone = new ArrayList<>();
-		this.salvar = false;
-		this.cancelar = false;
-		this.novo = true;
-		this.salReg = true;
-		this.enderecos = true;
-		this.email = true;
-		this.telefone = true;
+		this.setPessoaJuridica(null);
+		this.setPessoaFisica(null);
+		this.setListaEnd(null);
+		this.setListaEmail(null);
+		this.setListaTelefone(null);
+		this.setSalvar(false);
+		this.setCancelar(false);
+		this.setNovo(true);
+		this.setSalReg(true);
+		this.setEnderecos(true);
+		this.setEmail(true);
+		this.setTelefone(true);
 		habilitar();
 	}
 
 	public void pesquisaPJ() {
-		this.participanteRN = new ParticipanteRN();
 		String cnpj = "cnpj";
 		try {
-			if (this.listaPessoaJuridica != null) {
-				this.listaPessoaJuridica.clear();
-			}
-			if (!textoConsulta.equals("") && !filtro.equals("")) {
-				if (filtro.equals(cnpj)) {
-					this.listaPessoaJuridica = this.participanteRN
-							.listaPJCNPJ(textoConsulta);
+			this.getListaPessoaJuridica().clear();
+			if (!this.getTextoConsulta().equals("") && !this.getFiltro().equals("")) {
+				if (this.getFiltro().equals(cnpj)) {
+					this.setListaPessoaJuridica(this.getParticipanteRN().listaPJCNPJ(this.getTextoConsulta()));
 				} else {
-					this.listaPessoaJuridica = this.participanteRN
-							.listaPJNome(textoConsulta);
+					this.setListaPessoaJuridica(this.getParticipanteRN().listaPJNome(this.getTextoConsulta()));
 				}
 			} else {
-				this.listaPessoaJuridica = this.participanteRN
-						.listaPJNome(textoConsulta);
+				this.setListaPessoaJuridica(this.getParticipanteRN().listaPJNome(this.getTextoConsulta()));
 			}
-			this.salvar = false;
-			this.cancelar = false;
-			this.enderecos = false;
-			this.salReg = false;
-			this.email = false;
-			this.telefone = false;
+			this.setSalvar(false);
+			this.setCancelar(false);
+			this.setSalReg(false);
+			this.setEnderecos(false);
+			this.setEmail(false);
+			this.setTelefone(false);
 		} catch (Exception e) {
-			msgErro("Problemas na pesquisa", e);
+			this.error("Problemas na pesquisa"+ e.getMessage());
 		}
 
 	}
 
 	public void pesquisaPF() {
-		this.participanteRN = new ParticipanteRN();
 		String cpf = "cpf";
 		try {
-			if (this.listaPessoaFisica != null) {
-				this.listaPessoaFisica.clear();
-			}
-			if (!textoConsulta.equals("") && !filtro.equals("")) {
-				if (filtro.equals(cpf)) {
-					this.listaPessoaFisica = this.participanteRN
-							.listaPFCPF(textoConsulta);
+			this.getListaPessoaFisica().clear();
+			if (!this.getTextoConsulta().equals("") && !this.getFiltro().equals("")) {
+				if (this.getFiltro().equals(cpf)) {
+					this.setListaPessoaFisica(this.getParticipanteRN().listaPFCPF(this.getTextoConsulta()));
 				} else if (filtro.equals("nomeFantasia")) {
-					this.listaPessoaFisica = this.participanteRN
-							.listaPFNome(textoConsulta);
+					this.setListaPessoaFisica(this.getParticipanteRN().listaPFNome(this.getTextoConsulta()));
 				}
 			} else {
-				this.listaPessoaFisica = this.participanteRN
-						.listaPFNome(textoConsulta);
+				this.setListaPessoaFisica(this.getParticipanteRN().listaPFNome(this.getTextoConsulta()));
 			}
-			this.salvar = false;
-			this.cancelar = false;
-			this.enderecos = false;
-			this.salReg = false;
-			this.email = false;
-			this.telefone = false;
+			this.setSalvar(false);
+			this.setCancelar(false);
+			this.setSalReg(false);
+			this.setEnderecos(false);
+			this.setEmail(false);
+			this.setTelefone(false);
 		} catch (Exception e) {
-			msgErro("Problemas na pesquisa", e);
+			this.error("Problemas na pesquisa"+ e.getMessage());
 		}
-
-	}
-
-	public void msgAcerto(String msg) {
-		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", msg));
-	}
-
-	public void msgErro(String msg, Exception e) {
-		FacesContext.getCurrentInstance().addMessage(
-				null,
-				new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info", msg
-						+ e.getMessage()));
-	}
-
-	public void msgNull(String msg) {
-		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info", msg));
 	}
 
 	public void editar() {
-		this.participanteRN = new ParticipanteRN();
 		try {
-			this.pessoaFisica = this.participanteRN.carregaIDPF(id);
-			this.tipoParticipante = this.pessoaFisica.getNaturezaPessoa()
-					.toString();
+			this.setPessoaFisica(this.getParticipanteRN().carregaIDPF(this.getId()));
+			this.setTipoParticipante(this.getPessoaFisica().getNaturezaPessoa().toString());
 			habilitar();
 		} catch (Exception e) {
-			msgErro("Problemas na edição", e);
+			this.error("Problemas na edição"+ e.getMessage());
 		}
 		listaLogradouro();
 		listaEmail();
 		listaTelefone();
-		this.salvar = false;
-		this.cancelar = false;
-		this.enderecos = false;
-		this.salReg = false;
-		this.email = false;
-		this.telefone = false;
+		this.setSalvar(false);
+		this.setCancelar(false);
+		this.setSalReg(false);
+		this.setEnderecos(false);
+		this.setEmail(false);
+		this.setTelefone(false);
 	}
 
 	public void editarPJ() {
-		this.participanteRN = new ParticipanteRN();
 		try {
-			this.pessoaJuridica = this.participanteRN.carregaIDPJ(id);
-			this.tipoParticipante = this.pessoaJuridica.getNaturezaPessoa()
-					.toString();
+			this.setPessoaJuridica(this.getParticipanteRN().carregaIDPJ(this.getId()));
+			this.setTipoParticipante(this.getPessoaJuridica().getNaturezaPessoa().toString());
 			habilitar();
 		} catch (Exception e) {
-			msgErro("Problemas na edição", e);
+			this.error("Problemas na edição"+ e.getMessage());
 		}
 		listaLogradouro();
 		listaEmail();
 		listaTelefone();
-		this.salvar = false;
-		this.cancelar = false;
-		this.enderecos = false;
-		this.salReg = false;
-		this.email = false;
-		this.telefone = false;
+		this.setSalvar(false);
+		this.setCancelar(false);
+		this.setSalReg(false);
+		this.setEnderecos(false);
+		this.setEmail(false);
+		this.setTelefone(false);
 	}
 
 	public void excluirLogr() {
-		LogradouroRN logrRN = new LogradouroRN();
 		try {
-			logrRN.excluirLogr(idLogr);
-			msgAcerto("Logradouro excluido com sucesso");
+			this.getLogrRN().excluirLogr(idLogr);
+			this.info("Logradouro excluido com sucesso");
 			listaLogradouro();
 		} catch (Exception e) {
-			msgErro("Problemas na exclusão do logradouro", e);
+			this.error("Problemas na exclusão do logradouro"+ e.getMessage());
 		}
 	}
 
 	public void listaEmail() {
-		EmailRN emailRN = new EmailRN();
 		try {
-			if (this.listaEmail != null) {
-				this.listaEmail.clear();
-			}
-			if (this.pessoaFisica.getIdPessoa() == null) {
-				this.listaEmail = emailRN.listaEmail(pessoaJuridica);
+			this.getListaEmail().clear();
+			if (this.getPessoaFisica().getIdPessoa() == null) {
+				this.setListaEmail(this.getEmailRN().listaEmail(this.getPessoaJuridica()));
 			} else {
-				this.listaEmail = emailRN.listaEmail(pessoaFisica);
+				this.setListaEmail(this.getEmailRN().listaEmail(this.getPessoaFisica()));
 			}
 		} catch (Exception e) {
-			msgErro("Problemas na listagem dos emails", e);
+			this.error("Problemas na listagem dos emails"+ e.getMessage());
 		}
 	}
 
 	public void excluirEmail() {
-		EmailRN emailRN = new EmailRN();
 		try {
-			emailRN.excluir(idEmail);
-			msgAcerto("Email excluido com sucesso");
+			this.getEmailRN().excluir(idEmail);
+			this.info("Email excluido com sucesso");
 			listaEmail();
 		} catch (Exception e) {
-			msgErro("Problemas na exclusão do email", e);
+			this.error("Problemas na exclusão do email"+ e.getMessage());
 		}
 	}
 
 	public void salvarEmail() {
-		EmailRN emailRN = new EmailRN();
 		Integer pNfe = 0, checkNFe = 0;
-		Integer retorno = emailRN.validaCampoNulo(this.emails);
+		Integer retorno = this.getEmailRN().validaCampoNulo(this.getEmails());
 		if (retorno == 0) {
 			try {
 				try {
-					if (this.pessoaFisica.getIdPessoa() == 0) {
-						checkNFe = emailRN.validaEmailNFE(pessoaJuridica);
+					if (this.getPessoaFisica().getIdPessoa() == 0) {
+						checkNFe = this.getEmailRN().validaEmailNFE(this.getPessoaJuridica());
 					} else {
-						checkNFe = emailRN.validaEmailNFE(pessoaFisica);
+						checkNFe = this.getEmailRN().validaEmailNFE(this.getPessoaFisica());
 					}
 				} catch (NullPointerException e) {
-					checkNFe = emailRN.validaEmailNFE(pessoaJuridica);
+					checkNFe = this.getEmailRN().validaEmailNFE(this.getPessoaJuridica());
 				}
 			} catch (Exception e) {
-				msgErro("Problemas na validação do email", e);
+				this.error("Problemas na validação do email"+ e.getMessage());
 			}
-			if (padraoNFE && checkNFe == 1) {
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-								"Ja existe um email como padrão NFE"));
+			if (this.isPadraoNFE() && checkNFe == 1) {
+				this.error("Ja existe um email como padrão NFE");
 			} else {
 				try {
-					if (this.pessoaFisica.getIdPessoa() == 0) {
-						emails.setPessoa(pessoaJuridica);
+					if (this.getPessoaFisica().getIdPessoa() == 0) {
+						this.getEmails().setPessoa(this.getPessoaJuridica());
 					} else {
-						emails.setPessoa(pessoaFisica);
+						this.getEmails().setPessoa(this.getPessoaFisica());
 					}
 				} catch (NullPointerException e) {
-					emails.setPessoa(pessoaJuridica);
+					this.getEmails().setPessoa(this.getPessoaJuridica());
 				}
-				if (padraoNFE) {
+				if (this.isPadraoNFE()) {
 					pNfe = 1;
-					emails.setPadraoNFe(pNfe);
+					this.getEmails().setPadraoNFe(pNfe);
 				} else {
-					emails.setPadraoNFe(pNfe);
+					this.getEmails().setPadraoNFe(pNfe);
 				}
 				try {
-					emailRN.salvar(emails);
-					msgAcerto("Email salvo com sucesso");
-					this.emails = new Email();
+					this.getEmailRN().salvar(this.getEmails());
+					this.info("Email salvo com sucesso");
+					this.setEmails(null);
 					listaEmail();
 				} catch (Exception e) {
-					msgErro("Problemas na inclusão do email", e);
+					this.error("Problemas na inclusão do email"+ e.getMessage());
 				}
 			}
 		} else {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-							"Existem campos nulos no formulário"));
+			this.error("Existem campos nulos no formulário");
 		}
 	}
 
 	public void excluirTelefone() {
-		TelefoneRN telefoneRN = new TelefoneRN();
 		try {
-			telefoneRN.excluir(idTel);
-			msgAcerto("Telefone excluido com sucesso");
+			this.getTelefoneRN().excluir(idTel);
+			this.info("Telefone excluido com sucesso");
 			listaTelefone();
 		} catch (Exception e) {
-			msgErro("Problemas na exclusao do telefone", e);
+			this.error("Problemas na exclusao do telefone"+ e.getMessage());
 		}
 	}
 
 	public void listaTelefone() {
-		TelefoneRN telefoneRN = new TelefoneRN();
 		try {
-			if (this.listaTelefone != null) {
-				this.listaTelefone.clear();
-			}
+			this.getListaTelefone().clear();
 			try {
-				if (this.pessoaFisica.getIdPessoa() == 0) {
-					this.listaTelefone = telefoneRN
-							.listaTelefone(pessoaJuridica);
+				if (this.getPessoaFisica().getIdPessoa() == 0) {
+					this.setListaTelefone(this.getTelefoneRN().listaTelefone(this.getPessoaJuridica()));
 				} else {
-					this.listaTelefone = telefoneRN.listaTelefone(pessoaFisica);
+					this.setListaTelefone(this.getTelefoneRN().listaTelefone(this.getPessoaFisica()));
 				}
 			} catch (NullPointerException e) {
-				this.listaTelefone = telefoneRN.listaTelefone(pessoaJuridica);
+				this.setListaTelefone(this.getTelefoneRN().listaTelefone(this.getPessoaJuridica()));
 			}
 		} catch (Exception e) {
-			msgErro("Problemas em listar os telefones", e);
+			this.error("Problemas em listar os telefones"+ e.getMessage());
 		}
 	}
 
 	public void salvarTelefone() {
-		TelefoneRN telefoneRN = new TelefoneRN();
-		if (tipoSelecionadoTel.equals(TipoTelefone.CELULAR.toString())) {
-			this.tel.setTipoFone(TipoTelefone.CELULAR);
-		} else if (tipoSelecionadoTel.equals(TipoTelefone.COMERCIAL.toString())) {
-			this.tel.setTipoFone(TipoTelefone.COMERCIAL);
-		} else if (tipoSelecionadoTel.equals(TipoTelefone.RESIDENCIAL
-				.toString())) {
-			this.tel.setTipoFone(TipoTelefone.RESIDENCIAL);
+		if (this.getTipoSelecionadoTel().equals(TipoTelefone.CELULAR.toString())) {
+			this.getTel().setTipoFone(TipoTelefone.CELULAR);
+		} else if (this.getTipoSelecionadoTel().equals(TipoTelefone.COMERCIAL.toString())) {
+			this.getTel().setTipoFone(TipoTelefone.COMERCIAL);
+		} else if (this.getTipoSelecionadoTel().equals(TipoTelefone.RESIDENCIAL.toString())) {
+			this.getTel().setTipoFone(TipoTelefone.RESIDENCIAL);
 		}
 		try {
 			try {
-				if (this.pessoaFisica.getIdPessoa() == 0) {
-					this.tel.setPessoa(pessoaJuridica);
+				if (this.getPessoaFisica().getIdPessoa() == 0) {
+					this.getTel().setPessoa(this.getPessoaJuridica());
 				} else {
-					this.tel.setPessoa(pessoaFisica);
+					this.getTel().setPessoa(this.getPessoaFisica());
 				}
 			} catch (NullPointerException e) {
-				this.tel.setPessoa(pessoaJuridica);
+				this.getTel().setPessoa(this.getPessoaJuridica());
 			}
-			Integer retorno = telefoneRN.validaCampoNulo(tel, dddTel);
+			Integer retorno = this.getTelefoneRN().validaCampoNulo(this.getTel(), this.getDddTel());
 			if (retorno == 0) {
-				this.tel.setNumero(this.dddTel + this.tel.getNumero());
-				telefoneRN.salvar(tel);
-				msgAcerto("Telefone salvo com sucesso");
-				this.dddTel = new String();
+				this.getTel().setNumero(this.getDddTel() + this.getTel().getNumero());
+				this.getTelefoneRN().salvar(this.getTel());
+				this.info("Telefone salvo com sucesso");
+				this.setDddTel(null);
 				listaTelefone();
-				this.tel = new Telefone();
+				this.setTel(null);
 			} else {
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-								"Existem campos nulos no formulário"));
+				this.error("Existem campos nulos no formulário");
 			}
 		} catch (Exception e) {
-			msgErro("Problemas em salvar o telefone", e);
+			this.error("Problemas em salvar o telefone"+ e.getMessage());
 		}
 	}
 
 	public void habilitar() {
-		this.tipoParPerFis = false;
-		this.inaParPerFis = false;
-		this.nomeParPesFis = false;
-		this.cpfParPesFis = false;
-		this.rgParPesFis = false;
+		this.setTipoParPerFis(false);
+		this.setInaParPerFis(false);
+		this.setNomeParPesFis(false);
+		this.setCpfParPesFis(false);
+		this.setRgParPesFis(false);
 		// ***********************
-		this.tipoParPerJur = false;
-		this.inaParPerJur = false;
-		this.nomeParPesJur = false;
-		this.razParPesJur = false;
-		this.cnpjParPesJur = false;
-		this.inscParPesJur = false;
-		this.cnaeParPesJur = false;
+		this.setTipoParPerJur(false);
+		this.setInaParPerJur(false);
+		this.setNomeParPesJur(false);
+		this.setRazParPesJur(false);
+		this.setCnpjParPesJur(false);
+		this.setInscParPesJur(false);
+		this.setCnaeParPesJur(false);
 	}
 
 	public void desabilitar() {
-		this.tipoParPerFis = true;
-		this.inaParPerFis = true;
-		this.nomeParPesFis = true;
-		this.cpfParPesFis = true;
-		this.rgParPesFis = true;
+		this.setTipoParPerFis(true);
+		this.setInaParPerFis(true);
+		this.setNomeParPesFis(true);
+		this.setCpfParPesFis(true);
+		this.setRgParPesFis(true);
 		// ***********************
-		this.tipoParPerJur = true;
-		this.inaParPerJur = true;
-		this.nomeParPesJur = true;
-		this.razParPesJur = true;
-		this.cnpjParPesJur = true;
-		this.inscParPesJur = true;
-		this.cnaeParPesJur = true;
+		this.setTipoParPerJur(true);
+		this.setInaParPerJur(true);
+		this.setNomeParPesJur(true);
+		this.setRazParPesJur(true);
+		this.setCnpjParPesJur(true);
+		this.setInscParPesJur(true);
+		this.setCnaeParPesJur(true);
 	}
 
 	public String getDddTel() {
+		if(this.dddTel == null){
+			this.dddTel = new String();
+		}
 		return dddTel;
 	}
 
@@ -515,6 +447,9 @@ public class ParticipanteBean implements Serializable{
 	}
 
 	public ParticipanteRN getParticipanteRN() {
+		if(this.participanteRN == null){
+			this.participanteRN = new ParticipanteRN();
+		}
 		return participanteRN;
 	}
 
@@ -571,6 +506,9 @@ public class ParticipanteBean implements Serializable{
 	}
 
 	public String getTipoPJ() {
+		if(this.tipoPJ == null){
+			this.tipoPJ = new String();
+		}
 		return tipoPJ;
 	}
 
@@ -579,6 +517,9 @@ public class ParticipanteBean implements Serializable{
 	}
 
 	public String getSelecionadaPessoa() {
+		if(this.selecionadaPessoa == null){
+			this.selecionadaPessoa = new String();
+		}
 		return selecionadaPessoa;
 	}
 
@@ -587,6 +528,9 @@ public class ParticipanteBean implements Serializable{
 	}
 
 	public List<Logradouro> getListaEnd() {
+		if(this.listaEnd == null){
+			this.listaEnd  = new ArrayList<Logradouro>();
+		}
 		return listaEnd;
 	}
 
@@ -595,6 +539,9 @@ public class ParticipanteBean implements Serializable{
 	}
 
 	public Logradouro getLogradouro() {
+		if(this.logradouro == null){
+			this.logradouro  = new Logradouro();
+		}
 		return logradouro;
 	}
 
@@ -603,6 +550,9 @@ public class ParticipanteBean implements Serializable{
 	}
 
 	public String getTipoLogrSelecionado() {
+		if(this.tipoLogrSelecionado == null){
+			this.tipoLogrSelecionado = new String();
+		}
 		return tipoLogrSelecionado;
 	}
 
@@ -683,6 +633,9 @@ public class ParticipanteBean implements Serializable{
 	}
 
 	public List<Email> getListaEmail() {
+		if(this.listaEmail == null){
+			this.listaEmail  = new ArrayList<Email>();
+		}
 		return listaEmail;
 	}
 
@@ -691,6 +644,9 @@ public class ParticipanteBean implements Serializable{
 	}
 
 	public List<Telefone> getListaTelefone() {
+		if(this.listaTelefone == null){
+			this.listaTelefone  = new ArrayList<Telefone>();
+		}
 		return listaTelefone;
 	}
 
@@ -699,6 +655,9 @@ public class ParticipanteBean implements Serializable{
 	}
 
 	public PessoaFisica getPessoaFisica() {
+		if(this.pessoaFisica == null){
+			this.pessoaFisica  = new PessoaFisica();
+		}
 		return pessoaFisica;
 	}
 
@@ -707,6 +666,9 @@ public class ParticipanteBean implements Serializable{
 	}
 
 	public PessoaJuridica getPessoaJuridica() {
+		if(this.pessoaJuridica == null){
+			this.pessoaJuridica = new PessoaJuridica();
+		}
 		return pessoaJuridica;
 	}
 
@@ -747,6 +709,9 @@ public class ParticipanteBean implements Serializable{
 	}
 
 	public String getTipoParticipante() {
+		if(this.tipoParticipante == null){
+			this.tipoParticipante = new String();
+		}
 		return tipoParticipante;
 	}
 
@@ -755,6 +720,9 @@ public class ParticipanteBean implements Serializable{
 	}
 
 	public List<PessoaFisica> getListaPessoaFisica() {
+		if(this.listaPessoaFisica == null){
+			this.listaPessoaFisica  = new ArrayList<PessoaFisica>();
+		}
 		return listaPessoaFisica;
 	}
 
@@ -763,6 +731,9 @@ public class ParticipanteBean implements Serializable{
 	}
 
 	public String getFiltro() {
+		if(this.filtro == null){
+			this.filtro = new String();
+		}
 		return filtro;
 	}
 
@@ -771,6 +742,9 @@ public class ParticipanteBean implements Serializable{
 	}
 
 	public String getTextoConsulta() {
+		if(this.textoConsulta == null){
+			this.textoConsulta = new String();
+		}
 		return textoConsulta;
 	}
 
@@ -779,6 +753,9 @@ public class ParticipanteBean implements Serializable{
 	}
 
 	public String getTipoSelecionadoTel() {
+		if(this.tipoSelecionadoTel == null){
+			this.tipoSelecionadoTel = new String();
+		}
 		return tipoSelecionadoTel;
 	}
 
@@ -787,6 +764,9 @@ public class ParticipanteBean implements Serializable{
 	}
 
 	public Telefone getTel() {
+		if(this.tel == null){
+			this.tel  = new Telefone();
+		}
 		return tel;
 	}
 
@@ -795,6 +775,9 @@ public class ParticipanteBean implements Serializable{
 	}
 
 	public Email getEmails() {
+		if(this.emails == null){
+			this.emails  = new Email();
+		}
 		return emails;
 	}
 
@@ -803,6 +786,9 @@ public class ParticipanteBean implements Serializable{
 	}
 
 	public List<PessoaJuridica> getListaPessoaJuridica() {
+		if(this.listaPessoaJuridica == null){
+			this.listaPessoaJuridica = new ArrayList<PessoaJuridica>();
+		}
 		return listaPessoaJuridica;
 	}
 
@@ -866,4 +852,25 @@ public class ParticipanteBean implements Serializable{
 		this.cnaeParPesJur = cnaeParPesJur;
 	}
 
+	public EmailRN getEmailRN() {
+		if(this.emailRN == null){
+			this.emailRN = new EmailRN();
+		}
+		return emailRN;
+	}
+
+	public void setEmailRN(EmailRN emailRN) {
+		this.emailRN = emailRN;
+	}
+
+	public TelefoneRN getTelefoneRN() {
+		if(this.telefoneRN == null){
+			this.telefoneRN = new TelefoneRN();
+		}
+		return telefoneRN;
+	}
+
+	public void setTelefoneRN(TelefoneRN telefoneRN) {
+		this.telefoneRN = telefoneRN;
+	}
 }
