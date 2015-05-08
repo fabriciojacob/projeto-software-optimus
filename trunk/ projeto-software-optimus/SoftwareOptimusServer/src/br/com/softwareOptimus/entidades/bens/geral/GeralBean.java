@@ -1,6 +1,7 @@
 package br.com.softwareOptimus.entidades.bens.geral;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -10,24 +11,28 @@ import br.com.softwareOptimus.entidades.Estado;
 import br.com.softwareOptimus.entidades.Municipio;
 import br.com.softwareOptimus.entidades.RN.geral.EstadoRN;
 import br.com.softwareOptimus.entidades.RN.geral.MunicipioRN;
+import br.com.softwareOptimus.util.FacesUtil;
 
 @ManagedBean(name = "geralBean")
 @SessionScoped
-public class GeralBean implements Serializable{
+public class GeralBean extends FacesUtil implements Serializable{
 
 	private static final long serialVersionUID = -2566411116709206423L;
 	private List<Estado> estados;
 	private List<Municipio> municipios;
-	private EstadoRN estadoRN = new EstadoRN();
-	private MunicipioRN municipioRN = new MunicipioRN();
-	private Estado uf = new Estado();
-	private Municipio municipio = new Municipio();
+	private EstadoRN estadoRN;
+	private MunicipioRN municipioRN;
+	private Estado uf;
+	private Municipio municipio;
 
 	public GeralBean() {
-		setEstados(this.estadoRN.listaEstado());
+		this.setEstados(this.getEstadoRN().listaEstado());
 	}
 
 	public List<Estado> getEstados() {
+		if(this.estados == null){
+			this.estados = new ArrayList<Estado>();
+		}
 		return estados;
 	}
 
@@ -36,6 +41,9 @@ public class GeralBean implements Serializable{
 	}
 
 	public Estado getUf() {
+		if(this.uf == null){
+			this.uf = new Estado();
+		}
 		return uf;
 	}
 
@@ -44,6 +52,9 @@ public class GeralBean implements Serializable{
 	}
 
 	public List<Municipio> getMunicipios() {
+		if(this.municipios == null){
+			this.municipios = new ArrayList<Municipio>();
+		}
 		return municipios;
 	}
 
@@ -52,10 +63,13 @@ public class GeralBean implements Serializable{
 	}
 
 	public void filtraEstado() {
-		this.municipios = municipioRN.listaMunicipios(uf);
+		this.setMunicipios(this.getMunicipioRN().listaMunicipios(this.getUf()));
 	}
 
 	public Municipio getMunicipio() {
+		if(this.municipio == null){
+			this.municipio = new Municipio();
+		}
 		return municipio;
 	}
 
@@ -63,4 +77,25 @@ public class GeralBean implements Serializable{
 		this.municipio = municipio;
 	}
 
+	public EstadoRN getEstadoRN() {
+		if(this.estadoRN == null){
+			this.estadoRN = new EstadoRN();
+		}
+		return estadoRN;
+	}
+
+	public void setEstadoRN(EstadoRN estadoRN) {
+		this.estadoRN = estadoRN;
+	}
+
+	public MunicipioRN getMunicipioRN() {
+		if(this.municipioRN == null){
+			this.municipioRN = new MunicipioRN();		
+		}
+		return municipioRN;
+	}
+
+	public void setMunicipioRN(MunicipioRN municipioRN) {
+		this.municipioRN = municipioRN;
+	}
 }
