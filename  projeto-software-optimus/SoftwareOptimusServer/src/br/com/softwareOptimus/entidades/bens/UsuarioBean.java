@@ -2,25 +2,39 @@ package br.com.softwareOptimus.entidades.bens;
 
 import java.io.Serializable;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
 
 import br.com.softwareOptimus.entidades.Usuario;
 import br.com.softwareOptimus.entidades.RN.UsuarioRN;
+import br.com.softwareOptimus.util.FacesUtil;
 
 @ManagedBean(name = "usuarioBean")
 @SessionScoped
-public class UsuarioBean implements Serializable {
+public class UsuarioBean extends FacesUtil implements Serializable {
 	
     private static final long serialVersionUID = -3280128356907200060L;
  
-	private Usuario usuario = new Usuario();
+	private Usuario usuario;
 	private String confirmarSenha;
+	UsuarioRN usuarioRN;
 
 	public Usuario getUsuario() {
+		if(this.usuario == null){
+			this.usuario = new Usuario();
+		}
 		return usuario;
+	}
+
+	public UsuarioRN getUsuarioRN() {
+		if(this.usuarioRN == null){
+			this.usuarioRN = new UsuarioRN();
+		}
+		return usuarioRN;
+	}
+
+	public void setUsuarioRN(UsuarioRN usuarioRN) {
+		this.usuarioRN = usuarioRN;
 	}
 
 	public void setUsuario(Usuario usuario) {
@@ -28,6 +42,9 @@ public class UsuarioBean implements Serializable {
 	}
 
 	public String getConfirmarSenha() {
+		if(this.confirmarSenha == null){
+			this.confirmarSenha = new String();
+		}
 		return confirmarSenha;
 	}
 
@@ -36,41 +53,29 @@ public class UsuarioBean implements Serializable {
 	}
 
 	public String novo() {
-		this.usuario = new Usuario();
-		this.usuario.setAtivo(true);
+		this.setUsuario(null);
+		this.getUsuario().setAtivo(true);
 		return "usuario";
 	}
 	
 	public void cancelar(){
-		this.usuario = new Usuario();
+		this.setUsuario(null);
 	}
 
 	public void salvar() {
 
-		String senha = this.usuario.getPassword();
-		if (!senha.equals(this.confirmarSenha)) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_WARN, "Info",
-							"A senha nao foi confirmada corretamente"));
+		String senha = this.getUsuario().getPassword();
+		if (!senha.equals(this.getConfirmarSenha())) {
+			this.warm("A senha nao foi confirmada corretamente");
 		}
 		
-		if (senha.equals(this.confirmarSenha)) {
+		if (senha.equals(this.getConfirmarSenha())) {
 			try {
-				UsuarioRN usuarioRN = new UsuarioRN();
-				usuarioRN.salvar(this.usuario);
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-								"Usuario salvo com sucesso"));
+				this.getUsuarioRN().salvar(this.getUsuario());
+				this.info("Usuario salvo com sucesso");
 			} catch (Exception ex) {
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info",
-								"Problemas na gravacao do usuario "
-										+ ex.getMessage()));
+				this.error("Problemas na gravacao do usuario " + ex.getMessage());
 			}
-
 		}
 	}
 
