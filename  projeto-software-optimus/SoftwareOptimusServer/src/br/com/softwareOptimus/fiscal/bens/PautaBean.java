@@ -17,34 +17,34 @@ import br.com.softwareOptimus.util.FacesUtil;
 public class PautaBean extends FacesUtil implements Serializable{
 
 	private static final long serialVersionUID = -7205875322346314575L;
-	private Pauta pauta = new Pauta();
-	private PautaMVA pautaMVA = new PautaMVA();
+	private Pauta pauta;
+	private PautaMVA pautaMVA;
+	private PautaRN pautaRN;
 	private Boolean sal = true, alt = true, rem = true, vig = true,
 			desc = true;
 	private String busca, filtro;
-	private List<PautaMVA> listaPautaMVA = new ArrayList<PautaMVA>();
-	private List<Pauta> listaPauta = new ArrayList<Pauta>();
+	private List<PautaMVA> listaPautaMVA;
+	private List<Pauta> listaPauta;
 	private Long id, idPautaMVA;
 
 	public void novo() {
-		this.sal = false;
-		this.alt = true;
-		this.rem = true;
-		this.vig = true;
+		this.setSal(false);
+		this.setAlt(true);
+		this.setRem(true);
+		this.setVig(true);
 		habilita();
 		limpar();
 	}
 
 	public void alterar() {
 		try {
-			PautaRN pautaRN = new PautaRN();
-			Integer retorno = pautaRN.validaCampoNulo(this.pauta);
+			Integer retorno = this.getPautaRN().validaCampoNulo(this.getPauta());
 			if (retorno == 0) {
-				pautaRN.altPauta(this.pauta);
+				this.getPautaRN().altPauta(this.getPauta());
 				this.info("Pauta alterada com sucesso");
-				this.alt = true;
-				this.rem = true;
-				this.vig = true;
+				this.setAlt(true);
+				this.setRem(true);
+				this.setVig(true);
 				limpar();
 				desabilita();
 			} else {
@@ -57,14 +57,13 @@ public class PautaBean extends FacesUtil implements Serializable{
 
 	public void remover() {
 		try {
-			PautaRN pautaRN = new PautaRN();
-			Integer retorno = pautaRN.verificaRemocao(this.pauta);
+			Integer retorno = this.getPautaRN().verificaRemocao(this.getPauta());
 			if (retorno == 0) {
-				pautaRN.remover(this.pauta);
+				this.getPautaRN().remover(this.getPauta());
 				this.info("Pauta removida com sucesso");
-				this.alt = true;
-				this.rem = true;
-				this.vig = true;
+				this.setAlt(true);
+				this.setRem(true);
+				this.setVig(true);
 				limpar();
 				desabilita();
 			} else {
@@ -76,26 +75,25 @@ public class PautaBean extends FacesUtil implements Serializable{
 	}
 
 	public void cancelar() {
-		this.sal = true;
-		this.alt = true;
-		this.rem = true;
-		this.vig = true;
+		this.setSal(true);
+		this.setAlt(true);
+		this.setRem(true);
+		this.setVig(true);
 		limpar();
 		desabilita();
 	}
 
 	public void salvar() {
 		try {
-			PautaRN pautaRN = new PautaRN();
-			this.pauta.setIdPauta(null);
-			Integer retorno = pautaRN.validaCampoNulo(this.pauta);
+			this.getPauta().setIdPauta(null);
+			Integer retorno = this.getPautaRN().validaCampoNulo(this.getPauta());
 			if (retorno == 0) {
-				pautaRN.salvar(this.pauta);
+				this.getPautaRN().salvar(this.getPauta());
 				this.info("Pauta salva com sucesso");
-				this.vig = false;
-				this.sal = true;
-				this.alt = true;
-				this.rem = true;
+				this.setSal(true);
+				this.setAlt(true);
+				this.setRem(true);
+				this.setVig(false);
 			} else {
 				this.error("Existem campos nulos no formulário");
 			}
@@ -106,15 +104,14 @@ public class PautaBean extends FacesUtil implements Serializable{
 
 	public void incluirPautaMVA() {
 		try {
-			PautaRN pautaRN = new PautaRN();
-			this.pautaMVA.setIdPautaMVA(null);
-			this.pautaMVA.setPauta(this.pauta);
-			Integer retorno = pautaRN.validaCampoNuloVig(this.pautaMVA);
+			this.getPautaMVA().setIdPautaMVA(null);
+			this.getPautaMVA().setPauta(this.getPauta());
+			Integer retorno = this.getPautaRN().validaCampoNuloVig(this.getPautaMVA());
 			if (retorno == 0) {
-				pautaRN.salvaVig(this.pautaMVA);
+				this.getPautaRN().salvaVig(this.getPautaMVA());
 				listaVigencia();
 				this.info("Vigência salva com sucesso");
-				this.pautaMVA = new PautaMVA();
+				this.setPautaMVA(null);
 			} else {
 				this.error("Existem campos nulos no formulário");
 			}
@@ -125,55 +122,48 @@ public class PautaBean extends FacesUtil implements Serializable{
 
 	public void listaVigencia() {
 		try {
-			PautaRN pautaRN = new PautaRN();
-			if (this.listaPautaMVA != null) {
-				this.listaPautaMVA.clear();
-			}
-			this.listaPautaMVA = pautaRN.listar(this.pauta);
+			this.getListaPautaMVA().clear();
+			this.setListaPautaMVA(this.getPautaRN().listar(this.getPauta()));
 		} catch (Exception e) {
 			this.error("Problemas ao listar as Vigências " + e.getMessage());
 		}
-
 	}
 
 	public void limpar() {
-		this.listaPautaMVA = new ArrayList<PautaMVA>();
-		this.listaPauta = new ArrayList<Pauta>();
-		this.pautaMVA = new PautaMVA();
-		this.pauta = new Pauta();
-		this.id = null;
-		this.idPautaMVA = null;
+		this.setListaPautaMVA(null);
+		this.setListaPauta(null);
+		this.setPautaMVA(null);
+		this.setPauta(new Pauta());
+		this.setId(null);
+		this.setIdPautaMVA(null);		
 	}
 
 	public void buscaPauta() {
 		limpar();
-		PautaRN pautaRN = new PautaRN();
-		if (!busca.equals("") && (!filtro.equals(""))) {
-			if (filtro.equals("id")) {
-				this.listaPauta = pautaRN.consultaId(Long.parseLong(busca));
-			} else if (filtro.equals("desc")) {
-				this.listaPauta = pautaRN.consultaDesc(busca);
+		if (!this.getBusca().equals("") && (!this.getFiltro().equals(""))) {
+			if (this.getFiltro().equals("id")) {
+				this.setListaPauta(this.getPautaRN().consultaId(Long.parseLong(this.getBusca())));
+			} else if (this.getFiltro().equals("desc")) {
+				this.setListaPauta(this.getPautaRN().consultaDesc(this.getBusca()));
 			}
 		} else {
-			this.listaPauta = pautaRN.listar();
+			this.setListaPauta(this.getPautaRN().listar());
 		}
 	}
 
 	public void editPauta() {
-		PautaRN pautaRN = new PautaRN();
-		this.pauta = pautaRN.editPauta(id);
+		this.setPauta(this.getPautaRN().editPauta(this.getId()));
 		habilita();
 		listaVigencia();
-		this.alt = false;
-		this.vig = false;
-		this.rem = false;
-		this.sal = true;
+		this.setSal(true);
+		this.setAlt(false);
+		this.setRem(false);
+		this.setVig(false);
 	}
 
 	public void excluirPautaMVA() {
 		try {
-			PautaRN pautaRN = new PautaRN();
-			pautaRN.removerVig(this.idPautaMVA);
+			this.getPautaRN().removerVig(this.getIdPautaMVA());
 			listaVigencia();
 			this.info("Vigência da Pauta removida com sucesso");
 		} catch (Exception e) {
@@ -182,11 +172,11 @@ public class PautaBean extends FacesUtil implements Serializable{
 	}
 
 	public void habilita() {
-		this.desc = false;
+		this.setDesc(false);
 	}
 
 	public void desabilita() {
-		this.desc = true;
+		this.setDesc(true);
 	}
 
 	public Boolean getDesc() {
@@ -206,6 +196,9 @@ public class PautaBean extends FacesUtil implements Serializable{
 	}
 
 	public List<Pauta> getListaPauta() {
+		if(this.listaPauta == null){
+			this.listaPauta = new ArrayList<Pauta>();
+		}
 		return listaPauta;
 	}
 
@@ -214,6 +207,9 @@ public class PautaBean extends FacesUtil implements Serializable{
 	}
 
 	public List<PautaMVA> getListaPautaMVA() {
+		if(this.listaPautaMVA == null){
+			this.listaPautaMVA = new ArrayList<PautaMVA>();
+		}
 		return listaPautaMVA;
 	}
 
@@ -234,6 +230,9 @@ public class PautaBean extends FacesUtil implements Serializable{
 	}
 
 	public PautaMVA getPautaMVA() {
+		if(this.pautaMVA == null){
+			this.pautaMVA = new PautaMVA();
+		}
 		return pautaMVA;
 	}
 
@@ -250,6 +249,9 @@ public class PautaBean extends FacesUtil implements Serializable{
 	}
 
 	public List<PautaMVA> getPautaList() {
+		if(this.listaPautaMVA == null){
+			this.listaPautaMVA = new ArrayList<PautaMVA>();
+		}
 		return listaPautaMVA;
 	}
 
@@ -258,6 +260,9 @@ public class PautaBean extends FacesUtil implements Serializable{
 	}
 
 	public String getBusca() {
+		if(this.busca == null){
+			this.busca = new String();
+		}
 		return busca;
 	}
 
@@ -266,6 +271,9 @@ public class PautaBean extends FacesUtil implements Serializable{
 	}
 
 	public String getFiltro() {
+		if(this.filtro == null){
+			this.filtro = new String();
+		}
 		return filtro;
 	}
 
@@ -274,6 +282,9 @@ public class PautaBean extends FacesUtil implements Serializable{
 	}
 
 	public String getBuscaPauta() {
+		if(this.busca == null){
+			this.busca = new String();
+		}
 		return busca;
 	}
 
@@ -282,6 +293,9 @@ public class PautaBean extends FacesUtil implements Serializable{
 	}
 
 	public Pauta getPauta() {
+		if(this.pauta == null){
+			this.pauta = new Pauta();
+		}
 		return pauta;
 	}
 
@@ -311,5 +325,16 @@ public class PautaBean extends FacesUtil implements Serializable{
 
 	public void setRem(Boolean rem) {
 		this.rem = rem;
+	}
+
+	public PautaRN getPautaRN() {
+		if(this.pautaRN == null){
+			this.pautaRN = new PautaRN();
+		}
+		return pautaRN;
+	}
+
+	public void setPautaRN(PautaRN pautaRN) {
+		this.pautaRN = pautaRN;
 	}
 }

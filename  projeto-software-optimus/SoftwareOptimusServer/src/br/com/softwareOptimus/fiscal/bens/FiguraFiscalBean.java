@@ -18,45 +18,44 @@ import br.com.softwareOptimus.util.FacesUtil;
 public class FiguraFiscalBean extends FacesUtil implements Serializable {
 
 	private static final long serialVersionUID = -1736356682286724886L;
-	private FiguraFiscal figura = new FiguraFiscal();
-	private GradeTributaria grade = new GradeTributaria();
-	private List<FiguraFiscal> listaFigura = new ArrayList<FiguraFiscal>();
-	private List<GradeTributaria> listaGrade = new ArrayList<GradeTributaria>();
-	private List<GradeTributaria> listaGradeVis = new ArrayList<GradeTributaria>();
-	private GradeTributariaRN gradRN = new GradeTributariaRN();
+	private FiguraFiscal figura;
+	private GradeTributaria grade;
+	private List<FiguraFiscal> listaFigura;
+	private List<GradeTributaria> listaGrade;
+	private List<GradeTributaria> listaGradeVis;
+	private GradeTributariaRN gradRN;
+	private FiguraFiscalRN figuraRN;
 	private Boolean sal = true, alt = true, rem = true, vincGrade = true,
 			desc = true;
 	private String busca, filtro;
 	private Long id, idGrade;
 
 	public FiguraFiscalBean() {
-		setListaGradeVis(this.gradRN.consGradVig());
+		setListaGradeVis(this.getGradRN().consGradVig());
 	}
 
 	public void novo() {
-		this.sal = false;
-		this.alt = true;
-		this.rem = true;
-		this.vincGrade = false;
-		setListaGradeVis(this.gradRN.consGradVig());
+		this.setSal(false);
+		this.setAlt(true);
+		this.setRem(true);
+		this.setVincGrade(false);
+		setListaGradeVis(this.getGradRN().consGradVig());
 		limpar();
 		habilita();
 	}
 
 	public void salvar() {
 		try {
-			FiguraFiscalRN figuraRN = new FiguraFiscalRN();
-			this.figura.setIdFigura(null);
-			Integer retorno = figuraRN.validaCampoNulo(this.figura,
-					this.listaGrade);
+			this.getFigura().setIdFigura(null);
+			Integer retorno = this.getFiguraRN().validaCampoNulo(this.getFigura(),this.listaGrade);
 			if (retorno == 0) {
-				this.figura.setGrades(this.listaGrade);
-				figuraRN.salvar(this.figura);
+				this.getFigura().setGrades(this.listaGrade);
+				this.getFiguraRN().salvar(this.getFigura());
 				this.info("Figura Fiscal salva com sucesso");
-				this.vincGrade = false;
-				this.sal = true;
-				this.alt = false;
-				this.rem = false;
+				this.setSal(true);
+				this.setAlt(false);
+				this.setRem(false);
+				this.setVincGrade(false);
 			} else {
 				this.error("Existem campos nulos no formulário");
 			}
@@ -67,17 +66,15 @@ public class FiguraFiscalBean extends FacesUtil implements Serializable {
 
 	public void alterar() {
 		try {
-			FiguraFiscalRN figuraRN = new FiguraFiscalRN();
-			Integer retorno = figuraRN.validaCampoNulo(this.figura,
-					this.listaGrade);
+			Integer retorno = this.getFiguraRN().validaCampoNulo(this.getFigura(),this.listaGrade);
 			if (retorno == 0) {
-				this.figura.setGrades(this.listaGrade);
-				figuraRN.altFigura(this.figura);
+				this.getFigura().setGrades(this.listaGrade);
+				this.getFiguraRN().altFigura(this.getFigura());
 				this.info("Figura Fiscal alterada com sucesso");
-				this.alt = true;
-				this.rem = true;
-				this.vincGrade = true;
-				this.sal = true;
+				this.setSal(true);
+				this.setAlt(true);
+				this.setRem(true);
+				this.setVincGrade(true);
 				limpar();
 				desabilita();
 			} else {
@@ -90,15 +87,14 @@ public class FiguraFiscalBean extends FacesUtil implements Serializable {
 
 	public void remover() {
 		try {
-			FiguraFiscalRN figuraRN = new FiguraFiscalRN();
-			Integer retorno = figuraRN.verificaRemocao(this.figura);
+			Integer retorno = this.getFiguraRN().verificaRemocao(this.getFigura());
 			if (retorno == 0) {
-				figuraRN.remover(this.figura);
+				this.getFiguraRN().remover(this.getFigura());
 				this.info("Figura Fiscal removida com sucesso");
-				this.alt = true;
-				this.rem = true;
-				this.vincGrade = true;
-				this.sal = true;
+				this.setSal(true);
+				this.setAlt(true);
+				this.setRem(true);
+				this.setVincGrade(true);
 				limpar();
 				desabilita();
 			} else {
@@ -110,64 +106,62 @@ public class FiguraFiscalBean extends FacesUtil implements Serializable {
 	}
 
 	public void limpar() {
-		this.figura = new FiguraFiscal();
-		this.grade = new GradeTributaria();
-		this.listaFigura = new ArrayList<FiguraFiscal>();
-		this.listaGrade = new ArrayList<GradeTributaria>();
+		this.setFigura(null);
+		this.setGrade(null);
+		this.setListaFigura(null);
+		this.setListaGrade(null);
 	}
 
 	public void cancelar() {
-		this.sal = true;
-		this.alt = true;
-		this.rem = true;
-		this.vincGrade = true;
+		this.setSal(true);
+		this.setAlt(true);
+		this.setRem(true);
+		this.setVincGrade(true);
 		limpar();
 		desabilita();
 	}
 
 	public void editFigura() {
-		FiguraFiscalRN figuraRN = new FiguraFiscalRN();
-		this.listaGrade = new ArrayList<GradeTributaria>();
-		this.figura = figuraRN.editFigura(this.id);
-		this.listaGrade.addAll(this.figura.getGrades());
+		this.setListaGrade(null);
+		this.setFigura(this.getFiguraRN().editFigura(this.getId()));
+		this.getListaGrade().addAll(this.getFigura().getGrades());
 		habilita();
-		this.sal = true;
-		this.alt = false;
-		this.vincGrade = false;
-		this.rem = false;
+		this.setSal(true);
+		this.setAlt(false);
+		this.setRem(false);
+		this.setVincGrade(false);
 	}
 
 	public void excluirGrade() {
 		List<GradeTributaria> listaGradeNova = new ArrayList<GradeTributaria>();
-		listaGradeNova.addAll(this.listaGrade);
-		for (GradeTributaria gra : this.listaGrade) {
-			if (gra.getIdGradeTrib().equals(this.idGrade)) {
+		listaGradeNova.addAll(this.getListaGrade());
+		for (GradeTributaria gra : this.getListaGrade()) {
+			if (gra.getIdGradeTrib().equals(this.getIdGrade())) {
 				listaGradeNova.remove(gra);
 			}
 		}
-		this.listaGrade = new ArrayList<GradeTributaria>();
-		this.listaGrade.addAll(listaGradeNova);
+		this.setListaGrade(null);
+		this.getListaGrade().addAll(listaGradeNova);
 	}
 
 	public void buscar() {
 		limpar();
-		FiguraFiscalRN figuraRN = new FiguraFiscalRN();
-		if (!busca.equals("") && (!filtro.equals(""))) {
-			if (filtro.equals("id")) {
-				this.listaFigura = figuraRN.consultaId(Long.parseLong(busca));
-			} else if (filtro.equals("des")) {
-				this.listaFigura = figuraRN.consultaDesc(busca);
+		if (!this.getBusca().equals("") && (!this.getFiltro().equals(""))) {
+			if (this.getFiltro().equals("id")) {
+				this.setListaFigura(this.getFiguraRN().consultaId(Long.parseLong(this.getBusca())));
+			} else if (this.getFiltro().equals("des")) {
+				this.setListaFigura(this.getFiguraRN().consultaDesc(this.getBusca()));
 			}
 		} else {
-			this.listaFigura = figuraRN.listar();
+			this.setListaFigura(this.getFiguraRN().listar());
 		}
 	}
 
 	public void incluirGrade() {
-		if (this.grade != null) {
+		if (this.getGrade().getIdGradeTrib() != null) {
 			Integer retorno = verificaInclusaoGrade();
 			if (retorno == 0) {
-				this.listaGrade.add(this.grade);
+				this.getListaGrade().add(this.getGrade());
 			} else {
 				this.error("Grade já vinculada na figura!");
 			}
@@ -178,19 +172,19 @@ public class FiguraFiscalBean extends FacesUtil implements Serializable {
 
 	public Integer verificaInclusaoGrade() {
 		Integer retorno = 0;
-		for (GradeTributaria gra : this.listaGrade) {
-			if (gra.getIdGradeTrib().equals(this.grade.getIdGradeTrib()))
+		for (GradeTributaria gra : this.getListaGrade()) {
+			if (gra.getIdGradeTrib().equals(this.getGrade().getIdGradeTrib()))
 				retorno++;
 		}
 		return retorno;
 	}
 
 	public void habilita() {
-		this.desc = false;
+		this.setDesc(false);
 	}
 
 	public void desabilita() {
-		this.desc = true;
+		this.setDesc(true);
 	}
 
 	public Boolean getDesc() {
@@ -202,6 +196,9 @@ public class FiguraFiscalBean extends FacesUtil implements Serializable {
 	}
 
 	public List<GradeTributaria> getListaGradeVis() {
+		if(this.listaGradeVis == null){
+			this.listaGradeVis = new ArrayList<GradeTributaria>();
+		}
 		return listaGradeVis;
 	}
 
@@ -210,6 +207,9 @@ public class FiguraFiscalBean extends FacesUtil implements Serializable {
 	}
 
 	public GradeTributaria getGrade() {
+		if(this.grade == null){
+			this.grade = new GradeTributaria();
+		}
 		return grade;
 	}
 
@@ -226,6 +226,9 @@ public class FiguraFiscalBean extends FacesUtil implements Serializable {
 	}
 
 	public List<GradeTributaria> getListaGrade() {
+		if(this.listaGrade == null){
+			this.listaGrade = new ArrayList<GradeTributaria>();			
+		}
 		return listaGrade;
 	}
 
@@ -242,6 +245,9 @@ public class FiguraFiscalBean extends FacesUtil implements Serializable {
 	}
 
 	public FiguraFiscal getFigura() {
+		if(this.figura == null){
+			this.figura = new FiguraFiscal();
+		}
 		return figura;
 	}
 
@@ -274,6 +280,9 @@ public class FiguraFiscalBean extends FacesUtil implements Serializable {
 	}
 
 	public String getBusca() {
+		if(this.busca == null){
+			this.busca = new String();
+		}
 		return busca;
 	}
 
@@ -282,6 +291,9 @@ public class FiguraFiscalBean extends FacesUtil implements Serializable {
 	}
 
 	public String getFiltro() {
+		if(this.filtro == null){
+			this.filtro = new String();
+		}
 		return filtro;
 	}
 
@@ -298,10 +310,37 @@ public class FiguraFiscalBean extends FacesUtil implements Serializable {
 	}
 
 	public List<FiguraFiscal> getListaFigura() {
+		if(this.listaFigura == null){
+			this.listaFigura = new ArrayList<FiguraFiscal>();
+		}
 		return listaFigura;
 	}
 
 	public void setListaFigura(List<FiguraFiscal> listaFigura) {
 		this.listaFigura = listaFigura;
 	}
+
+	public GradeTributariaRN getGradRN() {
+		if(this.gradRN == null){
+			this.gradRN = new GradeTributariaRN();
+		}
+		return gradRN;
+	}
+
+	public void setGradRN(GradeTributariaRN gradRN) {
+		this.gradRN = gradRN;
+	}
+
+	public FiguraFiscalRN getFiguraRN() {
+		if(this.figuraRN == null){
+			this.figuraRN = new FiguraFiscalRN();
+		}
+		return figuraRN;
+	}
+
+	public void setFiguraRN(FiguraFiscalRN figuraRN) {
+		this.figuraRN = figuraRN;
+	}
+	
+	
 }
