@@ -23,47 +23,47 @@ import br.com.softwareOptimus.util.FacesUtil;
 public class GradeTributariaBean extends FacesUtil implements Serializable {
 
 	private static final long serialVersionUID = -1841419801185722787L;
-	private GradeTributaria grade = new GradeTributaria();
-	private GradeTributariaVigencia gradeVig = new GradeTributariaVigencia();
-	private List<GradeTributaria> listaGrade = new ArrayList<GradeTributaria>();
-	private List<GradeTributariaVigencia> listaGradeVig = new ArrayList<GradeTributariaVigencia>();
-	private List<Aliquota> listaAliquota = new ArrayList<Aliquota>();
-	private List<Pauta> listaPauta = new ArrayList<Pauta>();
-	private AliquotaRN aliqRN = new AliquotaRN();
-	private PautaRN pautaRN = new PautaRN();
+	private GradeTributaria grade;
+	private GradeTributariaVigencia gradeVig;
+	private List<GradeTributaria> listaGrade;
+	private List<GradeTributariaVigencia> listaGradeVig;
+	private List<Aliquota> listaAliquota;
+	private List<Pauta> listaPauta;
+	private AliquotaRN aliqRN;
+	private PautaRN pautaRN;
+	private GradeTributariaRN gradeRN;
 	private String busca, filtro, tipoEntSai, tipoGrade;
 	private Long id, idGradeVig;
 	private boolean sal = true, alt = true, rem = true, vig = true,
 			desc = true;
 
 	public GradeTributariaBean() {
-		setListaAliquota(this.aliqRN.listaAliqIcms());
-		setListaPauta(this.pautaRN.consPautVig());
+		setListaAliquota(this.getAliqRN().listaAliqIcms());
+		setListaPauta(this.getPautaRN().consPautVig());
 	}
 
 	public void novo() {
-		this.sal = false;
-		this.alt = true;
-		this.rem = true;
-		this.vig = true;
-		setListaAliquota(this.aliqRN.listaAliqIcms());
-		setListaPauta(this.pautaRN.consPautVig());
+		this.setSal(false);
+		this.setAlt(true);
+		this.setRem(true);
+		this.setVig(true);
+		setListaAliquota(this.getAliqRN().listaAliqIcms());
+		setListaPauta(this.getPautaRN().consPautVig());
 		limpar();
 		habilita();
 	}
 
 	public void salvar() {
 		try {
-			GradeTributariaRN gradeRN = new GradeTributariaRN();
-			this.grade.setIdGradeTrib(null);
-			Integer retorno = gradeRN.validaCampoNulo(this.grade);
+			this.getGrade().setIdGradeTrib(null);
+			Integer retorno = this.getGradeRN().validaCampoNulo(this.getGrade());
 			if (retorno == 0) {
-				gradeRN.salvar(this.grade);
+				this.getGradeRN().salvar(this.getGrade());
 				this.info("Grade salva com sucesso");
-				this.vig = false;
-				this.sal = true;
-				this.alt = true;
-				this.rem = true;
+				this.setSal(true);
+				this.setAlt(true);
+				this.setRem(true);
+				this.setVig(false);
 			} else {
 				this.error("Existem campos nulos no formulário");
 			}
@@ -74,14 +74,13 @@ public class GradeTributariaBean extends FacesUtil implements Serializable {
 
 	public void alterar() {
 		try {
-			GradeTributariaRN gradeRN = new GradeTributariaRN();
-			Integer retorno = gradeRN.validaCampoNulo(this.grade);
+			Integer retorno = this.getGradeRN().validaCampoNulo(this.getGrade());
 			if (retorno == 0) {
-				gradeRN.altGrade(this.grade);
+				this.getGradeRN().altGrade(this.getGrade());
 				this.info("Grade alterada com sucesso");
-				this.alt = true;
-				this.rem = true;
-				this.vig = true;
+				this.setAlt(true);
+				this.setRem(true);
+				this.setVig(true);
 				limpar();
 				desabilita();
 			} else {
@@ -94,14 +93,13 @@ public class GradeTributariaBean extends FacesUtil implements Serializable {
 
 	public void remover() {
 		try {
-			GradeTributariaRN gradeRN = new GradeTributariaRN();
-			Integer retorno = gradeRN.verificaRemocao(this.grade);
+			Integer retorno = this.getGradeRN().verificaRemocao(getGrade());
 			if (retorno == 0) {
-				gradeRN.remover(this.grade);
+				this.getGradeRN().remover(this.getGrade());
 				this.info("Grade removida com sucesso");
-				this.alt = true;
-				this.rem = true;
-				this.vig = true;
+				this.setAlt(true);
+				this.setRem(true);
+				this.setVig(true);
 				limpar();
 				desabilita();
 			} else {
@@ -114,49 +112,46 @@ public class GradeTributariaBean extends FacesUtil implements Serializable {
 
 	public void buscarGrade() {
 		limpar();
-		GradeTributariaRN gradeRN = new GradeTributariaRN();
-		if (!busca.equals("") && (!filtro.equals(""))) {
-			if (filtro.equals("id")) {
-				this.listaGrade = gradeRN.consultaId(Long.parseLong(busca));
-			} else if (filtro.equals("desc")) {
-				this.listaGrade = gradeRN.consultaDesc(busca);
+		if (!this.getBusca().equals("") && (!this.getFiltro().equals(""))) {
+			if (this.getFiltro().equals("id")) {
+				this.setListaGrade(this.getGradeRN().consultaId(Long.parseLong(this.getBusca())));
+			} else if (this.getFiltro().equals("desc")) {
+				this.setListaGrade(this.getGradeRN().consultaDesc(this.getBusca()));
 			}
 		} else {
-			this.listaGrade = gradeRN.listar();
+			this.setListaGrade(this.getGradeRN().listar());
 		}
 	}
 
 	public void editGrade() {
-		GradeTributariaRN gradeRN = new GradeTributariaRN();
-		this.grade = gradeRN.editGrade(id);
+		this.setGrade(this.getGradeRN().editGrade(this.getId()));
 		listaVigencia();
 		habilita();
-		this.alt = false;
-		this.vig = false;
-		this.rem = false;
-		this.sal = true;
+		this.setSal(true);
+		this.setAlt(false);
+		this.setRem(false);
+		this.setVig(false);
 	}
 
 	public void limpar() {
-		this.grade = new GradeTributaria();
-		this.gradeVig = new GradeTributariaVigencia();
-		this.listaGrade = new ArrayList<GradeTributaria>();
-		this.listaGradeVig = new ArrayList<GradeTributariaVigencia>();
+		this.setGrade(null);
+		this.setGradeVig(null);
+		this.setListaGrade(null);
+		this.setListaGradeVig(null);
 	}
 
 	public void cancelar() {
-		this.sal = true;
-		this.alt = true;
-		this.rem = true;
-		this.vig = true;
+		this.setSal(true);
+		this.setAlt(true);
+		this.setRem(true);
+		this.setVig(true);
 		limpar();
 		desabilita();
 	}
 
 	public void excluirGradeVig() {
 		try {
-			GradeTributariaRN gradeRN = new GradeTributariaRN();
-			gradeRN.removerVig(this.idGradeVig);
+			this.getGradeRN().removerVig(this.getIdGradeVig());
 			listaVigencia();
 			this.info("Vigência da Grade removida com sucesso");
 		} catch (Exception e) {
@@ -166,38 +161,34 @@ public class GradeTributariaBean extends FacesUtil implements Serializable {
 
 	public void incluirGradeVig() {
 		try {
-			GradeTributariaRN gradeRN = new GradeTributariaRN();
-			this.gradeVig.setId(null);
-			this.gradeVig.setGrade(this.grade);
-			if (this.tipoEntSai.equals(IO.ENTRADA.toString())) {
-				this.gradeVig.setIo(IO.ENTRADA);
-			} else if (this.tipoEntSai.equals(IO.SAIDA.toString())) {
-				this.gradeVig.setIo(IO.SAIDA);
+			this.getGradeVig().setId(null);
+			this.getGradeVig().setGrade(this.getGrade());
+			if (this.getTipoEntSai().equals(IO.ENTRADA.toString())) {
+				this.getGradeVig().setIo(IO.ENTRADA);
+			} else if (this.getTipoEntSai().equals(IO.SAIDA.toString())) {
+				this.getGradeVig().setIo(IO.SAIDA);
 			}
-			if (this.tipoGrade.equals(TipoPessoaJuridica.DISTRIBUIDOR
-					.toString())) {
-				this.gradeVig.setTipoGrade(TipoPessoaJuridica.DISTRIBUIDOR);
-			} else if (this.tipoGrade.equals(TipoPessoaJuridica.FABRICANTE
-					.toString())) {
-				this.gradeVig.setTipoGrade(TipoPessoaJuridica.FABRICANTE);
-			} else if (this.tipoGrade.equals(TipoPessoaJuridica.OUTROS
-					.toString())) {
-				this.gradeVig.setTipoGrade(TipoPessoaJuridica.OUTROS);
+			if (this.getTipoGrade().equals(TipoPessoaJuridica.DISTRIBUIDOR.toString())) {
+				this.getGradeVig().setTipoGrade(TipoPessoaJuridica.DISTRIBUIDOR);
+			} else if (this.getTipoGrade().equals(TipoPessoaJuridica.FABRICANTE.toString())) {
+				this.getGradeVig().setTipoGrade(TipoPessoaJuridica.FABRICANTE);
+			} else if (this.getTipoGrade().equals(TipoPessoaJuridica.OUTROS.toString())) {
+				this.getGradeVig().setTipoGrade(TipoPessoaJuridica.OUTROS);
 			}
-			List<GradeTributariaVigencia> gradeValida = gradeRN.validaInclusao(
-					this.gradeVig.getOrigem(), this.gradeVig.getDestino(),
-					this.gradeVig.getAliquota(), this.gradeVig.getIo(),
-					this.gradeVig.getTipoGrade(), this.gradeVig.getVigencia(),
-					this.gradeVig.getPauta());
+			List<GradeTributariaVigencia> gradeValida = this.getGradeRN().validaInclusao(
+					this.getGradeVig().getOrigem(), this.getGradeVig().getDestino(),
+					this.getGradeVig().getAliquota(), this.getGradeVig().getIo(),
+					this.getGradeVig().getTipoGrade(), this.getGradeVig().getVigencia(),
+					this.getGradeVig().getPauta());
 			if (gradeValida.size() == 0) {
-				Integer retorno = gradeRN.validaCampoNuloVig(this.gradeVig);
+				Integer retorno = this.getGradeRN().validaCampoNuloVig(this.getGradeVig());
 				if (retorno == 0) {
-					gradeRN.salvaVig(this.gradeVig);
+					this.getGradeRN().salvaVig(this.getGradeVig());
 					listaVigencia();
 					this.info("Vigência salva com sucesso");
-					this.gradeVig = new GradeTributariaVigencia();
-					this.tipoEntSai = new String();
-					this.tipoGrade = new String();
+					this.setGradeVig(null);
+					this.setTipoEntSai(new String());
+					this.setTipoGrade(new String());
 				} else {
 					this.error("Existem campos nulos no formulário");
 				}
@@ -212,25 +203,25 @@ public class GradeTributariaBean extends FacesUtil implements Serializable {
 
 	public void listaVigencia() {
 		try {
-			GradeTributariaRN gradeRN = new GradeTributariaRN();
-			if (this.listaGradeVig != null) {
-				this.listaGradeVig.clear();
-			}
-			this.listaGradeVig = gradeRN.listarVig(this.grade);
+			this.getListaGradeVig().clear();
+			this.setListaGradeVig(this.getGradeRN().listarVig(this.getGrade()));
 		} catch (Exception e) {
 			this.error("Problemas ao listar as Vigências " + e.getMessage());
 		}
 	}
 
 	public void habilita() {
-		this.desc = false;
+		this.setDesc(false);
 	}
 
 	public void desabilita() {
-		this.desc = true;
+		this.setDesc(true);
 	}
 
 	public List<Pauta> getListaPauta() {
+		if(this.listaPauta == null){
+			this.listaPauta = new ArrayList<Pauta>();
+		}
 		return listaPauta;
 	}
 
@@ -247,6 +238,9 @@ public class GradeTributariaBean extends FacesUtil implements Serializable {
 	}
 
 	public List<Aliquota> getListaAliquota() {
+		if(this.listaAliquota == null){
+			this.listaAliquota = new ArrayList<Aliquota>();
+		}
 		return listaAliquota;
 	}
 
@@ -255,6 +249,9 @@ public class GradeTributariaBean extends FacesUtil implements Serializable {
 	}
 
 	public String getTipoGrade() {
+		if(this.tipoGrade == null){
+			this.tipoGrade = new String();
+		}
 		return tipoGrade;
 	}
 
@@ -279,6 +276,9 @@ public class GradeTributariaBean extends FacesUtil implements Serializable {
 	}
 
 	public GradeTributariaVigencia getGradeVig() {
+		if(this.gradeVig == null){
+			this.gradeVig = new GradeTributariaVigencia();
+		}
 		return gradeVig;
 	}
 
@@ -287,6 +287,9 @@ public class GradeTributariaBean extends FacesUtil implements Serializable {
 	}
 
 	public String getTipoEntSai() {
+		if(this.tipoEntSai == null){
+			this.tipoEntSai = new String();
+		}
 		return tipoEntSai;
 	}
 
@@ -295,14 +298,23 @@ public class GradeTributariaBean extends FacesUtil implements Serializable {
 	}
 
 	public GradeTributaria getGrade() {
+		if(this.grade == null){
+			this.grade = new GradeTributaria();
+		}
 		return grade;
 	}
 
 	public void setGrade(GradeTributaria grade) {
+		if(this.grade == null){
+			this.grade = new GradeTributaria();
+		}
 		this.grade = grade;
 	}
 
 	public List<GradeTributariaVigencia> getListaGradeVig() {
+		if(this.listaGradeVig == null){
+			this.listaGradeVig = new ArrayList<GradeTributariaVigencia>();
+		}
 		return listaGradeVig;
 	}
 
@@ -311,6 +323,9 @@ public class GradeTributariaBean extends FacesUtil implements Serializable {
 	}
 
 	public List<GradeTributaria> getListaGrade() {
+		if(this.listaGrade == null){
+			this.listaGrade = new ArrayList<GradeTributaria>();
+		}
 		return listaGrade;
 	}
 
@@ -319,6 +334,9 @@ public class GradeTributariaBean extends FacesUtil implements Serializable {
 	}
 
 	public String getBusca() {
+		if(this.busca == null){
+			this.busca = new String();
+		}
 		return busca;
 	}
 
@@ -327,6 +345,9 @@ public class GradeTributariaBean extends FacesUtil implements Serializable {
 	}
 
 	public String getFiltro() {
+		if(this.filtro == null){
+			this.filtro = new String();			
+		}
 		return filtro;
 	}
 
@@ -364,5 +385,38 @@ public class GradeTributariaBean extends FacesUtil implements Serializable {
 
 	public void setRem(boolean rem) {
 		this.rem = rem;
+	}
+
+	public AliquotaRN getAliqRN() {
+		if(this.aliqRN == null){
+			this.aliqRN = new AliquotaRN();
+		}
+		return aliqRN;
+	}
+
+	public void setAliqRN(AliquotaRN aliqRN) {
+		this.aliqRN = aliqRN;
+	}
+
+	public PautaRN getPautaRN() {
+		if(this.pautaRN == null){
+			this.pautaRN = new PautaRN();
+		}
+		return pautaRN;
+	}
+
+	public void setPautaRN(PautaRN pautaRN) {
+		this.pautaRN = pautaRN;
+	}
+
+	public GradeTributariaRN getGradeRN() {
+		if(this.gradeRN == null){
+			this.gradeRN = new GradeTributariaRN();
+		}
+		return gradeRN;
+	}
+
+	public void setGradRN(GradeTributariaRN gradeRN) {
+		this.gradeRN = gradeRN;
 	}
 }
