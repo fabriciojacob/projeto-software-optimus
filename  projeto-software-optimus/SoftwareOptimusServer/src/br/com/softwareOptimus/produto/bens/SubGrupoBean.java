@@ -17,34 +17,34 @@ import br.com.softwareOptimus.util.FacesUtil;
 public class SubGrupoBean extends FacesUtil implements Serializable{
 
 	private static final long serialVersionUID = 6025267193479395126L;
-	private SubGrupo subGrupo = new SubGrupo();
-	private Categoria categoria = new Categoria();
-	private List<Categoria> listaCategoria = new ArrayList<Categoria>();
-	private List<SubGrupo> listaSubGrupo = new ArrayList<SubGrupo>();
+	private SubGrupo subGrupo;
+	private Categoria categoria;
+	private List<Categoria> listaCategoria;
+	private List<SubGrupo> listaSubGrupo;
+	private SubGrupoRN subRN;
 	private String busca, filtro;
 	private boolean sal = true, alt = true, rem = true, desc = true,
 			vig = true;
 	private Long id, idCateg;
 
 	public void novo() {
-		this.sal = false;
-		this.alt = true;
-		this.rem = true;
-		this.vig = true;
+		this.setSal(false);
+		this.setAlt(true);
+		this.setRem(true);
+		this.setVig(true);
 		limpar();
 		habilita();
 	}
 
 	public void alterar() {
 		try {
-			SubGrupoRN subRN = new SubGrupoRN();
-			Integer retorno = subRN.validaCampoNulo(this.subGrupo);
+			Integer retorno = this.getSubRN().validaCampoNulo(this.getSubGrupo());
 			if (retorno == 0) {
-				subRN.altSub(this.subGrupo);
+				this.getSubRN().altSub(this.getSubGrupo());
 				this.info("SubGrupo alterado com sucesso");
-				this.alt = true;
-				this.rem = true;
-				this.vig = true;
+				this.setAlt(true);
+				this.setRem(true);
+				this.setVig(true);
 				limpar();
 				desabilita();
 			} else {
@@ -56,33 +56,32 @@ public class SubGrupoBean extends FacesUtil implements Serializable{
 	}
 
 	public void cancelar() {
-		this.sal = true;
-		this.alt = true;
-		this.rem = true;
-		this.vig = true;
+		this.setSal(true);
+		this.setAlt(true);
+		this.setRem(true);
+		this.setVig(true);
 		limpar();
 		desabilita();
 	}
 
 	public void limpar() {
-		this.subGrupo = new SubGrupo();
-		this.categoria = new Categoria();
-		this.listaCategoria = new ArrayList<Categoria>();
-		this.listaSubGrupo = new ArrayList<SubGrupo>();
+		this.setSubGrupo(null);
+		this.setCategoria(null);
+		this.setListaCategoria(null);
+		this.setListaSubGrupo(null);
 	}
 
 	public void salvar() {
 		try {
-			SubGrupoRN subRN = new SubGrupoRN();
-			this.subGrupo.setIdSubGrupo(null);
-			Integer retorno = subRN.validaCampoNulo(this.subGrupo);
+			this.getSubGrupo().setIdSubGrupo(null);
+			Integer retorno = this.getSubRN().validaCampoNulo(this.getSubGrupo());
 			if (retorno == 0) {
-				subRN.salvar(this.subGrupo);
+				this.getSubRN().salvar(this.getSubGrupo());
 				this.info("SubGrupo salvo com sucesso");
-				this.vig = false;
-				this.sal = true;
-				this.alt = false;
-				this.rem = false;
+				this.setSal(true);
+				this.setAlt(false);
+				this.setRem(false);
+				this.setVig(false);
 			} else {
 				this.error("Existem campos nulos no formulário");
 			}
@@ -93,14 +92,13 @@ public class SubGrupoBean extends FacesUtil implements Serializable{
 
 	public void remover() {
 		try {
-			SubGrupoRN subRN = new SubGrupoRN();
-			Integer retorno = subRN.verificaRemocao(this.subGrupo);
+			Integer retorno = this.getSubRN().verificaRemocao(this.getSubGrupo());
 			if (retorno == 0) {
-				subRN.remover(this.subGrupo);
+				this.getSubRN().remover(this.getSubGrupo());
 				this.info("SubGrupo removido com sucesso");
-				this.alt = true;
-				this.rem = true;
-				this.vig = true;
+				this.setAlt(true);
+				this.setRem(true);
+				this.setVig(true);				
 				limpar();
 				desabilita();
 			} else {
@@ -113,25 +111,22 @@ public class SubGrupoBean extends FacesUtil implements Serializable{
 
 	public void buscaSub() {
 		limpar();
-		SubGrupoRN subRN = new SubGrupoRN();
-		if (!busca.equals("") && (!filtro.equals(""))) {
-			if (filtro.equals("id")) {
-				this.listaSubGrupo = subRN.consultaId(Long.parseLong(busca));
-			} else if (filtro.equals("desc")) {
-				this.listaSubGrupo = subRN.consultaDesc(busca);
+		if (!this.getBusca().equals("") && (!this.getFiltro().equals(""))) {
+			if (this.getFiltro().equals("id")) {
+				this.setListaSubGrupo(this.getSubRN().consultaId(Long.parseLong(this.getBusca())));
+			} else if (this.getFiltro().equals("desc")) {
+				this.setListaSubGrupo(this.getSubRN().consultaDesc(this.getBusca()));
 			}
 		} else {
-			this.listaSubGrupo = subRN.listar();
+			this.setListaSubGrupo(this.getSubRN().listar());
 		}
 	}
 
 	public void remCategoria() {
 		try {
-			SubGrupoRN subRN = new SubGrupoRN();
-			Integer retorno = subRN.VerificaRemCatSub(this.subGrupo,
-					this.idCateg);
+			Integer retorno = this.getSubRN().VerificaRemCatSub(this.getSubGrupo(), this.getIdCateg());
 			if (retorno == 0) {
-				subRN.removerCat(this.idCateg);
+				this.getSubRN().removerCat(this.getIdCateg());
 				listaCategoria();
 				this.info("Categoria removida com sucesso");
 			} else {
@@ -143,26 +138,24 @@ public class SubGrupoBean extends FacesUtil implements Serializable{
 	}
 
 	public void editSub() {
-		SubGrupoRN subRN = new SubGrupoRN();
-		this.subGrupo = subRN.editSub(this.id);
+		this.setSubGrupo(this.getSubRN().editSub(this.id));
 		listaCategoria();
 		habilita();
-		this.alt = false;
-		this.vig = false;
-		this.rem = false;
-		this.sal = true;
+		this.setSal(true);
+		this.setAlt(false);
+		this.setRem(false);
+		this.setVig(false);
 	}
 
 	public void incluirCategoria() {
 		try {
-			SubGrupoRN subRN = new SubGrupoRN();
-			this.categoria.setIdCategoria(null);
-			this.categoria.setSubGrupo(subGrupo);
-			Integer retorno = subRN.validaCampoNuloCategoria(this.categoria);
+			this.getCategoria().setIdCategoria(null);
+			this.getCategoria().setSubGrupo(this.getSubGrupo());
+			Integer retorno = this.getSubRN().validaCampoNuloCategoria(this.getCategoria());
 			if (retorno == 0) {
-				subRN.salvarCategoria(this.categoria);
+				this.getSubRN().salvarCategoria(this.getCategoria());
 				listaCategoria();
-				this.categoria = new Categoria();
+				this.setCategoria(null);
 				this.info("Categoria salva com sucesso");
 			} else {
 				this.error("Existem campos nulos no formulário");
@@ -174,25 +167,25 @@ public class SubGrupoBean extends FacesUtil implements Serializable{
 
 	public void listaCategoria() {
 		try {
-			SubGrupoRN subRN = new SubGrupoRN();
-			if (this.listaCategoria != null) {
-				this.listaCategoria.clear();
-			}
-			this.listaCategoria = subRN.listarCatg(this.subGrupo);
+			this.getListaCategoria().clear();
+			this.setListaCategoria(this.getSubRN().listarCatg(this.getSubGrupo()));
 		} catch (Exception e) {
 			this.error("Problemas ao listar as Categorias " + e.getMessage());
 		}
 	}
 
 	public void habilita() {
-		this.desc = false;
+		this.setDesc(false);
 	}
 
 	public void desabilita() {
-		this.desc = true;
+		this.setDesc(true);
 	}
 
 	public List<Categoria> getListaCategoria() {
+		if(this.listaCategoria == null){
+			this.listaCategoria = new ArrayList<Categoria>();
+		}
 		return listaCategoria;
 	}
 
@@ -201,6 +194,9 @@ public class SubGrupoBean extends FacesUtil implements Serializable{
 	}
 
 	public List<SubGrupo> getListaSubGrupo() {
+		if(this.listaSubGrupo == null){
+			this.listaSubGrupo = new ArrayList<SubGrupo>();
+		}
 		return listaSubGrupo;
 	}
 
@@ -225,10 +221,16 @@ public class SubGrupoBean extends FacesUtil implements Serializable{
 	}
 
 	public String getBusca() {
+		if(this.busca == null){
+			this.busca = new String();
+		}
 		return busca;
 	}
 
 	public String getFiltro() {
+		if(this.filtro == null){
+			this.filtro = new String();
+		}
 		return filtro;
 	}
 
@@ -277,6 +279,9 @@ public class SubGrupoBean extends FacesUtil implements Serializable{
 	}
 
 	public SubGrupo getSubGrupo() {
+		if(this.subGrupo == null){
+			this.subGrupo = new SubGrupo();
+		}
 		return subGrupo;
 	}
 
@@ -294,5 +299,16 @@ public class SubGrupoBean extends FacesUtil implements Serializable{
 
 	public void setDesc(boolean desc) {
 		this.desc = desc;
+	}
+
+	public SubGrupoRN getSubRN() {
+		if(this.subRN == null){
+			this.subRN = new SubGrupoRN();
+		}
+		return subRN;
+	}
+
+	public void setSubRN(SubGrupoRN subRN) {
+		this.subRN = subRN;
 	}
 }

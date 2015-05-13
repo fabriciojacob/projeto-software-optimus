@@ -16,9 +16,10 @@ import br.com.softwareOptimus.util.FacesUtil;
 public class UnidMedBean extends FacesUtil implements Serializable {
 
 	private static final long serialVersionUID = -3988883087479983925L;
-	private UnidMed unidMed = new UnidMed();
+	private UnidMed unidMed;
 	private boolean disable = false;
-	private List<UnidMed> unidMedLis = new ArrayList<UnidMed>();
+	private List<UnidMed> unidMedLis;
+	UnidMedRN unidRN;
 	private String busca;
 	private String filtro;
 	private Long id;
@@ -27,13 +28,12 @@ public class UnidMedBean extends FacesUtil implements Serializable {
 
 	public void salvarUnid() {
 		try {
-			UnidMedRN unidRN = new UnidMedRN();
-			this.unidMed.setIdUnidMed(null);
-			Integer retorno = unidRN.validaCampoNulo(this.unidMed);
+			this.getUnidMed().setIdUnidMed(null);
+			Integer retorno = this.getUnidRN().validaCampoNulo(this.getUnidMed());
 			if (retorno == 0) {
-				unidRN.salvar(unidMed);
+				this.getUnidRN().salvar(getUnidMed());
 				this.info("Unidade salva com sucesso");
-				this.sal = true;
+				this.setSal(true);
 				limpa();
 				desabilita();
 			} else {
@@ -46,76 +46,72 @@ public class UnidMedBean extends FacesUtil implements Serializable {
 
 	public void buscaUnid() {
 		limpa();
-		UnidMedRN unidRN = new UnidMedRN();
-		if (!busca.equals("") && !filtro.equals("")) {
-			if (filtro.equals("id")) {
-				this.unidMedLis = unidRN.consultaId(Long.parseLong(busca));
-			} else if (filtro.equals("unid")) {
-				this.unidMedLis = unidRN.consultaUnid(busca);
-			} else if (filtro.equals("desc")) {
-				this.unidMedLis = unidRN.consultaDesc(busca);
+		if (!this.getBusca().equals("") && !this.getFiltro().equals("")) {
+			if (this.getFiltro().equals("id")) {
+				this.setUnidMedLis(this.getUnidRN().consultaId(Long.parseLong(this.getBusca())));
+			} else if (this.getFiltro().equals("unid")) {
+				this.setUnidMedLis(this.getUnidRN().consultaUnid(this.getBusca()));
+			} else if (this.getFiltro().equals("desc")) {
+				this.setUnidMedLis(this.getUnidRN().consultaDesc(this.getBusca()));
 			}
 		} else {
-			this.unidMedLis = unidRN.lista();
+			this.setUnidMedLis(this.getUnidRN().lista());
 		}
 	}
 
 	public void cancelar() {
-		this.sal = true;
-		this.alt = true;
-		this.rem = true;
+		this.setSal(true);
+		this.setAlt(true);
+		this.setRem(true);
 		limpa();
 		desabilita();
 	}
 
 	public void novo() {
-		this.sal = false;
-		this.alt = true;
-		this.rem = true;
+		this.setSal(false);
+		this.setAlt(true);
+		this.setRem(true);
 		habilita();
 		limpa();
 	}
 
 	public void limpa() {
-		this.unidMed = new UnidMed();
-		this.unidMedLis = new ArrayList<UnidMed>();
+		this.setUnidMed(null);
+		this.setUnidMedLis(null);
 	}
 
 	public void altUnid() {
 		try {
-			UnidMedRN unidRN = new UnidMedRN();
-			Integer retorno = unidRN.validaCampoNulo(this.unidMed);
+			Integer retorno = this.getUnidRN().validaCampoNulo(this.getUnidMed());
 			if (retorno == 0) {
-				unidRN.altUnid(unidMed);
+				this.getUnidRN().altUnid(this.getUnidMed());
 				this.info("Unidade alterada com sucesso");
-				this.alt = true;
-				this.rem = true;
+				this.setAlt(true);
+				this.setRem(true);
 				limpa();
 				desabilita();
 			} else {
 				this.error("Existem campos nulos no formulário");
 			}
 		} catch (Exception e) {
-			this.error("Problemas na alteraÃ§Ã£o da Unidade " + e.getMessage());
+			this.error("Problemas na alteração da Unidade " + e.getMessage());
 		}
 	}
 
 	public void editUnid() {
-		UnidMedRN unidRN = new UnidMedRN();
-		this.unidMed = unidRN.editUnid(id);
-		this.alt = false;
-		this.rem = false;
-		this.sal = true;
+		this.setUnidMed(null);
+		this.setSal(true);
+		this.setAlt(false);
+		this.setRem(false);
 		habilita();
 	}
 
 	public void remUnid() {
-		UnidMedRN unidRN = new UnidMedRN();
 		try {
-			unidRN.remove(unidMed.getIdUnidMed());
+			this.getUnidRN().remove(this.getUnidMed().getIdUnidMed());
 			this.info("Unidade removida com sucesso");
-			this.alt = true;
-			this.rem = true;
+			this.setAlt(true);
+			this.setRem(true);
 			limpa();
 			desabilita();
 		} catch (Exception e) {
@@ -124,13 +120,13 @@ public class UnidMedBean extends FacesUtil implements Serializable {
 	}
 
 	public void habilita() {
-		this.unidAbre = false;
-		this.desc = false;
+		this.setUnidAbre(false);
+		this.setDesc(false);
 	}
 
 	public void desabilita() {
-		this.unidAbre = true;
-		this.desc = true;
+		this.setUnidAbre(true);
+		this.setDesc(true);
 	}
 
 	public boolean isUnidAbre() {
@@ -182,6 +178,9 @@ public class UnidMedBean extends FacesUtil implements Serializable {
 	}
 
 	public String getFiltro() {
+		if(this.filtro == null){
+			this.filtro = new String();
+		}
 		return filtro;
 	}
 
@@ -190,6 +189,9 @@ public class UnidMedBean extends FacesUtil implements Serializable {
 	}
 
 	public String getBusca() {
+		if(this.busca == null){
+			this.busca = new String();
+		}
 		return busca;
 	}
 
@@ -206,6 +208,9 @@ public class UnidMedBean extends FacesUtil implements Serializable {
 	}
 
 	public UnidMed getUnidMed() {
+		if(this.unidMed == null){
+			this.unidMed = new UnidMed();
+		}
 		return unidMed;
 	}
 
@@ -214,10 +219,24 @@ public class UnidMedBean extends FacesUtil implements Serializable {
 	}
 
 	public List<UnidMed> getUnidMedLis() {
+		if(this.unidMedLis == null){
+			this.unidMedLis = new ArrayList<UnidMed>();
+		}
 		return unidMedLis;
 	}
 
 	public void setUnidMedLis(List<UnidMed> unidMedLis) {
 		this.unidMedLis = unidMedLis;
+	}
+
+	public UnidMedRN getUnidRN() {
+		if(this.unidRN == null){
+			this.unidRN = new UnidMedRN();
+		}
+		return unidRN;
+	}
+
+	public void setUnidRN(UnidMedRN unidRN) {
+		this.unidRN = unidRN;
 	}
 }
