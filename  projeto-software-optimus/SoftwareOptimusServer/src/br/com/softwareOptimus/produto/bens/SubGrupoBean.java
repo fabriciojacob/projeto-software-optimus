@@ -23,9 +23,13 @@ public class SubGrupoBean extends FacesUtil implements Serializable{
 	private List<SubGrupo> listaSubGrupo;
 	private SubGrupoRN subRN;
 	private String busca, filtro;
-	private boolean sal = true, alt = true, rem = true, desc = true,
-			vig = true;
-	private Long id, idCateg;
+	private boolean sal = true;
+	private boolean alt = true;
+	private boolean rem = true;
+	private boolean desc = true;
+	private boolean vig = true;
+	private Long id;
+	private Long idCateg;
 
 	public void novo() {
 		this.setSal(false);

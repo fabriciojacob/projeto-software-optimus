@@ -26,9 +26,13 @@ public class GrupoBean extends FacesUtil implements Serializable{
 	private SubGrupoRN subRN;
 	private GrupoRN gruRN;
 	private String busca, filtro;
-	private boolean sal = true, alt = true, rem = true, desc = true,
-			vig = true;
-	private Long id, idSub;
+	private boolean sal = true;
+	private boolean alt = true;
+	private boolean rem = true;
+	private boolean desc = true;
+	private boolean vig = true;
+	private Long id;
+	private Long idSub;
 
 	public GrupoBean() {
 		this.setListaSubGrupo(this.getSubRN().listaSubGrupo());

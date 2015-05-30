@@ -29,45 +29,55 @@ import br.com.softwareOptimus.util.FacesUtil;
 public class ProdutoBean extends FacesUtil implements Serializable{
 
 	private static final long serialVersionUID = 8953487771453312466L;
-	private Produto produto = new Produto();
-	private List<FiguraFiscal> listaFigura = new ArrayList<FiguraFiscal>();
-	private List<UnidMed> listaUnidade = new ArrayList<UnidMed>();
-	private List<TipoProduto> listaTipo = new ArrayList<TipoProduto>();
-	private List<Setor> listaSetor = new ArrayList<Setor>();
-	private List<Grupo> listaGrupo = new ArrayList<Grupo>();
-	private List<SubGrupo> listaSubGrupo = new ArrayList<SubGrupo>();
-	private List<Produto> listaProduto = new ArrayList<Produto>();
-	private List<Categoria> listaCategoria = new ArrayList<Categoria>();
-	private FiguraFiscalRN figRN = new FiguraFiscalRN();
-	private UnidMedRN unidRN = new UnidMedRN();
-	private SubGrupoRN subRN = new SubGrupoRN();
-	private GrupoRN gruRN = new GrupoRN();
-	private SetorRN setRN = new SetorRN();
+	private Produto produto;
+	private List<FiguraFiscal> listaFigura;
+	private List<UnidMed> listaUnidade;
+	private List<TipoProduto> listaTipo;
+	private List<Setor> listaSetor;
+	private List<Grupo> listaGrupo;
+	private List<SubGrupo> listaSubGrupo;
+	private List<Produto> listaProduto;
+	private List<Categoria> listaCategoria;
+	private FiguraFiscalRN figRN;
+	private UnidMedRN unidRN;
+	private SubGrupoRN subRN;
+	private GrupoRN gruRN;
+	private SetorRN setRN;
 	private String busca, filtro;
 	private Long id;
-	private TipoProdutoRN tipRN = new TipoProdutoRN();
-	private boolean sal = true, alt = true, rem = true, sta = true,
-			desc = true, codBarra = true, fig = true, unid = true,
-			tipoProd = true, set = true, gru = true, subGru = true, categ = true;
+	private TipoProdutoRN tipRN;
+	private ProdutoRN proRN;
+	private boolean sal = true;
+	private boolean alt = true;
+	private boolean rem = true;
+	private boolean sta = true;
+	private boolean desc = true;
+	private boolean codBarra = true;
+	private boolean fig = true;
+	private boolean unid = true;
+	private boolean tipoProd = true;
+	private boolean set = true;
+	private boolean gru = true;
+	private boolean subGru = true;
+	private boolean categ = true;
 
 	public ProdutoBean() {
-		setListaUnidade(this.unidRN.lista());
-		setListaTipo(this.tipRN.listarTipoVig());
-		setListaFigura(this.figRN.listar());
-		setListaSetor(this.setRN.listar());
+		setListaUnidade(this.getUnidRN().lista());
+		setListaTipo(this.getTipRN().listarTipoVig());
+		setListaFigura(this.getFigRN().listar());
+		setListaSetor(this.getSetRN().listar());
 	}
 
 	public void salvar() {
 		try {
-			ProdutoRN proRN = new ProdutoRN();
-			this.produto.setIdProduto(null);
-			Integer retorno = proRN.validaCampoNulo(this.produto);
+			this.getProduto().setIdProduto(null);
+			Integer retorno = this.getProRN().validaCampoNulo(this.getProduto());
 			if (retorno == 0) {
-				proRN.salvar(this.produto);
+				this.getProRN().salvar(this.getProduto());
 				this.info("Produto salvo com sucesso");
-				this.sal = true;
-				this.alt = true;
-				this.rem = true;
+				this.setSal(true);
+				this.setAlt(true);
+				this.setRem(true);
 				limpar();
 				desabilita();
 			} else {
@@ -79,23 +89,22 @@ public class ProdutoBean extends FacesUtil implements Serializable{
 	}
 
 	public void novo() {
-		this.sal = false;
-		this.alt = true;
-		this.rem = true;
+		this.setSal(false);
+		this.setAlt(true);
+		this.setRem(true);
 		limpar();
 		habilita();
 	}
 
 	public void alterar() {
 		try {
-			ProdutoRN prodRN = new ProdutoRN();
-			Integer retorno = prodRN.validaCampoNulo(this.produto);
+			Integer retorno = this.getProRN().validaCampoNulo(this.getProduto());
 			if (retorno == 0) {
-				prodRN.altPro(this.produto);
+				this.getProRN().altPro(this.getProduto());
 				this.info("Produto alterado com sucesso");
-				this.alt = true;
-				this.rem = true;
-				this.sal = true;
+				this.setSal(true);
+				this.setAlt(true);
+				this.setRem(true);
 				limpar();
 				desabilita();
 			} else {
@@ -108,13 +117,12 @@ public class ProdutoBean extends FacesUtil implements Serializable{
 
 	public void remover() {
 		try {
-			ProdutoRN proRN = new ProdutoRN();
-			Integer retorno = proRN.verificaRemocao(this.produto);
+			Integer retorno = this.getProRN().verificaRemocao(this.getProduto());
 			if (retorno == 0) {
-				proRN.remover(this.produto);
+				this.getProRN().remover(this.getProduto());
 				this.info("Produto removido com sucesso");
-				this.alt = true;
-				this.rem = true;
+				this.setAlt(true);
+				this.setRem(true);
 				limpar();
 				desabilita();
 			} else {
@@ -127,96 +135,96 @@ public class ProdutoBean extends FacesUtil implements Serializable{
 	
 	public void buscarProd(){
 		limpar();
-		ProdutoRN proRN = new ProdutoRN();
-		if (!busca.equals("") && (!filtro.equals(""))) {
-			if (filtro.equals("id")) {
-				this.listaProduto = proRN.consultaId(Long.parseLong(busca));
-			} else if (filtro.equals("desc")) {
-				this.listaProduto = proRN.consultaDesc(busca);
+		if (!this.getBusca().equals("") && (!this.getFiltro().equals(""))) {
+			if (this.getFiltro().equals("id")) {
+				this.setListaProduto(this.getProRN().consultaId(Long.parseLong(this.getBusca())));
+			} else if (this.getFiltro().equals("desc")) {
+				this.setListaProduto(this.getProRN().consultaDesc(this.getBusca()));
 			}
 		} else {
-			this.listaProduto = proRN.listar();
+			this.setListaProduto(this.getProRN().listar());
 		}
 	}
 	
 	public void editProduto(){
-		ProdutoRN proRN = new ProdutoRN();
-		this.produto = proRN.editPro(this.id);
+		this.setProduto(this.getProRN().editPro(this.getId()));
 		filtraGrupo();
 		filtraSubGrupo();
 		filtraCategoria();
 		habilita();
-		this.alt = false;
-		this.rem = false;
-		this.sal = true;	
+		this.setSal(true);
+		this.setAlt(false);
+		this.setRem(false);
 	}
 
 	public void cancelar() {
-		this.sal = true;
-		this.alt = true;
-		this.rem = true;
+		this.setSal(true);
+		this.setAlt(true);
+		this.setRem(true);
 		limpar();
 		desabilita();
 	}
 
 	public void limpar() {
-		this.produto = new Produto();
-		this.listaFigura = new ArrayList<FiguraFiscal>();
-		this.listaProduto = new ArrayList<Produto>();
-		this.listaUnidade = new ArrayList<UnidMed>();
-		this.listaTipo = new ArrayList<TipoProduto>();
-		this.listaSetor = new ArrayList<Setor>();
-		this.listaGrupo = new ArrayList<Grupo>();
-		this.listaSubGrupo = new ArrayList<SubGrupo>();
-		this.listaCategoria = new ArrayList<Categoria>();
-		setListaUnidade(this.unidRN.lista());
-		setListaTipo(this.tipRN.listarTipoVig());
-		setListaFigura(this.figRN.listar());
-		setListaSetor(this.setRN.listar());
+		this.setProduto(null);
+		this.setListaFigura(null);
+		this.setListaProduto(null);
+		this.setListaUnidade(null);
+		this.setListaTipo(null);
+		this.setListaSetor(null);
+		this.setListaGrupo(null);
+		this.setListaSubGrupo(null);
+		this.setListaCategoria(null);
+		this.setListaUnidade(this.getUnidRN().lista());
+		this.setListaTipo(this.getTipRN().listarTipoVig());
+		this.setListaFigura(this.getFigRN().listar());
+		this.setListaSetor(this.getSetRN().listar());
 	}
 
 	public void habilita() {
-		this.sta = false;
-		this.desc = false;
-		this.codBarra = false;
-		this.fig = false;
-		this.unid = false;
-		this.tipoProd = false;
-		this.set = false;
-		this.gru = false;
-		this.subGru = false;
-		this.categ = false;
+		this.setSta(false);
+		this.setDesc(false);
+		this.setCodBarra(false);
+		this.setFig(false);
+		this.setUnid(false);
+		this.setTipoProd(false);
+		this.setSet(false);
+		this.setGru(false);
+		this.setSubGru(false);
+		this.setCateg(false);
 	}
 
 	public void desabilita() {
-		this.sta = true;
-		this.desc = true;
-		this.codBarra = true;
-		this.fig = true;
-		this.unid = true;
-		this.tipoProd = true;
-		this.set = true;
-		this.gru = true;
-		this.subGru = true;
-		this.categ = true;
+		this.setSta(true);
+		this.setDesc(true);
+		this.setCodBarra(true);
+		this.setFig(true);
+		this.setUnid(true);
+		this.setTipoProd(true);
+		this.setSet(true);
+		this.setGru(true);
+		this.setSubGru(true);
+		this.setCateg(true);
 	}
 
 	public void filtraGrupo() {
-		setListaGrupo(this.gruRN.listaGrupoVincSet(this.produto.getSetor()));
-		this.listaSubGrupo = new ArrayList<SubGrupo>();
-		this.listaCategoria = new ArrayList<Categoria>();
+		setListaGrupo(this.getGruRN().listaGrupoVincSet(this.getProduto().getSetor()));
+		this.setListaSubGrupo(null);
+		this.setListaCategoria(null);
 	}
 
 	public void filtraSubGrupo() {
-		setListaSubGrupo(this.subRN.listaSubGrupoVincGrupo(this.produto
-				.getGrupo()));
+		setListaSubGrupo(this.getSubRN().listaSubGrupoVincGrupo(this.getProduto().getGrupo()));
 	}
 
 	public void filtraCategoria() {
-		setListaCategoria(this.subRN.listarCatg(this.produto.getSubGrupo()));
+		setListaCategoria(this.getSubRN().listarCatg(this.getProduto().getSubGrupo()));
 	}
 
 	public List<Produto> getListaProduto() {
+		if(this.listaProduto == null){
+			this.listaProduto = new ArrayList<Produto>();
+		}
 		return listaProduto;
 	}
 
@@ -329,6 +337,9 @@ public class ProdutoBean extends FacesUtil implements Serializable{
 	}
 
 	public List<Setor> getListaSetor() {
+		if(this.listaSetor == null){
+			this.listaSetor = new ArrayList<Setor>();
+		}
 		return listaSetor;
 	}
 
@@ -337,6 +348,9 @@ public class ProdutoBean extends FacesUtil implements Serializable{
 	}
 
 	public List<Grupo> getListaGrupo() {
+		if(this.listaGrupo == null){
+			this.listaGrupo = new ArrayList<Grupo>();
+		}
 		return listaGrupo;
 	}
 
@@ -345,6 +359,9 @@ public class ProdutoBean extends FacesUtil implements Serializable{
 	}
 
 	public List<SubGrupo> getListaSubGrupo() {
+		if(this.listaSubGrupo == null){
+			this.listaSubGrupo = new ArrayList<SubGrupo>();
+		}
 		return listaSubGrupo;
 	}
 
@@ -353,6 +370,9 @@ public class ProdutoBean extends FacesUtil implements Serializable{
 	}
 
 	public List<Categoria> getListaCategoria() {
+		if(this.listaCategoria == null){
+			this.listaCategoria = new ArrayList<Categoria>();
+		}
 		return listaCategoria;
 	}
 
@@ -361,10 +381,16 @@ public class ProdutoBean extends FacesUtil implements Serializable{
 	}
 
 	public List<TipoProduto> getListaTipo() {
+		if(this.listaTipo == null){
+			this.listaTipo = new ArrayList<TipoProduto>();
+		}
 		return listaTipo;
 	}
 
 	public List<UnidMed> getListaUnidade() {
+		if(this.listaUnidade == null){
+			this.listaUnidade = new ArrayList<UnidMed>();
+		}
 		return listaUnidade;
 	}
 
@@ -401,6 +427,9 @@ public class ProdutoBean extends FacesUtil implements Serializable{
 	}
 
 	public List<FiguraFiscal> getListaFigura() {
+		if(this.listaFigura == null){
+			this.listaFigura = new ArrayList<FiguraFiscal>();
+		}
 		return listaFigura;
 	}
 
@@ -409,10 +438,90 @@ public class ProdutoBean extends FacesUtil implements Serializable{
 	}
 
 	public Produto getProduto() {
+		if(this.produto == null){
+			this.produto = new Produto();
+		}
 		return produto;
 	}
 
 	public void setProduto(Produto produto) {
 		this.produto = produto;
+	}
+
+	public FiguraFiscalRN getFigRN() {
+		if(this.figRN == null){
+			this.figRN = new FiguraFiscalRN();			
+		}
+		return figRN;
+	}
+
+	public void setFigRN(FiguraFiscalRN figRN) {
+		this.figRN = figRN;
+	}
+
+	public UnidMedRN getUnidRN() {
+		if(this.unidRN == null){
+			this.unidRN = new UnidMedRN();
+		}
+		return unidRN;
+	}
+
+	public void setUnidRN(UnidMedRN unidRN) {
+		this.unidRN = unidRN;
+	}
+
+	public SubGrupoRN getSubRN() {
+		if(this.subRN == null){
+			this.subRN = new SubGrupoRN();
+		}
+		return subRN;
+	}
+
+	public void setSubRN(SubGrupoRN subRN) {
+		this.subRN = subRN;
+	}
+
+	public GrupoRN getGruRN() {
+		if(this.gruRN == null){
+			this.gruRN = new GrupoRN();
+		}
+		return gruRN;
+	}
+
+	public void setGruRN(GrupoRN gruRN) {
+		this.gruRN = gruRN;
+	}
+
+	public SetorRN getSetRN() {
+		if(this.setRN == null){
+			this.setRN = new SetorRN();
+		}
+		return setRN;
+	}
+
+	public void setSetRN(SetorRN setRN) {
+		this.setRN = setRN;
+	}
+
+	public TipoProdutoRN getTipRN() {
+		if(this.tipRN == null){
+			this.tipRN = new TipoProdutoRN();
+		}
+		return tipRN;
+	}
+
+	public void setTipRN(TipoProdutoRN tipRN) {
+		this.tipRN = tipRN;
+	}
+
+	public ProdutoRN getProRN() {
+		if(this.proRN == null){
+			this.proRN = new ProdutoRN();
+		}
+		return proRN;
+	}
+
+	public void setProRN(ProdutoRN proRN) {
+		this.proRN = proRN;
 	}
 }
