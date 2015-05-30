@@ -198,7 +198,7 @@ public class TituloDAOHibernate implements TituloDAO {
 	@Override
 	public Titulo retornaTitulo(Long id) throws Exception {
 		String jpql = "Select t from Titulo t where t.idTitulo = :id"
-				+ " and t.status = 1";
+				+ " and t.status = 0";
 		TypedQuery<Titulo> consulta = this.session.createQuery(jpql,
 				Titulo.class);
 		consulta.setParameter("id", id);
