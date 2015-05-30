@@ -17,7 +17,7 @@ public class UsuarioBean extends FacesUtil implements Serializable {
  
 	private Usuario usuario;
 	private String confirmarSenha;
-	UsuarioRN usuarioRN;
+	private UsuarioRN usuarioRN;
 
 	public Usuario getUsuario() {
 		if(this.usuario == null){

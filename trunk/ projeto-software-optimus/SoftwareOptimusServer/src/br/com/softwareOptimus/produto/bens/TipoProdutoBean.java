@@ -22,51 +22,56 @@ import br.com.softwareOptimus.util.FacesUtil;
 public class TipoProdutoBean extends FacesUtil implements Serializable{
 
 	private static final long serialVersionUID = -2984908303662738172L;
-	private TipoProduto tipo = new TipoProduto();
-	private CodTabelaGov tbGov = new CodTabelaGov();
-	private Ncm ncm = new Ncm();
-	private List<TipoProduto> listaTipoProduto = new ArrayList<TipoProduto>();
-	private List<Aliquota> listaAliqPis = new ArrayList<Aliquota>();
-	private List<Aliquota> listaAliqCofins = new ArrayList<Aliquota>();
-	private List<Ncm> listaNcm = new ArrayList<Ncm>();
-	private List<Aliquota> listaAliqIpi = new ArrayList<Aliquota>();
-	private AliquotaRN aliqRN = new AliquotaRN();
-	private List<CodTabelaGov> listaTbGov = new ArrayList<CodTabelaGov>();
-	private boolean sal = true, alt = true, rem = true, vig = true,
-			desc = true;
+	private TipoProduto tipo;
+	private CodTabelaGov tbGov;
+	private Ncm ncm;
+	private List<TipoProduto> listaTipoProduto;
+	private List<Aliquota> listaAliqPis;
+	private List<Aliquota> listaAliqCofins;
+	private List<Ncm> listaNcm;
+	private List<Aliquota> listaAliqIpi;
+	private AliquotaRN aliqRN;
+	private TipoProdutoRN tipoRN;
+	private List<CodTabelaGov> listaTbGov;
+	private boolean sal = true;
+	private boolean alt = true;
+	private boolean rem = true;
+	private boolean vig = true;
+	private boolean desc = true;
 	private String busca, filtro;
-	private Long id, idVig, idNcm;
+	private Long id;
+	private Long idVig;
+	private Long idNcm;
 
 	public TipoProdutoBean() {
-		setListaAliqPis(this.aliqRN.listaAliqPisCofins(TipoCst.PISCOFINS, PisCofins.PIS));
-		setListaAliqCofins(this.aliqRN.listaAliqPisCofins(TipoCst.PISCOFINS, PisCofins.COFINS));
-		setListaAliqIpi(this.aliqRN.listaAliq(TipoCst.IPI));
+		setListaAliqPis(this.getAliqRN().listaAliqPisCofins(TipoCst.PISCOFINS, PisCofins.PIS));
+		setListaAliqCofins(this.getAliqRN().listaAliqPisCofins(TipoCst.PISCOFINS, PisCofins.COFINS));
+		setListaAliqIpi(this.getAliqRN().listaAliq(TipoCst.IPI));
 	}
 
 	public void novo() {
-		this.sal = false;
-		this.alt = true;
-		this.rem = true;
-		this.vig = true;
-		setListaAliqPis(this.aliqRN.listaAliqPisCofins(TipoCst.PISCOFINS, PisCofins.PIS));
-		setListaAliqCofins(this.aliqRN.listaAliqPisCofins(TipoCst.PISCOFINS, PisCofins.COFINS));
-		setListaAliqIpi(this.aliqRN.listaAliq(TipoCst.IPI));
+		this.setSal(false);
+		this.setAlt(true);
+		this.setRem(true);
+		this.setVig(true);
+		setListaAliqPis(this.getAliqRN().listaAliqPisCofins(TipoCst.PISCOFINS, PisCofins.PIS));
+		setListaAliqCofins(this.getAliqRN().listaAliqPisCofins(TipoCst.PISCOFINS, PisCofins.COFINS));
+		setListaAliqIpi(this.getAliqRN().listaAliq(TipoCst.IPI));
 		limpar();
 		habilita();
 	}
 
 	public void salvar() {
 		try {
-			TipoProdutoRN tipoRN = new TipoProdutoRN();
-			this.tipo.setIdTipoProd(null);
-			Integer retorno = tipoRN.validaCampoNulo(this.tipo);
+			this.getTipo().setIdTipoProd(null);
+			Integer retorno = this.getTipoRN().validaCampoNulo(this.getTipo());
 			if (retorno == 0) {
-				tipoRN.salvar(this.tipo);
+				this.getTipoRN().salvar(this.getTipo());
 				this.info("Tipo de Produto salvo com sucesso");
-				this.vig = false;
-				this.sal = true;
-				this.alt = false;
-				this.rem = false;
+				this.setVig(false);
+				this.setSal(true);
+				this.setAlt(false);
+				this.setRem(false);
 			} else {
 				this.error("Existem campos nulos no formulário");
 			}
@@ -77,14 +82,13 @@ public class TipoProdutoBean extends FacesUtil implements Serializable{
 
 	public void alterar() {
 		try {
-			TipoProdutoRN tipoRN = new TipoProdutoRN();
-			Integer retorno = tipoRN.validaCampoNulo(this.tipo);
+			Integer retorno = this.getTipoRN().validaCampoNulo(this.getTipo());
 			if (retorno == 0) {
-				tipoRN.altTipo(this.tipo);
+				this.getTipoRN().altTipo(this.getTipo());
 				this.info("Tipo de Produto alterado com sucesso");
-				this.alt = true;
-				this.rem = true;
-				this.vig = true;
+				this.setAlt(true);
+				this.setRem(true);
+				this.setVig(true);
 				limpar();
 				desabilita();
 			} else {
@@ -97,14 +101,13 @@ public class TipoProdutoBean extends FacesUtil implements Serializable{
 
 	public void remover() {
 		try {
-			TipoProdutoRN tipoRN = new TipoProdutoRN();
-			Integer retorno = tipoRN.verificaRemocao(this.tipo);
+			Integer retorno = this.getTipoRN().verificaRemocao(this.getTipo());
 			if (retorno == 0) {
-				tipoRN.remover(this.tipo);
+				this.getTipoRN().remover(this.getTipo());
 				this.info("Tipo de Produto removido com sucesso");
-				this.alt = true;
-				this.rem = true;
-				this.vig = true;
+				this.setAlt(true);
+				this.setRem(true);
+				this.setVig(true);
 				limpar();
 				desabilita();
 			} else {
@@ -116,27 +119,26 @@ public class TipoProdutoBean extends FacesUtil implements Serializable{
 	}
 
 	public void cancelar() {
-		this.sal = true;
-		this.alt = true;
-		this.rem = true;
-		this.vig = true;
+		this.setSal(true);
+		this.setAlt(true);
+		this.setRem(true);
+		this.setVig(true);
 		limpar();
 		desabilita();
 	}
 
 	public void buscarNcm() {
-		TipoProdutoRN tipoRN = new TipoProdutoRN();
-		if (!busca.equals("") && (!filtro.equals(""))) {
-			if (filtro.equals("codNcm")) {
-				this.listaNcm = tipoRN.consultaNCMCod(busca);
-			} else if (filtro.equals("descNcm")) {
-				this.listaNcm = tipoRN.consultaNCMDesc(busca);
-			} else if (filtro.equals("descNat")) {
-				this.listaNcm = tipoRN.consultaNatDesc(busca);
-			} else if (filtro.equals("codNat")) {
-				this.listaNcm = tipoRN.consultaNatCod(busca);
-			} else if (filtro.equals("descTb")) {
-				this.listaNcm = tipoRN.consultaTbDesc(busca);
+		if (!this.getBusca().equals("") && (!this.getFiltro().equals(""))) {
+			if (this.getFiltro().equals("codNcm")) {
+				this.setListaNcm(this.getTipoRN().consultaNCMCod(this.getBusca()));
+			} else if (this.getFiltro().equals("descNcm")) {
+				this.setListaNcm(this.getTipoRN().consultaNCMDesc(this.getBusca()));
+			} else if (this.getFiltro().equals("descNat")) {
+				this.setListaNcm(this.getTipoRN().consultaNatDesc(this.getBusca()));
+			} else if (this.getFiltro().equals("codNat")) {
+				this.setListaNcm(this.getTipoRN().consultaNatCod(this.getBusca()));
+			} else if (this.getFiltro().equals("descTb")) {
+				this.setListaNcm(this.getTipoRN().consultaTbDesc(this.getBusca()));
 			}
 		} else {
 			this.error("Para listar os NCM inclua um parâmentro.");
@@ -144,16 +146,14 @@ public class TipoProdutoBean extends FacesUtil implements Serializable{
 	}
 
 	public void vincularNcm() {
-		TipoProdutoRN tipoRN = new TipoProdutoRN();
-		this.ncm = tipoRN.consultaNCMId(this.idNcm);
-		this.tbGov.setNcm(ncm);
+		this.setNcm(this.getTipoRN().consultaNCMId(this.getIdNcm()));
+		this.getTbGov().setNcm(this.getNcm());
 		this.info("Ncm Vinculado ao Tipo!");
 	}
 
 	public void excluirVigTip() {
 		try {
-			TipoProdutoRN tipoRN = new TipoProdutoRN();
-			tipoRN.removerVig(this.idVig);
+			this.getTipoRN().removerVig(this.getIdVig());
 			listaVigencia();
 			this.info("Vigência do tipo de produto removido com sucesso");
 		} catch (Exception e) {
@@ -163,8 +163,7 @@ public class TipoProdutoBean extends FacesUtil implements Serializable{
 
 	public void editarVigTip() {
 		try {
-			TipoProdutoRN tipoRN = new TipoProdutoRN();
-			this.tbGov = tipoRN.editVig(this.idVig);
+			this.setTbGov(this.getTipoRN().editVig(this.getIdVig()));
 		} catch (Exception e) {
 			this.error("Problemas na remoção da vigência do tipo de produto " + e.getMessage());
 		}
@@ -172,52 +171,48 @@ public class TipoProdutoBean extends FacesUtil implements Serializable{
 
 	public void buscarTipo() {
 		limpar();
-		TipoProdutoRN tipoRN = new TipoProdutoRN();
-		if (!busca.equals("") && (!filtro.equals(""))) {
-			if (filtro.equals("id")) {
-				this.listaTipoProduto = tipoRN
-						.consultaId(Long.parseLong(busca));
-			} else if (filtro.equals("desc")) {
-				this.listaTipoProduto = tipoRN.consultaDesc(busca);
+		if (!this.getBusca().equals("") && (!this.getFiltro().equals(""))) {
+			if (this.getFiltro().equals("id")) {
+				this.setListaTipoProduto(this.getTipoRN().consultaId(Long.parseLong(this.getBusca())));
+			} else if (this.getFiltro().equals("desc")) {
+				this.setListaTipoProduto(this.getTipoRN().consultaDesc(this.getBusca()));
 			}
 		} else {
-			this.listaTipoProduto = tipoRN.listar();
+			this.setListaTipoProduto(this.getTipoRN().listar());
 		}
 	}
 
 	public void editTipo() {
-		TipoProdutoRN tipoRN = new TipoProdutoRN();
-		this.tipo = tipoRN.editTipo(id);
+		this.setTipo(this.getTipoRN().editTipo(this.getId()));
 		listaVigencia();
 		habilita();
-		this.alt = false;
-		this.vig = false;
-		this.rem = false;
-		this.sal = true;
+		this.setAlt(false);
+		this.setVig(false);
+		this.setRem(false);
+		this.setSal(true);
 	}
 
 	public void incluirTipoVig() {
 		try {
-			TipoProdutoRN tipoRN = new TipoProdutoRN();
-			if (this.tbGov.getIdCodGov() == null) {
-				this.tbGov.setIdCodGov(null);
-				this.tbGov.setTipoProduto(this.tipo);
-				Integer retorno = tipoRN.validaCampoNuloVig(this.tbGov);
+			if (this.getTbGov().getIdCodGov() == null) {
+				this.getTbGov().setIdCodGov(null);
+				this.getTbGov().setTipoProduto(this.getTipo());
+				Integer retorno = this.getTipoRN().validaCampoNuloVig(this.getTbGov());
 				if (retorno == 0) {
-					tipoRN.salvaVig(this.tbGov);
+					this.getTipoRN().salvaVig(this.getTbGov());
 					listaVigencia();
 					this.info("Vigência salva com sucesso");
-					this.tbGov = new CodTabelaGov();
+					this.setTbGov(null);
 				} else {
 					this.error("Existem campos nulos no formulário");
 				}
 			} else {
-				Integer retorno = tipoRN.validaCampoNuloVig(this.tbGov);
+				Integer retorno = this.getTipoRN().validaCampoNuloVig(this.getTbGov());
 				if (retorno == 0) {
-					tipoRN.salvaVig2(this.tbGov);
+					this.getTipoRN().salvaVig2(getTbGov());
 					listaVigencia();
 					this.info("Vigência salva com sucesso");
-					this.tbGov = new CodTabelaGov();
+					this.setTbGov(new CodTabelaGov());
 				} else {
 					this.error("Existem campos nulos no formulário");
 				}
@@ -228,25 +223,22 @@ public class TipoProdutoBean extends FacesUtil implements Serializable{
 	}
 
 	public void incVigNovo() {
-		this.tbGov = new CodTabelaGov();
+		this.setTbGov(null);
 	}
 
 	public void limpar() {
-		this.tipo = new TipoProduto();
-		this.tbGov = new CodTabelaGov();
-		this.listaTipoProduto = new ArrayList<TipoProduto>();
-		this.listaTbGov = new ArrayList<CodTabelaGov>();
-		this.ncm = new Ncm();
-		this.listaNcm = new ArrayList<Ncm>();
+		this.setTipo(null);
+		this.setTbGov(null);
+		this.setListaTipoProduto(null);
+		this.setListaTbGov(null);
+		this.setNcm(null);
+		this.setListaNcm(null);
 	}
 
 	public void listaVigencia() {
 		try {
-			TipoProdutoRN tipoRN = new TipoProdutoRN();
-			if (this.listaTbGov != null) {
-				this.listaTbGov.clear();
-			}
-			this.listaTbGov = tipoRN.listarVig(this.tipo);
+			this.getListaTbGov().clear();
+			this.setListaTbGov(this.getTipoRN().listarVig(this.getTipo()));
 		} catch (Exception e) {
 			this.error("Problemas ao listar as Vigências " + e.getMessage());
 		}
@@ -269,6 +261,9 @@ public class TipoProdutoBean extends FacesUtil implements Serializable{
 	}
 
 	public List<Aliquota> getListaAliqPis() {
+		if(this.listaAliqPis == null){
+			this.listaAliqPis = new ArrayList<Aliquota>();
+		}
 		return listaAliqPis;
 	}
 
@@ -277,6 +272,9 @@ public class TipoProdutoBean extends FacesUtil implements Serializable{
 	}
 
 	public List<Aliquota> getListaAliqCofins() {
+		if(this.listaAliqCofins == null){
+			this.listaAliqCofins = new ArrayList<Aliquota>();
+		}
 		return listaAliqCofins;
 	}
 
@@ -285,6 +283,9 @@ public class TipoProdutoBean extends FacesUtil implements Serializable{
 	}
 
 	public Ncm getNcm() {
+		if(this.ncm == null){
+			this.ncm = new Ncm();
+		}
 		return ncm;
 	}
 
@@ -293,6 +294,9 @@ public class TipoProdutoBean extends FacesUtil implements Serializable{
 	}
 
 	public List<Ncm> getListaNcm() {
+		if(this.listaNcm == null){
+			this.listaNcm = new ArrayList<Ncm>();
+		}
 		return listaNcm;
 	}
 
@@ -301,6 +305,9 @@ public class TipoProdutoBean extends FacesUtil implements Serializable{
 	}
 
 	public List<Aliquota> getListaAliqIpi() {
+		if(this.listaAliqIpi == null){
+			this.listaAliqIpi = new ArrayList<Aliquota>();
+		}
 		return listaAliqIpi;
 	}
 
@@ -309,6 +316,9 @@ public class TipoProdutoBean extends FacesUtil implements Serializable{
 	}
 
 	public TipoProduto getTipo() {
+		if(this.tipo == null){
+			this.tipo = new TipoProduto();
+		}
 		return tipo;
 	}
 
@@ -317,6 +327,9 @@ public class TipoProdutoBean extends FacesUtil implements Serializable{
 	}
 
 	public List<TipoProduto> getListaTipoProduto() {
+		if(this.listaTipoProduto == null){
+			this.listaTipoProduto = new ArrayList<TipoProduto>();
+		}
 		return listaTipoProduto;
 	}
 
@@ -397,6 +410,9 @@ public class TipoProdutoBean extends FacesUtil implements Serializable{
 	}
 
 	public CodTabelaGov getTbGov() {
+		if(this.tbGov == null){
+			this.tbGov = new CodTabelaGov();
+		}
 		return tbGov;
 	}
 
@@ -405,10 +421,35 @@ public class TipoProdutoBean extends FacesUtil implements Serializable{
 	}
 
 	public List<CodTabelaGov> getListaTbGov() {
+		if(this.listaTbGov == null){
+			this.listaTbGov = new ArrayList<CodTabelaGov>();
+		}
 		return listaTbGov;
 	}
 
 	public void setListaTbGov(List<CodTabelaGov> listaTbGov) {
 		this.listaTbGov = listaTbGov;
+	}
+
+	public AliquotaRN getAliqRN() {
+		if(this.aliqRN == null){
+			this.aliqRN = new AliquotaRN();
+		}
+		return aliqRN;
+	}
+
+	public void setAliqRN(AliquotaRN aliqRN) {
+		this.aliqRN = aliqRN;
+	}
+
+	public TipoProdutoRN getTipoRN() {
+		if(this.tipoRN == null){
+			this.tipoRN = new TipoProdutoRN();			
+		}
+		return tipoRN;
+	}
+
+	public void setTipoRN(TipoProdutoRN tipoRN) {
+		this.tipoRN = tipoRN;
 	}
 }

@@ -18,44 +18,48 @@ import br.com.softwareOptimus.util.FacesUtil;
 public class SetorBean extends FacesUtil implements Serializable{
 
 	private static final long serialVersionUID = -6889204545055216922L;
-	private Setor setor = new Setor();
-	private Grupo grupo = new Grupo();
-	private List<Setor> listaSetor = new ArrayList<Setor>();
-	private List<Grupo> listaGrupo = new ArrayList<Grupo>();
-	private List<Grupo> listaGrupoExib = new ArrayList<Grupo>();
-	private GrupoRN gruRN = new GrupoRN();
+	private Setor setor;
+	private Grupo grupo;
+	private List<Setor> listaSetor;
+	private List<Grupo> listaGrupo;
+	private List<Grupo> listaGrupoExib;
+	private GrupoRN gruRN;
+	private SetorRN setRN;
 	private String busca, filtro;
-	private boolean sal = true, alt = true, rem = true, desc = true,
-			vig = true;
-	private Long id, idGrup;
+	private boolean sal = true;
+	private boolean alt = true;
+	private boolean rem = true;
+	private boolean desc = true;
+	private boolean vig = true;
+	private Long id;
+	private Long idGrup;
 
 	public SetorBean() {
-		this.listaGrupo = gruRN.listaGrupo();
+		this.setListaGrupo(this.getGruRN().listaGrupo());
 	}
 
 	public void novo() {
 		limpar();
-		this.sal = false;
-		this.alt = true;
-		this.rem = true;
-		this.vig = false;
-		this.listaGrupo = gruRN.listaGrupo();
+		this.setSal(false);
+		this.setAlt(true);
+		this.setRem(true);
+		this.setVig(false);
+		this.setListaGrupo(this.getGruRN().listaGrupo());
 		habilita();
 	}
 
 	public void salvar() {
 		try {
-			SetorRN setRN = new SetorRN();
-			this.setor.setIdSetor(null);
-			Integer retorno = setRN.validaCampoNulo(this.setor, this.listaGrupoExib);
+			this.getSetor().setIdSetor(null);
+			Integer retorno = this.getSetRN().validaCampoNulo(this.getSetor(), this.getListaGrupoExib());
 			if (retorno == 0) {
-				this.setor.setGrupo(this.listaGrupoExib);
-				setRN.salvar(this.setor);
+				this.getSetor().setGrupo(this.getListaGrupoExib());
+				this.getSetRN().salvar(this.getSetor());
 				this.info("Setor salvo com sucesso");
-				this.vig = false;
-				this.sal = true;
-				this.alt = false;
-				this.rem = false;
+				this.setSal(true);
+				this.setAlt(false);
+				this.setRem(false);
+				this.setVig(false);
 			} else {
 				this.error("Existem campos nulos no formulário");
 			}
@@ -66,16 +70,15 @@ public class SetorBean extends FacesUtil implements Serializable{
 
 	public void alterar() {
 		try {
-			SetorRN setRN = new SetorRN();
-			Integer retorno = setRN.validaCampoNulo(this.setor, this.listaGrupoExib);
+			Integer retorno = this.getSetRN().validaCampoNulo(this.getSetor(), this.getListaGrupoExib());
 			if (retorno == 0) {
-				this.setor.setGrupo(this.listaGrupoExib);
-				setRN.altSet(this.setor);
+				this.getSetor().setGrupo(this.getListaGrupoExib());
+				this.getSetRN().altSet(this.getSetor());
 				this.info("Setor alterado com sucesso");
-				this.alt = true;
-				this.rem = true;
-				this.vig = true;
-				this.sal = true;
+				this.setSal(true);
+				this.setAlt(true);
+				this.setRem(true);
+				this.setVig(true);
 				limpar();
 				desabilita();
 			} else {
@@ -87,31 +90,30 @@ public class SetorBean extends FacesUtil implements Serializable{
 	}
 
 	public void cancelar() {
-		this.sal = true;
-		this.alt = true;
-		this.rem = true;
-		this.vig = true;
+		this.setSal(true);
+		this.setAlt(true);
+		this.setRem(true);
+		this.setVig(true);
 		limpar();
 		desabilita();
 	}
 
 	public void limpar() {
-		this.grupo = new Grupo();
-		this.setor = new Setor();
-		this.listaSetor = new ArrayList<Setor>();
-		this.listaGrupoExib = new ArrayList<Grupo>();
+		this.setGrupo(null);
+		this.setSetor(null);
+		this.setListaSetor(null);
+		this.setListaGrupoExib(null);;
 	}
 
 	public void remover() {
 		try {
-			SetorRN setRN = new SetorRN();
-			Integer retorno = setRN.verificaRemocao(this.setor);
+			Integer retorno = this.getSetRN().verificaRemocao(this.getSetor());
 			if (retorno == 0) {
-				setRN.remover(this.setor);
+				this.getSetRN().remover(this.getSetor());
 				this.info("Setor removido com sucesso");
-				this.alt = true;
-				this.rem = true;
-				this.vig = true;
+				this.setAlt(true);
+				this.setRem(true);
+				this.setVig(true);
 				limpar();
 				desabilita();
 			} else {
@@ -124,57 +126,54 @@ public class SetorBean extends FacesUtil implements Serializable{
 
 	public void buscarSetor() {
 		limpar();
-		SetorRN setRN = new SetorRN();
-		if (!busca.equals("") && (!filtro.equals(""))) {
-			if (filtro.equals("id")) {
-				this.listaSetor = setRN.consultaId(Long.parseLong(busca));
-			} else if (filtro.equals("desc")) {
-				this.listaSetor = setRN.consultaDesc(busca);
-			}else if (filtro.equals("idGrup")) {
-				this.listaSetor = setRN.consultaIdGrup(Long.parseLong(busca));
-			}else if (filtro.equals("descGrup")) {
-				this.listaSetor = setRN.consultaDescGrup(busca);
+		if (!this.getBusca().equals("") && (!this.getFiltro().equals(""))) {
+			if (this.getFiltro().equals("id")) {
+				this.setListaSetor(this.getSetRN().consultaId(Long.parseLong(this.getBusca())));
+			} else if (this.getFiltro().equals("desc")) {
+				this.setListaSetor(this.getSetRN().consultaDesc(this.getBusca()));
+			}else if (this.getFiltro().equals("idGrup")) {
+				this.setListaSetor(this.getSetRN().consultaIdGrup(Long.parseLong(this.getBusca())));
+			}else if (this.getFiltro().equals("descGrup")) {
+				this.setListaSetor(this.getSetRN().consultaDescGrup(this.getBusca()));
 			}
 		} else {
-			this.listaSetor = setRN.listar();
+			this.setListaSetor(this.getSetRN().listar());
 		}
 	}
 
 	public void remGru() {
-		SetorRN setRN = new SetorRN();
-		Integer retorno = setRN.verificaRemocaoRelGrupo(this.setor, idGrup);
+		Integer retorno = this.getSetRN().verificaRemocaoRelGrupo(this.getSetor(), this.getIdGrup());
 		if (retorno == 0) {
 			List<Grupo> listaGruNovo = new ArrayList<Grupo>();
-			listaGruNovo.addAll(this.listaGrupoExib);
-			for (Grupo gru : this.listaGrupoExib) {
-				if (gru.getIdGrupo().equals(this.idGrup)) {
+			listaGruNovo.addAll(this.getListaGrupoExib());
+			for (Grupo gru : this.getListaGrupoExib()) {
+				if (gru.getIdGrupo().equals(this.getIdGrup())) {
 					listaGruNovo.remove(gru);
 				}
 			}
-			this.listaGrupoExib = new ArrayList<Grupo>();
-			this.listaGrupoExib.addAll(listaGruNovo);
+			this.setListaGrupoExib(null);
+			this.getListaGrupoExib().addAll(listaGruNovo);
 		} else {
 			this.error("Remoção não permitida! Existem Produtos vinculados a este Setor e Grupo. ");
 		}
 	}
 
 	public void editSet() {
-		SetorRN setRN = new SetorRN();
-		this.listaGrupoExib = new ArrayList<Grupo>();
-		this.setor = setRN.editSet(this.id);
-		this.listaGrupoExib.addAll(this.setor.getGrupo());
+		this.setListaGrupoExib(null);
+		this.setSetor(this.getSetRN().editSet(this.getId()));
+		this.getListaGrupoExib().addAll(this.getSetor().getGrupo());
 		habilita();
-		this.alt = false;
-		this.vig = false;
-		this.rem = false;
-		this.sal = true;
+		this.setSal(true);
+		this.setAlt(false);
+		this.setRem(false);
+		this.setVig(false);
 	}
 
 	public void incluirGrup() {
-		if (this.grupo != null) {
+		if (this.getGrupo() != null) {
 			Integer retorno = verificaInclusaoGrupo();
 			if (retorno == 0) {
-				this.listaGrupoExib.add(this.grupo);
+				this.getListaGrupoExib().add(this.getGrupo());
 			} else {
 				this.error("Grupo já vinculado no Setor!");
 			}
@@ -184,23 +183,26 @@ public class SetorBean extends FacesUtil implements Serializable{
 	}
 
 	public void habilita() {
-		this.desc = false;
+		this.setDesc(false);
 	}
 
 	public void desabilita() {
-		this.desc = true;
+		this.setDesc(true);
 	}
 
 	private Integer verificaInclusaoGrupo() {
 		Integer retorno = 0;
-		for (Grupo gru : this.listaGrupoExib) {
-			if (gru.getIdGrupo().equals(this.grupo.getIdGrupo()))
+		for (Grupo gru : this.getListaGrupoExib()) {
+			if (gru.getIdGrupo().equals(this.getGrupo().getIdGrupo()))
 				retorno++;
 		}
 		return retorno;
 	}
 
 	public Setor getSetor() {
+		if(this.setor == null){
+			this.setor = new Setor();
+		}
 		return setor;
 	}
 
@@ -209,6 +211,9 @@ public class SetorBean extends FacesUtil implements Serializable{
 	}
 
 	public Grupo getGrupo() {
+		if(this.grupo == null){
+			this.grupo = new Grupo();
+		}
 		return grupo;
 	}
 
@@ -217,6 +222,9 @@ public class SetorBean extends FacesUtil implements Serializable{
 	}
 
 	public List<Setor> getListaSetor() {
+		if(this.listaSetor == null){
+			this.listaSetor = new ArrayList<Setor>();
+		}
 		return listaSetor;
 	}
 
@@ -225,6 +233,9 @@ public class SetorBean extends FacesUtil implements Serializable{
 	}
 
 	public List<Grupo> getListaGrupo() {
+		if(this.listaGrupo == null){
+			this.listaGrupo = new ArrayList<Grupo>();
+		}
 		return listaGrupo;
 	}
 
@@ -297,6 +308,9 @@ public class SetorBean extends FacesUtil implements Serializable{
 	}
 
 	public List<Grupo> getListaGrupoExib() {
+		if(this.listaGrupoExib == null){
+			this.listaGrupoExib = new ArrayList<Grupo>();
+		}
 		return listaGrupoExib;
 	}
 
@@ -310,5 +324,27 @@ public class SetorBean extends FacesUtil implements Serializable{
 
 	public void setIdGrup(Long idGrup) {
 		this.idGrup = idGrup;
+	}
+
+	public GrupoRN getGruRN() {
+		if(this.gruRN == null){
+			this.gruRN = new GrupoRN();
+		}
+		return gruRN;
+	}
+
+	public void setGruRN(GrupoRN gruRN) {
+		this.gruRN = gruRN;
+	}
+
+	public SetorRN getSetRN() {
+		if(this.setRN == null){
+			this.setRN = new SetorRN();
+		}
+		return setRN;
+	}
+
+	public void setSetRN(SetorRN setRN) {
+		this.setRN = setRN;
 	}
 }

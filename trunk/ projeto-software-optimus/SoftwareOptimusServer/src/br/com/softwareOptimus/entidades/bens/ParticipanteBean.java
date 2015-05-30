@@ -39,17 +39,36 @@ public class ParticipanteBean extends FacesUtil implements Serializable{
 	private EmailRN emailRN;
 	private TelefoneRN telefoneRN;
 	private Logradouro logradouro;
-	private String tipoLogrSelecionado = null, selecionadaPessoa = null,
-			tipoParticipante = null, tipoPJ = null, filtro = null,
-			textoConsulta = null, tipoSelecionadoTel = null, dddTel;
+	private String tipoLogrSelecionado = null;
+	private String selecionadaPessoa = null;
+	private String tipoParticipante = null;
+	private String tipoPJ = null;
+	private String filtro = null;
+	private String textoConsulta = null;
+	private String tipoSelecionadoTel = null;
+	private String dddTel;
 	private List<Telefone> listaTelefone;
-	private boolean salvar = true, cancelar = true, enderecos = true,
-			salReg = true, email = true, telefone = true, padraoNFE,
-			novo = false, consulta = false, tipoParPerFis = true,
-			inaParPerFis = true, nomeParPesFis = true, cpfParPesFis = true,
-			rgParPesFis = true, tipoParPerJur = true, inaParPerJur = true,
-			nomeParPesJur = true, razParPesJur = true, cnpjParPesJur = true,
-			inscParPesJur = true, cnaeParPesJur = true;
+	private boolean salvar = true;
+	private boolean cancelar = true;
+	private boolean enderecos = true;
+	private boolean salReg = true;
+	private boolean email = true;
+	private boolean telefone = true;
+	private boolean padraoNFE;
+	private boolean novo = false;
+	private boolean consulta = false;
+	private boolean tipoParPerFis = true;
+	private boolean inaParPerFis = true;
+	private boolean nomeParPesFis = true;
+	private boolean cpfParPesFis = true;
+	private boolean rgParPesFis = true;
+	private boolean tipoParPerJur = true;
+	private boolean inaParPerJur = true;
+	private boolean nomeParPesJur = true;
+	private boolean razParPesJur = true;
+	private boolean cnpjParPesJur = true;
+	private boolean inscParPesJur = true;
+	private boolean cnaeParPesJur = true;
 	private Telefone tel;
 	private Email emails;
 

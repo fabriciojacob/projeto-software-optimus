@@ -19,12 +19,15 @@ public class UnidMedBean extends FacesUtil implements Serializable {
 	private UnidMed unidMed;
 	private boolean disable = false;
 	private List<UnidMed> unidMedLis;
-	UnidMedRN unidRN;
+	private UnidMedRN unidRN;
 	private String busca;
 	private String filtro;
 	private Long id;
-	private boolean alt = true, sal = true, rem = true, unidAbre = true,
-			desc = true;
+	private boolean alt = true;
+	private boolean sal = true;
+	private boolean rem = true;
+	private boolean unidAbre = true;
+	private boolean desc = true;
 
 	public void salvarUnid() {
 		try {
