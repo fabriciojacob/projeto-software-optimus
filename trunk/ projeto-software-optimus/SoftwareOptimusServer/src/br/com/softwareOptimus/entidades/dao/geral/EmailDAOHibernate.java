@@ -34,6 +34,9 @@ public class EmailDAOHibernate implements EmailDAO {
 
 	@Override
 	public void salvar(Email email) throws Exception {
+		if(!this.transacao.isActive()){
+			this.transacao.begin();
+		}
 		this.session.persist(email);
 		this.transacao.commit();
 
@@ -55,6 +58,9 @@ public class EmailDAOHibernate implements EmailDAO {
 
 	@Override
 	public void excluir(Long idEmail) throws Exception {
+		if(!this.transacao.isActive()){
+			this.transacao.begin();
+		}
 		this.session.remove(this.session.getReference(Email.class, idEmail));
 		this.transacao.commit();
 
