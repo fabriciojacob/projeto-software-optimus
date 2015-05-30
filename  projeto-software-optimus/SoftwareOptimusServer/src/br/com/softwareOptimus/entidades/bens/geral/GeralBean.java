@@ -3,10 +3,8 @@ package br.com.softwareOptimus.entidades.bens.geral;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-
 import br.com.softwareOptimus.entidades.Estado;
 import br.com.softwareOptimus.entidades.Municipio;
 import br.com.softwareOptimus.entidades.RN.geral.EstadoRN;

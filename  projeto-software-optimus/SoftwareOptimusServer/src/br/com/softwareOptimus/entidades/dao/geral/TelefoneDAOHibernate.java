@@ -34,6 +34,9 @@ public class TelefoneDAOHibernate implements TelefoneDAO {
 
 	@Override
 	public void salvar(Telefone telefone) throws Exception {
+		if(!this.transacao.isActive()){
+			this.transacao.begin();
+		}
 		this.session.persist(telefone);
 		this.transacao.commit();
 

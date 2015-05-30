@@ -37,6 +37,9 @@ public class EmpresaDAOHibernate implements EmpresaDAO {
 	@Override
 	public void salvar(PessoaJuridica empresa) {
 		empresa.setNaturezaPessoa(NaturezaPessoa.EMPRESA);
+		if(!this.transaction.isActive()){
+			this.transaction.begin();
+		}
 		this.session.persist(empresa);
 		this.transaction.commit();
 
@@ -44,12 +47,18 @@ public class EmpresaDAOHibernate implements EmpresaDAO {
 
 	@Override
 	public void atualizar(PessoaJuridica empresa) {
+		if(!this.transaction.isActive()){
+			this.transaction.begin();
+		}
 		this.session.merge(empresa);
 		this.transaction.commit();
 	}
 
 	@Override
 	public void excluir(PessoaJuridica empresa) {
+		if(!this.transaction.isActive()){
+			this.transaction.begin();
+		}
 		this.session.remove(empresa);
 		this.transaction.commit();
 
@@ -107,6 +116,9 @@ public class EmpresaDAOHibernate implements EmpresaDAO {
 
 	@Override
 	public void salvarRegime(VigenciaRegime regime) throws Exception {
+		if(!this.transaction.isActive()){
+			this.transaction.begin();
+		}
 		this.session.persist(regime);
 		this.transaction.commit();
 	}
