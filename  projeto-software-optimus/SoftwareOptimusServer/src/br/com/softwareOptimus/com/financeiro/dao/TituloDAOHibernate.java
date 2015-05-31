@@ -47,8 +47,12 @@ public class TituloDAOHibernate implements TituloDAO {
 
 	@Override
 	public void editar(Titulo titulo) throws Exception {
+		if(!this.transacao.isActive()){
+			this.transacao.begin();
+		}
 		this.session.merge(titulo);
 		this.transacao.commit();
+		this.session.clear();
 	}
 
 	@Override
@@ -197,23 +201,13 @@ public class TituloDAOHibernate implements TituloDAO {
 
 	@Override
 	public Titulo retornaTitulo(Long id) throws Exception {
-		String jpql = "Select t from Titulo t where t.idTitulo = :id"
-				+ " and t.status = 0";
+		String jpql = "Select t from Titulo t where t.idTitulo = :id";
 		TypedQuery<Titulo> consulta = this.session.createQuery(jpql,
 				Titulo.class);
 		consulta.setParameter("id", id);
 		return consulta.getSingleResult();
 	}
 
-	@Override
-	public void atualizaTitulo(Titulo titulo) throws Exception {
-		if (!this.transacao.isActive()) {
-			this.transacao.begin();
-		}
-		this.session.merge(titulo);
-		this.transacao.commit();
-
-	}
 
 	@Override
 	public void checkStatusBaixaTitulo(Long id) throws Exception {

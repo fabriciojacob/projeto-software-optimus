@@ -7,8 +7,6 @@ import br.com.softwareOptimus.com.financeiro.dao.TituloDAO;
 import br.com.softwareOptimus.entidades.Pessoa;
 import br.com.softwareOptimus.financeiro.Rubrica;
 import br.com.softwareOptimus.financeiro.StatusConta;
-import br.com.softwareOptimus.financeiro.TipoMov;
-import br.com.softwareOptimus.financeiro.TipoTitulo;
 import br.com.softwareOptimus.financeiro.Titulo;
 import br.com.softwareOptimus.util.DAOFactory;
 
@@ -42,7 +40,7 @@ public class TituloRN {
 	}
 
 	public void atualizaTitulo(Titulo titulo) throws Exception {
-		this.titulo.atualizaTitulo(titulo);
+		this.titulo.editar(titulo);
 	}
 
 	public List<Titulo> pesquisaPessoa(Pessoa empresa) throws Exception {
@@ -92,8 +90,21 @@ public class TituloRN {
 		this.titulo.closed();
 	}
 
-	public void editar(Titulo titulo) throws Exception {
-		this.titulo.editar(titulo);
+	public int editar(Titulo titulo) throws Exception {
+		if(!titulo.getStatus().equals(StatusConta.BAIXADA)){
+			this.titulo.editar(titulo);
+			if(!titulo.getValor().equals(titulo.getValorTitulo())){
+				Titulo tituloAlt = new Titulo();
+				tituloAlt = titulo;
+				tituloAlt.setIdTituloPai(titulo.getIdTitulo());
+				tituloAlt.setIdTitulo(null);
+				tituloAlt.setValor(titulo.getValorTitulo() - titulo.getValor());
+				this.titulo.salvar(tituloAlt);
+			}
+			return 1;
+		}else{
+			return 0;
+		}
 	}
 
 	public TituloDAO getTitulo() {

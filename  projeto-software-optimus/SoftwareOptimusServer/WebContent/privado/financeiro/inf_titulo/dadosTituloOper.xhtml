@@ -74,7 +74,8 @@
 		<p:commandButton id="btSalvarOper" value="Baixar"
 			actionListener="#{tituloBens.baixa}" ajax="dadosTituloOper"/>
 		<p:commandButton id="btEstornoOper" value="Estorno" />
-		<p:commandButton id="btAlterarOper" value="Alterar" />
+		<p:commandButton id="btAlterarOper" value="Alterar" 
+			actionListener="#{tituloBens.editarTitulo}" ajax="dadosTituloOper"/>
 		<p:commandButton id="btExcluirOper" value="Excluir" />
 	</h:panelGrid>
 </h:panelGrid>
