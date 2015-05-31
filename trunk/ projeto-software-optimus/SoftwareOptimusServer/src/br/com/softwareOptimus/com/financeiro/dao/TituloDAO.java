@@ -41,8 +41,6 @@ public interface TituloDAO {
 	
 	public Titulo retornaTituloBaixado(Long id) throws Exception;
 	
-	public void atualizaTitulo(Titulo titulo) throws Exception;
-	
 	public void checkStatusBaixaTitulo(Long id) throws Exception;
 	
 	public void closed() throws Exception;

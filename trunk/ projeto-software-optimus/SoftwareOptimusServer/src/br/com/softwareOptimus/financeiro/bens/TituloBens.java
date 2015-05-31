@@ -155,7 +155,7 @@ public class TituloBens {
 		setChecktitulo(true);
 		titulos.add(titulo);
 		try {
-			if (tipoBaixa.toString().equals("BANCO")) { 
+			if (tipoBaixa.toString().equals("BANCO")) {
 				extrato.inclusao(titulos, contaBancaria, null);
 			} else {
 				extrato.inclusao(titulos, null, caixa);
@@ -193,8 +193,12 @@ public class TituloBens {
 	public void editarTitulo() {
 		this.regraNegocio = new TituloRN();
 		try {
-			this.regraNegocio.editar(titulo);
-			msgAcerto("Registro editado com sucesso ");
+			int ret = this.regraNegocio.editar(titulo);
+			if (ret == 1) {
+				msgAcerto("Registro editado com sucesso ");
+			} else {
+				msgAcerto("Registro encontra-se baixado!!!");
+			}
 		} catch (Exception e) {
 			msgErro("Problemas na edição do titulo ", e);
 		}
@@ -455,5 +459,4 @@ public class TituloBens {
 	public void setCheckBanco(boolean checkBanco) {
 		this.checkBanco = checkBanco;
 	}
-
 }

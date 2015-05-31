@@ -72,7 +72,7 @@
 			<property name=" javax.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver" />
 			<property name=" javax.persistence.jdbc.user" value="projeto" />
 			<property name=" javax.persistence.jdbc.password" value="123" />
-			<property name=" javax.persistence.jdbc.url" value="jdbc:oracle:thin:@192.168.1.101:1521:xe" />
+			<property name=" javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:xe" />
 			<property name="hibernate.hbm2ddl.auto" value="update" />
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.format_sql" value="true" />
