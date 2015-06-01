@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+</h:head>
+<h:body>
+	<h:form id="frmExtrato">
+		<br />
+		<h3 style="margin-top: 0">EXTRATO</h3>
+		<div align="left">
+
+			<p:messages id="messages" showDetail="true" autoUpdate="true"
+				closable="true" />
+
+			<br />
+
+			<p:tab id="dados">
+
+				<h:panelGrid columns="15">
+					
+					Tipo:
+					 <p:selectOneMenu value="#{tituloBens.statusBaixa}">
+						<f:selectItem itemLabel="CONTA CORRENTE" itemValue="CONTA" />
+						<f:selectItem itemLabel="CAIXA" itemValue="CAIXA" />
+					</p:selectOneMenu>
+					
+					Seleção:
+					 <p:selectOneMenu value="#{tituloBens.statusBaixa}">
+						<f:selectItem itemLabel="CONTA CORRENTE" itemValue="CONTA" />
+						<f:selectItem itemLabel="CAIXA" itemValue="CAIXA" />
+					</p:selectOneMenu>
+						
+					Tipo:
+					<p:outputLabel value="" />
+					
+					Caixa:
+					<p:outputLabel value="" />
+					
+					 Data Inicio:
+					 <p:calendar size="5" value="teste" />
+					 
+					 Data Fim:
+					 <p:calendar size="5" value="teste" />
+
+					<p:commandButton value="Pesquisar" update="tabelaCaixa" />
+
+				</h:panelGrid>
+
+				<ui:include src="/privado/financeiro/dataExtrato.xhtml" />
+
+			</p:tab>
+		</div>
+	</h:form>
+</h:body>
+</html>
