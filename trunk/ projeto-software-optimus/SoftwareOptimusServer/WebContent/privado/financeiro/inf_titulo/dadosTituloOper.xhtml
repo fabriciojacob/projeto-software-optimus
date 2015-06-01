@@ -76,7 +76,8 @@
 		<p:commandButton id="btEstornoOper" value="Estorno" />
 		<p:commandButton id="btAlterarOper" value="Alterar" 
 			actionListener="#{tituloBens.editarTitulo}" ajax="dadosTituloOper"/>
-		<p:commandButton id="btExcluirOper" value="Excluir" />
+		<p:commandButton id="btExcluirOper" value="Excluir" 
+			actionListener ="#{tituloBens.excluirTitulo}" ajax="dadosTituloOper"/>
 	</h:panelGrid>
 </h:panelGrid>
 </html>

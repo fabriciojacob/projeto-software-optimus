@@ -203,6 +203,16 @@ public class TituloBens {
 			msgErro("Problemas na edição do titulo ", e);
 		}
 	}
+	
+	public void excluirTitulo(){
+		this.regraNegocio = new TituloRN();
+		try{
+			this.regraNegocio.excluirTitulo(titulo);
+			msgAcerto("Titulo excluido com sucesso");
+		}catch (Exception e){
+			msgErro("Problemas na exclusão do titulo ", e);
+		}
+	}
 
 	public void selecionaParticipante() {
 		this.regraNegocio = new TituloRN();
