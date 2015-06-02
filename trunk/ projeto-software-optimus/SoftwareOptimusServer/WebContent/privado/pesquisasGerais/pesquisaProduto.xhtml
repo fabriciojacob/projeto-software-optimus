@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<h:outputStylesheet library="css" name="fonte.css" />
+</h:head>
+	<h:body>
+		<h:form>
+			<div align="right">
+				<h:panelGrid columns="1">
+
+				</h:panelGrid>
+			</div>
+			<h:panelGrid columns="4" columnClasses="label" cellspacing="3">
+				<h:panelGrid columns="1">
+					Código:
+					<p:inputText id="codigo" value="#{pesquisaProdutoBean.produto.idProduto}" />
+				</h:panelGrid>
+				
+				<h:panelGrid columns="1">
+					Descrição:
+					<p:inputText id="descr" value="#{pesquisaProdutoBean.produto.descProd}" size="40" />
+				</h:panelGrid>
+				
+				<h:panelGrid columns="1">
+					Código de Barra:
+					<p:inputText id="codBarra" value="#{pesquisaProdutoBean.produto.codBarra}" size="40" />
+				</h:panelGrid>
+
+				<h:panelGrid columns="1">
+					Inativo:
+					<p:selectBooleanCheckbox id="status" value="#{pesquisaProdutoBean.produto.status}" />
+				</h:panelGrid>
+			</h:panelGrid>
+			
+			<h:panelGrid columnClasses="label" columns="4" cellpadding="3" >
+				<h:panelGrid columns="1">
+					Figura
+					<p:selectOneMenu id="figura"  value="#{pesquisaProdutoBean.produto.figura}" style="width:210px;" >
+						<f:selectItem itemLabel="Selecione uma Figura" />
+						<f:selectItems value="#{pesquisaProdutoBean.listaFigura}" var="listaFig"
+							itemValue="#{listaFig}"
+							itemLabel="#{listaFig.idFigura} - #{listaFig.descricao}" />
+					</p:selectOneMenu>
+				</h:panelGrid>
+
+				<h:panelGrid columns="1">				
+					Unidade de Medida
+					<p:selectOneMenu id="unidMed" value="#{pesquisaProdutoBean.produto.unidMed}" style="width:210px;">
+						<f:selectItem itemLabel="Selecione uma Unidade de Medida" />
+						<f:selectItems value="#{pesquisaProdutoBean.listaUnidade}"
+							var="listaUnid" itemValue="#{listaUnid}"
+							itemLabel="#{listaUnid.idUnidMed} - #{listaUnid.descUnid}" />
+					</p:selectOneMenu>
+				</h:panelGrid>
+					
+				<h:panelGrid columns="1">
+					Tipo de Produto
+					<p:selectOneMenu id="tipoProduto" value="#{pesquisaProdutoBean.produto.tipoProd}" style="width:210px;">
+						<f:selectItem itemLabel="Selecione um Tipo de Produto" />
+						<f:selectItems value="#{pesquisaProdutoBean.listaTipo}" var="listaTip"
+							itemValue="#{listaTip}"
+							itemLabel="#{listaTip.idTipoProd} - #{listaTip.descricao}" />
+					</p:selectOneMenu>
+				</h:panelGrid>
+				<h:panelGrid columns="1">
+					<p:commandButton id="btnPesquisa" value="Pesquisar"
+						actionListener="#{pesquisaProdutoBean.buscarProd}" update="gridData">
+					</p:commandButton>
+				</h:panelGrid>
+			</h:panelGrid>
+			<h:panelGrid id="gridData" columns="1" columnClasses="label, value">
+				<p:blockUI block="gridData" trigger="btnPesquisa" />
+				<p:dataTable id="data" value="#{pesquisaProdutoBean.listaProduto}"
+					paginator="true" rows="6" var="produto" rowKey="produto.idPorduto">
+					<p:column headerText="Código do Produto">
+						<h:outputText value="#{produto.idProduto}" />
+					</p:column>
+
+					<p:column headerText="Descrição">
+						<h:outputText value="#{produto.descProd}" />
+					</p:column>
+					
+					<p:column headerText="Código de Barra">
+						<h:outputText value="#{produto.codBarra}" />
+					</p:column>
+					
+					<p:column headerText="Inativo">
+						<h:outputText value="#{produto.status}" />
+					</p:column>
+					
+					<p:column headerText="Figura Fiscal">
+						<h:outputText value="#{produto.figura.idFigura} - #{produto.figura.descricao}" />
+					</p:column>
+					
+					<p:column headerText="Unidade de Medida">
+						<h:outputText value="#{produto.UnidMed.idUnidMed} - #{produto.UnidMed.descUnid}" />
+					</p:column>
+					
+					<p:column headerText="Tipo de Produto">
+						<h:outputText value="#{produto.tipoProd.idTipoProd} - #{produto.tipoProd.descricao}" />
+					</p:column>
+
+					<p:column headerText="Selecionar">
+						<p:commandLink id="link" value="Editar"
+							ajax="data, cadProduto, cadSetor"
+							action="#{pesquisaProdutoBean.editProduto}">
+							<f:setPropertyActionListener value="#{produto.idProduto}"
+								target="#{pesquisaProdutoBean.id}" />
+						</p:commandLink>
+					</p:column>
+				</p:dataTable>
+				<p:blockUI block="data" trigger="data">
+       				LOADING<br />
+					<p:graphicImage name="ajaxloader.gif" />
+				</p:blockUI>
+			</h:panelGrid>
+		</h:form>
+	</h:body>
+</html>
