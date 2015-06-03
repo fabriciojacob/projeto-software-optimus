@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.persistence.Query;
+
 import br.com.softwareOptimus.produto.Produto;
 
 public interface ProdutoDAO {
@@ -17,4 +19,8 @@ public interface ProdutoDAO {
 	public List<Produto> consultaDesc(String busca);
 	public List<Produto> listar();
 	public Produto editPro(Long id);
+	public List<Produto> buscaProdutoPaginacao(Produto produto, int first, int pageSize);
+	public void definiCondicao(StringBuilder sql, Produto produto);
+	public void defineParametros(Query qry, Produto produto);
+	public int countProdutoPaginacao(Produto produto);
 }

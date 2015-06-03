@@ -58,4 +58,12 @@ public class ProdutoRN {
 	public Produto editPro(Long id) {
 		return this.produtoDAO.editPro(id);
 	}
+	
+	public List<Produto> buscaProdutoPaginacao(Produto produto, int first, int pageSize){
+		return this.produtoDAO.buscaProdutoPaginacao(produto, first, pageSize);
+	}
+	
+	public int countProdutoPaginacao(Produto produto){
+		return this.produtoDAO.countProdutoPaginacao(produto);
+	}
 }
