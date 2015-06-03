@@ -69,15 +69,16 @@
 					</p:selectOneMenu>
 				</h:panelGrid>
 				<h:panelGrid columns="1">
-					<p:commandButton id="btnPesquisa" value="Pesquisar"
-						actionListener="#{pesquisaProdutoBean.buscarProd}" update="gridData">
-					</p:commandButton>
+					<p:commandButton id="btnPesquisa" value="Pesquisar" update="data"/>
 				</h:panelGrid>
 			</h:panelGrid>
 			<h:panelGrid id="gridData" columns="1" columnClasses="label, value">
 				<p:blockUI block="gridData" trigger="btnPesquisa" />
-				<p:dataTable id="data" value="#{pesquisaProdutoBean.listaProduto}"
-					paginator="true" rows="6" var="produto" rowKey="produto.idPorduto">
+				<p:dataTable id="data" value="#{pesquisaProdutoBean.listProduto}" resizableColumns="true"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="5,10,15" lazy="true" border="1" paginatorPosition="bottom" cellpadding="2" cellspacing="0" 
+					paginator="true" rows="1" var="produto" rowKey="produto.idPorduto">
+
 					<p:column headerText="Código do Produto">
 						<h:outputText value="#{produto.idProduto}" />
 					</p:column>
@@ -99,20 +100,17 @@
 					</p:column>
 					
 					<p:column headerText="Unidade de Medida">
-						<h:outputText value="#{produto.UnidMed.idUnidMed} - #{produto.UnidMed.descUnid}" />
+						<h:outputText value="#{produto.unidMed.idUnidMed} - #{produto.unidMed.descUnid}" />
 					</p:column>
 					
-					<p:column headerText="Tipo de Produto">
+ 					<p:column headerText="Tipo de Produto">
 						<h:outputText value="#{produto.tipoProd.idTipoProd} - #{produto.tipoProd.descricao}" />
 					</p:column>
 
-					<p:column headerText="Selecionar">
-						<p:commandLink id="link" value="Editar"
-							ajax="data, cadProduto, cadSetor"
-							action="#{pesquisaProdutoBean.editProduto}">
-							<f:setPropertyActionListener value="#{produto.idProduto}"
-								target="#{pesquisaProdutoBean.id}" />
-						</p:commandLink>
+					<p:column headerText="Selecionar" style="width: 50px; text-align: center">
+		    			<p:commandButton icon="ui-icon-check" title="Selecionar"
+		    				action="#{pesquisaProdutoBean.selecionaProduto(produto)}"
+		    				process="@this" />
 					</p:column>
 				</p:dataTable>
 				<p:blockUI block="data" trigger="data">
