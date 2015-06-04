@@ -139,6 +139,10 @@
 
 					<p:commandButton value="Pesquisar" update="tabelaTitulo"
 						actionListener="#{tituloBens.pesquisaTitulo}" />
+						
+					<p:commandButton id="linkBaixar" value="operar"
+						onclick="PF('operacoes').show();"
+						disabled="#{tituloBens.checktitulo}" />
 
 				</h:panelGrid>
 

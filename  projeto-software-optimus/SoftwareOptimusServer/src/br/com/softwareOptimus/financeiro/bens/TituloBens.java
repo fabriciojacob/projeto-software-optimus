@@ -233,7 +233,7 @@ public class TituloBens {
 		this.titulo = new Titulo();
 		try {
 			this.titulo = regraNegocio.retornaTitulo(tituloSelecionado);
-			msgAcerto("Titulo selecionado");
+			msgAcerto("Titulo selecionado: " + this.titulo.getIdTitulo());
 			setChecktitulo(false);
 			listaContaBancaria();
 			listaCaixa();
