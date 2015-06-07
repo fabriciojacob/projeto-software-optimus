@@ -1,7 +1,9 @@
 package br.com.softwareOptimus.com.financeiro.dao;
 
 import java.io.IOException;
+import java.util.Date;
 import java.sql.SQLException;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
@@ -70,5 +72,26 @@ public class ExtratoDAOHibernate implements ExtratoDAO {
 		this.transacao = transacao;
 	}
 
+	@Override
+	public List<Extrato> pesquisaExtrato(Date dataIni, Date dataFim,
+			ContaBancaria conta, Caixa caixa) throws Exception {
+		if (!this.transacao.isActive()) {
+			this.transacao.begin();
+		}
+		this.secao.clear();
+
+		String jpql = "Select e From Extrato e "
+				+ " where e.data between :parDataIni and :parDataFim"
+				+ " and e.contaBancaria  = parContaBancaria"
+				+ " or e.caixa = parCaixa ";
+
+		TypedQuery<Extrato> consulta = this.secao.createQuery(jpql,
+				Extrato.class);
+		consulta.setParameter("parDataIni", dataIni);
+		consulta.setParameter("parDataFim", dataFim);
+		consulta.setParameter("parCaixa", caixa);
+		consulta.setParameter("parContaBancaria", conta);
+		return consulta.getResultList();
+	}
 
 }

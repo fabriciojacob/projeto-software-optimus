@@ -26,24 +26,37 @@
 				<h:panelGrid columns="15">
 					
 					Tipo:
-					 <p:selectOneMenu value="#{tituloBens.statusBaixa}">
+					 <p:selectOneMenu value="#{extratoBens.destinoExtrato}">
 						<f:selectItem itemLabel="CONTA CORRENTE" itemValue="CONTA" />
 						<f:selectItem itemLabel="CAIXA" itemValue="CAIXA" />
+						<p:ajax update="caixa,contaBancaria" event="change"
+							listener="#{extratoBens.ativoTipoFiltro}" />
 					</p:selectOneMenu>
 					
-					Seleção:
-					 <p:selectOneMenu value="#{tituloBens.statusBaixa}">
-						<f:selectItem itemLabel="CONTA CORRENTE" itemValue="CONTA" />
-						<f:selectItem itemLabel="CAIXA" itemValue="CAIXA" />
+					Caixa:
+					 <p:selectOneMenu id="caixa" value="#{extratoBens.caixa}">
+						<f:selectItem itemLabel="Selecione um caixa" />
+						<f:selectItems itemLabel="#{listaCaixa.descricao}"
+							value="#{extratoBens.caixas}" itemValue="#{listaCaixa}"
+							var="listaCaixa" />
 					</p:selectOneMenu>
+					
+					Conta Bancaria:
+					 <p:selectOneMenu id="contaBancaria" value="#{extratoBens.conta}">
+						<f:selectItem itemLabel="Selecione uma conta" />
+						<f:selectItems value="#{extratoBens.contas}" var="listaConta"
+							itemValue="#{listaConta}" itemLabel="#{listaConta.titular}" />
+					</p:selectOneMenu>
+					
 					
 					 Data Inicio:
-					 <p:calendar size="5" value="teste" />
+					 <p:calendar size="5" value="#{extratoBens.dataIni}" />
 					 
 					 Data Fim:
-					 <p:calendar size="5" value="teste" />
+					 <p:calendar size="5" value="#{extratoBens.dataFim}" />
 
-					<p:commandButton value="Pesquisar" update="tabelaCaixa" />
+					<p:commandButton value="Pesquisar" update="tabelaExtrato"
+						action="#{extratoBens.pesquisaExtrato}" />
 
 				</h:panelGrid>
 

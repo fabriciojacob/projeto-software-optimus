@@ -6,40 +6,32 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
-<p:dataTable id="tabelaExtrato" paginator="true" rows="6" var="titulos"
-	value="">
+<p:dataTable id="tabelaExtrato" paginator="true" rows="6" var="extratos"
+	value="#{extratoBens.listaExtrato}">
 
 	<p:column headerText="Codigo">
-		<h:outputLabel value="" />
+		<h:outputLabel value="#{extratos.idExtrato}" />
 	</p:column>
 
 	<p:column headerText="Descrição">
-		<h:outputLabel value="" />
+		<h:outputLabel value="#{extratos.descricao}" />
 	</p:column>
 
 	<p:column headerText="Valor crédito">
-		<h:outputLabel value="" />
+		<h:outputLabel value="#{extratos.credito}" />
 	</p:column>
 
 	<p:column headerText="Valor débito">
-		<h:outputLabel value="" />
+		<h:outputLabel value="#{extratos.debito}" />
 	</p:column>
 
 	<p:column headerText="Saldo">
-		<h:outputLabel value="" />
+		<h:outputLabel value="#{extratos.saldo}" />
 	</p:column>
 
 
 	<p:column headerText="Data">
-		<h:outputLabel value="" />
-	</p:column>
-
-	<p:column headerText="Forma pgto">
-		<h:outputLabel value="" />
-	</p:column>
-
-	<p:column headerText="Rubrica">
-		<h:outputLabel value="" />
+		<h:outputLabel value="#{extratos.data}" />
 	</p:column>
 
 </p:dataTable>
