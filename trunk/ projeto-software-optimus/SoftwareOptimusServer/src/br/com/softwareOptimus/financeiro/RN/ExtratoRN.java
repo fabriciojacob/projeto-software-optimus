@@ -4,9 +4,7 @@ import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.NoResultException;
-
 import br.com.softwareOptimus.com.financeiro.dao.ExtratoDAO;
 import br.com.softwareOptimus.financeiro.Caixa;
 import br.com.softwareOptimus.financeiro.ContaBancaria;
@@ -39,6 +37,11 @@ public class ExtratoRN {
 			fase = 3;
 		}
 		return fase;
+	}
+	
+	public List<Extrato> pesquisa(Date dataIni, Date dataFim, Caixa caixa, ContaBancaria conta)
+		throws Exception {
+		return extratoDAO.pesquisaExtrato(dataIni, dataFim, conta, caixa);
 	}
 
 	public void estorno(Titulo titulo, ContaBancaria contaBancaria, Caixa caixa)
