@@ -61,9 +61,10 @@ public class PesquisaProdutoBean extends FacesUtil implements Serializable {
 		Map<String, Object> opcoes = new HashMap<>();
 		opcoes.put("modal", true);
 		opcoes.put("resizable", false);
-		opcoes.put("contentHeight", 470);
+		opcoes.put("contentHeight", 500);
+		opcoes.put("contentWidth", 800);
 		
-		RequestContext.getCurrentInstance().openDialog("pesquisaProduto", opcoes, null);
+		RequestContext.getCurrentInstance().openDialog("/privado/pesquisasGerais/pesquisaProduto", opcoes, null);
 	}
 	
 	public List<FiguraFiscal> getListaFigura() {

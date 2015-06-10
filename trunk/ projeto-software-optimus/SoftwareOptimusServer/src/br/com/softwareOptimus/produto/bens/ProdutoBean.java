@@ -7,6 +7,8 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import org.primefaces.event.SelectEvent;
+
 import br.com.softwareOptimus.fiscal.FiguraFiscal;
 import br.com.softwareOptimus.fiscal.TipoProduto;
 import br.com.softwareOptimus.fiscal.RN.FiguraFiscalRN;
@@ -36,15 +38,12 @@ public class ProdutoBean extends FacesUtil implements Serializable{
 	private List<Setor> listaSetor;
 	private List<Grupo> listaGrupo;
 	private List<SubGrupo> listaSubGrupo;
-	private List<Produto> listaProduto;
 	private List<Categoria> listaCategoria;
 	private FiguraFiscalRN figRN;
 	private UnidMedRN unidRN;
 	private SubGrupoRN subRN;
 	private GrupoRN gruRN;
 	private SetorRN setRN;
-	private String busca, filtro;
-	private Long id;
 	private TipoProdutoRN tipRN;
 	private ProdutoRN proRN;
 	private boolean sal = true;
@@ -66,6 +65,17 @@ public class ProdutoBean extends FacesUtil implements Serializable{
 		setListaTipo(this.getTipRN().listarTipoVig());
 		setListaFigura(this.getFigRN().listar());
 		setListaSetor(this.getSetRN().listar());
+	}
+	
+	public void produtoSelecionado(SelectEvent event){
+		this.setProduto((Produto) event.getObject());
+		filtraGrupo();
+		filtraSubGrupo();
+		filtraCategoria();
+		habilita();
+		this.setSal(true);
+		this.setAlt(false);
+		this.setRem(false);
 	}
 
 	public void salvar() {
@@ -132,30 +142,6 @@ public class ProdutoBean extends FacesUtil implements Serializable{
 			this.error("Problemas na remoção do Produto " + e.getMessage());
 		}
 	}
-	
-	public void buscarProd(){
-		limpar();
-		if (!this.getBusca().equals("") && (!this.getFiltro().equals(""))) {
-			if (this.getFiltro().equals("id")) {
-				this.setListaProduto(this.getProRN().consultaId(Long.parseLong(this.getBusca())));
-			} else if (this.getFiltro().equals("desc")) {
-				this.setListaProduto(this.getProRN().consultaDesc(this.getBusca()));
-			}
-		} else {
-			this.setListaProduto(this.getProRN().listar());
-		}
-	}
-	
-	public void editProduto(){
-		this.setProduto(this.getProRN().editPro(this.getId()));
-		filtraGrupo();
-		filtraSubGrupo();
-		filtraCategoria();
-		habilita();
-		this.setSal(true);
-		this.setAlt(false);
-		this.setRem(false);
-	}
 
 	public void cancelar() {
 		this.setSal(true);
@@ -168,7 +154,6 @@ public class ProdutoBean extends FacesUtil implements Serializable{
 	public void limpar() {
 		this.setProduto(null);
 		this.setListaFigura(null);
-		this.setListaProduto(null);
 		this.setListaUnidade(null);
 		this.setListaTipo(null);
 		this.setListaSetor(null);
@@ -219,41 +204,6 @@ public class ProdutoBean extends FacesUtil implements Serializable{
 
 	public void filtraCategoria() {
 		setListaCategoria(this.getSubRN().listarCatg(this.getProduto().getSubGrupo()));
-	}
-
-	public List<Produto> getListaProduto() {
-		if(this.listaProduto == null){
-			this.listaProduto = new ArrayList<Produto>();
-		}
-		return listaProduto;
-	}
-
-	public void setListaProduto(List<Produto> listaProduto) {
-		this.listaProduto = listaProduto;
-	}
-
-	public String getBusca() {
-		return busca;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public void setBusca(String busca) {
-		this.busca = busca;
-	}
-
-	public String getFiltro() {
-		return filtro;
-	}
-
-	public void setFiltro(String filtro) {
-		this.filtro = filtro;
 	}
 
 	public boolean isSta() {
