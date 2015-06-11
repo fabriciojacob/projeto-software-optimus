@@ -15,7 +15,10 @@ public class RequisicaoHibernate implements RequisicaoDAO{
 
 	@Override
 	public void begin() throws IOException, SQLException {
-		// TODO Auto-generated method stub
+		this.transacao = this.session.getTransaction();
+		if(!this.transacao.isActive()){
+			this.transacao.begin();
+		}
 		
 	}
 
