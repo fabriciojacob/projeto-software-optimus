@@ -2,7 +2,11 @@ package br.com.softwareOptimus.util;
 
 import java.io.IOException;
 import java.sql.SQLException;
+
 import javax.persistence.EntityManager;
+
+import br.com.softwareOptimus.com.comercial.dao.RequisicaoDAO;
+import br.com.softwareOptimus.com.comercial.dao.RequisicaoHibernate;
 import br.com.softwareOptimus.com.financeiro.dao.BancoDAO;
 import br.com.softwareOptimus.com.financeiro.dao.BancoDAOHibernate;
 import br.com.softwareOptimus.com.financeiro.dao.CaixaDAO;
@@ -75,6 +79,18 @@ import br.com.softwareOptimus.estoque.dao.ProdutoEstoqueDAOHibernate;
 public class DAOFactory {
 
 	private static EntityManager session = JpaUtil.getEntityManager();
+	
+	public static RequisicaoDAO criaRequisicao(){
+		RequisicaoHibernate requisicaoDAO = new RequisicaoHibernate();
+		requisicaoDAO.setSession(session);
+		try{
+			requisicaoDAO.begin();
+		}catch (IOException | SQLException e){
+			e.printStackTrace();
+		}
+		
+		return requisicaoDAO;
+	}
 	
 	public static ExtratoDAO criaExtratoConta(){
 		ExtratoDAOHibernate extratoDAO = new ExtratoDAOHibernate();
