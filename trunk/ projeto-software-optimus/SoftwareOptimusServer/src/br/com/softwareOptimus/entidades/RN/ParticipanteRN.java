@@ -85,4 +85,12 @@ public class ParticipanteRN {
 		return this.participanteDAO.carregarPJ(codigo);
 	}
 
+	public int countPessoaFisicaPaginacao(PessoaFisica pessoaFisica) {
+		return participanteDAO.countPessoaFisicaPaginacao(pessoaFisica);
+	}
+
+	public List<PessoaFisica> buscaPessoaFisicaPaginacao(PessoaFisica pessoaFisica, int first, int pageSize) {
+		return participanteDAO.buscaPessoaFisicaPaginacao(pessoaFisica, first, pageSize);
+	}
+
 }
