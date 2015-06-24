@@ -30,7 +30,6 @@ public class PesquisaProdutoBean extends FacesUtil implements Serializable {
 	private static final long serialVersionUID = 3019620803107082715L;
 	private Produto produto;
 	
-	private List<Produto> listaProduto;
 	private List<FiguraFiscal> listaFigura;
 	private List<UnidMed> listaUnidade;
 	private List<TipoProduto> listaTipo;
@@ -115,17 +114,6 @@ public class PesquisaProdutoBean extends FacesUtil implements Serializable {
 
 	public void setProduto(Produto produto) {
 		this.produto = produto;
-	}
-
-	public List<Produto> getListaProduto() {
-		if(this.listaProduto == null){
-			this.listaProduto = new ArrayList<Produto>();
-		}
-		return listaProduto;
-	}
-
-	public void setListaProduto(List<Produto> listaProduto) {
-		this.listaProduto = listaProduto;
 	}
 
 	public FiguraFiscalRN getFigRN() {

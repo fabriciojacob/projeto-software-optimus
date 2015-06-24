@@ -3,9 +3,12 @@ package br.com.softwareOptimus.entidades.dao.participantes;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+
 import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.EntityManager;
+
 import br.com.softwareOptimus.entidades.PessoaFisica;
 import br.com.softwareOptimus.entidades.PessoaJuridica;
 
@@ -60,7 +63,6 @@ public class ParticipanteDAOHibernate implements ParticipanteDAO {
 		if (!this.transaction.isActive()) {
 			this.transaction.begin();
 		}
-
 	}
 
 	@Override
@@ -119,5 +121,23 @@ public class ParticipanteDAOHibernate implements ParticipanteDAO {
 		return consulta.getResultList();
 	}
 
+	@Override
+	public int countPessoaFisicaPaginacao(PessoaFisica pessoaFisica) {
+		return 0;
+	}
 
+	@Override
+	public List<PessoaFisica> buscaPessoaFisicaPaginacao(PessoaFisica pessoaFisica, int first, int pageSize) {
+		return null;
+	}
+	
+	@Override
+	public void defineCondicao(StringBuilder sql, PessoaFisica pessoaFisica){
+		
+	}
+	
+	@Override
+	public void defineParametros(Query qry, PessoaFisica pessoaFisica){
+		
+	}
 }
