@@ -31,7 +31,7 @@
 				actionListener="#{produtoBean.remover}" ajax="grid" />
 
 			<p:commandButton id="consulta" value="Consultar" 
-				action="#{pesquisaProdutoBean.abrirDialogo}">
+				action="#{pesquisaPessoaFisicaBean.abrirDialogo}">
 				<p:ajax event="dialogReturn" listener="#{produtoBean.produtoSelecionado}" update="frmCadProduto"/>
 			</p:commandButton>
 

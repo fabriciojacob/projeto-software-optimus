@@ -25,6 +25,10 @@ public interface ParticipanteDAO {
 	public List<PessoaJuridica> buscaNomePJ(String nome) throws Exception;
 	public int countPessoaFisicaPaginacao(PessoaFisica pessoaFisica);
 	public List<PessoaFisica> buscaPessoaFisicaPaginacao(PessoaFisica pessoaFisica, int first, int pageSize);
-	public void defineCondicao(StringBuilder sql, PessoaFisica pessoaFisica);
-	public void defineParametros(Query qry, PessoaFisica pessoaFisica);
+	public void defineCondicaoPF(StringBuilder sql, PessoaFisica pessoaFisica);
+	public void defineParametrosPF(Query qry, PessoaFisica pessoaFisica);
+	public void defineParametrosPJ(Query qry, PessoaJuridica pessoaJuridica);
+	public List<PessoaJuridica> buscaPessoaJuridicaPaginacao(PessoaJuridica pessoaJuridica, int first, int pageSize);
+	public int countPessoaJuridicaPaginacao(PessoaJuridica pessoaJuridica);
+	public void defineCondicaoPJ(StringBuilder sql, PessoaJuridica pessoaJuridica);
 }
