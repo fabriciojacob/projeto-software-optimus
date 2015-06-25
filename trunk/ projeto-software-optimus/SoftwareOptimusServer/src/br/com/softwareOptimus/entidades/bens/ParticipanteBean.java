@@ -7,6 +7,8 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import org.primefaces.event.SelectEvent;
+
 import br.com.softwareOptimus.entidades.Email;
 import br.com.softwareOptimus.entidades.Logradouro;
 import br.com.softwareOptimus.entidades.Municipio;
@@ -217,33 +219,11 @@ public class ParticipanteBean extends FacesUtil implements Serializable{
 
 	}
 
-	public void pesquisaPF() {
-		String cpf = "cpf";
+	public void pessoaFisicaSelecionado(SelectEvent event){
+		PessoaFisica pf;
 		try {
-			this.getListaPessoaFisica().clear();
-			if (!this.getTextoConsulta().equals("") && !this.getFiltro().equals("")) {
-				if (this.getFiltro().equals(cpf)) {
-					this.setListaPessoaFisica(this.getParticipanteRN().listaPFCPF(this.getTextoConsulta()));
-				} else if (filtro.equals("nomeFantasia")) {
-					this.setListaPessoaFisica(this.getParticipanteRN().listaPFNome(this.getTextoConsulta()));
-				}
-			} else {
-				this.setListaPessoaFisica(this.getParticipanteRN().listaPFNome(this.getTextoConsulta()));
-			}
-			this.setSalvar(false);
-			this.setCancelar(false);
-			this.setSalReg(false);
-			this.setEnderecos(false);
-			this.setEmail(false);
-			this.setTelefone(false);
-		} catch (Exception e) {
-			this.error("Problemas na pesquisa"+ e.getMessage());
-		}
-	}
-
-	public void editar() {
-		try {
-			this.setPessoaFisica(this.getParticipanteRN().carregaIDPF(this.getId()));
+			pf = (PessoaFisica) event.getObject();
+			this.setPessoaFisica(this.getParticipanteRN().carregaIDPF(pf.getIdPessoa()));
 			this.setTipoParticipante(this.getPessoaFisica().getNaturezaPessoa().toString());
 			habilitar();
 		} catch (Exception e) {
