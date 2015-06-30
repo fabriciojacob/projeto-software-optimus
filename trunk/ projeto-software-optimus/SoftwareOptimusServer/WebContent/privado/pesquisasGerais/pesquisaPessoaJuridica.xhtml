@@ -12,6 +12,56 @@
 </h:head>
 	<h:body>
 		<h:form>
+				<h:panelGrid columns="4" columnClasses="label" cellspacing="3">
+					<h:panelGrid>
+						Fantasia:
+						<p:inputText size="60" value="#{pesquisaPessoaJuridicaBean.pessoaJuridica.fantasia}" />					
+					</h:panelGrid>
+					<h:panelGrid>
+						CNPJ:
+						<p:inputText size="20" value="#{pesquisaPessoaJuridicaBean.pessoaJuridica.cnpj}" />					
+					</h:panelGrid>
+					<h:panelGrid>
+						Inscr. Estadual:
+						<p:inputText size="20" value="#{pesquisaPessoaJuridicaBean.pessoaJuridica.ie}" />					
+					</h:panelGrid>
+					<h:panelGrid>
+						<p:commandButton id="btnPesquisar" value="Pesquisar" update="dataPesquisa" />
+					</h:panelGrid>
+				</h:panelGrid>
+				
+				<p:blockUI block="dataPesquisa" trigger="btnPesquisar" />
+				<p:dataTable id="dataPesquisa" value="#{pesquisaPessoaJuridicaBean.pessoaJuridicaList}" var="pesPF" resizableColumns="true"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="5,10,15" lazy="true" border="1" paginatorPosition="bottom" cellpadding="2" cellspacing="0"
+					paginator="true" rows="10" rowKey="pesPJ.idPessoa">
+
+					<f:facet name="header">Pessoas Física Cadastradas</f:facet>
+
+					<p:column headerText="Codigo">
+						<h:outputText value="#{pesPJ.idPessoa}" />
+					</p:column>
+
+					<p:column headerText="Nome Fantasia">
+						<h:outputText value="#{pesPJ.fantasia}" />
+					</p:column>
+
+					<p:column headerText="CPF">
+						<h:outputText value="#{pesPJ.cpf}" />
+					</p:column>
+					<p:column headerText="RG">
+						<h:outputText value="#{pesPJ.rg}" />
+					</p:column>
+					<p:column headerText="Selecionar" style="width: 50px; text-align: center">
+		    			<p:commandButton icon="ui-icon-check" title="Selecionar"
+		    				action="#{pesquisaPessoaJuridicaBean.selecionaPessoa(pesPJ)}"
+		    				process="@this" />
+					</p:column>
+				</p:dataTable>
+				<p:blockUI block="dataPesquisa" trigger="dataPesquisa">
+       				LOADING<br />
+					<p:graphicImage name="ajaxloader.gif" />
+				</p:blockUI>
 		</h:form>
 	</h:body>
 </html>
