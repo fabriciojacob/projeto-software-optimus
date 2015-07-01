@@ -7,9 +7,6 @@ import javax.persistence.Table;
 @Table(name="tbPessoaJuridica")
 public class PessoaJuridica extends Pessoa{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 3931037073062799711L;
 	
 	private String cnpj;

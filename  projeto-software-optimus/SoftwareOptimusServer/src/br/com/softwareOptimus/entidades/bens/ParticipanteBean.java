@@ -171,7 +171,11 @@ public class ParticipanteBean extends FacesUtil implements Serializable{
 					this.setListaEnd(this.getParticipanteRN().listaLogr(this.getPessoaFisica()));
 				}
 			} catch (NullPointerException e) {
-				this.setListaEnd(this.getParticipanteRN().listaLogr(this.getPessoaFisica()));
+				if(this.getPessoaJuridica().getIdPessoa() != 0 && this.getPessoaJuridica().getIdPessoa() != null){
+					this.setListaEnd(this.getParticipanteRN().listaLogr(this.getPessoaJuridica()));
+				}else{
+					this.setListaEnd(this.getParticipanteRN().listaLogr(this.getPessoaFisica()));	
+				}
 			}
 		} catch (Exception e) {
 			this.error("Problemas na listagem dos logradouros"+ e.getMessage());
@@ -218,6 +222,27 @@ public class ParticipanteBean extends FacesUtil implements Serializable{
 		}
 
 	}
+	
+	public void pessoaJuridicaSelecionado(SelectEvent event){
+		PessoaJuridica pj;
+		try {
+			pj = (PessoaJuridica) event.getObject();
+			this.setPessoaJuridica(this.getParticipanteRN().carregaIDPJ(pj.getIdPessoa()));
+			this.setTipoParticipante(this.getPessoaJuridica().getNaturezaPessoa().toString());
+			habilitar();
+		} catch (Exception e) {
+			this.error("Problemas na edição"+ e.getMessage());
+		}
+		listaLogradouro();
+		listaEmail();
+		listaTelefone();
+		this.setSalvar(false);
+		this.setCancelar(false);
+		this.setSalReg(false);
+		this.setEnderecos(false);
+		this.setEmail(false);
+		this.setTelefone(false);
+	}
 
 	public void pessoaFisicaSelecionado(SelectEvent event){
 		PessoaFisica pf;
@@ -241,22 +266,7 @@ public class ParticipanteBean extends FacesUtil implements Serializable{
 	}
 
 	public void editarPJ() {
-		try {
-			this.setPessoaJuridica(this.getParticipanteRN().carregaIDPJ(this.getId()));
-			this.setTipoParticipante(this.getPessoaJuridica().getNaturezaPessoa().toString());
-			habilitar();
-		} catch (Exception e) {
-			this.error("Problemas na edição"+ e.getMessage());
-		}
-		listaLogradouro();
-		listaEmail();
-		listaTelefone();
-		this.setSalvar(false);
-		this.setCancelar(false);
-		this.setSalReg(false);
-		this.setEnderecos(false);
-		this.setEmail(false);
-		this.setTelefone(false);
+
 	}
 
 	public void excluirLogr() {
@@ -457,6 +467,9 @@ public class ParticipanteBean extends FacesUtil implements Serializable{
 	}
 
 	public LogradouroRN getLogrRN() {
+		if(this.logrRN == null){
+			this.logrRN = new LogradouroRN();
+		}
 		return logrRN;
 	}
 
