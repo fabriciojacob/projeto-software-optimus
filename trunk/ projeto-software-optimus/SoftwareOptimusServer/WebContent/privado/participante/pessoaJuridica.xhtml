@@ -22,9 +22,10 @@
 				actionListener="#{participanteBean.salvarPJ}"
 				ajax="frmCadParticipante" />
 
-			<p:commandButton value="Consulta" type="button"
-				onclick="PF('consulta').show();"
-				disabled="#{participanteBean.consulta}" />
+			<p:commandButton value="Consulta" disabled="#{participanteBean.consulta}"
+				action="#{pesquisaPessoaJuridicaBean.abrirDialogo}">
+				<p:ajax event="dialogReturn" listener="#{participanteBean.pessoaJuridicaSelecionado}" update="frmCadParticipante"/>
+			</p:commandButton>
 
 			<p:commandButton value="Cancelar" ajax="cadEmpresa"
 				actionListener="#{participanteBean.novo}"

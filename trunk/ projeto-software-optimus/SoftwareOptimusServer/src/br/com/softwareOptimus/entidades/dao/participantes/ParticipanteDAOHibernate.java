@@ -201,11 +201,33 @@ public class ParticipanteDAOHibernate implements ParticipanteDAO {
 	
 	@Override
 	public void defineCondicaoPJ(StringBuilder sql, PessoaJuridica pessoaJuridica){
-		
+		if(pessoaJuridica.getFantasia() != null && pessoaJuridica.getFantasia() != ""){
+			sql.append(sql.length() == 0 ? " where p.fantasia like :fantasia ": " and p.fantasia like :fantasia ");
+		}
+		if(pessoaJuridica.getRazaoSocial() != null && pessoaJuridica.getRazaoSocial() != ""){
+			sql.append(sql.length() == 0 ? " where p.razaoSocial like :razaoSocial ": " and p.razaoSocial like :razaoSocial ");
+		}
+		if(pessoaJuridica.getCnpj() != null && pessoaJuridica.getCnpj() != ""){
+			sql.append(sql.length() == 0 ? " where p.cnpj like :cnpj ": " and p.cnpj like :cnpj ");
+		}
+		if(pessoaJuridica.getIe() != null && pessoaJuridica.getIe() != ""){
+			sql.append(sql.length() == 0 ? " where p.ie like :ie ": " and p.ie like :ie ");
+		}
 	}
 	
 	@Override
 	public void defineParametrosPJ(Query qry, PessoaJuridica pessoaJuridica){
-		
+		if(pessoaJuridica.getFantasia() != null && pessoaJuridica.getFantasia() != ""){
+			qry.setParameter("fantasia", "%" + pessoaJuridica.getFantasia() + "%");
+		}
+		if(pessoaJuridica.getRazaoSocial() != null && pessoaJuridica.getRazaoSocial() != ""){
+			qry.setParameter("razaoSocial", "%" + pessoaJuridica.getRazaoSocial() + "%");
+		}
+		if(pessoaJuridica.getCnpj() != null && pessoaJuridica.getCnpj() != ""){
+			qry.setParameter("cnpj", "%" + pessoaJuridica.getCnpj() + "%");
+		}
+		if(pessoaJuridica.getIe() != null && pessoaJuridica.getIe() != ""){
+			qry.setParameter("ie", "%" + pessoaJuridica.getIe() + "%");
+		}
 	}
 }

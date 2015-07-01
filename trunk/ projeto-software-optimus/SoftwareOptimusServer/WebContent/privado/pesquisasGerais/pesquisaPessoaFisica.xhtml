@@ -45,13 +45,23 @@
 					<p:column headerText="Nome Fantasia">
 						<h:outputText value="#{pesPF.fantasia}" />
 					</p:column>
+					
+					<p:column headerText="Natureza Pessoa">
+						<h:outputText value="#{pesPF.naturezaPessoa}" />
+					</p:column>
+					
+					<p:column headerText="Status">
+						<h:outputText value="#{pesPF.status}" />
+					</p:column>
 
 					<p:column headerText="CPF">
 						<h:outputText value="#{pesPF.cpf}" />
 					</p:column>
+					
 					<p:column headerText="RG">
 						<h:outputText value="#{pesPF.rg}" />
 					</p:column>
+
 					<p:column headerText="Selecionar" style="width: 50px; text-align: center">
 		    			<p:commandButton icon="ui-icon-check" title="Selecionar"
 		    				action="#{pesquisaPessoaFisicaBean.selecionaPessoa(pesPF)}"

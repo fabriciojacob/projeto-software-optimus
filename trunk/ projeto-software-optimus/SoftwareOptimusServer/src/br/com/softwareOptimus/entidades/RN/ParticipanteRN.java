@@ -92,5 +92,12 @@ public class ParticipanteRN {
 	public List<PessoaFisica> buscaPessoaFisicaPaginacao(PessoaFisica pessoaFisica, int first, int pageSize) {
 		return participanteDAO.buscaPessoaFisicaPaginacao(pessoaFisica, first, pageSize);
 	}
-
+	
+	public List<PessoaJuridica> buscaPessoaJuridicaPaginacao(PessoaJuridica pessoaJuridica, int first, int pageSize) {
+		return participanteDAO.buscaPessoaJuridicaPaginacao(pessoaJuridica, first, pageSize);
+	}
+	
+	public int countPessoaJuridicaPaginacao(PessoaJuridica pessoaJuridica) {
+		return participanteDAO.countPessoaJuridicaPaginacao(pessoaJuridica);
+	}
 }
