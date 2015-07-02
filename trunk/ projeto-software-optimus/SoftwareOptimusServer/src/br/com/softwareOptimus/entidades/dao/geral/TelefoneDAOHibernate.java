@@ -71,7 +71,8 @@ public class TelefoneDAOHibernate implements TelefoneDAO {
 		TypedQuery<Telefone> consulta = this.session.createQuery(jpql,
 				Telefone.class);
 		consulta.setParameter("parPessoa", pessoa);
-		return consulta.getResultList();
+		List<Telefone> result = consulta.getResultList();
+		return result;
 	}
 
 }

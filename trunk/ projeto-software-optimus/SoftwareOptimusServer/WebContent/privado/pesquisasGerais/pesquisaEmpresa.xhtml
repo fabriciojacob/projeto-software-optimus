@@ -12,6 +12,84 @@
 </h:head>
 	<h:body>
 		<h:form>
+				<h:panelGrid columns="3" columnClasses="label" cellspacing="3">
+					<h:panelGrid>
+						Fantasia:
+						<p:inputText size="60" value="#{pesquisaEmpresaBean.empresa.fantasia}" />					
+					</h:panelGrid>
+					<h:panelGrid>
+						CNPJ:
+						<p:inputText size="20" value="#{pesquisaEmpresaBean.empresa.cnpj}" />					
+					</h:panelGrid>
+
+					<h:panelGrid>
+						<p:commandButton id="btnPesquisar" value="Pesquisar" update="dataPesquisa" />
+					</h:panelGrid>
+				</h:panelGrid>
+				<h:panelGrid columns="2" columnClasses="label" cellspacing="3">
+					<h:panelGrid>
+						Razão Social:
+						<p:inputText size="60" value="#{pesquisaEmpresaBean.empresa.razaoSocial}" />					
+					</h:panelGrid>
+					<h:panelGrid>
+						Inscr. Estadual:
+						<p:inputText size="20" value="#{pesquisaEmpresaBean.empresa.ie}" />					
+					</h:panelGrid>
+				</h:panelGrid>
+				
+				<p:blockUI block="dataPesquisa" trigger="btnPesquisar" />
+				<p:dataTable id="dataPesquisa" value="#{pesquisaEmpresaBean.empresaList}" var="empresa" resizableColumns="true"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="5,10,15" lazy="true" border="1" paginatorPosition="bottom" cellpadding="2" cellspacing="0"
+					paginator="true" rows="10" rowKey="empresa.idPessoa">
+
+					<f:facet name="header">Pessoas Jurídica Cadastradas</f:facet>
+
+					<p:column headerText="Codigo">
+						<h:outputText value="#{empresa.idPessoa}" />
+					</p:column>
+
+					<p:column headerText="Nome Fantasia">
+						<h:outputText value="#{empresa.fantasia}" />
+					</p:column>
+					
+					<p:column headerText="Razão Social">
+						<h:outputText value="#{empresa.razaoSocial}" />
+					</p:column>
+					
+					<p:column headerText="Status">
+						<h:outputText value="#{empresa.status}" />
+					</p:column>
+					
+					<p:column headerText="Natureza Pessoa">
+						<h:outputText value="#{empresa.naturezaPessoa}" />
+					</p:column>
+
+					<p:column headerText="Tipo Pessoa Jurídica">
+						<h:outputText value="#{empresa.tipoPessoaJuridica}" />
+					</p:column>					
+
+					<p:column headerText="CNPJ">
+						<h:outputText value="#{empresa.cnpj}" />
+					</p:column>
+
+					<p:column headerText="Inscr. Estadual">
+						<h:outputText value="#{empresa.ie}" />
+					</p:column>
+					
+					<p:column headerText="CNAE">
+						<h:outputText value="#{empresa.cnae}" />
+					</p:column>					
+					<p:column headerText="Selecionar" style="width: 50px; text-align: center">
+		    			<p:commandButton icon="ui-icon-check" title="Selecionar"
+		    				action="#{pesquisaEmpresaBean.selecionaEmpresa(empresa)}"
+		    				process="@this" />
+					</p:column>
+				</p:dataTable>
+				<p:blockUI block="dataPesquisa" trigger="dataPesquisa">
+       				LOADING<br />
+					<p:graphicImage name="ajaxloader.gif" />
+				</p:blockUI>
 		</h:form>
 	</h:body>
 </html>

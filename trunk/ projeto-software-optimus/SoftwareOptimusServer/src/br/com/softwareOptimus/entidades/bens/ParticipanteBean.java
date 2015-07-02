@@ -31,11 +31,10 @@ public class ParticipanteBean extends FacesUtil implements Serializable{
 	private static final long serialVersionUID = 8728030689995236693L;
 	private PessoaFisica pessoaFisica;
 	private PessoaJuridica pessoaJuridica;
-	private Long id, idLogr, idTel, idEmail;
+	private Long idLogr, idTel, idEmail;
 	private List<Email> listaEmail;
 	private List<Logradouro> listaEnd;
 	public List<PessoaFisica> listaPessoaFisica;
-	public List<PessoaJuridica> listaPessoaJuridica;
 	private ParticipanteRN participanteRN;
 	private LogradouroRN logrRN;
 	private EmailRN emailRN;
@@ -45,8 +44,6 @@ public class ParticipanteBean extends FacesUtil implements Serializable{
 	private String selecionadaPessoa = null;
 	private String tipoParticipante = null;
 	private String tipoPJ = null;
-	private String filtro = null;
-	private String textoConsulta = null;
 	private String tipoSelecionadoTel = null;
 	private String dddTel;
 	private List<Telefone> listaTelefone;
@@ -198,31 +195,6 @@ public class ParticipanteBean extends FacesUtil implements Serializable{
 		habilitar();
 	}
 
-	public void pesquisaPJ() {
-		String cnpj = "cnpj";
-		try {
-			this.getListaPessoaJuridica().clear();
-			if (!this.getTextoConsulta().equals("") && !this.getFiltro().equals("")) {
-				if (this.getFiltro().equals(cnpj)) {
-					this.setListaPessoaJuridica(this.getParticipanteRN().listaPJCNPJ(this.getTextoConsulta()));
-				} else {
-					this.setListaPessoaJuridica(this.getParticipanteRN().listaPJNome(this.getTextoConsulta()));
-				}
-			} else {
-				this.setListaPessoaJuridica(this.getParticipanteRN().listaPJNome(this.getTextoConsulta()));
-			}
-			this.setSalvar(false);
-			this.setCancelar(false);
-			this.setSalReg(false);
-			this.setEnderecos(false);
-			this.setEmail(false);
-			this.setTelefone(false);
-		} catch (Exception e) {
-			this.error("Problemas na pesquisa"+ e.getMessage());
-		}
-
-	}
-	
 	public void pessoaJuridicaSelecionado(SelectEvent event){
 		PessoaJuridica pj;
 		try {
@@ -263,10 +235,6 @@ public class ParticipanteBean extends FacesUtil implements Serializable{
 		this.setEnderecos(false);
 		this.setEmail(false);
 		this.setTelefone(false);
-	}
-
-	public void editarPJ() {
-
 	}
 
 	public void excluirLogr() {
@@ -688,14 +656,6 @@ public class ParticipanteBean extends FacesUtil implements Serializable{
 		this.pessoaJuridica = pessoaJuridica;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
 	public Long getIdLogr() {
 		return idLogr;
 	}
@@ -742,28 +702,6 @@ public class ParticipanteBean extends FacesUtil implements Serializable{
 		this.listaPessoaFisica = listaPessoaFisica;
 	}
 
-	public String getFiltro() {
-		if(this.filtro == null){
-			this.filtro = new String();
-		}
-		return filtro;
-	}
-
-	public void setFiltro(String filtro) {
-		this.filtro = filtro;
-	}
-
-	public String getTextoConsulta() {
-		if(this.textoConsulta == null){
-			this.textoConsulta = new String();
-		}
-		return textoConsulta;
-	}
-
-	public void setTextoConsulta(String textoConsulta) {
-		this.textoConsulta = textoConsulta;
-	}
-
 	public String getTipoSelecionadoTel() {
 		if(this.tipoSelecionadoTel == null){
 			this.tipoSelecionadoTel = new String();
@@ -795,17 +733,6 @@ public class ParticipanteBean extends FacesUtil implements Serializable{
 
 	public void setEmails(Email emails) {
 		this.emails = emails;
-	}
-
-	public List<PessoaJuridica> getListaPessoaJuridica() {
-		if(this.listaPessoaJuridica == null){
-			this.listaPessoaJuridica = new ArrayList<PessoaJuridica>();
-		}
-		return listaPessoaJuridica;
-	}
-
-	public void setListaPessoaJuridica(List<PessoaJuridica> listaPessoaJuridica) {
-		this.listaPessoaJuridica = listaPessoaJuridica;
 	}
 
 	public boolean isTipoParPerJur() {
