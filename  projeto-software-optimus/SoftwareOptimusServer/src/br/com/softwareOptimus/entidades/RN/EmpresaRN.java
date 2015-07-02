@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import br.com.softwareOptimus.entidades.Logradouro;
+import br.com.softwareOptimus.entidades.Pessoa;
 import br.com.softwareOptimus.entidades.PessoaJuridica;
 import br.com.softwareOptimus.entidades.dao.empresa.EmpresaDAO;
 import br.com.softwareOptimus.entidades.dao.geral.LogradouroDAO;
@@ -86,6 +87,16 @@ public class EmpresaRN {
 		}
 		
 		return retorno;
+	}
+
+	public int countEmpresaPaginacao(Pessoa empresa) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public List<Pessoa> buscaEmpresaPaginacao(Pessoa empresa, int first,int pageSize) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -34,56 +34,6 @@
 			<p:messages id="messages" showDetail="true" autoUpdate="true"
 				closable="true" />
 
-			<p:dialog header="Consulta" widgetVar="consulta" modal="true"
-				height="300" width="400">
-
-				<div align="right">
-					<h:panelGrid columns="1">
-
-						<p:commandButton value="Pesquisar"
-							actionListener="#{participanteBean.pesquisaPJ}"
-							update="dataPesquisa" />
-					</h:panelGrid>
-				</div>
-
-				<h:panelGrid columns="2">
-
-					<p:inputText id="textoConsulta" size="40"
-						value="#{participanteBean.textoConsulta}" />
-
-					<p:selectOneMenu id="fConsult" value="#{participanteBean.filtro}">/>
-						<f:selectItem itemLabel="CNPJ" itemValue="cnpj" />
-						<f:selectItem itemLabel="Nome Fantasia" itemValue="nomeFantasia" />
-					</p:selectOneMenu>
-
-				</h:panelGrid>
-				<p:dataTable id="dataPesquisa"
-					value="#{participanteBean.listaPessoaJuridica}" var="pesPJ"
-					paginator="true" rows="6">
-
-					<p:column headerText="Codigo">
-						<h:outputText value="#{pesPJ.idPessoa}" />
-					</p:column>
-
-					<p:column headerText="Nome Fantasia">
-						<h:outputText value="#{pesPJ.fantasia}" />
-					</p:column>
-
-					<p:column headerText="CNPJ">
-						<h:outputText value="#{pesPJ.cnpj}" />
-					</p:column>
-
-					<p:column headerText="Selecionar">
-						<p:commandLink id="link" value="Editar"
-							ajax="dialog,frmCadParticipante"
-							action="#{participanteBean.editarPJ}">
-							<f:setPropertyActionListener value="#{pesPJ.idPessoa}"
-								target="#{participanteBean.id}" />
-						</p:commandLink>
-					</p:column>
-				</p:dataTable>
-			</p:dialog>
-
 			<p:tabView style="border: 0px">
 				<p:tab id="cadEmpresa" title="Informações Gerais">
 					<ui:include src="/privado/participante/panel/pessoaJuridicaInformacoesGeraisPanel.xhtml" />
