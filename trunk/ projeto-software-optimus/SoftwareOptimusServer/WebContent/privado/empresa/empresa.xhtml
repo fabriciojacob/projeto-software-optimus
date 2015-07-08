@@ -20,8 +20,10 @@
 			<p:commandButton value="Salvar" disabled="#{empresaBean.salvar}"
 				actionListener="#{empresaBean.salvarEmp}" ajax="frmCadEmpresa" />
 
-			<p:commandButton id="consul" value="Consulta" type="button"
-				onclick="PF('consulta').show();" disabled="#{empresaBean.consulta}" />
+			<p:commandButton value="Consulta" disabled="#{empresaBean.consulta}"
+				action="#{pesquisaPessoaJuridicaBean.abrirDialogo('emp')}">
+				<p:ajax event="dialogReturn" listener="#{empresaBean.empresaSelecionado}" update="frmCadEmpresa"/>
+			</p:commandButton>				
 
 			<p:commandButton value="Cancelar" ajax="cadEmpresa"
 				actionListener="#{empresaBean.novo}"
@@ -29,64 +31,6 @@
 
 			<p:messages id="messages" showDetail="true" autoUpdate="true"
 				closable="true" />
-
-			<p:dialog header="Consulta" widgetVar="consulta" modal="true"
-				height="350" width="450">
-
-				<div align="right">
-					<h:panelGrid columns="1">
-						<p:commandButton id="pesq" value="Pesquisar"
-							actionListener="#{empresaBean.pesquisa}" update="dataConsulta" />
-					</h:panelGrid>
-				</div>
-
-				<h:panelGrid columns="2">
-
-					<p:inputText id="textoConsulta" size="40"
-						value="#{empresaBean.tipoConsulta}" />
-
-					<p:selectOneMenu id="fConsult" value="#{empresaBean.filtro}">/>
-						<f:selectItem itemLabel="CNPJ" itemValue="cnpj" />
-						<f:selectItem itemLabel="Nome Fantasia" itemValue="nomeFantasia" />
-					</p:selectOneMenu>
-
-				</h:panelGrid>
-
-				<h:panelGrid id="gridData1" columns="1" columnClasses="label, value">
-					<p:blockUI block="gridData1" trigger="pesq" />
-
-					<p:dataTable id="dataConsulta"
-						value="#{empresaBean.retornoListaPessoa}" var="pesEmpresa"
-						paginator="true" rows="6" rowKey="pesEmpresa.idPessoa">
-
-						<p:column headerText="Codigo">
-							<h:outputText value="#{pesEmpresa.idPessoa}" />
-						</p:column>
-
-						<p:column headerText="Nome Fantasia">
-							<h:outputText value="#{pesEmpresa.fantasia}" />
-						</p:column>
-
-						<p:column headerText="CNPJ">
-							<h:outputText value="#{pesEmpresa.cnpj}" />
-						</p:column>
-
-						<p:column headerText="Selecionar">
-							<p:commandLink id="link" value="Editar"
-								ajax="dialog,frmCadEmpresa" action="#{empresaBean.editEmp}">
-								<f:setPropertyActionListener value="#{pesEmpresa.idPessoa}"
-									target="#{empresaBean.id}" />
-							</p:commandLink>
-						</p:column>
-
-					</p:dataTable>
-					<p:blockUI block="dataConsulta" trigger="dataConsulta">
-        				LOADING<br />
-						<p:graphicImage name="ajaxloader.gif" />
-					</p:blockUI>
-				</h:panelGrid>
-
-			</p:dialog>
 
 			<p:tabView style="border: 0px">
 				<p:tab id="cadEmpresa" title="Informações Gerais">

@@ -8,6 +8,8 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import org.primefaces.event.SelectEvent;
+
 import br.com.softwareOptimus.entidades.Email;
 import br.com.softwareOptimus.entidades.Logradouro;
 import br.com.softwareOptimus.entidades.Municipio;
@@ -189,9 +191,10 @@ public class EmpresaBean extends FacesUtil implements Serializable {
 			this.error("Problemas na listagem dos regimes" + e.getMessage());
 		}
 	}
-
-	public void editEmp() {
-		this.setPessoaJuridica(this.getEmpresaRN().pesquisaId(this.getId()));
+	
+	public void empresaSelecionado(SelectEvent event){
+		PessoaJuridica pj = (PessoaJuridica) event.getObject();
+		this.setPessoaJuridica(this.getEmpresaRN().pesquisaId(pj.getIdPessoa()));
 		listaLogradouro();
 		listaRegime();
 		listaEmail();

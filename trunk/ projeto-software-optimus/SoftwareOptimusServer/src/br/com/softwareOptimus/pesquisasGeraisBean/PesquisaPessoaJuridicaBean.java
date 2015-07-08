@@ -7,6 +7,8 @@ import java.util.Map;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 
 import org.primefaces.context.RequestContext;
 import org.primefaces.model.LazyDataModel;
@@ -28,13 +30,13 @@ public class PesquisaPessoaJuridicaBean extends FacesUtil implements Serializabl
 
 	public PesquisaPessoaJuridicaBean(){
 		pessoaJuridicaList = new LazyDataModel<PessoaJuridica>() {
-
+			
 			private static final long serialVersionUID = 8237501022051609919L;
 			@Override
-			public List<PessoaJuridica> load(int first, int pageSize, String sortField, SortOrder sortOrder, 
-					Map<String, Object> filters) {
-				setRowCount(getPartRN().countPessoaJuridicaPaginacao(getPessoaJuridica()));
-				return getPartRN().buscaPessoaJuridicaPaginacao(getPessoaJuridica(), first, pageSize);
+			public List<PessoaJuridica> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
+				String natureza = getValueSessionJSF("natureza").toString();
+				setRowCount(getPartRN().countPessoaJuridicaPaginacao(getPessoaJuridica(), natureza));
+				return getPartRN().buscaPessoaJuridicaPaginacao(getPessoaJuridica(), natureza, first, pageSize);
 			}
 		};
 	}
@@ -43,13 +45,15 @@ public class PesquisaPessoaJuridicaBean extends FacesUtil implements Serializabl
 		RequestContext.getCurrentInstance().closeDialog(pj);
 	}
 	
- 	public void abrirDialogo() {
+ 	public void abrirDialogo(String natureza) {
 		Map<String, Object> opcoes = new HashMap<>();
 		opcoes.put("modal", true);
 		opcoes.put("resizable", false);
 		opcoes.put("contentHeight", 600);
 		opcoes.put("contentWidth", 1000);
-		
+		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+		checkSession(externalContext,"natureza");
+		externalContext.getSessionMap().put("natureza", natureza);
 		RequestContext.getCurrentInstance().openDialog("/privado/pesquisasGerais/pesquisaPessoaJuridica", opcoes, null);
 	}
 	public PessoaJuridica getPessoaJuridica() {

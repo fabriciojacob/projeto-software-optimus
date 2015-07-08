@@ -23,7 +23,7 @@
 				ajax="frmCadParticipante" />
 
 			<p:commandButton value="Consulta" disabled="#{participanteBean.consulta}"
-				action="#{pesquisaPessoaJuridicaBean.abrirDialogo}">
+				action="#{pesquisaPessoaJuridicaBean.abrirDialogo('pes')}">
 				<p:ajax event="dialogReturn" listener="#{participanteBean.pessoaJuridicaSelecionado}" update="frmCadParticipante"/>
 			</p:commandButton>
 

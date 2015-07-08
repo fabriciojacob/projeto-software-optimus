@@ -28,7 +28,7 @@ public interface ParticipanteDAO {
 	public void defineCondicaoPF(StringBuilder sql, PessoaFisica pessoaFisica);
 	public void defineParametrosPF(Query qry, PessoaFisica pessoaFisica);
 	public void defineParametrosPJ(Query qry, PessoaJuridica pessoaJuridica);
-	public List<PessoaJuridica> buscaPessoaJuridicaPaginacao(PessoaJuridica pessoaJuridica, int first, int pageSize);
-	public int countPessoaJuridicaPaginacao(PessoaJuridica pessoaJuridica);
-	public void defineCondicaoPJ(StringBuilder sql, PessoaJuridica pessoaJuridica);
+	public List<PessoaJuridica> buscaPessoaJuridicaPaginacao(PessoaJuridica pessoaJuridica, String natureza, int first, int pageSize);
+	public int countPessoaJuridicaPaginacao(PessoaJuridica pessoaJuridica, String natureza);
+	public void defineCondicaoPJ(StringBuilder sql, PessoaJuridica pessoaJuridica,String natureza);
 }
