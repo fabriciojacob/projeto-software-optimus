@@ -9,6 +9,7 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.EntityManager;
 
+import br.com.softwareOptimus.entidades.NaturezaPessoa;
 import br.com.softwareOptimus.entidades.PessoaFisica;
 import br.com.softwareOptimus.entidades.PessoaJuridica;
 
@@ -177,9 +178,9 @@ public class ParticipanteDAOHibernate implements ParticipanteDAO {
 	}
 	
 	@Override
-	public int countPessoaJuridicaPaginacao(PessoaJuridica pessoaJuridica) {
+	public int countPessoaJuridicaPaginacao(PessoaJuridica pessoaJuridica, String natureza) {
 		StringBuilder sql = new StringBuilder();
-		this.defineCondicaoPJ(sql, pessoaJuridica);
+		this.defineCondicaoPJ(sql, pessoaJuridica, natureza);
 		Query qryMaximo = this.session.createQuery("select Count(p) from PessoaJuridica p ".concat(sql.toString()));
 		this.defineParametrosPJ(qryMaximo, pessoaJuridica);
 		Number count = (Number) qryMaximo.getSingleResult();
@@ -188,9 +189,9 @@ public class ParticipanteDAOHibernate implements ParticipanteDAO {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<PessoaJuridica> buscaPessoaJuridicaPaginacao(PessoaJuridica pessoaJuridica, int first, int pageSize) {
+	public List<PessoaJuridica> buscaPessoaJuridicaPaginacao(PessoaJuridica pessoaJuridica, String natureza, int first, int pageSize) {
 		StringBuilder sql = new StringBuilder();
-		this.defineCondicaoPJ(sql, pessoaJuridica);
+		this.defineCondicaoPJ(sql, pessoaJuridica, natureza);
 		Query qry = this.session.createQuery("select p from PessoaJuridica p ".concat(sql.toString()));
 		this.defineParametrosPJ(qry, pessoaJuridica);
 		qry.setFirstResult(first);
@@ -200,7 +201,7 @@ public class ParticipanteDAOHibernate implements ParticipanteDAO {
 	}
 	
 	@Override
-	public void defineCondicaoPJ(StringBuilder sql, PessoaJuridica pessoaJuridica){
+	public void defineCondicaoPJ(StringBuilder sql, PessoaJuridica pessoaJuridica, String natureza){
 		if(pessoaJuridica.getFantasia() != null && pessoaJuridica.getFantasia() != ""){
 			sql.append(sql.length() == 0 ? " where p.fantasia like :fantasia ": " and p.fantasia like :fantasia ");
 		}
@@ -212,6 +213,13 @@ public class ParticipanteDAOHibernate implements ParticipanteDAO {
 		}
 		if(pessoaJuridica.getIe() != null && pessoaJuridica.getIe() != ""){
 			sql.append(sql.length() == 0 ? " where p.ie like :ie ": " and p.ie like :ie ");
+		}
+		//natureza pes retornar diferente de empresa
+		//natureza emp retorna igual empresa
+		if(natureza.equals("pes")){
+			sql.append(sql.length() == 0 ? " where p.naturezaPessoa <> :naturezaPessoa ": " and p.naturezaPessoa <> :naturezaPessoa ");
+		}else{
+			sql.append(sql.length() == 0 ? " where p.naturezaPessoa = :naturezaPessoa ": " and p.naturezaPessoa = :naturezaPessoa ");
 		}
 	}
 	
@@ -229,5 +237,6 @@ public class ParticipanteDAOHibernate implements ParticipanteDAO {
 		if(pessoaJuridica.getIe() != null && pessoaJuridica.getIe() != ""){
 			qry.setParameter("ie", "%" + pessoaJuridica.getIe() + "%");
 		}
+		qry.setParameter("naturezaPessoa", NaturezaPessoa.EMPRESA);
 	}
 }

@@ -93,11 +93,11 @@ public class ParticipanteRN {
 		return participanteDAO.buscaPessoaFisicaPaginacao(pessoaFisica, first, pageSize);
 	}
 	
-	public List<PessoaJuridica> buscaPessoaJuridicaPaginacao(PessoaJuridica pessoaJuridica, int first, int pageSize) {
-		return participanteDAO.buscaPessoaJuridicaPaginacao(pessoaJuridica, first, pageSize);
+	public List<PessoaJuridica> buscaPessoaJuridicaPaginacao(PessoaJuridica pessoaJuridica, String natureza, int first, int pageSize) {
+		return participanteDAO.buscaPessoaJuridicaPaginacao(pessoaJuridica, natureza, first, pageSize);
 	}
 	
-	public int countPessoaJuridicaPaginacao(PessoaJuridica pessoaJuridica) {
-		return participanteDAO.countPessoaJuridicaPaginacao(pessoaJuridica);
+	public int countPessoaJuridicaPaginacao(PessoaJuridica pessoaJuridica, String natureza) {
+		return participanteDAO.countPessoaJuridicaPaginacao(pessoaJuridica, natureza);
 	}
 }
