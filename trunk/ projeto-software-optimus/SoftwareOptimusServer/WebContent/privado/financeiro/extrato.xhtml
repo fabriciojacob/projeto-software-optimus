@@ -34,7 +34,8 @@
 					</p:selectOneMenu>
 					
 					Caixa:
-					 <p:selectOneMenu id="caixa" value="#{extratoBens.caixa}">
+					 <p:selectOneMenu id="caixa" value="#{extratoBens.caixa}"
+					 	disabled="#{extratoBens.ativaCaixa}">
 						<f:selectItem itemLabel="Selecione um caixa" />
 						<f:selectItems itemLabel="#{listaCaixa.descricao}"
 							value="#{extratoBens.caixas}" itemValue="#{listaCaixa}"
@@ -42,7 +43,8 @@
 					</p:selectOneMenu>
 					
 					Conta Bancaria:
-					 <p:selectOneMenu id="contaBancaria" value="#{extratoBens.conta}">
+					 <p:selectOneMenu id="contaBancaria" value="#{extratoBens.conta}"
+					    disabled="#{extratoBens.ativaConta}">
 						<f:selectItem itemLabel="Selecione uma conta" />
 						<f:selectItems value="#{extratoBens.contas}" var="listaConta"
 							itemValue="#{listaConta}" itemLabel="#{listaConta.titular}" />

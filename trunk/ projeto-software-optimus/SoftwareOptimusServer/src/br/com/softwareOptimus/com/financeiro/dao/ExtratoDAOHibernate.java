@@ -82,8 +82,8 @@ public class ExtratoDAOHibernate implements ExtratoDAO {
 
 		String jpql = "Select e From Extrato e "
 				+ " where e.data between :parDataIni and :parDataFim"
-				+ " and e.contaBancaria  = parContaBancaria"
-				+ " or e.caixa = parCaixa ";
+				+ " and e.contaBancaria  = :parContaBancaria"
+				+ " or e.caixa = :parCaixa ";
 
 		TypedQuery<Extrato> consulta = this.secao.createQuery(jpql,
 				Extrato.class);

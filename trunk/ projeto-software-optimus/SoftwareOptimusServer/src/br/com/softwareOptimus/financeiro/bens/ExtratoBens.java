@@ -27,11 +27,12 @@ public class ExtratoBens {
 	private Caixa caixa;
 	private List<ContaBancaria> contas = new ArrayList<>();
 	private List<Caixa> caixas = new ArrayList<>();
-	private boolean ativaCaixa, ativaConta;
+	private boolean ativaCaixa = true, ativaConta = true;
 	private String destinoExtrato;
 
 	public void pesquisaExtrato() {
 		try {
+			listaExtrato.clear();
 			listaExtrato = extratoRN.pesquisa(dataIni, dataFim, caixa, conta);
 		} catch (Exception e) {
 			msgErro("Problemas na listagem do extrato ", e);
@@ -43,9 +44,15 @@ public class ExtratoBens {
 			if (destinoExtrato.equals("CONTA")) {
 				ContaBancariaRN contaBancariaRN = new ContaBancariaRN();
 				contas = contaBancariaRN.listaGeral();
+				caixas.clear();
+				ativaConta = false;
+				ativaCaixa = true;
 			} else {
 				CaixaRN caixaRN = new CaixaRN();
 				caixas = caixaRN.listaCaixa();
+				contas.clear();
+				ativaCaixa = false;
+				ativaConta = true;
 			}
 		} catch (Exception e) {
 			msgErro("Problemas no tipo do filtro", e);
@@ -142,6 +149,22 @@ public class ExtratoBens {
 
 	public void setCaixas(List<Caixa> caixas) {
 		this.caixas = caixas;
+	}
+
+	public boolean isAtivaCaixa() {
+		return ativaCaixa;
+	}
+
+	public void setAtivaCaixa(boolean ativaCaixa) {
+		this.ativaCaixa = ativaCaixa;
+	}
+
+	public boolean isAtivaConta() {
+		return ativaConta;
+	}
+
+	public void setAtivaConta(boolean ativaConta) {
+		this.ativaConta = ativaConta;
 	}
 
 }
