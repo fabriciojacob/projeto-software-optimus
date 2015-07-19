@@ -5,6 +5,8 @@ import java.sql.SQLException;
 
 import javax.persistence.EntityManager;
 
+import br.com.softwareOptimus.com.comercial.dao.CotacaoDAO;
+import br.com.softwareOptimus.com.comercial.dao.CotacaoHibernate;
 import br.com.softwareOptimus.com.comercial.dao.RequisicaoDAO;
 import br.com.softwareOptimus.com.comercial.dao.RequisicaoHibernate;
 import br.com.softwareOptimus.com.financeiro.dao.BancoDAO;
@@ -90,6 +92,17 @@ public class DAOFactory {
 		}
 		
 		return requisicaoDAO;
+	}
+	
+	public static CotacaoDAO criaCotacao(){
+		CotacaoHibernate cotacaoDAO = new CotacaoHibernate();
+		cotacaoDAO.setSession(session);
+		try{
+			cotacaoDAO.begin();
+		}catch(IOException | SQLException e){
+			e.printStackTrace();
+		}
+		return cotacaoDAO;
 	}
 	
 	public static ExtratoDAO criaExtratoConta(){

@@ -1,46 +1,20 @@
 package br.com.softwareOptimus.util;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import br.com.softwareOptimus.financeiro.ContaBancaria;
-import br.com.softwareOptimus.financeiro.Extrato;
-import br.com.softwareOptimus.financeiro.Titulo;
-import br.com.softwareOptimus.financeiro.RN.ContaBancariaRN;
-import br.com.softwareOptimus.financeiro.RN.ExtratoRN;
-import br.com.softwareOptimus.financeiro.RN.TituloRN;
-
+import br.com.softwareOptimus.financeiro.Caixa;
+import br.com.softwareOptimus.financeiro.RN.CaixaRN;
 public class Simulacao {
 
 	@SuppressWarnings("unused")
 	public static void main(String[] args) {
-		Extrato extrato = new Extrato();
-		Titulo titulo = new Titulo();
-		TituloRN tituloRN = new TituloRN();
-		ExtratoRN extratoRN = new ExtratoRN();
-		List<Titulo> titulos = new ArrayList<>();
-		ContaBancaria conta = new ContaBancaria();
-		ContaBancariaRN contaRN = new ContaBancariaRN();
-		try {
-			conta = contaRN.pesquisaID((long) 41);
-			//int check = tituloRN.checkBaixaTitulo((long) 132);
-			titulo = tituloRN.retornaTituloBaixado((long) 132);
-			extratoRN.estorno(titulo, conta, null);
-			/*if (check == 0) {
-				titulo = tituloRN.retornaTitulo((long) 132);
-
-				titulo.setValor(2.88);
-				titulos.add(titulo);
-				extratoRN.inclusao(titulos, conta, null);
-			}*/
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		try{
-			tituloRN.closed();
-			extratoRN.closed();
-		}catch (Exception e){
+			Caixa caixa = new Caixa();
+			caixa.setDescricao("Teste");
+			
+			CaixaRN rn = new CaixaRN();
+			rn.salvar(caixa);
 		
+		}catch (Exception e){
+			e.printStackTrace();
 		}
 		
 	}

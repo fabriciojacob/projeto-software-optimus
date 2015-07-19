@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
+
 import br.com.softwareOptimus.comercial.Requisicao;
 
 public class RequisicaoHibernate implements RequisicaoDAO{
@@ -24,20 +26,23 @@ public class RequisicaoHibernate implements RequisicaoDAO{
 
 	@Override
 	public void close() throws Exception {
-		// TODO Auto-generated method stub
-		
+		this.session.close();
 	}
 
 	@Override
 	public List<Requisicao> lista() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		String jpql = "Select r From Requisicao";
+		TypedQuery<Requisicao> consulta = this.session.createQuery(jpql,Requisicao.class);
+		
+		return consulta.getResultList();
 	}
 
 	@Override
 	public Requisicao requisicao(Long id) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		String jpql = "Select r From Requisicao where idRequisicao = :parId";
+		TypedQuery<Requisicao> consulta = this.session.createQuery(jpql,Requisicao.class);
+		consulta.setParameter("parId", id);
+		return consulta.getSingleResult();
 	}
 
 	public EntityManager getSession() {
