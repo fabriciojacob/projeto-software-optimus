@@ -1,7 +1,7 @@
 create or replace package body pkg_financeiro is
 
   procedure addparcelas(id in integer, operacao in integer) is
-    -- operacao 0 inclusão
+    -- operacao 0 inclusï¿½o
     -- operacao 1 cancelamento do titulo
     cursor c_titulo is(
       select t.* from tbTitulo t where t.idTitulo = id);
@@ -34,7 +34,6 @@ create or replace package body pkg_financeiro is
                tipoTitulo,
                Valor,
                Vencimento,
-               Caixa_Idmovcaixa,
                Condpgto_Idcondpgto,
                Empresa_Idpessoa,
                Formapgto_Idformapg,
@@ -54,7 +53,6 @@ create or replace package body pkg_financeiro is
                  titulo.valor
                end,
                titulo.Datalancamento + v_acumula_dias,
-               titulo.Caixa_Idmovcaixa,
                titulo.Condpgto_Idcondpgto,
                titulo.Empresa_Idpessoa,
                titulo.Formapgto_Idformapg,
@@ -67,7 +65,7 @@ create or replace package body pkg_financeiro is
                 insert into log_financeiro
                   (descricao, origem)
                 values
-                  ('Problemas na inserção das parcelas do titulo',
+                  ('Problemas na inserï¿½ï¿½o das parcelas do titulo',
                    titulo.idTitulo);
                 commit;
               end;
@@ -84,7 +82,7 @@ create or replace package body pkg_financeiro is
               insert into log_financeiro
                 (descricao, origem)
               values
-                ('Problemas na exclusão do titulo original', id);
+                ('Problemas na exclusï¿½o do titulo original', id);
               commit;
             end;
         end;
