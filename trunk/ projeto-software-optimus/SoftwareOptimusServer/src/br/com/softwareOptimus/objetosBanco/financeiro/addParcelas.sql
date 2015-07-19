@@ -48,7 +48,11 @@ create or replace package body pkg_financeiro is
                titulo.status,
                titulo.tipobaixa,
                titulo.tipoTitulo,
-               titulo.valor,
+               case when operacao = 2 and nvl(titulo.valor,0) > 0 then
+                 titulo.valorTitulo - titulo.valor
+               else
+                 titulo.valor
+               end,
                titulo.Datalancamento + v_acumula_dias,
                titulo.Caixa_Idmovcaixa,
                titulo.Condpgto_Idcondpgto,
@@ -89,4 +93,5 @@ create or replace package body pkg_financeiro is
       end if;
     end loop;
   end;
+
 end pkg_financeiro;
