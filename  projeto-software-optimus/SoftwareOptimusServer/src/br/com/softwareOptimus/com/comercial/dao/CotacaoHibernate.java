@@ -56,4 +56,14 @@ public class CotacaoHibernate implements CotacaoDAO {
 	public void setTransacao(EntityTransaction transacao) {
 		this.transacao = transacao;
 	}
+
+	@Override
+	public void salvar(Cotacao cotacao) throws Exception {
+		if(!this.transacao.isActive()){
+			this.transacao.begin();
+		}
+		
+		this.session.persist(cotacao);
+		this.transacao.commit();
+	}
 }

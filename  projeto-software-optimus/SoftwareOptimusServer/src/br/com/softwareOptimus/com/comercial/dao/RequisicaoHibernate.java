@@ -61,4 +61,14 @@ public class RequisicaoHibernate implements RequisicaoDAO{
 		this.transacao = transacao;
 	}
 
+	@Override
+	public void salvar(Requisicao requisicao) throws Exception {
+		if(!this.transacao.isActive()){
+			this.transacao.begin();
+		}
+		
+		this.session.persist(requisicao);
+		this.transacao.commit();
+	}
+
 }
