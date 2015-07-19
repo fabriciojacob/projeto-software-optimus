@@ -15,4 +15,6 @@ public interface CotacaoDAO {
 	public List<Cotacao> lista() throws Exception;
 	
 	public Cotacao cotacao(Long id) throws Exception;
+	
+	public void salvar(Cotacao cotacao) throws Exception;
 }

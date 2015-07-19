@@ -14,5 +14,7 @@ public interface RequisicaoDAO {
 	public List<Requisicao> lista() throws Exception;
 
 	public Requisicao requisicao(Long id) throws Exception;
+	
+	public void salvar(Requisicao requisicao) throws Exception;
 
 }
