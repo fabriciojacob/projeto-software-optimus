@@ -27,6 +27,8 @@ public class CodigoFiscalOperacao implements Serializable{
 	private IO io;
 
 	private String cfop;
+	
+	private GeraCredPisCofins geraCredPisCofins;
 
 	public String getCfop() {
 		return cfop;
@@ -50,5 +52,21 @@ public class CodigoFiscalOperacao implements Serializable{
 
 	public void setIo(IO io) {
 		this.io = io;
+	}
+
+	public GeraCredPisCofins getGeraCredPisCofins() {
+		return geraCredPisCofins;
+	}
+
+	public void setGeraCredPisCofins(GeraCredPisCofins geraCredPisCofins) {
+		this.geraCredPisCofins = geraCredPisCofins;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 }
