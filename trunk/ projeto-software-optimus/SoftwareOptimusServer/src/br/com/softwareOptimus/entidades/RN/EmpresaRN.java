@@ -90,12 +90,10 @@ public class EmpresaRN {
 	}
 
 	public int countEmpresaPaginacao(Pessoa empresa) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	public List<Pessoa> buscaEmpresaPaginacao(Pessoa empresa, int first,int pageSize) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
