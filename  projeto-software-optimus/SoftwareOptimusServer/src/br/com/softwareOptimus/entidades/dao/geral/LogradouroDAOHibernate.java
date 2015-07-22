@@ -80,13 +80,11 @@ public class LogradouroDAOHibernate implements LogradouroDAO {
 
 	@Override
 	public void consultar() throws Exception {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public Logradouro carregar(Long codigo) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

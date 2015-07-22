@@ -4,7 +4,6 @@ import br.com.softwareOptimus.financeiro.Caixa;
 import br.com.softwareOptimus.financeiro.RN.CaixaRN;
 public class Simulacao {
 
-	@SuppressWarnings("unused")
 	public static void main(String[] args) {
 		try{
 			Caixa caixa = new Caixa();

@@ -91,7 +91,6 @@ public class EmpresaDAOHibernate implements EmpresaDAO {
 
 	@Override
 	public List<PessoaJuridica> listar() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
