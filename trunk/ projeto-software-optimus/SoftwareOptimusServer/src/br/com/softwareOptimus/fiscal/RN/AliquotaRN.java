@@ -2,6 +2,7 @@ package br.com.softwareOptimus.fiscal.RN;
 
 import java.util.Collection;
 import java.util.List;
+
 import br.com.softwareOptimus.dao.fiscal.AliquotaDAO;
 import br.com.softwareOptimus.fiscal.Aliquota;
 import br.com.softwareOptimus.fiscal.CodTabelaGov;
@@ -85,5 +86,14 @@ public class AliquotaRN {
 		}else{
 			return 0;
 		}
+	}
+
+	public int countAliquotaPaginacao(Double maxAliquota, Double minAliquota, Double maxReduc, Double minReduc) {
+		return 0;
+	}
+
+	public List<Aliquota> buscaAliquotaPaginacao(Double maxAliquota, Double minAliquota, Double maxReduc, Double minReduc, int first,
+			int pageSize) {
+		return null;
 	}
 }

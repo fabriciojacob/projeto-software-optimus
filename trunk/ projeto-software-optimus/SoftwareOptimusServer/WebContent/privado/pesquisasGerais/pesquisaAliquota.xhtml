@@ -10,9 +10,66 @@
 	<h:outputStylesheet library="css" name="fonte.css" />
 	<title>Consulta Alíquota</title>
 </h:head>
-	<h:body>
-		<h:form>
-		
-		</h:form>
-	</h:body>
+<h:body>
+	<h:form>
+		<h:panelGrid columns="2">
+			<h:panelGrid columns="1">
+				Alíquota Max.
+				<p:inputText style="width:500px; float: left;" value="#{pesquisaAliquotaBean.maxAliquota}"/>
+			</h:panelGrid>
+			<h:panelGrid columns="1">
+				Alíquota Min.
+				<p:inputText style="width:500px; float: left;" value="#{pesquisaAliquotaBean.minAliquota}"/>
+			</h:panelGrid>
+		</h:panelGrid>
+		<h:panelGrid columns="2">
+			<h:panelGrid columns="1">
+				Redução Max.
+				<p:inputText style="width: 500px;" value="#{pesquisaAliquotaBean.maxReduc}"/>
+			</h:panelGrid>
+			<h:panelGrid columns="1">
+				Redução Min.
+				<p:inputText style="width: 500px;" value="#{pesquisaAliquotaBean.minReduc}"/>
+			</h:panelGrid>
+		</h:panelGrid>
+		<div align="right">
+			<p:commandButton id="btnPesquisar" value="Pesquisar" update="dataPesquisa" />
+		</div>
+		<h:panelGrid id="gridData" columns="1" columnClasses="label, value">
+			<p:blockUI block="dataPesquisa" trigger="btnPesquisar" />
+			<p:dataTable id="dataPesquisa" value="#{pesquisaAliquotaBean.aliquotaList}" var="aliquota" resizableColumns="true"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10,15" lazy="true" border="1" paginatorPosition="bottom" cellpadding="2" cellspacing="0"
+				paginator="true" rows="10" rowKey="aliquota.idAliq">
+
+				<f:facet name="header">Alíquotas Cadastradas</f:facet>
+					
+				<p:column headerText="Código da Alíquota">
+					<h:outputText value="#{aliquota.idAliq}" />
+				</p:column>
+
+				<p:column headerText="Alíquota">
+					<h:outputText value="#{aliquota.aliquota}" />
+				</p:column>
+
+				<p:column headerText="Redução">
+					<h:outputText value="#{aliquota.reducao}" />
+				</p:column>
+
+				<p:column headerText="Tipo Tributação">
+					<h:outputText value="#{aliquota.tipo}" />
+				</p:column>
+				<p:column headerText="Selecionar" style="width: 50px; text-align: center">
+		    		<p:commandButton icon="ui-icon-check" title="Selecionar"
+		    			action="#{pesquisaAliquotaBean.selecionaAliquota(aliquota)}"
+		    			process="@this" />
+				</p:column>
+			</p:dataTable>
+			<p:blockUI block="dataPesquisa" trigger="dataPesquisa">
+      				LOADING<br />
+				<p:graphicImage name="ajaxloader.gif" />
+			</p:blockUI>
+		</h:panelGrid>
+	</h:form>
+</h:body>
 </html>
