@@ -89,11 +89,11 @@ public class AliquotaRN {
 	}
 
 	public int countAliquotaPaginacao(Double maxAliquota, Double minAliquota, Double maxReduc, Double minReduc) {
-		return 0;
+		return this.aliquotaDAO.countAliquotaPaginacao(maxAliquota,minAliquota,maxReduc, minReduc);
 	}
 
 	public List<Aliquota> buscaAliquotaPaginacao(Double maxAliquota, Double minAliquota, Double maxReduc, Double minReduc, int first,
 			int pageSize) {
-		return null;
-	}
+		return this.aliquotaDAO.buscaAliquotaPaginacao(maxAliquota,minAliquota,maxReduc,minReduc,first,first); 
+				}
 }

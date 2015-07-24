@@ -3,9 +3,12 @@ package br.com.softwareOptimus.dao.fiscal;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+
 import br.com.softwareOptimus.fiscal.Aliquota;
 import br.com.softwareOptimus.fiscal.CodTabelaGov;
 import br.com.softwareOptimus.fiscal.GradeTributariaVigencia;
@@ -167,6 +170,62 @@ public class AliquotaDAOHibernate implements AliquotaDAO {
 				jpql, GradeTributariaVigencia.class);
 		grade.setParameter("aliquota", aliquota);
 		return grade.getResultList();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Aliquota> buscaAliquotaPaginacao(Double maxAliquota, Double minAliquota,Double maxReduc, Double minReduc, int first, int pageSize) {
+		
+		StringBuilder sql = new StringBuilder();
+		this.defineCondicao(sql, maxAliquota, minAliquota, maxReduc, minReduc);
+		Query qry = this.session.createQuery("select a from Aliquota a ".concat(sql.toString()));
+		this.defineParametros(qry,  maxAliquota, minAliquota, maxReduc, minReduc);
+		qry.setFirstResult(first);
+		qry.setMaxResults(pageSize);
+		List<Aliquota> result = qry.getResultList();
+		return result;
+	}
+
+	@Override
+	public int countAliquotaPaginacao(Double maxAliquota, Double minAliquota,Double maxReduc, Double minReduc) {
+		StringBuilder sql = new StringBuilder();
+		this.defineCondicao(sql, maxAliquota, minAliquota, maxReduc, minReduc);
+		Query qryMaximo = this.session.createQuery("select Count(a) from Aliquota a ".concat(sql.toString()));
+		this.defineParametros(qryMaximo, maxAliquota, minAliquota, maxReduc, minReduc);
+		Number count = (Number) qryMaximo.getSingleResult();
+		return count.intValue();
+	}
+	
+	@Override
+	public void defineCondicao(StringBuilder sql, Double maxAliquota, Double minAliquota,Double maxReduc, Double minReduc){
+		if(maxAliquota != null){
+			sql.append(sql.length() == 0 ? " where ": " and ");
+		}
+		if(minAliquota != null){
+			sql.append(sql.length() == 0 ? " where ": " and ");
+		}
+		if(maxReduc != null){
+			sql.append(sql.length() == 0 ? " where ": " and ");
+		}
+		if(minReduc != null){
+			sql.append(sql.length() == 0 ? " where ": " and ");
+		}
+	}
+	
+	@Override
+	public void defineParametros(Query qry, Double maxAliquota, Double minAliquota,Double maxReduc, Double minReduc){
+		if(maxAliquota != null){
+
+		}
+		if(minAliquota != null){
+
+		}
+		if(maxReduc != null){
+
+		}
+		if(minReduc != null){
+
+		}
 	}
 
 }

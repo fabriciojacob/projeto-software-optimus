@@ -3,6 +3,9 @@ package br.com.softwareOptimus.dao.fiscal;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+
+import javax.persistence.Query;
+
 import br.com.softwareOptimus.fiscal.Aliquota;
 import br.com.softwareOptimus.fiscal.CodTabelaGov;
 import br.com.softwareOptimus.fiscal.GradeTributariaVigencia;
@@ -26,4 +29,8 @@ public interface AliquotaDAO {
 	public List<Aliquota> listaAliqPisCofins(TipoCst pisCofins, PisCofins tipoAliq);
 	public List<CodTabelaGov> verificaRemocao1(Aliquota aliquota);
 	public List<GradeTributariaVigencia> verificaRemocao2(Aliquota aliquota);
+	public List<Aliquota> buscaAliquotaPaginacao(Double maxAliquota, Double minAliquota,Double maxReduc, Double minReduc, int first, int pageSize);
+	public int countAliquotaPaginacao(Double maxAliquota, Double minAliquota, Double maxReduc, Double minReduc);
+	public void defineCondicao(StringBuilder sql, Double maxAliquota,Double minAliquota, Double maxReduc, Double minReduc);
+	public void defineParametros(Query qry, Double maxAliquota, Double minAliquota,Double maxReduc, Double minReduc);
 }
