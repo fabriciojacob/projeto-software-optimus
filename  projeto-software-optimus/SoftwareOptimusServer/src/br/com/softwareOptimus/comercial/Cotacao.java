@@ -3,21 +3,18 @@ package br.com.softwareOptimus.comercial;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ForeignKey;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
 import br.com.softwareOptimus.entidades.Pessoa;
-
 
 @Entity
 @Table(name="TbCotacao")
@@ -32,9 +29,8 @@ public class Cotacao implements Serializable {
 	@GeneratedValue
 	private Long idCotacao;
 	
-	@ManyToOne
-	@JoinColumn(name = "requisicao", nullable = false, foreignKey = @ForeignKey(name = "fk_tbRequisicao"))
-	private Requisicao Requisicao;
+	@OneToMany
+	private List<Requisicao> Requisicao;
 	
 	@ManyToMany
 	@JoinTable(name = "tbVincForReq", joinColumns = @JoinColumn(name = "idRequisicao"), inverseJoinColumns = @JoinColumn(name = "idFornecedor"))
@@ -44,6 +40,8 @@ public class Cotacao implements Serializable {
 	private Calendar DataCot;
 	
 	private Double SalCotado;
+	
+	private List<Requisicao> listRequisicao;
 
 	@OneToMany(mappedBy ="cotacao")
 	private Collection<CotacaoItens> cotItem;
@@ -55,12 +53,13 @@ public class Cotacao implements Serializable {
 	public void setIdCotacao(Long idCotacao) {
 		this.idCotacao = idCotacao;
 	}
+	
 
-	public Requisicao getRequisicao() {
+	public List<Requisicao> getRequisicao() {
 		return Requisicao;
 	}
 
-	public void setRequisicao(Requisicao requisicao) {
+	public void setRequisicao(List<Requisicao> requisicao) {
 		Requisicao = requisicao;
 	}
 
@@ -86,6 +85,23 @@ public class Cotacao implements Serializable {
 
 	public void setSalCotado(Double salCotado) {
 		SalCotado = salCotado;
+	}
+	
+
+	public List<Requisicao> getListRequisicao() {
+		return listRequisicao;
+	}
+
+	public void setListRequisicao(List<Requisicao> listRequisicao) {
+		this.listRequisicao = listRequisicao;
+	}
+
+	public Collection<CotacaoItens> getCotItem() {
+		return cotItem;
+	}
+
+	public void setCotItem(Collection<CotacaoItens> cotItem) {
+		this.cotItem = cotItem;
 	}
 
 	@Override
@@ -113,4 +129,6 @@ public class Cotacao implements Serializable {
 			return false;
 		return true;
 	}
+	
+	
 }
