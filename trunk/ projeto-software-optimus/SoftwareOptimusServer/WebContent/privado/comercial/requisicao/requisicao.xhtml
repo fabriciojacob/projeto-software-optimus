@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+</h:head>
+<h:body>
+	<h:form id="frmRequisicao">
+		<br />
+		<h3 style="margin-top: 0">REQUISICAO</h3>
+		<div align="left">
+
+			<p:commandButton value="Novo" update="" />
+
+			<p:commandButton value="Salvar"/>
+
+			<p:commandButton value="Editar" />
+
+			<p:commandButton value="Consulta" type="button"
+				onclick="PF('requisicoes').show();" />
+
+			<p:commandButton value="Cancelar"/>
+
+			<p:commandButton value="Excluir"/>
+
+			<p:messages id="messages" showDetail="true" autoUpdate="true"
+				closable="true" />
+
+			<ui:include
+				src="/privado/comercial/requisicao/requisicaoDadosGerais.xhtml" />
+
+			<p:dialog header="Consulta" widgetVar="requisicoes" modal="true"
+				height="350" width="600">
+
+				<h:panelGrid columns="3">
+				Descrição:
+					<p:inputText value="" />
+
+					<p:commandButton value="Pesquisar" />
+				</h:panelGrid>
+
+				<ui:include
+					src="/privado/comercial/requisicao/tabelaProdutosRequisicao.xhtml" />
+
+			</p:dialog>
+			
+			<ui:include src="/privado/comercial/requisicao/tabelaProdutosRequisicao.xhtml"/>
+			
+		</div>
+	</h:form>
+</h:body>
+</html>

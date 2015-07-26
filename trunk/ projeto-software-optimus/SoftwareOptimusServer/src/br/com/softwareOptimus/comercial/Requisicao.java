@@ -35,6 +35,8 @@ public class Requisicao implements Serializable {
 	//(Ano+idRequisicao)
 	private Double numReq;
 	
+	private String descricao;
+	
 	@ManyToOne
 	@JoinColumn(name = "usuRequisita", nullable = false, foreignKey = @ForeignKey(name = "fk_tbUsuario"))
 	private Usuario UsuRequisita;
@@ -50,8 +52,7 @@ public class Requisicao implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Calendar dataReq;
 	
-	@OneToMany(mappedBy = "Requisicao")
-	private Collection<Cotacao>  cotacao;
+	private TipoOrigem tipoOrigem;
 
 	public Calendar getDataReq() {
 		return dataReq;
@@ -99,6 +100,38 @@ public class Requisicao implements Serializable {
 
 	public void setNumReq(Double numReq) {
 		this.numReq = numReq;
+	}
+
+	public TipoOrigem getTipoOrigem() {
+		return tipoOrigem;
+	}
+
+	public void setTipoOrigem(TipoOrigem tipoOrigem) {
+		this.tipoOrigem = tipoOrigem;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	public Usuario getUsuRequisita() {
+		return UsuRequisita;
+	}
+
+	public void setUsuRequisita(Usuario usuRequisita) {
+		UsuRequisita = usuRequisita;
+	}
+
+	public Collection<RequisicaoItens> getRequisicaoItens() {
+		return requisicaoItens;
+	}
+
+	public void setRequisicaoItens(Collection<RequisicaoItens> requisicaoItens) {
+		this.requisicaoItens = requisicaoItens;
 	}
 
 	@Override
