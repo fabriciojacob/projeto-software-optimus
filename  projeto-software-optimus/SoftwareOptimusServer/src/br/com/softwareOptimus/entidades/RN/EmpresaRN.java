@@ -35,6 +35,10 @@ public class EmpresaRN {
 			this.empresaDAO.atualizar(empresa);
 		}
 	}
+	
+	public List<Pessoa> listaEmpresa() throws Exception {
+		return this.empresaDAO.listar();
+	}
 
 	public List<VigenciaRegime> validaRegime(PessoaJuridica empresa, Date data)
 			throws Exception {

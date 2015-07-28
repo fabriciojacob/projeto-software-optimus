@@ -1,9 +1,9 @@
-package br.com.softwareOptimus.com.comercial.RN;
+package br.com.softwareOptimus.comercial.RN;
 
 import java.util.List;
 
-import br.com.softwareOptimus.com.comercial.dao.RequisicaoDAO;
 import br.com.softwareOptimus.comercial.Requisicao;
+import br.com.softwareOptimus.comercial.dao.RequisicaoDAO;
 import br.com.softwareOptimus.util.DAOFactory;
 
 public class RequisicaoRN {

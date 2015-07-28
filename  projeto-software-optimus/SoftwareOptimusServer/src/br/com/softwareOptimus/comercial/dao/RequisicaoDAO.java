@@ -1,4 +1,4 @@
-package br.com.softwareOptimus.com.comercial.dao;
+package br.com.softwareOptimus.comercial.dao;
 
 import java.io.IOException;
 import java.sql.SQLException;

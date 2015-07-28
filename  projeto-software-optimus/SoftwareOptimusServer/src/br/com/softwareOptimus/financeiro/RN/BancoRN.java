@@ -2,8 +2,8 @@ package br.com.softwareOptimus.financeiro.RN;
 
 import java.util.List;
 
-import br.com.softwareOptimus.com.financeiro.dao.BancoDAO;
 import br.com.softwareOptimus.financeiro.Banco;
+import br.com.softwareOptimus.financeiro.dao.BancoDAO;
 import br.com.softwareOptimus.util.DAOFactory;
 
 public class BancoRN {

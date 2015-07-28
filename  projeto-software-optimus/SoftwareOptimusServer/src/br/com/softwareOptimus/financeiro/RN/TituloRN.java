@@ -3,11 +3,11 @@ package br.com.softwareOptimus.financeiro.RN;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import br.com.softwareOptimus.com.financeiro.dao.TituloDAO;
 import br.com.softwareOptimus.entidades.Pessoa;
 import br.com.softwareOptimus.financeiro.Rubrica;
 import br.com.softwareOptimus.financeiro.StatusConta;
 import br.com.softwareOptimus.financeiro.Titulo;
+import br.com.softwareOptimus.financeiro.dao.TituloDAO;
 import br.com.softwareOptimus.util.DAOFactory;
 
 public class TituloRN {

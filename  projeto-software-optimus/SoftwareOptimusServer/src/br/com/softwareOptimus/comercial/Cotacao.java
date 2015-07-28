@@ -41,8 +41,6 @@ public class Cotacao implements Serializable {
 	
 	private Double SalCotado;
 	
-	private List<Requisicao> listRequisicao;
-
 	@OneToMany(mappedBy ="cotacao")
 	private Collection<CotacaoItens> cotItem;
 	
@@ -87,15 +85,6 @@ public class Cotacao implements Serializable {
 		SalCotado = salCotado;
 	}
 	
-
-	public List<Requisicao> getListRequisicao() {
-		return listRequisicao;
-	}
-
-	public void setListRequisicao(List<Requisicao> listRequisicao) {
-		this.listRequisicao = listRequisicao;
-	}
-
 	public Collection<CotacaoItens> getCotItem() {
 		return cotItem;
 	}

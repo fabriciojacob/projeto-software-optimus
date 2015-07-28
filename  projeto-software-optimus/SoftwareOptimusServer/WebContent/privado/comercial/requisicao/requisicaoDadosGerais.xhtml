@@ -6,17 +6,25 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
-<h:panelGrid id="cadastroEmpresa" columns="2" columnClasses="label, value">
+<h:panelGrid id="cadastroEmpresa" columns="2"
+	columnClasses="label, value">
 					
 		Inativa:
 		<p:selectBooleanCheckbox id="inativaEmp" disabled="#{empresaBean.ina}"
 		value="#{empresaBean.pessoaJuridica.status}" />
 		Codigo Requisicao:
-		<p:inputText id="idEmpresa" disabled="true" value=""/>
-		Descricao:
-		<p:inputText id="descricao" disabled="" value="" />
+		<p:inputText id="idReq" value=""/>
 		Empresa:
+		<p:selectOneMenu id="listEmp" value="#{empresaBean.pessoa}">
+		<f:selectItem itemLabel="Selecione uma Empresa" />
+		<f:selectItems value="#{empresaBean.listaEmpresa}"
+			var="listaEmpresa" itemValue="#{listaEmpresa}"
+			itemLabel="#{listaEmpresa.fantasia}" />
+	</p:selectOneMenu>
+		Descricao:
+		<p:inputText id="descricao" disabled="" value="" size="40"/>
+		Data requisicao:
 		<p:inputText id="razaoSocial" disabled="" value="" />
-		Data requisicao:	
+			
 </h:panelGrid>
 </html>

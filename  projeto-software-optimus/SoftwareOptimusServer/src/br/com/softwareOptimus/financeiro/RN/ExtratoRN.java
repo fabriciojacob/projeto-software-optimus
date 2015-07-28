@@ -5,7 +5,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.NoResultException;
-import br.com.softwareOptimus.com.financeiro.dao.ExtratoDAO;
 import br.com.softwareOptimus.financeiro.Caixa;
 import br.com.softwareOptimus.financeiro.ContaBancaria;
 import br.com.softwareOptimus.financeiro.Extrato;
@@ -13,6 +12,7 @@ import br.com.softwareOptimus.financeiro.Rubrica;
 import br.com.softwareOptimus.financeiro.StatusConta;
 import br.com.softwareOptimus.financeiro.TipoTitulo;
 import br.com.softwareOptimus.financeiro.Titulo;
+import br.com.softwareOptimus.financeiro.dao.ExtratoDAO;
 import br.com.softwareOptimus.util.DAOFactory;
 
 public class ExtratoRN {

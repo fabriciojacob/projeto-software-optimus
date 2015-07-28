@@ -2,9 +2,9 @@ package br.com.softwareOptimus.financeiro.RN;
 
 import java.util.List;
 
-import br.com.softwareOptimus.com.financeiro.dao.ContaDAO;
 import br.com.softwareOptimus.financeiro.Conta;
 import br.com.softwareOptimus.financeiro.ContaFilha;
+import br.com.softwareOptimus.financeiro.dao.ContaDAO;
 import br.com.softwareOptimus.util.DAOFactory;
 
 public class ContaRN {
