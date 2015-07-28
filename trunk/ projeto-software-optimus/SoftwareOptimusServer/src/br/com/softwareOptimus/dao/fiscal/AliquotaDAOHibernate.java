@@ -199,32 +199,32 @@ public class AliquotaDAOHibernate implements AliquotaDAO {
 	@Override
 	public void defineCondicao(StringBuilder sql, Double maxAliquota, Double minAliquota,Double maxReduc, Double minReduc){
 		if(maxAliquota != null){
-			sql.append(sql.length() == 0 ? " where ": " and ");
+			sql.append(sql.length() == 0 ? " where ": " and ").append(" a.aliquota >= :minAliquota");
 		}
 		if(minAliquota != null){
-			sql.append(sql.length() == 0 ? " where ": " and ");
+			sql.append(sql.length() == 0 ? " where ": " and ").append(" a.aliquota <= :maxAliquota");
 		}
 		if(maxReduc != null){
-			sql.append(sql.length() == 0 ? " where ": " and ");
+			sql.append(sql.length() == 0 ? " where ": " and ").append(" a.reducao >= :minReduc");
 		}
 		if(minReduc != null){
-			sql.append(sql.length() == 0 ? " where ": " and ");
+			sql.append(sql.length() == 0 ? " where ": " and ").append(" a.reducao <= :maxReduc");
 		}
 	}
 	
 	@Override
 	public void defineParametros(Query qry, Double maxAliquota, Double minAliquota,Double maxReduc, Double minReduc){
 		if(maxAliquota != null){
-
+			qry.setParameter("minAliquota", minAliquota);
 		}
 		if(minAliquota != null){
-
+			qry.setParameter("maxAliquota", maxAliquota);
 		}
 		if(maxReduc != null){
-
+			qry.setParameter("minReduc", minReduc);
 		}
 		if(minReduc != null){
-
+			qry.setParameter("maxReduc", maxReduc);
 		}
 	}
 

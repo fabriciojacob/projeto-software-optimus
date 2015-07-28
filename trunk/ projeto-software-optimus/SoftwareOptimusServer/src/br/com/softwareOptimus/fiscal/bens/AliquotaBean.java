@@ -5,6 +5,9 @@ import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import org.primefaces.event.SelectEvent;
+
+import br.com.softwareOptimus.fiscal.Aliquota;
 import br.com.softwareOptimus.fiscal.CodigoSituacaoTributaria;
 import br.com.softwareOptimus.fiscal.IO;
 import br.com.softwareOptimus.fiscal.TipoCst;
@@ -158,11 +161,18 @@ public class AliquotaBean extends AliquotaBeanAbstract implements Serializable{
 			this.setAliqList(this.getAliqRN().lista());
 		}
 	}
-
-	public void editAliq() {
+	
+	public void aliquotaSelecionado(SelectEvent event){
+		Aliquota ali;
+		try {
+			ali = (Aliquota) event.getObject();
+			this.setAliquota(this.getAliqRN().editAliq(ali.getIdAliq()));
+		} catch (Exception e) {
+			this.error("Problemas na edição"+ e.getMessage());
+			ali = new Aliquota();
+		}
 		this.setTipCstFixo("");
 		CodigoSituacaoTributariaRN cstRN = new CodigoSituacaoTributariaRN();
-		this.setAliquota(this.getAliqRN().editUnid(this.getId()));
 		this.setColCst(this.getAliquota().getCst());
 		if (this.getAliquota().getTipo() != null) {
 			for (CodigoSituacaoTributaria Cst : this.getColCst()) {
@@ -216,6 +226,12 @@ public class AliquotaBean extends AliquotaBeanAbstract implements Serializable{
 		this.setRem(false);
 		this.setVinculo(false);
 		habilita();
+			
+		
+	}
+
+	public void editAliq() {
+		
 	}
 
 	public void eventTipoCst() {

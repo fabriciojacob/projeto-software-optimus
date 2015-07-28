@@ -40,7 +40,7 @@ public class AliquotaRN {
 		return aliquotaDAO.consultaRed(busca);
 	}
 
-	public Aliquota editUnid(Long id) {
+	public Aliquota editAliq(Long id) {
 		return aliquotaDAO.editBusc(id);
 	}
 
