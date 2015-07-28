@@ -50,7 +50,7 @@ public class PesquisaAliquotaBean extends FacesUtil implements Serializable {
 		Map<String, Object> opcoes = new HashMap<>();
 		opcoes.put("modal", true);
 		opcoes.put("resizable", false);
-		opcoes.put("contentHeight", 500);
+		opcoes.put("contentHeight", 600);
 		opcoes.put("contentWidth", 800);
 		
 		RequestContext.getCurrentInstance().openDialog("/privado/pesquisasGerais/pesquisaAliquota", opcoes, null);

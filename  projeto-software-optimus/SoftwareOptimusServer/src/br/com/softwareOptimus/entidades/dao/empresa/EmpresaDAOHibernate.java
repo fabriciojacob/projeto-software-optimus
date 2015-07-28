@@ -101,7 +101,7 @@ public class EmpresaDAOHibernate implements EmpresaDAO {
 	@Override
 	public List<PessoaJuridica> buscaCNPJ(String cnpj) throws Exception {
 		String jpql = "Select a from PessoaJuridica a where a.cnpj = :parCNPJ";
-		TypedQuery<PessoJuridicaaJuridica> consulta = this.session.createQuery(jpql,
+		TypedQuery<PessoaJuridica> consulta = this.session.createQuery(jpql,
 				PessoaJuridica.class);
 		consulta.setParameter("parCNPJ", cnpj);
 		return consulta.getResultList();
