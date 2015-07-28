@@ -6,15 +6,15 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
-<p:dataTable id="dataPesquisa" value="#{empresaBean.retornoListaPessoa}"
+<p:dataTable id="dataPesquisa" value=""
 	var="pesEmpresa" paginator="true" rows="6">
 
 	<p:column headerText="Codigo">
-		<h:outputText value="#{pesEmpresa.idPessoa}" />
+		<h:outputText value="" />
 	</p:column>
 
 	<p:column headerText="Nome Fantasia">
-		<h:outputText value="#{pesEmpresa.fantasia}" />
+		<h:outputText value="" />
 	</p:column>
 
 	<p:column headerText="CNPJ">
@@ -23,9 +23,9 @@
 
 	<p:column headerText="Selecionar">
 		<p:commandLink id="link" value="Selecionar"
-			action="#{tituloBens.selecionaEmpresa}" ajax="dialogEmpresa">
-			<f:setPropertyActionListener value="#{pesEmpresa.idPessoa}"
-				target="#{tituloBens.empresaSelecionada}" />
+			action="" ajax="">
+			<f:setPropertyActionListener value=""
+				target="" />
 		</p:commandLink>
 	</p:column>
 

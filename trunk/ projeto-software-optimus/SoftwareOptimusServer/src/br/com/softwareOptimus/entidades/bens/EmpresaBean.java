@@ -13,6 +13,7 @@ import org.primefaces.event.SelectEvent;
 import br.com.softwareOptimus.entidades.Email;
 import br.com.softwareOptimus.entidades.Logradouro;
 import br.com.softwareOptimus.entidades.Municipio;
+import br.com.softwareOptimus.entidades.Pessoa;
 import br.com.softwareOptimus.entidades.PessoaJuridica;
 import br.com.softwareOptimus.entidades.Telefone;
 import br.com.softwareOptimus.entidades.TipoLogradouro;
@@ -32,6 +33,8 @@ public class EmpresaBean extends FacesUtil implements Serializable {
 
 	private static final long serialVersionUID = 8428074836380205888L;
 	private PessoaJuridica pessoaJuridica;
+	private Pessoa pessoa;
+	private List<Pessoa> listaEmpresa;
 	private Logradouro logradouro;
 	private String tipoSelecionado = null;
 	private String tipoSelecionadoTel = null;
@@ -59,12 +62,17 @@ public class EmpresaBean extends FacesUtil implements Serializable {
 			cnae = true, datIni = true, reg = true;
 	private boolean novo = false, consulta = false;
 
-	
+	public EmpresaBean() {
+		retornaListaEmp();
+	}
+
 	public void salvarEmp() {
 		try {
-			Integer retorno = this.getEmpresaRN().validaCampoNulo(this.getPessoaJuridica());
+			Integer retorno = this.getEmpresaRN().validaCampoNulo(
+					this.getPessoaJuridica());
 			if (retorno == 0) {
-				this.getPessoaJuridica().setTipoPessoaJuridica(TipoPessoaJuridica.FABRICANTE);
+				this.getPessoaJuridica().setTipoPessoaJuridica(
+						TipoPessoaJuridica.FABRICANTE);
 				this.getEmpresaRN().salvar(this.getPessoaJuridica());
 				this.info("Empresa salva com sucesso");
 				setDisable(false);
@@ -74,7 +82,7 @@ public class EmpresaBean extends FacesUtil implements Serializable {
 				this.setEmail(false);
 				this.setTelefone(false);
 			} else {
-				this.error("Existem campos nulos no formulário");
+				this.error("Existem campos nulos no formulï¿½rio");
 			}
 		} catch (Exception e) {
 			this.error("Problemas na gravacao da empresa " + e.getMessage());
@@ -85,11 +93,14 @@ public class EmpresaBean extends FacesUtil implements Serializable {
 		Logradouro logr = new Logradouro();
 		logr = this.getLogradouro();
 		logr.setIdEndereco(null);
-		if (this.getTipoSelecionado().equals(TipoLogradouro.COBRANCA.toString())) {
+		if (this.getTipoSelecionado()
+				.equals(TipoLogradouro.COBRANCA.toString())) {
 			logr.setTipoLogr(TipoLogradouro.COBRANCA);
-		} else if (this.getTipoSelecionado().equals(TipoLogradouro.ENTREGA.toString())) {
+		} else if (this.getTipoSelecionado().equals(
+				TipoLogradouro.ENTREGA.toString())) {
 			logr.setTipoLogr(TipoLogradouro.ENTREGA);
-		} else if (this.getTipoSelecionado().equals(TipoLogradouro.COMERCIAL.toString())) {
+		} else if (this.getTipoSelecionado().equals(
+				TipoLogradouro.COMERCIAL.toString())) {
 			logr.setTipoLogr(TipoLogradouro.COMERCIAL);
 		} else {
 			logr.setTipoLogr(TipoLogradouro.RESIDENCIAL);
@@ -99,11 +110,11 @@ public class EmpresaBean extends FacesUtil implements Serializable {
 			logr.setPessoa(this.getPessoaJuridica());
 			logr.setMunicipio(municipio);
 			this.getLogrRN().salvar(logr);
-			this.info("Endereço salvo com sucesso");
+			this.info("Endereï¿½o salvo com sucesso");
 			listaLogradouro();
 			this.logradouro = new Logradouro();
 		} catch (Exception e) {
-			this.error("Problemas na gravacao do endereço " + e.getMessage());
+			this.error("Problemas na gravacao do endereï¿½o " + e.getMessage());
 		}
 	}
 
@@ -111,7 +122,8 @@ public class EmpresaBean extends FacesUtil implements Serializable {
 		String cnpj = "cnpj";
 		try {
 			this.getRetornoListaPessoa().clear();
-			if (!this.getTipoConsulta().equals("") && !this.getFiltro().equals("")) {
+			if (!this.getTipoConsulta().equals("")
+					&& !this.getFiltro().equals("")) {
 				if (this.getFiltro().equals(cnpj)) {
 					this.setRetornoListaPessoa(this.getEmpresaRN()
 							.pesquisaCNPJ(this.getTipoConsulta()));
@@ -120,7 +132,8 @@ public class EmpresaBean extends FacesUtil implements Serializable {
 							.pesquisaNome(this.getTipoConsulta()));
 				}
 			} else {
-				this.setRetornoListaPessoa(this.getEmpresaRN().pesquisaNome(this.getTipoConsulta()));
+				this.setRetornoListaPessoa(this.getEmpresaRN().pesquisaNome(
+						this.getTipoConsulta()));
 			}
 			this.setSalvar(false);
 			this.setCancelar(false);
@@ -134,8 +147,8 @@ public class EmpresaBean extends FacesUtil implements Serializable {
 	}
 
 	public void salvarRegime() {
-		int retorno = validaRegime(this.getPessoaJuridica(),
-				this.getRegime().getDataInicio(), this.getEmpresaRN());
+		int retorno = validaRegime(this.getPessoaJuridica(), this.getRegime()
+				.getDataInicio(), this.getEmpresaRN());
 		if (retorno == 0) {
 			this.getRegime().setIdVigReg(null);
 			if (this.getTipoRegime().equals(Regime.LUCROPRESUMIDO.toString())) {
@@ -172,7 +185,7 @@ public class EmpresaBean extends FacesUtil implements Serializable {
 				retorno = 1;
 			}
 		} catch (Exception e) {
-			this.error("Problemas na verificação do regime" + e.getMessage());
+			this.error("Problemas na verificaï¿½ï¿½o do regime" + e.getMessage());
 			retorno = 1;
 		}
 		return retorno;
@@ -180,19 +193,21 @@ public class EmpresaBean extends FacesUtil implements Serializable {
 
 	public void listaLogradouro() {
 		this.getListaEnd().clear();
-		this.setListaEnd(this.getEmpresaRN().listaLogr(this.getPessoaJuridica()));
+		this.setListaEnd(this.getEmpresaRN()
+				.listaLogr(this.getPessoaJuridica()));
 	}
 
 	public void listaRegime() {
 		try {
 			this.getListaReg().clear();
-			this.setListaReg(this.getEmpresaRN().listaReg(this.getPessoaJuridica()));
+			this.setListaReg(this.getEmpresaRN().listaReg(
+					this.getPessoaJuridica()));
 		} catch (Exception e) {
 			this.error("Problemas na listagem dos regimes" + e.getMessage());
 		}
 	}
-	
-	public void empresaSelecionado(SelectEvent event){
+
+	public void empresaSelecionado(SelectEvent event) {
 		PessoaJuridica pj = (PessoaJuridica) event.getObject();
 		this.setPessoaJuridica(this.getEmpresaRN().pesquisaId(pj.getIdPessoa()));
 		listaLogradouro();
@@ -230,7 +245,7 @@ public class EmpresaBean extends FacesUtil implements Serializable {
 			this.info("Regime excluido com sucesso");
 			listaRegime();
 		} catch (Exception e) {
-			this.error("Problemas na exclusão do regime" + e.getMessage());
+			this.error("Problemas na exclusï¿½o do regime" + e.getMessage());
 		}
 	}
 
@@ -240,14 +255,15 @@ public class EmpresaBean extends FacesUtil implements Serializable {
 			this.info("Logradouro excluido com sucesso");
 			listaLogradouro();
 		} catch (Exception e) {
-			this.error("Problemas na exclusão do logradouro" + e.getMessage());
+			this.error("Problemas na exclusï¿½o do logradouro" + e.getMessage());
 		}
 	}
 
 	public void listaEmail() {
 		try {
 			this.getListaEmail().clear();
-			this.setListaEmail(this.getEmailRN().listaEmail(this.getPessoaJuridica()));
+			this.setListaEmail(this.getEmailRN().listaEmail(
+					this.getPessoaJuridica()));
 		} catch (Exception e) {
 			this.error("Problemas na listagem de emails" + e.getMessage());
 		}
@@ -259,16 +275,17 @@ public class EmpresaBean extends FacesUtil implements Serializable {
 			this.info("Email excluido com sucesso");
 			listaEmail();
 		} catch (Exception e) {
-			this.error("Problemas na exclusão do email" + e.getMessage());
+			this.error("Problemas na exclusï¿½o do email" + e.getMessage());
 		}
 	}
 
 	public void salvarEmail() {
 		Integer pNfe = 0, checkNFe = 0;
 		try {
-			checkNFe = this.getEmailRN().validaEmailNFE(this.getPessoaJuridica());
+			checkNFe = this.getEmailRN().validaEmailNFE(
+					this.getPessoaJuridica());
 			if (this.isPadraoNFE() && checkNFe == 1) {
-				this.error("Ja existe um email como padrão NFE");
+				this.error("Ja existe um email como padrï¿½o NFE");
 			} else {
 				this.getEmails().setPessoa(this.getPessoaJuridica());
 				if (this.isPadraoNFE()) {
@@ -283,7 +300,7 @@ public class EmpresaBean extends FacesUtil implements Serializable {
 			}
 			listaEmail();
 		} catch (Exception e) {
-			this.error("Problemas na exclusão do email" + e.getMessage());
+			this.error("Problemas na exclusï¿½o do email" + e.getMessage());
 		}
 	}
 
@@ -293,31 +310,37 @@ public class EmpresaBean extends FacesUtil implements Serializable {
 			this.info("Telefone excluido com sucesso");
 			listaTelefone();
 		} catch (Exception e) {
-			this.error("Problemas na exclusão do telefone" + e.getMessage());
+			this.error("Problemas na exclusï¿½o do telefone" + e.getMessage());
 		}
 	}
 
 	public void listaTelefone() {
 		try {
 			this.getListaTelefone().clear();
-			this.setListaTelefone(this.getTelefoneRN().listaTelefone(this.getPessoaJuridica()));
+			this.setListaTelefone(this.getTelefoneRN().listaTelefone(
+					this.getPessoaJuridica()));
 		} catch (Exception e) {
 			this.error("Problemas em listar os telefones" + e.getMessage());
 		}
 	}
 
 	public void salvarTelefone() {
-		if (this.getTipoSelecionadoTel().equals(TipoTelefone.CELULAR.toString())) {
+		if (this.getTipoSelecionadoTel()
+				.equals(TipoTelefone.CELULAR.toString())) {
 			this.getTel().setTipoFone(TipoTelefone.CELULAR);
-		} else if (this.getTipoSelecionadoTel().equals(TipoTelefone.COMERCIAL.toString())) {
+		} else if (this.getTipoSelecionadoTel().equals(
+				TipoTelefone.COMERCIAL.toString())) {
 			this.getTel().setTipoFone(TipoTelefone.COMERCIAL);
-		} else if (this.getTipoSelecionadoTel().equals(TipoTelefone.RESIDENCIAL.toString())) {
+		} else if (this.getTipoSelecionadoTel().equals(
+				TipoTelefone.RESIDENCIAL.toString())) {
 			this.getTel().setTipoFone(TipoTelefone.RESIDENCIAL);
 		}
 		try {
-			Integer retorno = this.getTelefoneRN().validaCampoNulo(this.getTel(), this.getDddTel());
+			Integer retorno = this.getTelefoneRN().validaCampoNulo(
+					this.getTel(), this.getDddTel());
 			if (retorno == 0) {
-				this.getTel().setNumero(this.getDddTel() + this.getTel().getNumero());
+				this.getTel().setNumero(
+						this.getDddTel() + this.getTel().getNumero());
 				this.getTel().setPessoa(this.getPessoaJuridica());
 				this.getTelefoneRN().salvar(this.getTel());
 				this.setDddTel(null);
@@ -325,7 +348,7 @@ public class EmpresaBean extends FacesUtil implements Serializable {
 				this.info("Telefone salvo com sucesso");
 				listaTelefone();
 			} else {
-				this.error("Existem campos nulos no formulário");
+				this.error("Existem campos nulos no formulï¿½rio");
 			}
 		} catch (Exception e) {
 			this.error("Problemas em salvar o telefone" + e.getMessage());
@@ -353,16 +376,27 @@ public class EmpresaBean extends FacesUtil implements Serializable {
 		this.setDatIni(true);
 		this.setReg(true);
 	}
-	
+
 	public boolean isIna() {
 		return this.ina;
 	}
 
 	public String getDddTel() {
-		if(this.dddTel == null){
+		if (this.dddTel == null) {
 			this.dddTel = new String();
 		}
 		return this.dddTel;
+	}
+
+	public void retornaListaEmp() {
+		if(empresaRN == null){
+			empresaRN = new EmpresaRN();
+		}
+		try {
+			listaEmpresa = empresaRN.listaEmpresa();
+		} catch (Exception e) {
+			error("Problemas na lista de empresas: " + e.toString());
+		}
 	}
 
 	public void setDddTel(String dddTel) {
@@ -430,7 +464,7 @@ public class EmpresaBean extends FacesUtil implements Serializable {
 	}
 
 	public String getTipoSelecionadoTel() {
-		if(this.tipoSelecionadoTel == null){
+		if (this.tipoSelecionadoTel == null) {
 			this.tipoSelecionadoTel = new String();
 		}
 		return this.tipoSelecionadoTel;
@@ -449,7 +483,7 @@ public class EmpresaBean extends FacesUtil implements Serializable {
 	}
 
 	public List<Telefone> getListaTelefone() {
-		if(this.listaTelefone ==  null){
+		if (this.listaTelefone == null) {
 			this.listaTelefone = new ArrayList<>();
 		}
 		return listaTelefone;
@@ -460,7 +494,7 @@ public class EmpresaBean extends FacesUtil implements Serializable {
 	}
 
 	public Telefone getTel() {
-		if(this.tel == null){
+		if (this.tel == null) {
 			this.tel = new Telefone();
 		}
 		return this.tel;
@@ -479,7 +513,7 @@ public class EmpresaBean extends FacesUtil implements Serializable {
 	}
 
 	public List<Email> getListaEmail() {
-		if(this.listaEmail == null){
+		if (this.listaEmail == null) {
 			this.listaEmail = new ArrayList<Email>();
 		}
 		return this.listaEmail;
@@ -490,7 +524,7 @@ public class EmpresaBean extends FacesUtil implements Serializable {
 	}
 
 	public Email getEmails() {
-		if(this.emails == null){
+		if (this.emails == null) {
 			this.emails = new Email();
 		}
 		return this.emails;
@@ -581,8 +615,8 @@ public class EmpresaBean extends FacesUtil implements Serializable {
 	}
 
 	public List<VigenciaRegime> getListaReg() {
-		if(this.listaReg == null){
-			this.listaReg  = new ArrayList<>();
+		if (this.listaReg == null) {
+			this.listaReg = new ArrayList<>();
 		}
 		return this.listaReg;
 	}
@@ -600,7 +634,7 @@ public class EmpresaBean extends FacesUtil implements Serializable {
 	}
 
 	public List<Logradouro> getListaEnd() {
-		if(this.listaEnd == null){
+		if (this.listaEnd == null) {
 			this.listaEnd = new ArrayList<>();
 		}
 		return this.listaEnd;
@@ -611,7 +645,7 @@ public class EmpresaBean extends FacesUtil implements Serializable {
 	}
 
 	public String getTipoRegime() {
-		if(this.tipoRegime == null){
+		if (this.tipoRegime == null) {
 			this.tipoRegime = new String();
 		}
 		return this.tipoRegime;
@@ -622,7 +656,7 @@ public class EmpresaBean extends FacesUtil implements Serializable {
 	}
 
 	public VigenciaRegime getRegime() {
-		if(this.regime == null){
+		if (this.regime == null) {
 			this.regime = new VigenciaRegime();
 		}
 		return this.regime;
@@ -641,7 +675,7 @@ public class EmpresaBean extends FacesUtil implements Serializable {
 	}
 
 	public List<PessoaJuridica> getRetornoListaPessoa() {
-		if(this.retornoListaPessoa == null){
+		if (this.retornoListaPessoa == null) {
 			this.retornoListaPessoa = new ArrayList<PessoaJuridica>();
 		}
 		return this.retornoListaPessoa;
@@ -652,7 +686,7 @@ public class EmpresaBean extends FacesUtil implements Serializable {
 	}
 
 	public String getFiltro() {
-		if(this.filtro == null){
+		if (this.filtro == null) {
 			this.filtro = new String();
 		}
 		return this.filtro;
@@ -671,8 +705,8 @@ public class EmpresaBean extends FacesUtil implements Serializable {
 	}
 
 	public PessoaJuridica getPessoaJuridica() {
-		if(this.pessoaJuridica == null){
-			this.pessoaJuridica  = new PessoaJuridica();
+		if (this.pessoaJuridica == null) {
+			this.pessoaJuridica = new PessoaJuridica();
 		}
 		return this.pessoaJuridica;
 	}
@@ -682,7 +716,7 @@ public class EmpresaBean extends FacesUtil implements Serializable {
 	}
 
 	public Logradouro getLogradouro() {
-		if(this.logradouro == null){
+		if (this.logradouro == null) {
 			this.logradouro = new Logradouro();
 		}
 		return this.logradouro;
@@ -693,7 +727,7 @@ public class EmpresaBean extends FacesUtil implements Serializable {
 	}
 
 	public String getTipoSelecionado() {
-		if(this.tipoSelecionado == null){
+		if (this.tipoSelecionado == null) {
 			this.tipoSelecionado = new String();
 		}
 		return this.tipoSelecionado;
@@ -704,7 +738,7 @@ public class EmpresaBean extends FacesUtil implements Serializable {
 	}
 
 	public String getTipoConsulta() {
-		if(this.tipoConsulta == null){
+		if (this.tipoConsulta == null) {
 			this.tipoConsulta = new String();
 		}
 		return this.tipoConsulta;
@@ -715,8 +749,8 @@ public class EmpresaBean extends FacesUtil implements Serializable {
 	}
 
 	public EmpresaRN getEmpresaRN() {
-		if(this.empresaRN == null){
-			this.empresaRN = new EmpresaRN();			
+		if (this.empresaRN == null) {
+			this.empresaRN = new EmpresaRN();
 		}
 		return this.empresaRN;
 	}
@@ -724,36 +758,54 @@ public class EmpresaBean extends FacesUtil implements Serializable {
 	public void setEmpresaRN(EmpresaRN empresaRN) {
 		this.empresaRN = empresaRN;
 	}
+
 	public LogradouroRN getLogrRN() {
-		if(this.logrRN == null){
+		if (this.logrRN == null) {
 			this.logrRN = new LogradouroRN();
 		}
 		return this.logrRN;
 	}
-	
+
 	public void setLogrRN(LogradouroRN logrRN) {
 		this.logrRN = logrRN;
 	}
-	
+
 	public EmailRN getEmailRN() {
-		if(this.emailRN == null){
-			 this.emailRN = new EmailRN();
+		if (this.emailRN == null) {
+			this.emailRN = new EmailRN();
 		}
 		return this.emailRN;
 	}
-	
+
 	public void setEmailRN(EmailRN emailRN) {
 		this.emailRN = emailRN;
 	}
-	
+
 	public TelefoneRN getTelefoneRN() {
-		if(this.telefoneRN == null){
-			this.telefoneRN  = new TelefoneRN();
+		if (this.telefoneRN == null) {
+			this.telefoneRN = new TelefoneRN();
 		}
 		return this.telefoneRN;
 	}
-	
+
 	public void setTelefoneRN(TelefoneRN telefoneRN) {
 		this.telefoneRN = telefoneRN;
 	}
+
+	public Pessoa getPessoa() {
+		return pessoa;
+	}
+
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
+	}
+
+	public List<Pessoa> getListaEmpresa() {
+		return listaEmpresa;
+	}
+
+	public void setListaEmpresa(List<Pessoa> listaEmpresa) {
+		this.listaEmpresa = listaEmpresa;
+	}
+
 }

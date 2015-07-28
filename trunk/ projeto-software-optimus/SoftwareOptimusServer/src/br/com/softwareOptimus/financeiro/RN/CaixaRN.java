@@ -1,8 +1,8 @@
 package br.com.softwareOptimus.financeiro.RN;
 
 import java.util.List;
-import br.com.softwareOptimus.com.financeiro.dao.CaixaDAO;
 import br.com.softwareOptimus.financeiro.Caixa;
+import br.com.softwareOptimus.financeiro.dao.CaixaDAO;
 import br.com.softwareOptimus.util.DAOFactory;
 
 public class CaixaRN {

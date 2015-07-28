@@ -5,26 +5,10 @@ import java.sql.SQLException;
 
 import javax.persistence.EntityManager;
 
-import br.com.softwareOptimus.com.comercial.dao.CotacaoDAO;
-import br.com.softwareOptimus.com.comercial.dao.CotacaoHibernate;
-import br.com.softwareOptimus.com.comercial.dao.RequisicaoDAO;
-import br.com.softwareOptimus.com.comercial.dao.RequisicaoHibernate;
-import br.com.softwareOptimus.com.financeiro.dao.BancoDAO;
-import br.com.softwareOptimus.com.financeiro.dao.BancoDAOHibernate;
-import br.com.softwareOptimus.com.financeiro.dao.CaixaDAO;
-import br.com.softwareOptimus.com.financeiro.dao.CaixaDAOHibernate;
-import br.com.softwareOptimus.com.financeiro.dao.CondPgtoDAO;
-import br.com.softwareOptimus.com.financeiro.dao.CondPgtoDAOHibernate;
-import br.com.softwareOptimus.com.financeiro.dao.ContaBancariaDAO;
-import br.com.softwareOptimus.com.financeiro.dao.ContaBancariaDAOHibernate;
-import br.com.softwareOptimus.com.financeiro.dao.ContaDAO;
-import br.com.softwareOptimus.com.financeiro.dao.ContaDAOHibernate;
-import br.com.softwareOptimus.com.financeiro.dao.ExtratoDAO;
-import br.com.softwareOptimus.com.financeiro.dao.ExtratoDAOHibernate;
-import br.com.softwareOptimus.com.financeiro.dao.FormaPgtoDAO;
-import br.com.softwareOptimus.com.financeiro.dao.FormaPgtoHibernate;
-import br.com.softwareOptimus.com.financeiro.dao.TituloDAO;
-import br.com.softwareOptimus.com.financeiro.dao.TituloDAOHibernate;
+import br.com.softwareOptimus.comercial.dao.CotacaoDAO;
+import br.com.softwareOptimus.comercial.dao.CotacaoHibernate;
+import br.com.softwareOptimus.comercial.dao.RequisicaoDAO;
+import br.com.softwareOptimus.comercial.dao.RequisicaoHibernate;
 import br.com.softwareOptimus.dao.fiscal.AliquotaDAO;
 import br.com.softwareOptimus.dao.fiscal.AliquotaDAOHibernate;
 import br.com.softwareOptimus.dao.fiscal.CodTabelaGovDAO;
@@ -77,6 +61,22 @@ import br.com.softwareOptimus.estoque.dao.InventarioDAO;
 import br.com.softwareOptimus.estoque.dao.InventarioDAOHibernate;
 import br.com.softwareOptimus.estoque.dao.ProdutoEstoqueDAO;
 import br.com.softwareOptimus.estoque.dao.ProdutoEstoqueDAOHibernate;
+import br.com.softwareOptimus.financeiro.dao.BancoDAO;
+import br.com.softwareOptimus.financeiro.dao.BancoDAOHibernate;
+import br.com.softwareOptimus.financeiro.dao.CaixaDAO;
+import br.com.softwareOptimus.financeiro.dao.CaixaDAOHibernate;
+import br.com.softwareOptimus.financeiro.dao.CondPgtoDAO;
+import br.com.softwareOptimus.financeiro.dao.CondPgtoDAOHibernate;
+import br.com.softwareOptimus.financeiro.dao.ContaBancariaDAO;
+import br.com.softwareOptimus.financeiro.dao.ContaBancariaDAOHibernate;
+import br.com.softwareOptimus.financeiro.dao.ContaDAO;
+import br.com.softwareOptimus.financeiro.dao.ContaDAOHibernate;
+import br.com.softwareOptimus.financeiro.dao.ExtratoDAO;
+import br.com.softwareOptimus.financeiro.dao.ExtratoDAOHibernate;
+import br.com.softwareOptimus.financeiro.dao.FormaPgtoDAO;
+import br.com.softwareOptimus.financeiro.dao.FormaPgtoHibernate;
+import br.com.softwareOptimus.financeiro.dao.TituloDAO;
+import br.com.softwareOptimus.financeiro.dao.TituloDAOHibernate;
 
 public class DAOFactory {
 

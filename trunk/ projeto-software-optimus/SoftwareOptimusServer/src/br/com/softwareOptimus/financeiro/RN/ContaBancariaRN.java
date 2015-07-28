@@ -2,8 +2,8 @@ package br.com.softwareOptimus.financeiro.RN;
 
 import java.util.List;
 
-import br.com.softwareOptimus.com.financeiro.dao.ContaBancariaDAO;
 import br.com.softwareOptimus.financeiro.ContaBancaria;
+import br.com.softwareOptimus.financeiro.dao.ContaBancariaDAO;
 import br.com.softwareOptimus.util.DAOFactory;
 
 public class ContaBancariaRN {

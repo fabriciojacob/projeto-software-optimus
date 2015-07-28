@@ -95,7 +95,7 @@ public class ParticipanteBean extends FacesUtil implements Serializable{
 				this.error("Problemas na gravacao " + e.getMessage());
 			}
 		} else {
-			this.error("Existem campos Nulo no Formulário");
+			this.error("Existem campos Nulo no Formulï¿½rio");
 		}
 	}
 
@@ -120,7 +120,7 @@ public class ParticipanteBean extends FacesUtil implements Serializable{
 				this.setEmail(false);
 				this.setTelefone(false);
 			} else {
-				this.error("Existem campos não preenchidos");
+				this.error("Existem campos nï¿½o preenchidos");
 			}
 		} catch (Exception e) {
 			this.error("Problemas ao salvar" + e.getMessage());
@@ -154,7 +154,7 @@ public class ParticipanteBean extends FacesUtil implements Serializable{
 			listaLogradouro();
 			this.setLogradouro(null);
 		} catch (Exception e) {
-			this.error("Problemas na gravacao do endereço"+ e.getMessage());
+			this.error("Problemas na gravacao do endereï¿½o"+ e.getMessage());
 		}
 	}
 
@@ -203,7 +203,7 @@ public class ParticipanteBean extends FacesUtil implements Serializable{
 			this.setTipoParticipante(this.getPessoaJuridica().getNaturezaPessoa().toString());
 			habilitar();
 		} catch (Exception e) {
-			this.error("Problemas na edição"+ e.getMessage());
+			this.error("Problemas na ediï¿½ï¿½o"+ e.getMessage());
 		}
 		listaLogradouro();
 		listaEmail();
@@ -224,7 +224,7 @@ public class ParticipanteBean extends FacesUtil implements Serializable{
 			this.setTipoParticipante(this.getPessoaFisica().getNaturezaPessoa().toString());
 			habilitar();
 		} catch (Exception e) {
-			this.error("Problemas na edição"+ e.getMessage());
+			this.error("Problemas na ediï¿½ï¿½o"+ e.getMessage());
 		}
 		listaLogradouro();
 		listaEmail();
@@ -243,7 +243,7 @@ public class ParticipanteBean extends FacesUtil implements Serializable{
 			this.info("Logradouro excluido com sucesso");
 			listaLogradouro();
 		} catch (Exception e) {
-			this.error("Problemas na exclusão do logradouro"+ e.getMessage());
+			this.error("Problemas na exclusï¿½o do logradouro"+ e.getMessage());
 		}
 	}
 
@@ -266,7 +266,7 @@ public class ParticipanteBean extends FacesUtil implements Serializable{
 			this.info("Email excluido com sucesso");
 			listaEmail();
 		} catch (Exception e) {
-			this.error("Problemas na exclusão do email"+ e.getMessage());
+			this.error("Problemas na exclusï¿½o do email"+ e.getMessage());
 		}
 	}
 
@@ -285,10 +285,10 @@ public class ParticipanteBean extends FacesUtil implements Serializable{
 					checkNFe = this.getEmailRN().validaEmailNFE(this.getPessoaJuridica());
 				}
 			} catch (Exception e) {
-				this.error("Problemas na validação do email"+ e.getMessage());
+				this.error("Problemas na validaï¿½ï¿½o do email"+ e.getMessage());
 			}
 			if (this.isPadraoNFE() && checkNFe == 1) {
-				this.error("Ja existe um email como padrão NFE");
+				this.error("Ja existe um email como padrï¿½o NFE");
 			} else {
 				try {
 					if (this.getPessoaFisica().getIdPessoa() == 0) {
@@ -311,11 +311,11 @@ public class ParticipanteBean extends FacesUtil implements Serializable{
 					this.setEmails(null);
 					listaEmail();
 				} catch (Exception e) {
-					this.error("Problemas na inclusão do email"+ e.getMessage());
+					this.error("Problemas na inclusï¿½o do email"+ e.getMessage());
 				}
 			}
 		} else {
-			this.error("Existem campos nulos no formulário");
+			this.error("Existem campos nulos no formulï¿½rio");
 		}
 	}
 
@@ -373,7 +373,7 @@ public class ParticipanteBean extends FacesUtil implements Serializable{
 				listaTelefone();
 				this.setTel(null);
 			} else {
-				this.error("Existem campos nulos no formulário");
+				this.error("Existem campos nulos no formulï¿½rio");
 			}
 		} catch (Exception e) {
 			this.error("Problemas em salvar o telefone"+ e.getMessage());
@@ -812,4 +812,6 @@ public class ParticipanteBean extends FacesUtil implements Serializable{
 	public void setTelefoneRN(TelefoneRN telefoneRN) {
 		this.telefoneRN = telefoneRN;
 	}
+
+
 }

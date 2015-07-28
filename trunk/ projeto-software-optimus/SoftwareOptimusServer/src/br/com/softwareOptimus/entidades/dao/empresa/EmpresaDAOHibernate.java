@@ -10,6 +10,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 
 import br.com.softwareOptimus.entidades.NaturezaPessoa;
+import br.com.softwareOptimus.entidades.Pessoa;
 import br.com.softwareOptimus.entidades.PessoaJuridica;
 import br.com.softwareOptimus.fiscal.VigenciaRegime;
 
@@ -90,14 +91,17 @@ public class EmpresaDAOHibernate implements EmpresaDAO {
 	}
 
 	@Override
-	public List<PessoaJuridica> listar() {
-		return null;
+	public List<Pessoa> listar() {
+		String jpql = "Select emp From Pessoa emp where emp.naturezaPessoa = 2";
+		TypedQuery<Pessoa> consultaList = this.session.createQuery(jpql,
+				Pessoa.class);
+		return consultaList.getResultList();
 	}
 
 	@Override
 	public List<PessoaJuridica> buscaCNPJ(String cnpj) throws Exception {
 		String jpql = "Select a from PessoaJuridica a where a.cnpj = :parCNPJ";
-		TypedQuery<PessoaJuridica> consulta = this.session.createQuery(jpql,
+		TypedQuery<PessoJuridicaaJuridica> consulta = this.session.createQuery(jpql,
 				PessoaJuridica.class);
 		consulta.setParameter("parCNPJ", cnpj);
 		return consulta.getResultList();
