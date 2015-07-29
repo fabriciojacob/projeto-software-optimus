@@ -1,14 +1,13 @@
 package br.com.softwareOptimus.comercial;
 
 import java.io.Serializable;
-import java.util.Calendar;
 import java.util.Collection;
-
+import java.util.Date;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ForeignKey;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -32,9 +31,6 @@ public class Requisicao implements Serializable {
 	@GeneratedValue
 	private Long idRequisicao;
 	
-	//(Ano+idRequisicao)
-	private Double numReq;
-	
 	private String descricao;
 	
 	@ManyToOne
@@ -50,15 +46,17 @@ public class Requisicao implements Serializable {
 	private String observacoes;
 	
 	@Temporal(TemporalType.DATE)
-	private Calendar dataReq;
+	private Date dataReq;
 	
 	private TipoOrigem tipoOrigem;
+	
+	private StatusGeral statusGeral;
 
-	public Calendar getDataReq() {
+	public Date getDataReq() {
 		return dataReq;
 	}
 
-	public void setDataReq(Calendar dataReq) {
+	public void setDataReq(Date dataReq) {
 		this.dataReq = dataReq;
 	}
 
@@ -93,14 +91,6 @@ public class Requisicao implements Serializable {
 	public void setObservacoes(String observacoes) {
 		this.observacoes = observacoes;
 	}
-	
-	public Double getNumReq() {
-		return numReq;
-	}
-
-	public void setNumReq(Double numReq) {
-		this.numReq = numReq;
-	}
 
 	public TipoOrigem getTipoOrigem() {
 		return tipoOrigem;
@@ -132,6 +122,14 @@ public class Requisicao implements Serializable {
 
 	public void setRequisicaoItens(Collection<RequisicaoItens> requisicaoItens) {
 		this.requisicaoItens = requisicaoItens;
+	}
+
+	public StatusGeral getStatusGeral() {
+		return statusGeral;
+	}
+
+	public void setStatusGeral(StatusGeral statusGeral) {
+		this.statusGeral = statusGeral;
 	}
 
 	@Override

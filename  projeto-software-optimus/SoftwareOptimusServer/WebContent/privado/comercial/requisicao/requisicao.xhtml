@@ -16,18 +16,25 @@
 		<h3 style="margin-top: 0">REQUISICAO</h3>
 		<div align="left">
 
-			<p:commandButton value="Novo" update="" />
+			<p:commandButton value="Novo" actionListener="#{requisicaoBean.novo}"
+				update="frmReq" disabled="#{requisicaoBean.btNovo}" />
 
-			<p:commandButton value="Salvar"/>
+			<p:commandButton value="Salvar"
+				actionListener="#{requisicaoBean.salvar}" update="frmReq"
+				disabled="#{requisicaoBean.btSalvar}" />
 
-			<p:commandButton value="Editar" />
+			<p:commandButton value="Vincula usuário" type="button"
+				onclick="PF('usuarios').show();" />
+
+			<p:commandButton value="Editar" disabled="#{requisicaoBean.btEdit}" />
 
 			<p:commandButton value="Consulta" type="button"
 				onclick="PF('requisicoes').show();" />
 
-			<p:commandButton value="Cancelar"/>
+			<p:commandButton value="Cancelar" disabled="#{requisicaoBean.btCanc}" />
 
-			<p:commandButton value="Excluir"/>
+			<p:commandButton value="Excluir"
+				disabled="#{requisicaoBean.btExcluir}" />
 
 			<p:messages id="messages" showDetail="true" autoUpdate="true"
 				closable="true" />
@@ -35,23 +42,37 @@
 			<ui:include
 				src="/privado/comercial/requisicao/requisicaoDadosGerais.xhtml" />
 
+			<p:dialog id="dialogUsuario" header = "Usuarios" widgetVar="usuarios" modal="true"
+				height="350" width="600">
+				
+				<h:panelGrid columns="3">
+				
+				Nome:
+				<p:inputText size="30"/>
+				
+				<p:commandButton value="Pesquisar"/>
+				
+				</h:panelGrid>
+
+				<ui:include src="/privado/comercial/requisicao/tabelaPesquisaUsuario.xhtml"/>
+
+			</p:dialog>
+
 			<p:dialog header="Consulta" widgetVar="requisicoes" modal="true"
 				height="350" width="600">
 
 				<h:panelGrid columns="3">
 				Descrição:
-					<p:inputText value="" />
-
-					<p:commandButton value="Pesquisar" />
+				 
+				Periodo:
+				   
+				<p:commandButton value="Pesquisar" />
 				</h:panelGrid>
 
-				<!--<ui:include
-					src="/privado/comercial/requisicao/tabelaProdutosRequisicao.xhtml" />-->
-
 			</p:dialog>
-			
+
 			<!--<ui:include src="/privado/comercial/requisicao/tabelaProdutosRequisicao.xhtml"/> -->
-			
+
 		</div>
 	</h:form>
 </h:body>
