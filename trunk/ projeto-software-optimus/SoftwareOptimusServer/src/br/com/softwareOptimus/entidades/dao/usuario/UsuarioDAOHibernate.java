@@ -9,7 +9,6 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import br.com.softwareOptimus.entidades.Usuario;
 
-
 public class UsuarioDAOHibernate implements UsuarioDAO {
 
 	private EntityManager session;
@@ -76,9 +75,17 @@ public class UsuarioDAOHibernate implements UsuarioDAO {
 			transaction.begin();
 		}
 	}
-	
-	public void close() throws Exception{
+
+	public void close() throws Exception {
 		this.session.close();
+	}
+
+	@Override
+	public List<Usuario> pesquisaNome(String nome) throws Exception {
+		String sql = "Select e from Usuario where nome like '%" + nome + "'%";
+		TypedQuery<Usuario> listaUsuario = this.session.createQuery(sql,
+				Usuario.class);
+		return listaUsuario.getResultList();
 	}
 
 }

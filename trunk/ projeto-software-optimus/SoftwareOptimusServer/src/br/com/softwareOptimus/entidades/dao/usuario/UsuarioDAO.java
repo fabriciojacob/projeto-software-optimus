@@ -14,5 +14,6 @@ public interface UsuarioDAO {
 	public Usuario carregar(Long codigo);
 	public Usuario buscaPorLogin(String login, String senha) throws Exception;
 	public List<Usuario> listar();
+	public List<Usuario> pesquisaNome(String nome) throws Exception;
 
 }

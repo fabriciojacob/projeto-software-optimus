@@ -32,6 +32,10 @@ public class UsuarioRN {
 		return check;
 	}
 	
+	public List<Usuario> listaUsuario(String nome) throws Exception{
+		return this.usuarioDAO.pesquisaNome(nome);
+	}
+	
 	public void salvar(Usuario usuario){
 		Long codigo = usuario.getIdUsuario();
 		if(codigo == null || codigo == 0){
