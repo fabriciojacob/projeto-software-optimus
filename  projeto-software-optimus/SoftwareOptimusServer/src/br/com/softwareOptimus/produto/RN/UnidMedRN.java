@@ -53,4 +53,12 @@ public class UnidMedRN {
 		}
 		return retorno;
 	}
+
+	public int countUnidadeMedidaPaginacao(UnidMed unidMed) {
+		return this.unidMedDAO.countUnidadeMedidaPaginacao(unidMed);
+	}
+
+	public List<UnidMed> buscaUnidadeMedidaPaginacao(UnidMed unidMed,int first, int pageSize) {
+		return this.unidMedDAO.buscaUnidadeMedidaPaginacao(unidMed, first, pageSize);
+	}
 }

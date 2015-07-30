@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import br.com.softwareOptimus.produto.UnidMed;
@@ -33,11 +34,19 @@ public class UnidMedDAOHibernate implements UnidMedDAO {
 
 	@Override
 	public void salvar(UnidMed unid) {
+		try {
+			this.begin();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		this.session.persist(unid);
 		this.transaction.commit();
 	}
 	
 	public void remover(Long unid) throws Exception{
+		this.begin();
 		UnidMed unidMed = this.session.find(UnidMed.class, unid);
 		this.session.remove(unidMed);
 		this.transaction.commit();
@@ -83,6 +92,7 @@ public class UnidMedDAOHibernate implements UnidMedDAO {
 	}
 	
 	public void altUnid(UnidMed unidMed) throws Exception{
+		this.begin();
 		this.session.merge(unidMed);
 		this.transaction.commit();
 	}
@@ -98,5 +108,54 @@ public class UnidMedDAOHibernate implements UnidMedDAO {
 	@Override
 	public void close() throws Exception {
 		this.session.close();
+	}
+
+	@Override
+	public int countUnidadeMedidaPaginacao(UnidMed unidMed) {
+		StringBuilder sql = new StringBuilder();
+		this.defineCondicao(sql, unidMed);
+		Query qryMaximo = this.session.createQuery("select Count(u) from UnidMed u ".concat(sql.toString()));
+		this.defineParametros(qryMaximo, unidMed);
+		Number count = (Number) qryMaximo.getSingleResult();
+		return count.intValue();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<UnidMed> buscaUnidadeMedidaPaginacao(UnidMed unidMed,int first, int pageSize) {
+		StringBuilder sql = new StringBuilder();
+		this.defineCondicao(sql, unidMed);
+		Query qry = this.session.createQuery("select u from UnidMed u ".concat(sql.toString()));
+		this.defineParametros(qry,  unidMed);
+		qry.setFirstResult(first);
+		qry.setMaxResults(pageSize);
+		List<UnidMed> result = qry.getResultList();
+		return result;
+	}
+	
+	@Override
+	public void defineCondicao(StringBuilder sql, UnidMed unidMed){
+		if(unidMed.getIdUnidMed() != null){
+			sql.append(sql.length() == 0 ? " where ": " and ").append(" u.idUnidMed = :idUnidMed");
+		}
+		if(unidMed.getUnid() != null && unidMed.getUnid() != ""){
+			sql.append(sql.length() == 0 ? " where ": " and ").append(" u.unid like :unid");
+		}
+		if(unidMed.getDescUnid() != null && unidMed.getDescUnid() != ""){
+			sql.append(sql.length() == 0 ? " where ": " and ").append(" u.descUnid like :descUnid");
+		}
+	}
+	
+	@Override
+	public void defineParametros(Query qry,UnidMed unidMed){
+		if(unidMed.getIdUnidMed() != null){
+			qry.setParameter("idUnidMed", unidMed.getIdUnidMed());
+		}
+		if(unidMed.getUnid() != null && unidMed.getUnid() != ""){
+			qry.setParameter("unid", "%" + unidMed.getUnid() + "%");
+		}
+		if(unidMed.getDescUnid() != null && unidMed.getDescUnid() != ""){
+			qry.setParameter("descUnid", "%" + unidMed.getDescUnid() + "%");
+		}
 	}
 }

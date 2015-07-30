@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<h:outputStylesheet library="css" name="fonte.css" />
+	<title>Consulta Unidade de Medida</title>
+</h:head>
+<h:body>
+	<h:form>
+		<h:panelGrid columns="3">
+			<h:panelGrid columns="1">
+				Código da Unidade de Medida
+				<p:inputText style="width:200px; float: left;" value="#{pesquisaUnidadeMedidaBean.unidMed.idUnidMed}"/>
+			</h:panelGrid>
+			<h:panelGrid columns="1">
+				Unidade
+				<p:inputText style="width:260px; float: left;" value="#{pesquisaUnidadeMedidaBean.unidMed.unid}"/>
+			</h:panelGrid>
+			<h:panelGrid columns="1">
+				Descrição da Unidade
+				<p:inputText style="width: 260px;" value="#{pesquisaUnidadeMedidaBean.unidMed.descUnid}"/>
+			</h:panelGrid>
+		</h:panelGrid>
+		<div align="right">
+			<p:commandButton id="btnPesquisar" value="Pesquisar" update="dataPesquisa" />
+		</div>
+		<h:panelGrid id="gridData" columns="1" columnClasses="label, value">
+			<p:blockUI block="dataPesquisa" trigger="btnPesquisar" />
+			<p:dataTable id="dataPesquisa" value="#{pesquisaUnidadeMedidaBean.unidadeMedidaList}" var="UnidMed" resizableColumns="true"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10,15" lazy="true" border="1" paginatorPosition="bottom" cellpadding="2" cellspacing="0"
+				paginator="true" rows="10" rowKey="UnidMed.idUnidMed">
+
+				<f:facet name="header">Unidade de Medidas Cadastradas</f:facet>
+					
+				<p:column headerText="Código da Unidade">
+					<h:outputText value="#{UnidMed.idUnidMed}" />
+				</p:column>
+
+				<p:column headerText="Unidade">
+					<h:outputText value="#{UnidMed.unid}" />
+				</p:column>
+
+				<p:column headerText="Descrição da Unidade">
+					<h:outputText value="#{UnidMed.descUnid}" />
+				</p:column>
+
+				<p:column headerText="Selecionar" style="width: 50px; text-align: center">
+		    		<p:commandButton icon="ui-icon-check" title="Selecionar"
+		    			action="#{pesquisaUnidadeMedidaBean.selecionaUnidadeMedida(UnidMed)}"
+		    			process="@this" />
+				</p:column>
+			</p:dataTable>
+			<p:blockUI block="dataPesquisa" trigger="dataPesquisa">
+      				LOADING<br />
+				<p:graphicImage name="ajaxloader.gif" />
+			</p:blockUI>
+		</h:panelGrid>
+	</h:form>
+</h:body>
+</html>
