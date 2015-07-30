@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.persistence.Query;
+
 import br.com.softwareOptimus.produto.UnidMed;
 
 public interface UnidMedDAO {
@@ -18,4 +20,8 @@ public interface UnidMedDAO {
 	public void salvar(UnidMed unid);
 	public void begin() throws IOException, SQLException;
 	public void close() throws Exception;
+	public int countUnidadeMedidaPaginacao(UnidMed unidMed);
+	public List<UnidMed> buscaUnidadeMedidaPaginacao(UnidMed unidMed,int first, int pageSize);
+	public void defineCondicao(StringBuilder sql, UnidMed unidMed);
+	public void defineParametros(Query qry, UnidMed unidMed);
 }
