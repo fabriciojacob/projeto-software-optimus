@@ -125,4 +125,12 @@ public class TipoProdutoRN {
 	public List<TipoProduto> listarTipoVig() {
 		return this.tipoProdutoDAO.listarTipoVig();
 	}
+
+	public int countTipoProdutoPaginacao(TipoProduto tipoProd) {
+		return this.tipoProdutoDAO.countTipoProdutoPaginacao(tipoProd);
+	}
+
+	public List<TipoProduto> buscaTipoProdutoPaginacao(TipoProduto tipoProd,int first, int pageSize) {
+		return this.tipoProdutoDAO.buscaTipoProdutoPaginacao(tipoProd, first, pageSize);
+	}
 }

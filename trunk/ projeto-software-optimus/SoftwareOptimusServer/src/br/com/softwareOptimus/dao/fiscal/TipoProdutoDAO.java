@@ -3,6 +3,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.persistence.Query;
+
 import br.com.softwareOptimus.fiscal.Ncm;
 import br.com.softwareOptimus.fiscal.TipoProduto;
 import br.com.softwareOptimus.produto.Produto;
@@ -27,5 +29,9 @@ public interface TipoProdutoDAO {
 	public List<Ncm> consultaTbDesc(String busca);
 	public Ncm consultaNCMId(Long idNcm);
 	public List<TipoProduto> listarTipoVig();
+	public int countTipoProdutoPaginacao(TipoProduto tipoProd);
+	public List<TipoProduto> buscaTipoProdutoPaginacao(TipoProduto tipoProd,int first, int pageSize);
+	public void defineCondicao(StringBuilder sql, TipoProduto tipoProd);
+	public void defineParametros(Query qry, TipoProduto tipoProd);
 
 }

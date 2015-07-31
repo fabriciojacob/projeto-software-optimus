@@ -3,10 +3,12 @@ package br.com.softwareOptimus.dao.produto;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+
 import br.com.softwareOptimus.produto.Grupo;
 import br.com.softwareOptimus.produto.Produto;
 import br.com.softwareOptimus.produto.SubGrupo;
@@ -47,12 +49,18 @@ public class SubGrupoDAOHibernate implements SubGrupoDAO {
 
 	@Override
 	public void salvar(SubGrupo subGrupo) {
+		if (!transaction.isActive()) {
+			transaction.begin();
+		}
 		this.session.persist(subGrupo);
 		this.transaction.commit();
 	}
 
 	@Override
 	public void altSub(SubGrupo subGrupo) {
+		if (!transaction.isActive()) {
+			transaction.begin();
+		}
 		this.session.merge(subGrupo);
 		this.transaction.commit();
 	}
@@ -143,5 +151,48 @@ public class SubGrupoDAOHibernate implements SubGrupoDAO {
 		TypedQuery<SubGrupo> subGru = this.session.createQuery(jpql, SubGrupo.class);
 		subGru.setParameter("grupo", grupo);
 		return subGru.getResultList();
+	}
+
+	@Override
+	public int countSubGrupoPaginacao(SubGrupo subGrupo) {
+		StringBuilder sql = new StringBuilder();
+		this.defineCondicao(sql, subGrupo);
+		Query qryMaximo = this.session.createQuery("select Count(s) from SubGrupo s ".concat(sql.toString()));
+		this.defineParametros(qryMaximo, subGrupo);
+		Number count = (Number) qryMaximo.getSingleResult();
+		return count.intValue();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<SubGrupo> buscaSubGrupoPaginacao(SubGrupo subGrupo, int first, int pageSize) {
+		StringBuilder sql = new StringBuilder();
+		this.defineCondicao(sql, subGrupo);
+		Query qry = this.session.createQuery("select s from SubGrupo s ".concat(sql.toString()));
+		this.defineParametros(qry, subGrupo);
+		qry.setFirstResult(first);
+		qry.setMaxResults(pageSize);
+		List<SubGrupo> result = qry.getResultList();
+		return result;
+	}
+	
+	@Override
+	public void defineCondicao(StringBuilder sql, SubGrupo subGrupo){
+		if(subGrupo.getIdSubGrupo() != null){
+			sql.append(sql.length() == 0 ? " where ": " and ").append(" s.idSubGrupo = :idSubGrupo");	
+		}
+		if(subGrupo.getDescricao() != null && !subGrupo.getDescricao().equals("")){
+			sql.append(sql.length() == 0 ? " where ": " and ").append(" s.descricao like :descricao");
+		}
+	}
+	
+	@Override
+	public void defineParametros(Query qry, SubGrupo subGrupo){
+		if(subGrupo.getIdSubGrupo() != null){
+			qry.setParameter("idSubGrupo", subGrupo.getIdSubGrupo());
+		}
+		if(subGrupo.getDescricao() != null && !subGrupo.getDescricao().equals("")){
+			qry.setParameter("descricao","%" + subGrupo.getDescricao() + "%");
+		}
 	}
 }

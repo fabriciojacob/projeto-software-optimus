@@ -1,18 +1,17 @@
 package br.com.softwareOptimus.fiscal;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="TbTipoProd")
 public class TipoProduto implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -6822091315494484402L;
 	
 	@Id
@@ -20,6 +19,9 @@ public class TipoProduto implements Serializable {
 	private Long idTipoProd;
 	
 	private String descricao;
+	
+	@OneToMany(mappedBy = "tipoProduto")
+	private List<CodTabelaGov> codTabelaGovList;
 
 	public Long getIdTipoProd() {
 		return idTipoProd;
@@ -35,6 +37,14 @@ public class TipoProduto implements Serializable {
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+
+	public List<CodTabelaGov> getCodTabelaGovList() {
+		return codTabelaGovList;
+	}
+
+	public void setCodTabelaGovList(List<CodTabelaGov> codTabelaGovList) {
+		this.codTabelaGovList = codTabelaGovList;
 	}
 
 	@Override
