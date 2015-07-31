@@ -1,11 +1,13 @@
 package br.com.softwareOptimus.produto;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
@@ -24,6 +26,9 @@ public class SubGrupo implements Serializable{
 	
 	@Column ( length = 100 , nullable = true , unique = false)
 	private String descricao;
+	
+	@OneToMany(mappedBy = "subGrupo")
+	private List<Categoria> categoriaList;
 	
 	public String getDescricao() {
 		return descricao;

@@ -108,4 +108,13 @@ public class SubGrupoRN {
 	public List<SubGrupo> listaSubGrupoVincGrupo(Grupo grupo) {
 		return this.subGrupoDAO.listaSubGrupoVincGrupo(grupo);
 	}
+
+	public int countSubGrupoPaginacao(SubGrupo subGrupo) {
+		return this.subGrupoDAO.countSubGrupoPaginacao( subGrupo);
+	}
+
+	public List<SubGrupo> buscaSubGrupoPaginacao(SubGrupo subGrupo, int first,int pageSize) {
+		return this.subGrupoDAO.buscaSubGrupoPaginacao(subGrupo, first,pageSize);
+	}
+
 }

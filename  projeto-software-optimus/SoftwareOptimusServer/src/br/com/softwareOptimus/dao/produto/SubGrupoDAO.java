@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.persistence.Query;
+
 import br.com.softwareOptimus.produto.Grupo;
 import br.com.softwareOptimus.produto.Produto;
 import br.com.softwareOptimus.produto.SubGrupo;
@@ -24,4 +26,8 @@ public interface SubGrupoDAO {
 	public List<SubGrupo> listaSubGru(Long id);
 	public List<Produto> verificaRemocaoSubProd(SubGrupo subGrupo);
 	public List<SubGrupo> listaSubGrupoVincGrupo(Grupo grupo);
+	public int countSubGrupoPaginacao(SubGrupo subGrupo);
+	public List<SubGrupo> buscaSubGrupoPaginacao(SubGrupo subGrupo, int first,int pageSize);
+	public void defineCondicao(StringBuilder sql, SubGrupo subGrupo);
+	public void defineParametros(Query qry, SubGrupo subGrupo);
 }
