@@ -7,6 +7,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.event.ToggleEvent;
+
 import br.com.softwareOptimus.comercial.Requisicao;
 import br.com.softwareOptimus.comercial.RN.RequisicaoRN;
 import br.com.softwareOptimus.entidades.Pessoa;
@@ -17,67 +19,89 @@ import br.com.softwareOptimus.produto.Produto;
 @ManagedBean
 @ViewScoped
 public class RequisicaoBean {
-	
+
 	private Requisicao requisicao;
-	private Long idEmpresa;
+	private Long idEmpresa, idUsuario;
 	private Pessoa empSelecionada;
 	private List<Produto> listaProdutos;
 	private RequisicaoRN requisicaoRN;
 	private Usuario user;
-	private boolean reqDesc = true, reqEmpr = true, reqData = true, btNovo = false, btSalvar = true, btEdit = true,
-			btExcluir = true, btCanc = true;
+	private boolean reqDesc = true, reqEmpr = true, reqData = true,
+			btNovo = false, btSalvar = true, btEdit = true, btExcluir = true,
+			btCanc = true, btVincUser = true;
 	private UsuarioRN usuarioRN;
-	private Long idUsuario;
 	private Usuario usuario;
-	private List<Usuario> listaUsuario;
-	
-	public RequisicaoBean(){
+
+	public RequisicaoBean() {
 		requisicaoRN = new RequisicaoRN();
 	}
-	
-	public void checkRegraNull(){
-		if(this.requisicaoRN == null){
+
+	public void checkRegraNull() {
+		if (this.requisicaoRN == null) {
 			this.requisicaoRN = new RequisicaoRN();
 		}
 	}
-	
-	public void ativaBool(){
+
+	public void ativaBool() {
 		this.reqData = true;
 		this.reqDesc = true;
 		this.reqData = true;
 		this.reqEmpr = true;
-		this.btNovo		= true;
-		this.btCanc		= true;
-		this.btEdit		= true;
-		this.btExcluir	= true;
-		this.btSalvar	= true;
+		this.btNovo = true;
+		this.btCanc = true;
+		this.btEdit = true;
+		this.btExcluir = true;
+		this.btSalvar = true;
+		this.btVincUser = true;
 	}
-	
-	public void inativaBool(){
+
+	public void inativaBool() {
 		this.reqData = false;
 		this.reqDesc = false;
 		this.reqData = false;
 		this.reqEmpr = false;
-		this.btNovo		= false;
-		this.btCanc		= false;
-		this.btEdit		= false;
-		this.btExcluir	= false;
-		this.btSalvar	= false;
+		this.btNovo = false;
+		this.btCanc = false;
+		this.btEdit = false;
+		this.btExcluir = false;
+		this.btSalvar = false;
+		this.btVincUser = false;
 	}
-	
-	public void novo(){
+
+	public void novo() {
 		this.requisicao = new Requisicao();
 		inativaBool();
 	}
-	
-	public void salvar(){
-		try{
-			requisicaoRN.salvar(requisicao);
-			msgAcerto("Requisicao salva com sucesso !!!");
-			inativaBool();
-		}catch(Exception ex){
+
+	public void salvar() {
+		try {
+			this.requisicao.setUsuRequisita(usuario);
+			this.requisicao.setEmpresa(empSelecionada);
+			if (requisicaoRN.salvar(requisicao)) {
+				msgAcerto("Requisicao salva com sucesso !!!");
+				inativaBool();
+			} else
+				msgErro("Vincule um usuário de requisição ", null);
+		} catch (Exception ex) {
 			msgErro("Problemas ao salvar a requisicao", ex);
 		}
+	}
+
+	public void selecionaUsuario() {
+		if (this.idUsuario != null) {
+			usuarioRN = new UsuarioRN();
+		}
+		try {
+			usuario = usuarioRN.carregar(idUsuario);
+		} catch (Exception ex) {
+			msgErro("Problemas na seleção do usuário ", ex);
+		}
+	}
+
+	public void handleToggle(ToggleEvent event) {
+		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+				"Toggled", "Visibility:" + event.getVisibility());
+		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
 
 	public Requisicao getRequisicao() {
@@ -119,7 +143,7 @@ public class RequisicaoBean {
 	public void setRequisicaoRN(RequisicaoRN requisicaoRN) {
 		this.requisicaoRN = requisicaoRN;
 	}
-	
+
 	public void msgAcerto(String msg) {
 		FacesContext.getCurrentInstance().addMessage(null,
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", msg));
@@ -139,7 +163,7 @@ public class RequisicaoBean {
 	public void setReqDesc(boolean reqDesc) {
 		this.reqDesc = reqDesc;
 	}
-	
+
 	public boolean isReqData() {
 		return reqData;
 	}
@@ -228,12 +252,12 @@ public class RequisicaoBean {
 		this.usuario = usuario;
 	}
 
-	public List<Usuario> getListaUsuario() {
-		return listaUsuario;
+	public boolean isBtVincUser() {
+		return btVincUser;
 	}
 
-	public void setListaUsuario(List<Usuario> listaUsuario) {
-		this.listaUsuario = listaUsuario;
+	public void setBtVincUser(boolean btVincUser) {
+		this.btVincUser = btVincUser;
 	}
 
 }

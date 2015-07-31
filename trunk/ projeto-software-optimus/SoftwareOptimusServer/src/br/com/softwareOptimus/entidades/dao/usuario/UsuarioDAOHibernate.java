@@ -3,10 +3,12 @@ package br.com.softwareOptimus.entidades.dao.usuario;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+
 import br.com.softwareOptimus.entidades.Usuario;
 
 public class UsuarioDAOHibernate implements UsuarioDAO {
@@ -34,10 +36,10 @@ public class UsuarioDAOHibernate implements UsuarioDAO {
 
 	@Override
 	public Usuario carregar(Long codigo) {
-		String jpql = "select e from Usuario e where e.codigo = :codigo";
-		Query consulta = this.session.createQuery(jpql, Usuario.class);
+		String jpql = "select e from Usuario e where e.idUsuario = :codigo";
+		TypedQuery<Usuario> consulta = this.session.createQuery(jpql, Usuario.class);
 		consulta.setParameter("codigo", codigo);
-		return (Usuario) consulta.getSingleResult();
+		return consulta.getSingleResult();
 	}
 
 	@Override
@@ -82,7 +84,7 @@ public class UsuarioDAOHibernate implements UsuarioDAO {
 
 	@Override
 	public List<Usuario> pesquisaNome(String nome) throws Exception {
-		String sql = "Select e from Usuario where nome like '%" + nome + "'%";
+		String sql = "Select e from Usuario e where e.nome like '%" + nome + "%'";
 		TypedQuery<Usuario> listaUsuario = this.session.createQuery(sql,
 				Usuario.class);
 		return listaUsuario.getResultList();

@@ -15,6 +15,7 @@
 		<br />
 		<h3 style="margin-top: 0">REQUISICAO</h3>
 		<div align="left">
+			<p:growl id="msgs" showDetail="true" />
 
 			<p:commandButton value="Novo" actionListener="#{requisicaoBean.novo}"
 				update="frmReq" disabled="#{requisicaoBean.btNovo}" />
@@ -24,7 +25,8 @@
 				disabled="#{requisicaoBean.btSalvar}" />
 
 			<p:commandButton value="Vincula usuário" type="button"
-				onclick="PF('usuarios').show();" />
+				onclick="PF('usuarios').show();"
+				disabled="#{requisicaoBean.btVincUser}" />
 
 			<p:commandButton value="Editar" disabled="#{requisicaoBean.btEdit}" />
 
@@ -42,19 +44,21 @@
 			<ui:include
 				src="/privado/comercial/requisicao/requisicaoDadosGerais.xhtml" />
 
-			<p:dialog id="dialogUsuario" header = "Usuarios" widgetVar="usuarios" modal="true"
-				height="350" width="600">
-				
+			<p:dialog id="dialogUsuario" header="Usuarios" widgetVar="usuarios"
+				modal="true" height="350" width="600">
+
 				<h:panelGrid columns="3">
 				
 				Nome:
-				<p:inputText size="30"/>
-				
-				<p:commandButton value="Pesquisar"/>
-				
+				<p:inputText size="30" value="#{usuarioBean.nomeUsuario}" />
+
+					<p:commandButton value="Pesquisar"
+						actionListener="#{usuarioBean.listagem}" update="dataUsuario" />
+
 				</h:panelGrid>
 
-				<ui:include src="/privado/comercial/requisicao/tabelaPesquisaUsuario.xhtml"/>
+				<ui:include
+					src="/privado/comercial/requisicao/tabelaPesquisaUsuario.xhtml" />
 
 			</p:dialog>
 
@@ -72,6 +76,18 @@
 			</p:dialog>
 
 			<!--<ui:include src="/privado/comercial/requisicao/tabelaProdutosRequisicao.xhtml"/> -->
+
+			<p:fieldset legend="Produtos" toggleable="true" toggleSpeed="500">
+				<p:ajax event="toggle" listener="#{fieldsetView.handleToggle}"
+					update="msgs" />
+				<h:panelGrid columns="2" cellpadding="5">
+					<p:graphicImage name="demo/images/godfather/godfather2.jpg" />
+					<h:outputText
+						value="Francis Ford Coppola's legendary continuation and sequel to his landmark 1972 film, The_Godfather, parallels the young Vito Corleone's rise with his son Michael's spiritual fall, deepening The_Godfather's depiction of the dark side of the American dream.
+                          In the early 1900s, the child Vito flees his Sicilian village for America after the local Mafia kills his family. Vito struggles to make a living, legally or illegally, for his wife and growing brood in Little Italy,
+                          killing the local Black Hand Fanucci after he demands his customary cut of the tyro's business. With Fanucci gone, Vito's communal stature grows."></h:outputText>
+				</h:panelGrid>
+			</p:fieldset>
 
 		</div>
 	</h:form>

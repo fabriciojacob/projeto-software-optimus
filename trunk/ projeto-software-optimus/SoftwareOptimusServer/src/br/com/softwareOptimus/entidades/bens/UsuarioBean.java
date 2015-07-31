@@ -1,16 +1,19 @@
 package br.com.softwareOptimus.entidades.bens;
 
 import java.io.Serializable;
-
+import java.util.ArrayList;
+import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import br.com.softwareOptimus.entidades.Usuario;
 import br.com.softwareOptimus.entidades.RN.UsuarioRN;
 import br.com.softwareOptimus.util.FacesUtil;
 
 @ManagedBean(name = "usuarioBean")
-@SessionScoped
+@ViewScoped
 public class UsuarioBean extends FacesUtil implements Serializable {
 	
     private static final long serialVersionUID = -3280128356907200060L;
@@ -18,12 +21,26 @@ public class UsuarioBean extends FacesUtil implements Serializable {
 	private Usuario usuario;
 	private String confirmarSenha;
 	private UsuarioRN usuarioRN;
+	private List<Usuario> listaUsuario;
+	private String nomeUsuario;
 
 	public Usuario getUsuario() {
 		if(this.usuario == null){
 			this.usuario = new Usuario();
 		}
 		return usuario;
+	}
+	
+	public void listagem(){
+		if(usuarioRN == null){
+			usuarioRN = new UsuarioRN();
+		}
+		listaUsuario = new ArrayList<>();
+		try{
+			listaUsuario = usuarioRN.listaUsuario(nomeUsuario);
+		}catch (Exception ex){
+			msgErro("Problemas na listagem dos usuários ", ex);
+		}
 	}
 
 	public UsuarioRN getUsuarioRN() {
@@ -61,6 +78,37 @@ public class UsuarioBean extends FacesUtil implements Serializable {
 	public void cancelar(){
 		this.setUsuario(null);
 	}
+
+	public List<Usuario> getListaUsuario() {
+		return listaUsuario;
+	}
+
+
+	public void setListaUsuario(List<Usuario> listaUsuario) {
+		this.listaUsuario = listaUsuario;
+	}
+
+	public String getNomeUsuario() {
+		return nomeUsuario;
+	}
+
+
+	public void setNomeUsuario(String nomeUsuario) {
+		this.nomeUsuario = nomeUsuario;
+	}
+	
+	public void msgAcerto(String msg) {
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", msg));
+	}
+
+	public void msgErro(String msg, Exception e) {
+		FacesContext.getCurrentInstance().addMessage(
+				null,
+				new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info", msg
+						+ e.getMessage()));
+	}
+
 
 	public void salvar() {
 
