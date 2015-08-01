@@ -15,9 +15,6 @@ import javax.persistence.Table;
 @Table(name = "tbSetor")
 public class Setor implements Serializable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 8548273193726403343L;
 
 	@Id

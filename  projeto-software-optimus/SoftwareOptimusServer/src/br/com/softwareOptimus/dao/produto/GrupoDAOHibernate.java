@@ -3,9 +3,12 @@ package br.com.softwareOptimus.dao.produto;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+
 import br.com.softwareOptimus.produto.Grupo;
 import br.com.softwareOptimus.produto.Produto;
 import br.com.softwareOptimus.produto.Setor;
@@ -46,11 +49,17 @@ public class GrupoDAOHibernate implements GrupoDAO {
 	}
 
 	public void salvar(Grupo grupo) {
+		if (!transaction.isActive()) {
+			transaction.begin();
+		}
 		this.session.persist(grupo);
 		this.transaction.commit();
 	}
 
 	public void alterar(Grupo grupo) {
+		if (!transaction.isActive()) {
+			transaction.begin();
+		}
 		this.session.merge(grupo);
 		this.transaction.commit();
 
@@ -66,6 +75,9 @@ public class GrupoDAOHibernate implements GrupoDAO {
 
 	@Override
 	public void remover(Grupo grupo) {
+		if (!transaction.isActive()) {
+			transaction.begin();
+		}
 		this.session.remove(grupo);
 		this.transaction.commit();
 	}
@@ -147,5 +159,56 @@ public class GrupoDAOHibernate implements GrupoDAO {
 		TypedQuery<Grupo> gru = this.session.createQuery(jpql, Grupo.class);
 		gru.setParameter("busca", "%" + busca + "%");
 		return gru.getResultList();
+	}
+
+	@Override
+	public int countGrupoPaginacao(Grupo grupo, SubGrupo subGrupo) {
+		StringBuilder sql = new StringBuilder();
+		this.defineCondicao(sql, grupo, subGrupo);
+		Query qryMaximo = this.session.createQuery(" select Count(g) from Grupo g "
+				 								 + " left join g.subGrupo s ".concat(sql.toString()));
+		this.defineParametros(qryMaximo, grupo, subGrupo);
+		Number count = (Number) qryMaximo.getSingleResult();
+		return count.intValue();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Grupo> buscaGrupoPaginacao(Grupo grupo, SubGrupo subGrupo,int first, int pageSize) {
+		StringBuilder sql = new StringBuilder();
+		this.defineCondicao(sql, grupo, subGrupo);
+		Query qry = this.session.createQuery("select g from Grupo g "
+										   + " left join g.subGrupo s ".concat(sql.toString()));
+		this.defineParametros(qry, grupo, subGrupo);
+		qry.setFirstResult(first);
+		qry.setMaxResults(pageSize);
+		List<Grupo> result = qry.getResultList();
+		return result;
+	}
+	
+	@Override
+	public void defineCondicao(StringBuilder sql, Grupo grupo, SubGrupo subGrupo){
+ 		if(subGrupo.getIdSubGrupo() != null){
+			sql.append(sql.length() == 0 ? " where ": " and ").append(" s.idSubGrupo = :idSubGrupo");
+		}
+ 		if(grupo.getIdGrupo() != null){
+ 			sql.append(sql.length() == 0 ? " where ": " and ").append(" g.idGrupo = :idGrupo");
+ 		}
+ 		if(grupo.getDescricao() != null && grupo.getDescricao() != "" && !grupo.getDescricao().equals("")){
+ 			sql.append(sql.length() == 0 ? " where ": " and ").append(" g.descricao like :descricao");
+ 		}
+	}
+	
+	@Override
+	public void defineParametros(Query qry, Grupo grupo, SubGrupo subGrupo){
+		if(subGrupo.getIdSubGrupo() != null){
+			qry.setParameter("idSubGrupo", subGrupo.getIdSubGrupo());
+		}
+ 		if(grupo.getIdGrupo() != null){
+ 			qry.setParameter("idGrupo", grupo.getIdGrupo());
+ 		}
+ 		if(grupo.getDescricao() != null && grupo.getDescricao() != "" && !grupo.getDescricao().equals("")){
+ 			qry.setParameter("descricao", "%" + grupo.getDescricao() + "%");
+ 		}
 	}
 }

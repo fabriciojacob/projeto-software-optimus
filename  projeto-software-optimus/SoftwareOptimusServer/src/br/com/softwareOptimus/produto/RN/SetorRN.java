@@ -78,4 +78,12 @@ public class SetorRN {
 		return this.setorDAO.consultaDescGrup(busca);
 	}
 
+	public int countSetorPaginacao(Setor setor, Grupo grupo) {
+		return this.setorDAO.countSetorPaginacao(setor, grupo);
+	}
+
+	public List<Setor> buscaSetorPaginacao(Setor setor, Grupo grupo, int first, int pageSize) {
+		return this.setorDAO.buscaSetorPaginacao(setor, grupo, first, pageSize);
+	}
+
 }

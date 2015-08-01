@@ -48,6 +48,9 @@ public class CategoridoDAOHibernate implements CategoriaDAO {
 
 	@Override
 	public void remover(Long idCateg) {
+		if (!transaction.isActive()) {
+			transaction.begin();
+		}
 		Categoria cat = this.session.find(Categoria.class, idCateg);
 		this.session.remove(cat);
 		this.transaction.commit();
@@ -63,6 +66,9 @@ public class CategoridoDAOHibernate implements CategoriaDAO {
 
 	@Override
 	public void salvarCategoria(Categoria categoria) {
+		if (!transaction.isActive()) {
+			transaction.begin();
+		}
 		this.session.persist(categoria);
 		this.transaction.commit();
 	}

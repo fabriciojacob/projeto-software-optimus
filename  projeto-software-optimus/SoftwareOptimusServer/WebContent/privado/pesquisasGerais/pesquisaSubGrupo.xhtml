@@ -14,12 +14,12 @@
 	<h:form>
 		<h:panelGrid columns="2">
 			<h:panelGrid columns="1">
-				Código Tipo
-				<p:inputText style="width:360px; float: left;" value="#{pesquisaTipoProdutoBean.tipoProd.idTipoProd}"/>
+				Código do SubGrupo
+				<p:inputText style="width:360px; float: left;" value="#{pesquisaSubGrupoBean.subGrupo.idSubGrupo}"/>
 			</h:panelGrid>
 			<h:panelGrid columns="1">
-				Descrição Tipo
-				<p:inputText style="width:360px; float: left;" value="#{pesquisaTipoProdutoBean.tipoProd.descricao}"/>
+				Descrição do SubGrupo
+				<p:inputText style="width:360px; float: left;" value="#{pesquisaSubGrupoBean.subGrupo.descricao}"/>
 			</h:panelGrid>
 		</h:panelGrid>
 		<div align="right">
@@ -27,23 +27,23 @@
 		</div>
 		<h:panelGrid id="gridData" columns="1" columnClasses="label, value">
 			<p:blockUI block="dataPesquisa" trigger="btnPesquisar" />
-			<p:dataTable id="dataPesquisa" value="#{pesquisaTipoProdutoBean.tipoProdutoList}" var="tipoProd" resizableColumns="true"
+			<p:dataTable id="dataPesquisa" value="#{pesquisaSubGrupoBean.subGrupoList}" var="subGrupo" resizableColumns="true"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				rowsPerPageTemplate="5,10,15" lazy="true" border="1" paginatorPosition="bottom" cellpadding="2" cellspacing="0"
-				paginator="true" rows="10" rowKey="tipoProd.idTipoProd">
+				paginator="true" rows="10" rowKey="subGrupo.idSubGrupo">
 
-				<f:facet name="header">Tipos de Produtos Cadastrados</f:facet>
+				<f:facet name="header">SubGrupos Cadastrados</f:facet>
 					
-				<p:column headerText="Código do Tipo">
-					<h:outputText value="#{tipoProd.idTipoProd}" />
+				<p:column headerText="Código do SubGrupo">
+					<h:outputText value="#{subGrupo.idSubGrupo}" />
 				</p:column>
 
-				<p:column headerText="Descrição do Tipo">
-					<h:outputText value="#{tipoProd.descricao}" />
+				<p:column headerText="Descrição do SubGrupo">
+					<h:outputText value="#{subGrupo.descricao}" />
 				</p:column>
 				<p:column headerText="Selecionar" style="width: 50px; text-align: center">
 		    		<p:commandButton icon="ui-icon-check" title="Selecionar"
-		    			action="#{pesquisaTipoProdutoBean.selecionaTipoProd(tipoProd)}"
+		    			action="#{pesquisaSubGrupoBean.selecionaSubGrupo(subGrupo)}"
 		    			process="@this" />
 				</p:column>
 			</p:dataTable>

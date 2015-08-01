@@ -10,8 +10,56 @@
 	<h:outputStylesheet library="css" name="fonte.css" />
 	<title>Consulta Grupo</title>
 </h:head>
-	<h:body>
-		<h:form>
-		</h:form>
-	</h:body>
+<h:body>
+	<h:form>
+		<h:panelGrid columns="3">
+			<h:panelGrid columns="1">
+				Código do Grupo
+				<p:inputText style="width:200px; float: left;" value="#{pesquisaGrupoBean.grupo.idGrupo}"/>
+			</h:panelGrid>
+			<h:panelGrid columns="1">
+				Descrição do Grupo
+				<p:inputText style="width:260px; float: left;" value="#{pesquisaGrupoBean.grupo.descricao}"/>
+			</h:panelGrid>
+			<h:panelGrid>
+				SubGrupos:
+				<p:selectOneMenu id="subGrupo" value="#{pesquisaGrupoBean.subGrupo}" style="width:260px;">
+					<f:selectItem itemLabel="Selecione um SubGrupo" />
+					<f:selectItems value="#{pesquisaGrupoBean.subGrupoList}" var="listaSubGrupo" itemValue="#{listaSubGrupo}"
+						itemLabel="#{listaSubGrupo.idSubGrupo} - #{listaSubGrupo.descricao}" />
+				</p:selectOneMenu>
+			</h:panelGrid>
+		</h:panelGrid>
+		<div align="right">
+			<p:commandButton id="btnPesquisar" value="Pesquisar" update="dataPesquisa" />
+		</div>
+		<h:panelGrid id="gridData" columns="1" columnClasses="label, value">
+			<p:blockUI block="dataPesquisa" trigger="btnPesquisar" />
+			<p:dataTable id="dataPesquisa" value="#{pesquisaGrupoBean.grupoList}" var="grupo" resizableColumns="true"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10,15" lazy="true" border="1" paginatorPosition="bottom" cellpadding="2" cellspacing="0"
+				paginator="true" rows="10" rowKey="grupo.idGrupo">
+
+				<f:facet name="header">Grupos Cadastrados</f:facet>
+					
+				<p:column headerText="Código do Grupo">
+					<h:outputText value="#{grupo.idGrupo}" />
+				</p:column>
+
+				<p:column headerText="Descrição do Grupo">
+					<h:outputText value="#{grupo.descricao}" />
+				</p:column>
+				<p:column headerText="Selecionar" style="width: 50px; text-align: center">
+		    		<p:commandButton icon="ui-icon-check" title="Selecionar"
+		    			action="#{pesquisaGrupoBean.selecionaGrupo(grupo)}"
+		    			process="@this" />
+				</p:column>
+			</p:dataTable>
+			<p:blockUI block="dataPesquisa" trigger="dataPesquisa">
+      				LOADING<br />
+				<p:graphicImage name="ajaxloader.gif" />
+			</p:blockUI>
+		</h:panelGrid>
+	</h:form>
+</h:body>
 </html>

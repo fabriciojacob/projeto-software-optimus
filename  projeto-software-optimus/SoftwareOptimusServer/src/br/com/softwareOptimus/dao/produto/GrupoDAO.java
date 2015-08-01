@@ -3,9 +3,13 @@ package br.com.softwareOptimus.dao.produto;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+
+import javax.persistence.Query;
+
 import br.com.softwareOptimus.produto.Grupo;
 import br.com.softwareOptimus.produto.Produto;
 import br.com.softwareOptimus.produto.Setor;
+import br.com.softwareOptimus.produto.SubGrupo;
 
 public interface GrupoDAO {
 
@@ -25,4 +29,8 @@ public interface GrupoDAO {
 	public List<Grupo> listaGrupoVincSet(Setor setor);
 	public List<Grupo> listaGrupoIdSub(long idSub);
 	public List<Grupo> listaGrupoDescSub(String busca);
+	public int countGrupoPaginacao(Grupo grupo, SubGrupo subGrupo);
+	public List<Grupo> buscaGrupoPaginacao(Grupo grupo, SubGrupo subGrupo,int first, int pageSize);
+	public void defineCondicao(StringBuilder sql, Grupo grupo, SubGrupo subGrupo);
+	public void defineParametros(Query qry, Grupo grupo, SubGrupo subGrupo);
 }
