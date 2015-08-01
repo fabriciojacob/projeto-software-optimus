@@ -50,7 +50,7 @@ public class PesquisaTipoProdutoBean extends FacesUtil implements Serializable {
 		opcoes.put("contentHeight", 600);
 		opcoes.put("contentWidth", 800);
 		
-		RequestContext.getCurrentInstance().openDialog("/privado/pesquisasGerais/pesquisaAliquota", opcoes, null);
+		RequestContext.getCurrentInstance().openDialog("/privado/pesquisasGerais/pesquisaTipoProduto", opcoes, null);
 	}
 
 	public TipoProdutoRN getTipoProdRN() {

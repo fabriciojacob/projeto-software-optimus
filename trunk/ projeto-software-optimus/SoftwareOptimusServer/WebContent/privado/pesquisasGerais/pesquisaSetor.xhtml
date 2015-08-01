@@ -10,8 +10,56 @@
 	<h:outputStylesheet library="css" name="fonte.css" />
 	<title>Consulta Setor</title>
 </h:head>
-	<h:body>
-		<h:form>
-		</h:form>
-	</h:body>
+<h:body>
+	<h:form>
+		<h:panelGrid columns="3">
+			<h:panelGrid columns="1">
+				Código do Setor
+				<p:inputText style="width:200px; float: left;" value="#{pesquisaSetorBean.setor.idSetor}"/>
+			</h:panelGrid>
+			<h:panelGrid columns="1">
+				Descrição do Setor
+				<p:inputText style="width:260px; float: left;" value="#{pesquisaSetorBean.setor.descricao}"/>
+			</h:panelGrid>
+			<h:panelGrid>
+				SubGrupos:
+				<p:selectOneMenu id="subGrupo" value="#{pesquisaSetorBean.grupo}" style="width:260px;">
+					<f:selectItem itemLabel="Selecione um Grupo" />
+					<f:selectItems value="#{pesquisaSetorBean.grupoList}" var="listaGrupo" itemValue="#{listaGrupo}"
+						itemLabel="#{listaGrupo.idGrupo} - #{listaGrupo.descricao}" />
+				</p:selectOneMenu>
+			</h:panelGrid>
+		</h:panelGrid>
+		<div align="right">
+			<p:commandButton id="btnPesquisar" value="Pesquisar" update="dataPesquisa" />
+		</div>
+		<h:panelGrid id="gridData" columns="1" columnClasses="label, value">
+			<p:blockUI block="dataPesquisa" trigger="btnPesquisar" />
+			<p:dataTable id="dataPesquisa" value="#{pesquisaSetorBean.setorList}" var="setor" resizableColumns="true"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10,15" lazy="true" border="1" paginatorPosition="bottom" cellpadding="2" cellspacing="0"
+				paginator="true" rows="10" rowKey="setor.idSetor">
+
+				<f:facet name="header">Setores Cadastrados</f:facet>
+					
+				<p:column headerText="Código do Grupo">
+					<h:outputText value="#{setoro.idSetor}" />
+				</p:column>
+
+				<p:column headerText="Descrição do Grupo">
+					<h:outputText value="#{setor.descricao}" />
+				</p:column>
+				<p:column headerText="Selecionar" style="width: 50px; text-align: center">
+		    		<p:commandButton icon="ui-icon-check" title="Selecionar"
+		    			action="#{pesquisaSetorBean.selecionaSetor(setor)}"
+		    			process="@this" />
+				</p:column>
+			</p:dataTable>
+			<p:blockUI block="dataPesquisa" trigger="dataPesquisa">
+      				LOADING<br />
+				<p:graphicImage name="ajaxloader.gif" />
+			</p:blockUI>
+		</h:panelGrid>
+	</h:form>
+</h:body>
 </html>

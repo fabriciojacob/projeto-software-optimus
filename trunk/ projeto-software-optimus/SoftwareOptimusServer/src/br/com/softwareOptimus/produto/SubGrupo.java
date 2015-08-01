@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -30,6 +31,9 @@ public class SubGrupo implements Serializable{
 	@OneToMany(mappedBy = "subGrupo")
 	private List<Categoria> categoriaList;
 	
+	@ManyToMany(mappedBy = "subGrupo")
+	private List<Grupo> grupoList;
+	
 	public String getDescricao() {
 		return descricao;
 	}
@@ -44,6 +48,22 @@ public class SubGrupo implements Serializable{
 	
 	public void setIdSubGrupo(Long idSubGrupo) {
 		this.idSubGrupo = idSubGrupo;
+	}
+
+	public List<Categoria> getCategoriaList() {
+		return categoriaList;
+	}
+
+	public void setCategoriaList(List<Categoria> categoriaList) {
+		this.categoriaList = categoriaList;
+	}
+
+	public List<Grupo> getGrupoList() {
+		return grupoList;
+	}
+
+	public void setGrupoList(List<Grupo> grupoList) {
+		this.grupoList = grupoList;
 	}
 
 	@Override

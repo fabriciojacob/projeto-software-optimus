@@ -50,7 +50,7 @@ public class PesquisaSubGrupoBean extends FacesUtil implements Serializable {
 		opcoes.put("contentHeight", 600);
 		opcoes.put("contentWidth", 800);
 		
-		RequestContext.getCurrentInstance().openDialog("/privado/pesquisasGerais/pesquisaAliquota", opcoes, null);
+		RequestContext.getCurrentInstance().openDialog("/privado/pesquisasGerais/pesquisaSubGrupo", opcoes, null);
 	}
 
 	public SubGrupoRN getSubGrupoRN() {

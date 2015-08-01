@@ -2,6 +2,8 @@ package br.com.softwareOptimus.produto;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
+
 import javax.persistence.JoinColumn;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,6 +34,9 @@ public class Grupo implements Serializable{
 	@JoinTable(name = "tbVincSubGrupo", joinColumns = @JoinColumn(name = "grupo"), inverseJoinColumns = @JoinColumn(name = "subGrupo"))
 	private Collection<SubGrupo> subGrupo;
 	
+	@ManyToMany(mappedBy = "grupo")
+	private List<Setor> setorList;
+	
 	
 	public String getDescricao() {
 		return descricao;
@@ -55,6 +60,14 @@ public class Grupo implements Serializable{
 	
 	public void setSubGrupo(Collection<SubGrupo> subGrupo) {
 		this.subGrupo = subGrupo;
+	}
+
+	public List<Setor> getSetorList() {
+		return setorList;
+	}
+
+	public void setSetorList(List<Setor> setorList) {
+		this.setorList = setorList;
 	}
 
 	@Override

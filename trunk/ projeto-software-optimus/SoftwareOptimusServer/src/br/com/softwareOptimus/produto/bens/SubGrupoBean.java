@@ -279,6 +279,9 @@ public class SubGrupoBean extends FacesUtil implements Serializable{
 	}
 
 	public Categoria getCategoria() {
+		if(this.categoria == null){
+			this.categoria = new Categoria();
+		}
 		return categoria;
 	}
 

@@ -87,4 +87,12 @@ public class GrupoRN {
 	public List<Grupo> consultaDescSub(String busca) {
 		return this.grupoDAO.listaGrupoDescSub(busca);
 	}
+
+	public int countGrupoPaginacao(Grupo grupo, SubGrupo subGrupo) {
+		return this.grupoDAO.countGrupoPaginacao(grupo, subGrupo);
+	}
+
+	public List<Grupo> buscaGrupoPaginacao(Grupo grupo, SubGrupo subGrupo,int first, int pageSize) {
+		return this.grupoDAO.buscaGrupoPaginacao(grupo, subGrupo, first, pageSize);
+	}
 }
