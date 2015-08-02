@@ -12,7 +12,6 @@ import org.primefaces.context.RequestContext;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
-import br.com.softwareOptimus.fiscal.Aliquota;
 import br.com.softwareOptimus.fiscal.Pauta;
 import br.com.softwareOptimus.fiscal.RN.PautaRN;
 import br.com.softwareOptimus.util.FacesUtil;
@@ -40,8 +39,8 @@ public class PesquisaPautaBean extends FacesUtil implements Serializable {
 		};
 	}
 	
-	public void selecionaAliquota(Aliquota aliquota){
-		RequestContext.getCurrentInstance().closeDialog(aliquota);
+	public void selecionaPauta(Pauta pauta){
+		RequestContext.getCurrentInstance().closeDialog(pauta);
 	}
 	
  	public void abrirDialogo() {

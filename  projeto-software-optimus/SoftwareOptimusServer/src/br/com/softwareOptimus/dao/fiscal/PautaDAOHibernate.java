@@ -3,10 +3,12 @@ package br.com.softwareOptimus.dao.fiscal;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+
 import br.com.softwareOptimus.fiscal.GradeTributariaVigencia;
 import br.com.softwareOptimus.fiscal.Pauta;
 
@@ -43,6 +45,9 @@ public class PautaDAOHibernate implements PautaDAO {
 	
 	@Override
 	public void salvar(Pauta pauta) {
+		if (!transaction.isActive()) {
+			transaction.begin();
+		}
 		this.session.persist(pauta);
 		this.transaction.commit();
 	}
@@ -90,12 +95,17 @@ public class PautaDAOHibernate implements PautaDAO {
 	
 	@Override
 	public void alterar(Pauta pauta) {
+		if (!transaction.isActive()) {
+			transaction.begin();
+		}
 		this.session.merge(pauta);
 		this.transaction.commit();
 	}
 	@Override
 	public void remover(Pauta pauta) throws IOException, SQLException {
-		
+		if (!transaction.isActive()) {
+			transaction.begin();
+		}		
 		String deleteQuery = "delete from PautaMVA p where p.pauta = :pauta";  
 		Query query = session.createQuery(deleteQuery);  
 		query.setParameter("pauta", pauta);  
@@ -112,5 +122,47 @@ public class PautaDAOHibernate implements PautaDAO {
 				GradeTributariaVigencia.class);
 		listaGrade.setParameter("pauta", pauta);
 		return listaGrade.getResultList();
+	}
+	@Override
+	public int countPautaPaginacao(Pauta pauta) {
+		StringBuilder sql = new StringBuilder();
+		this.defineCondicao(sql, pauta);
+		Query qryMaximo = this.session.createQuery("select Count(p) from Pauta p ".concat(sql.toString()));
+		this.defineParametros(qryMaximo, pauta);
+		Number count = (Number) qryMaximo.getSingleResult();
+		return count.intValue();
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Pauta> buscaPautaPaginacao(Pauta pauta, int first, int pageSize) {
+		StringBuilder sql = new StringBuilder();
+		this.defineCondicao(sql, pauta);
+		Query qry = this.session.createQuery("select p from Pauta p ".concat(sql.toString()));
+		this.defineParametros(qry, pauta);
+		qry.setFirstResult(first);
+		qry.setMaxResults(pageSize);
+		List<Pauta> result = qry.getResultList();
+		return result;
+	}
+	
+	@Override
+	public void defineCondicao(StringBuilder sql, Pauta pauta){
+		if(pauta.getIdPauta() != null){
+			sql.append(sql.length() == 0 ? " where ": " and ").append(" p.idPauta = :idPauta");
+		}
+		if(pauta.getDescricao() != null && pauta.getDescricao() != "" && !pauta.getDescricao().equals("")){
+			sql.append(sql.length() == 0 ? " where ": " and ").append(" p.descricao like :descricao");
+		}
+	}
+	
+	@Override
+	public void defineParametros(Query qry, Pauta pauta){
+		if(pauta.getIdPauta() != null){
+			qry.setParameter("idPauta", pauta.getIdPauta());
+		}
+		if(pauta.getDescricao() != null && pauta.getDescricao() != "" && !pauta.getDescricao().equals("")){
+			qry.setParameter("descricao", "%" + pauta.getDescricao() + "%");
+		}
 	}
 }
