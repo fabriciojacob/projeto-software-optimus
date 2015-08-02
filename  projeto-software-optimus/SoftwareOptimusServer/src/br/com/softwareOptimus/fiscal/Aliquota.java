@@ -2,6 +2,7 @@ package br.com.softwareOptimus.fiscal;
 
 import java.io.Serializable;
 import java.util.Collection;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -13,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -39,6 +41,9 @@ public class Aliquota implements Serializable, Converter{
 	private TipoTrib tipo;
 	
 	private PisCofins pisCofins;
+	
+	@OneToMany(mappedBy = "aliquota")
+	private Collection<GradeTributariaVigencia> gradeTributariaVigenciaCollection;
 	
 	public PisCofins getPisCofins() {
 		return pisCofins;
@@ -88,6 +93,15 @@ public class Aliquota implements Serializable, Converter{
 		this.cst = cst;
 	}
 	
+	public Collection<GradeTributariaVigencia> getGradeTributariaVigenciaCollection() {
+		return gradeTributariaVigenciaCollection;
+	}
+
+	public void setGradeTributariaVigenciaCollection(
+			Collection<GradeTributariaVigencia> gradeTributariaVigenciaCollection) {
+		this.gradeTributariaVigenciaCollection = gradeTributariaVigenciaCollection;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

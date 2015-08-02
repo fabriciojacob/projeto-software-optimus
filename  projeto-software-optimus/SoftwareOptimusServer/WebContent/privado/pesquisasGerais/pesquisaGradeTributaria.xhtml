@@ -8,10 +8,76 @@
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
 	<h:outputStylesheet library="css" name="fonte.css" />
-	<title>Consulta Grade Tributaria</title>
+	<title>Consulta da Grade Tributária</title>
 </h:head>
-	<h:body>
-		<h:form>
-		</h:form>
-	</h:body>
+<h:body>
+	<h:form>
+		<h:panelGrid columns="3">
+			<h:panelGrid columns="1">
+				Código da Grade Tributária
+				<p:inputText style="width:200px; float: left;" value="#{pesquisaGradeTributariaBean.gradeTributaria.idGradeTrib}"/>
+			</h:panelGrid>
+			<h:panelGrid columns="1">
+				Descrição da Grade Tributária
+				<p:inputText style="width:260px; float: left;" value="#{pesquisaGradeTributariaBean.gradeTributaria.descricao}"/>
+			</h:panelGrid>
+			<h:panelGrid columns="1">
+				Pauta:
+				<p:selectOneMenu id="subGrupo" value="#{pesquisaGradeTributariaBean.gradeTributariaVigencia.pauta}" style="width:260px;">
+					<f:selectItem itemLabel="Selecione um Grupo" />
+					<f:selectItems value="#{pesquisaGradeTributariaBean.pautaList}" var="listaPauta" itemValue="#{listaPauta}"
+						itemLabel="#{listaPauta.idGrupo} - #{listaGrupo.descricao}" />
+				</p:selectOneMenu>
+			</h:panelGrid>
+		</h:panelGrid>
+		<h:panelGrid columns="2">
+			<h:panelGrid columns="1">
+				Estado Origem:
+				<p:selectOneMenu id="origem" value="#{pesquisaGradeTributariaBean.gradeTributariaVigencia.origem}" style="width:360px;">
+					<f:selectItem itemLabel="Selecione um Estado Origem" />
+					<f:selectItems value="#{pesquisaGradeTributariaBean.origemList}" var="listaOrigem" itemValue="#{listaOrigem}"
+						itemLabel="#{listaOrigem.descricao}" />
+				</p:selectOneMenu>
+			</h:panelGrid>
+			<h:panelGrid columns="1">
+				Estado Destino:
+				<p:selectOneMenu id="destino" value="#{pesquisaGradeTributariaBean.gradeTributariaVigencia.destino}" style="width:360px;">
+					<f:selectItem itemLabel="Selecione um Estado Destino" />
+					<f:selectItems value="#{pesquisaGradeTributariaBean.destinoList}" var="listaDestino" itemValue="#{listaDestino}"
+						itemLabel="#{listaDestino.descricao}" />
+				</p:selectOneMenu>
+			</h:panelGrid>
+		</h:panelGrid>
+		<div align="right">
+			<p:commandButton id="btnPesquisar" value="Pesquisar" update="dataPesquisa" />
+		</div>
+		<h:panelGrid id="gridData" columns="1" columnClasses="label, value">
+			<p:blockUI block="dataPesquisa" trigger="btnPesquisar" />
+			<p:dataTable id="dataPesquisa" value="#{pesquisaGradeTributariaBean.gradeTributariaList}" var="gradeTributaria" resizableColumns="true"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10,15" lazy="true" border="1" paginatorPosition="bottom" cellpadding="2" cellspacing="0"
+				paginator="true" rows="10" rowKey="gradeTributaria.idGradeTrib">
+
+				<f:facet name="header">Grade Tributária Cadastradas</f:facet>
+					
+				<p:column headerText="Código da Grade Tributária">
+					<h:outputText value="#{gradeTributaria.idGradeTrib}" />
+				</p:column>
+
+				<p:column headerText="Descrição da Grade Tributária">
+					<h:outputText value="#{gradeTributaria.descricao}" />
+				</p:column>
+				<p:column headerText="Selecionar" style="width: 50px; text-align: center">
+		    		<p:commandButton icon="ui-icon-check" title="Selecionar"
+		    			action="#{pesquisaGradeTributariaBean.selecionaGradeTributaria(setor)}"
+		    			process="@this" />
+				</p:column>
+			</p:dataTable>
+			<p:blockUI block="dataPesquisa" trigger="dataPesquisa">
+      				LOADING<br />
+				<p:graphicImage name="ajaxloader.gif" />
+			</p:blockUI>
+		</h:panelGrid>
+	</h:form>
+</h:body>
 </html>

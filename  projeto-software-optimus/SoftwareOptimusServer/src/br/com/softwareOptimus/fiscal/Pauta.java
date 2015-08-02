@@ -2,6 +2,7 @@ package br.com.softwareOptimus.fiscal;
 
 import java.io.Serializable;
 import java.util.Collection;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -24,7 +25,10 @@ public class Pauta implements Serializable {
 	private String descricao;
 
 	@OneToMany(mappedBy = "pauta")
-	private Collection<PautaMVA> pauta;
+	private Collection<PautaMVA> pautaCollection;
+	
+	@OneToMany(mappedBy = "pauta")
+	private Collection<GradeTributariaVigencia> gradeTibutariaVigenciaCollection;
 
 	public Long getIdPauta() {
 		return idPauta;
@@ -40,6 +44,23 @@ public class Pauta implements Serializable {
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+
+	public Collection<PautaMVA> getPautaCollection() {
+		return pautaCollection;
+	}
+
+	public void setPautaCollection(Collection<PautaMVA> pautaCollection) {
+		this.pautaCollection = pautaCollection;
+	}
+
+	public Collection<GradeTributariaVigencia> getGradeTibutariaVigenciaCollection() {
+		return gradeTibutariaVigenciaCollection;
+	}
+
+	public void setGradeTibutariaVigenciaCollection(
+			Collection<GradeTributariaVigencia> gradeTibutariaVigenciaCollection) {
+		this.gradeTibutariaVigenciaCollection = gradeTibutariaVigenciaCollection;
 	}
 
 	@Override

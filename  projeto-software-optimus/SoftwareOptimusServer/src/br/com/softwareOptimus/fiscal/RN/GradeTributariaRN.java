@@ -107,4 +107,12 @@ public class GradeTributariaRN {
 			return 0;
 		}
 	}
+
+	public int countGradeTributariaPaginacao(GradeTributaria gradeTributaria,GradeTributariaVigencia gradeTributariaVigencia) {
+		return  this.gradeTribDAO.countGradeTributariaPaginacao(gradeTributaria, gradeTributariaVigencia);
+	}
+
+	public List<GradeTributaria> buscaGradeTributariaPaginacao(GradeTributaria gradeTributaria, GradeTributariaVigencia gradeTributariaVigencia, int first,int pageSize) {
+		return  this.gradeTribDAO.buscaGradeTributariaPaginacao(gradeTributaria, gradeTributariaVigencia, first, pageSize);
+	}
 }

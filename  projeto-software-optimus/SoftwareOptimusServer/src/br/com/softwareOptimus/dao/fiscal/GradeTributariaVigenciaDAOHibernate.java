@@ -70,6 +70,9 @@ public class GradeTributariaVigenciaDAOHibernate implements
 
 	@Override
 	public void salvaVig(GradeTributariaVigencia gradeVig) {
+		if (!transaction.isActive()) {
+			transaction.begin();
+		}
 		this.session.persist(gradeVig);
 		this.transaction.commit();
 	}
