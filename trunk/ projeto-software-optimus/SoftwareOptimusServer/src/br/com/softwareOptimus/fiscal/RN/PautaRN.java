@@ -93,10 +93,10 @@ public class PautaRN {
 	}
 
 	public int countPautaPaginacao(Pauta pauta) {
-		return 0;
+		return this.pautaDAO.countPautaPaginacao(pauta);
 	}
 
 	public List<Pauta> buscaPautaPaginacao(Pauta pauta, int first, int pageSize) {
-		return null;
+		return this.pautaDAO.buscaPautaPaginacao(pauta, first, pageSize);
 	}
 }

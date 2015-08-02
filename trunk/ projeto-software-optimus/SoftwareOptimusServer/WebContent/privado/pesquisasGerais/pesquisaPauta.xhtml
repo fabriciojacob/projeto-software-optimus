@@ -8,28 +8,18 @@
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
 	<h:outputStylesheet library="css" name="fonte.css" />
-	<title>Consulta Alíquota</title>
+	<title>Consulta Pauta</title>
 </h:head>
 <h:body>
 	<h:form>
 		<h:panelGrid columns="2">
 			<h:panelGrid columns="1">
-				Alíquota Max.
-				<p:inputText style="width:360px; float: left;" value="#{pesquisaAliquotaBean.maxAliquota}"/>
+				Código da Pauta
+				<p:inputText style="width:360px; float: left;" value="#{pesquisaPautaBean.pauta.idPauta}"/>
 			</h:panelGrid>
 			<h:panelGrid columns="1">
-				Alíquota Min.
-				<p:inputText style="width:360px; float: left;" value="#{pesquisaAliquotaBean.minAliquota}"/>
-			</h:panelGrid>
-		</h:panelGrid>
-		<h:panelGrid columns="2">
-			<h:panelGrid columns="1">
-				Redução Max.
-				<p:inputText style="width: 360px;" value="#{pesquisaAliquotaBean.maxReduc}"/>
-			</h:panelGrid>
-			<h:panelGrid columns="1">
-				Redução Min.
-				<p:inputText style="width: 360px;" value="#{pesquisaAliquotaBean.minReduc}"/>
+				Descrição da Pauta
+				<p:inputText style="width:360px; float: left;" value="#{pesquisaPautaBean.pauta.descricao}"/>
 			</h:panelGrid>
 		</h:panelGrid>
 		<div align="right">
@@ -37,31 +27,23 @@
 		</div>
 		<h:panelGrid id="gridData" columns="1" columnClasses="label, value">
 			<p:blockUI block="dataPesquisa" trigger="btnPesquisar" />
-			<p:dataTable id="dataPesquisa" value="#{pesquisaAliquotaBean.aliquotaList}" var="aliquota" resizableColumns="true"
+			<p:dataTable id="dataPesquisa" value="#{pesquisaPautaBean.pautaList}" var="pauta" resizableColumns="true"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				rowsPerPageTemplate="5,10,15" lazy="true" border="1" paginatorPosition="bottom" cellpadding="2" cellspacing="0"
-				paginator="true" rows="10" rowKey="aliquota.idAliq">
+				paginator="true" rows="10" rowKey="pauta.idPauta">
 
 				<f:facet name="header">Alíquotas Cadastradas</f:facet>
 					
-				<p:column headerText="Código da Alíquota">
-					<h:outputText value="#{aliquota.idAliq}" />
+				<p:column headerText="Código da Pauta">
+					<h:outputText value="#{pauta.idPauta}" />
 				</p:column>
 
-				<p:column headerText="Alíquota">
-					<h:outputText value="#{aliquota.aliquota}" />
-				</p:column>
-
-				<p:column headerText="Redução">
-					<h:outputText value="#{aliquota.reducao}" />
-				</p:column>
-
-				<p:column headerText="Tipo Tributação">
-					<h:outputText value="#{aliquota.tipo}" />
+				<p:column headerText="Descrição da Pauta">
+					<h:outputText value="#{pauta.descricao}" />
 				</p:column>
 				<p:column headerText="Selecionar" style="width: 50px; text-align: center">
 		    		<p:commandButton icon="ui-icon-check" title="Selecionar"
-		    			action="#{pesquisaAliquotaBean.selecionaAliquota(aliquota)}"
+		    			action="#{pesquisaPautaBean.selecionaPauta(pauta)}"
 		    			process="@this" />
 				</p:column>
 			</p:dataTable>

@@ -45,18 +45,27 @@ public class PautaMVADAOHibernate implements PautaMVADAO {
 
 	@Override
 	public void salva(PautaMVA pauta) {
+		if (!transaction.isActive()) {
+			transaction.begin();
+		}
 		this.session.persist(pauta);
 		this.transaction.commit();
 	}
 
 	@Override
 	public void alterar(PautaMVA pauta) {
+		if (!transaction.isActive()) {
+			transaction.begin();
+		}
 		this.session.merge(pauta);
 		this.transaction.commit();
 	}
 
 	@Override
 	public void remover(Long idPautaMVA) {
+		if (!transaction.isActive()) {
+			transaction.begin();
+		}
 		PautaMVA paut = this.session.find(PautaMVA.class, idPautaMVA);
 		this.session.remove(paut);
 		this.transaction.commit();

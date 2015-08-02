@@ -15,16 +15,16 @@
 		<h3 style="margin-top: 0">CADASTRO DA PAUTA</h3>
 		<div align="left">
 			<p:commandButton value="Novo" actionListener="#{pautaBean.novo}"
-				ajax="grid" />
+				ajax="frmCadPauta" />
 
 			<p:commandButton value="Salvar" disabled="#{pautaBean.sal}"
-				actionListener="#{pautaBean.salvar}" ajax="grid" />
+				actionListener="#{pautaBean.salvar}" ajax="frmCadPauta" />
 
 			<p:commandButton value="Alterar" disabled="#{pautaBean.alt}"
-				actionListener="#{pautaBean.alterar}" ajax="grid" />
+				actionListener="#{pautaBean.alterar}" ajax="frmCadPauta" />
 
 			<p:commandButton value="Excluir" disabled="#{pautaBean.rem}"
-				actionListener="#{pautaBean.remover}" ajax="grid" />
+				actionListener="#{pautaBean.remover}" ajax="frmCadPauta" />
 
 			<p:commandButton id="consulta" value="Consultar" type="button"
 				ajax="dialog, grid" onclick="PF('dlg1').show();"
