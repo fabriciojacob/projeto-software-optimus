@@ -16,6 +16,9 @@
 		<h3 style="margin-top: 0">REQUISICAO</h3>
 		<div align="left">
 			<p:growl id="msgs" showDetail="true" />
+			
+			<p:messages id="messages" showDetail="true" autoUpdate="true"
+				closable="true" />
 
 			<p:commandButton value="Novo" actionListener="#{requisicaoBean.novo}"
 				update="frmReq" disabled="#{requisicaoBean.btNovo}" />
@@ -37,9 +40,6 @@
 
 			<p:commandButton value="Excluir"
 				disabled="#{requisicaoBean.btExcluir}" />
-
-			<p:messages id="messages" showDetail="true" autoUpdate="true"
-				closable="true" />
 
 			<ui:include
 				src="/privado/comercial/requisicao/requisicaoDadosGerais.xhtml" />

@@ -19,7 +19,7 @@
 
 	<p:column headerText="Selecionar">
 		<p:commandLink id="linkUsuario" value="Selecionar"
-			action="#{requisicaoBean.selecionaUsuario}" ajax="linkUsuario">
+			action="#{requisicaoBean.selecionaUsuario}" ajax="frmReq" update="cadastroRequisicao">
 			<f:setPropertyActionListener value="#{pesUsuario.idUsuario}"
 				target="#{requisicaoBean.idUsuario}" />
 		</p:commandLink>

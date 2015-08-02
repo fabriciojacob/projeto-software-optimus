@@ -4,7 +4,10 @@ import java.util.Date;
 import java.util.List;
 
 import br.com.softwareOptimus.comercial.Requisicao;
+import br.com.softwareOptimus.comercial.TipoOrigem;
 import br.com.softwareOptimus.comercial.dao.RequisicaoDAO;
+import br.com.softwareOptimus.entidades.Pessoa;
+import br.com.softwareOptimus.entidades.Usuario;
 import br.com.softwareOptimus.util.DAOFactory;
 
 public class RequisicaoRN {
@@ -31,12 +34,40 @@ public class RequisicaoRN {
 		this.requisicaoDAO = requisicaoDAO;
 	}
 
-	public boolean salvar(Requisicao requisicao) throws Exception {
-		if (requisicao.getUsuRequisita().getIdUsuario() != null) {
+	public String salvar(Requisicao requisicao, Usuario user, Pessoa empresa,
+			String tipoRequisicao) throws Exception {
+		
+		if ((user != null)	&& (tipoRequisicao != null) && (empresa != null)) {
+			if (tipoRequisicao.equals("PED")) {
+				requisicao.setTipoOrigem(TipoOrigem.PEDIDO_VENDA);
+			} else if (tipoRequisicao.equals("RM")) {
+				requisicao.setTipoOrigem(TipoOrigem.REQUISICAO_MATERIAL);
+			} else if (tipoRequisicao.equals("OR")) {
+				requisicao.setTipoOrigem(TipoOrigem.ORDEM_FABRICACAO);
+			} else {
+				requisicao.setTipoOrigem(null);
+			}
+			requisicao.setEmpresa(empresa);
+			requisicao.setUsuRequisita(user);
 			this.requisicaoDAO.salvar(requisicao);
-			return true;
-		} else
-			return false;
+			return "Requisição salva com sucesso !!! ";
+		} else if ((user == null) && (tipoRequisicao == null)) {
+			return "Usuário e tipo de requisição não foram preenchidos !!! ";
+		} else if ((user == null) && (empresa == null)){
+			return "Usuario e empresa não foram preenchidos !!! ";
+		}else if((empresa == null) && (tipoRequisicao == null)){
+			return "Empresa e tipo de requisição não foram preenchidos !!! ";
+		}else if(user == null){
+			return "Usuário não foi vinculado na requisição !!! ";
+		}else if(empresa == null){
+			return "Empresa não foi selecionada !!! ";
+		}else{
+			return "Tipo de requisição não foi selecionada !!! ";
+		}
+	}
+
+	public void setTipoReq(String tipoRequisicao) {
+
 	}
 
 	public void editar(Requisicao requisicao) throws Exception {
