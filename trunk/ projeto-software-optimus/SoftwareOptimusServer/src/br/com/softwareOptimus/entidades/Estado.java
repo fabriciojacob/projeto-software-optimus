@@ -42,7 +42,6 @@ public class Estado implements Serializable, Converter {
 	
 	@OneToMany(mappedBy = "destino")
 	private Collection<GradeTributariaVigencia> grades2;
-	
 
 	@OneToMany(mappedBy = "uf")
 	private Collection<Municipio> municipio;

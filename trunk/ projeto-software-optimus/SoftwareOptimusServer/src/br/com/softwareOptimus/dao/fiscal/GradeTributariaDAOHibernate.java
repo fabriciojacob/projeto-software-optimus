@@ -3,6 +3,7 @@ package br.com.softwareOptimus.dao.fiscal;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
@@ -10,6 +11,7 @@ import javax.persistence.TypedQuery;
 
 import br.com.softwareOptimus.fiscal.FiguraFiscal;
 import br.com.softwareOptimus.fiscal.GradeTributaria;
+import br.com.softwareOptimus.fiscal.GradeTributariaVigencia;
 
 public class GradeTributariaDAOHibernate implements GradeTributariaDAO {
 
@@ -47,19 +49,27 @@ public class GradeTributariaDAOHibernate implements GradeTributariaDAO {
 
 	@Override
 	public void salvar(GradeTributaria grade) {
+		if (!transaction.isActive()) {
+			transaction.begin();
+		}
 		this.session.persist(grade);
 		this.transaction.commit();
 	}
 
 	@Override
 	public void altGrade(GradeTributaria grade) {
+		if (!transaction.isActive()) {
+			transaction.begin();
+		}
 		this.session.merge(grade);
 		this.transaction.commit();
 	}
 
 	@Override
 	public void remover(GradeTributaria grade) throws SQLException, IOException {
-		
+		if (!transaction.isActive()) {
+			transaction.begin();
+		}
 		String deleteQuery = "delete from GradeTributariaVigencia g where g.grade = :grade";  
 		Query query = session.createQuery(deleteQuery);  
 		query.setParameter("grade", grade);  
@@ -120,5 +130,46 @@ public class GradeTributariaDAOHibernate implements GradeTributariaDAO {
 				FiguraFiscal.class);
 		fig.setParameter("grade", grade.getIdGradeTrib());
 		return fig.getResultList();
+	}
+
+	@Override
+	public int countGradeTributariaPaginacao(GradeTributaria gradeTributaria,GradeTributariaVigencia gradeTributariaVigencia) {
+		StringBuilder sql = new StringBuilder();
+		this.defineCondicao(sql, gradeTributaria, gradeTributariaVigencia);
+		Query qryMaximo = this.session.createQuery(" select Count(g) from GradeTributaria g "
+				 								 + " left join g.gradeTributariaVigenciaCollection gV "
+				 								 + " left join gV.origem o "
+				 								 + " left Join gV.destino d "
+				 								 + " left join gv.pauta p ".concat(sql.toString()));
+		this.defineParametros(qryMaximo, gradeTributaria, gradeTributariaVigencia);
+		Number count = (Number) qryMaximo.getSingleResult();
+		return count.intValue();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<GradeTributaria> buscaGradeTributariaPaginacao(GradeTributaria gradeTributaria,GradeTributariaVigencia gradeTributariaVigencia, int first,int pageSize) {
+		StringBuilder sql = new StringBuilder();
+		this.defineCondicao(sql, gradeTributaria, gradeTributariaVigencia);
+		Query qry = this.session.createQuery(" select Count(g) from GradeTributaria g "
+				                           + " left join g.gradeTributariaVigenciaCollection gV "
+				                           + " left join gV.origem o "
+				                           + " left Join gV.destino d "
+				                           + " left join gv.pauta p ".concat(sql.toString()));
+		this.defineParametros(qry, gradeTributaria, gradeTributariaVigencia);
+		qry.setFirstResult(first);
+		qry.setMaxResults(pageSize);
+		List<GradeTributaria> result = qry.getResultList();
+		return result;
+	}
+	
+	@Override
+	public void defineCondicao(StringBuilder sql,GradeTributaria gradeTributaria,GradeTributariaVigencia gradeTributariaVigencia){
+		
+	}
+	
+	@Override
+	public void defineParametros(Query qry, GradeTributaria gradeTributaria,GradeTributariaVigencia gradeTributariaVigencia){
+		
 	}
 }

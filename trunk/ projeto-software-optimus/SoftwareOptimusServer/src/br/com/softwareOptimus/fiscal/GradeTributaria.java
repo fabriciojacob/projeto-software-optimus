@@ -12,9 +12,6 @@ import javax.persistence.Table;
 @Table(name="tbGradeTributaria")
 public class GradeTributaria implements Serializable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 260554637064890437L;
 	
 	@Id
@@ -24,7 +21,7 @@ public class GradeTributaria implements Serializable{
 	private String descricao;
 	
 	@OneToMany(mappedBy = "grade")
-	private Collection<GradeTributariaVigencia> grade;
+	private Collection<GradeTributariaVigencia> gradeTributariaVigenciaCollection;
 
 	public Long getIdGradeTrib() {
 		return idGradeTrib;
@@ -40,6 +37,15 @@ public class GradeTributaria implements Serializable{
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+
+	public Collection<GradeTributariaVigencia> getGradeTributariaVigenciaCollection() {
+		return gradeTributariaVigenciaCollection;
+	}
+
+	public void setGradeTributariaVigenciaCollection(
+			Collection<GradeTributariaVigencia> gradeTributariaVigenciaCollection) {
+		this.gradeTributariaVigenciaCollection = gradeTributariaVigenciaCollection;
 	}
 
 	@Override

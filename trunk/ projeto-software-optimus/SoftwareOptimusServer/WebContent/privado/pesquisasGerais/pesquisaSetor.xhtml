@@ -22,8 +22,8 @@
 				<p:inputText style="width:260px; float: left;" value="#{pesquisaSetorBean.setor.descricao}"/>
 			</h:panelGrid>
 			<h:panelGrid>
-				SubGrupos:
-				<p:selectOneMenu id="subGrupo" value="#{pesquisaSetorBean.grupo}" style="width:260px;">
+				Grupos:
+				<p:selectOneMenu id="grupo" value="#{pesquisaSetorBean.grupo}" style="width:260px;">
 					<f:selectItem itemLabel="Selecione um Grupo" />
 					<f:selectItems value="#{pesquisaSetorBean.grupoList}" var="listaGrupo" itemValue="#{listaGrupo}"
 						itemLabel="#{listaGrupo.idGrupo} - #{listaGrupo.descricao}" />
@@ -42,11 +42,11 @@
 
 				<f:facet name="header">Setores Cadastrados</f:facet>
 					
-				<p:column headerText="Código do Grupo">
+				<p:column headerText="Código do Setor">
 					<h:outputText value="#{setor.idSetor}" />
 				</p:column>
 
-				<p:column headerText="Descrição do Grupo">
+				<p:column headerText="Descrição do Setor">
 					<h:outputText value="#{setor.descricao}" />
 				</p:column>
 				<p:column headerText="Selecionar" style="width: 50px; text-align: center">
