@@ -25,12 +25,24 @@
 		<p:inputText id="descricao" disabled="#{requisicaoBean.reqDesc}"
 		value="#{requisicaoBean.requisicao.descricao}" size="40" />
 		
+		Observações:
+		<p:inputText id="obs" disable="#{requisicaoBean.obs}"
+		value="#{requisicaoBean.requisicao.observacoes}" size="40" />
+		
+		Tipo requisição:
+		<p:selectOneMenu id="tipoRequisicao" value="#{requisicaoBean.tipoRequisicao}" disabled="#{requisicaoBean.tipoReq}">
+			<f:selectItem itemLabel="Selecione um tipo de requisição" />
+			<f:selectItem itemLabel="Pedido" 					itemValue="PED" />
+			<f:selectItem itemLabel="Ordem de produção" 		itemValue="OR" />
+			<f:selectItem itemLabel="Requisição de material" 	itemValue="RM" />
+		</p:selectOneMenu>
+		
 		Data requisicao:
 		<p:calendar id="razaoSocial" disabled="#{requisicaoBean.reqData}"
 		value="#{requisicaoBean.requisicao.dataReq}" />
 		
 		Usuario:
-		<p:inputText id="usuario" disabled="true"/>	
+		<p:inputText id="usuario" disabled="true" value="#{requisicaoBean.usuario.nome}"/>
 
 </h:panelGrid>
 </html>

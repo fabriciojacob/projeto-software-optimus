@@ -10,6 +10,7 @@ import javax.faces.context.FacesContext;
 import org.primefaces.event.ToggleEvent;
 
 import br.com.softwareOptimus.comercial.Requisicao;
+import br.com.softwareOptimus.comercial.TipoOrigem;
 import br.com.softwareOptimus.comercial.RN.RequisicaoRN;
 import br.com.softwareOptimus.entidades.Pessoa;
 import br.com.softwareOptimus.entidades.Usuario;
@@ -20,17 +21,18 @@ import br.com.softwareOptimus.produto.Produto;
 @ViewScoped
 public class RequisicaoBean {
 
-	private Requisicao requisicao;
+	private Requisicao requisicao = new Requisicao();
 	private Long idEmpresa, idUsuario;
 	private Pessoa empSelecionada;
 	private List<Produto> listaProdutos;
 	private RequisicaoRN requisicaoRN;
-	private Usuario user;
+	private Usuario user =  new Usuario();
 	private boolean reqDesc = true, reqEmpr = true, reqData = true,
 			btNovo = false, btSalvar = true, btEdit = true, btExcluir = true,
-			btCanc = true, btVincUser = true;
+			btCanc = true, btVincUser = true, obs = true, tipoReq = true;;
 	private UsuarioRN usuarioRN;
 	private Usuario usuario;
+	private String tipoRequisicao;
 
 	public RequisicaoBean() {
 		requisicaoRN = new RequisicaoRN();
@@ -47,12 +49,14 @@ public class RequisicaoBean {
 		this.reqDesc = true;
 		this.reqData = true;
 		this.reqEmpr = true;
-		this.btNovo = true;
-		this.btCanc = true;
-		this.btEdit = true;
-		this.btExcluir = true;
-		this.btSalvar = true;
+		this.obs 		= true;
+		this.btNovo 	= true;
+		this.btCanc 	= true;
+		this.btEdit 	= true;
+		this.btExcluir 	= true;
+		this.btSalvar 	= true;
 		this.btVincUser = true;
+		this.tipoReq	= true;
 	}
 
 	public void inativaBool() {
@@ -60,28 +64,27 @@ public class RequisicaoBean {
 		this.reqDesc = false;
 		this.reqData = false;
 		this.reqEmpr = false;
-		this.btNovo = false;
-		this.btCanc = false;
-		this.btEdit = false;
-		this.btExcluir = false;
-		this.btSalvar = false;
+		this.obs 		= false;
+		this.btNovo 	= false;
+		this.btCanc 	= false;
+		this.btEdit 	= false;
+		this.btExcluir 	= false;
+		this.btSalvar 	= false;
 		this.btVincUser = false;
+		this.tipoReq	= false;
 	}
 
 	public void novo() {
-		this.requisicao = new Requisicao();
+		if(this.requisicao == null){
+			this.requisicao = new Requisicao();
+		}
 		inativaBool();
 	}
 
 	public void salvar() {
 		try {
-			this.requisicao.setUsuRequisita(usuario);
-			this.requisicao.setEmpresa(empSelecionada);
-			if (requisicaoRN.salvar(requisicao)) {
-				msgAcerto("Requisicao salva com sucesso !!!");
-				inativaBool();
-			} else
-				msgErro("Vincule um usuário de requisição ", null);
+			String check = requisicaoRN.salvar(requisicao, usuario, empSelecionada, tipoRequisicao);
+			msgAcerto(check);
 		} catch (Exception ex) {
 			msgErro("Problemas ao salvar a requisicao", ex);
 		}
@@ -258,6 +261,30 @@ public class RequisicaoBean {
 
 	public void setBtVincUser(boolean btVincUser) {
 		this.btVincUser = btVincUser;
+	}
+
+	public boolean isObs() {
+		return obs;
+	}
+
+	public void setObs(boolean obs) {
+		this.obs = obs;
+	}
+
+	public String getTipoRequisicao() {
+		return tipoRequisicao;
+	}
+
+	public void setTipoRequisicao(String tipoRequisicao) {
+		this.tipoRequisicao = tipoRequisicao;
+	}
+
+	public boolean isTipoReq() {
+		return tipoReq;
+	}
+
+	public void setTipoReq(boolean tipoReq) {
+		this.tipoReq = tipoReq;
 	}
 
 }
