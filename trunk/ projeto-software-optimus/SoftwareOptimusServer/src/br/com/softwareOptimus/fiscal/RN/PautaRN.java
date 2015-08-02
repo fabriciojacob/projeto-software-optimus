@@ -91,4 +91,12 @@ public class PautaRN {
 		}
 
 	}
+
+	public int countPautaPaginacao(Pauta pauta) {
+		return 0;
+	}
+
+	public List<Pauta> buscaPautaPaginacao(Pauta pauta, int first, int pageSize) {
+		return null;
+	}
 }

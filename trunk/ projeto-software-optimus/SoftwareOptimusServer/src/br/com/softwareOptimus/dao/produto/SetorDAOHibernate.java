@@ -49,12 +49,18 @@ public class SetorDAOHibernate implements SetorDAO {
 
 	@Override
 	public void salvar(Setor setor) {
+		if (!transaction.isActive()) {
+			transaction.begin();
+		}
 		this.session.persist(setor);
 		this.transaction.commit();
 	}
 
 	@Override
 	public void altSet(Setor setor) {
+		if (!transaction.isActive()) {
+			transaction.begin();
+		}
 		this.session.merge(setor);
 		this.transaction.commit();
 	}
@@ -69,6 +75,9 @@ public class SetorDAOHibernate implements SetorDAO {
 
 	@Override
 	public void remove(Setor setor) {
+		if (!transaction.isActive()) {
+			transaction.begin();
+		}
 		this.session.remove(setor);
 		this.transaction.commit();
 	}
