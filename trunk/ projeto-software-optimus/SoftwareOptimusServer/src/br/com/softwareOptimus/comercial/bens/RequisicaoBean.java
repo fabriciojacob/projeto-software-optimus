@@ -8,6 +8,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import org.primefaces.event.ToggleEvent;
 import br.com.softwareOptimus.comercial.Requisicao;
+import br.com.softwareOptimus.comercial.StatusGeral;
 import br.com.softwareOptimus.comercial.RN.RequisicaoRN;
 import br.com.softwareOptimus.entidades.Pessoa;
 import br.com.softwareOptimus.entidades.Usuario;
@@ -22,14 +23,15 @@ public class RequisicaoBean {
 	private Long idEmpresa, idUsuario;
 	private Pessoa empSelecionada;
 	private List<Produto> listaProdutos;
+	private List<Requisicao> listaRequisicao;
 	private RequisicaoRN requisicaoRN;
 	private Usuario user =  new Usuario();
 	private boolean reqDesc = true, reqEmpr = true, reqData = true,
 			btNovo = false, btSalvar = true, btEdit = true, btExcluir = true,
-			btVincUser = true, obs = true, tipoReq = true;;
+			btVincUser = true, obs = true, tipoReq = true, btEnviReq = true;;
 	private UsuarioRN usuarioRN;
 	private Usuario usuario;
-	private String tipoRequisicao;
+	private String tipoRequisicao, descReq;
 	
 	public RequisicaoBean() {
 		this.requisicao = new Requisicao();
@@ -60,8 +62,14 @@ public class RequisicaoBean {
 		ativaBool();
 		this.btNovo = false;
 		try{
-			requisicaoRN.excluir(requisicao);
-			msgAcerto("Registro excluido com sucesso !!!");
+			int i = requisicaoRN.excluir(requisicao);
+			
+			if(i == 0){
+				msgAcerto("Registro excluido com sucesso !!!");
+			}else{
+				msgErro("Requisição já enviada, exclusão abortada" , null);
+			}
+			
 			requisicao = new Requisicao();
 		}catch (Exception ex){
 			msgErro("Problemas ao excluir o registro ", ex);
@@ -89,6 +97,16 @@ public class RequisicaoBean {
 		salvar(tipoOper);
 	}
 	
+	public void enviarRequisicao(){
+		this.requisicao.setStatusGeral(StatusGeral.ENVIADA);
+		try{
+			editar(2);
+			msgAcerto("Requisição enviada!!!");
+		}catch (Exception ex){
+			msgErro("Erro ao enviar a requisição !!!", ex);
+		}
+	}
+	
 	public void inativaBoolSalvar(){
 		this.btEdit 	= false;
 		this.btExcluir 	= false;
@@ -106,6 +124,7 @@ public class RequisicaoBean {
 			msgAcerto(check);
 			inativaBoolSalvar();
 			this.btSalvar = true;
+			this.btEnviReq = false;
 		} catch (Exception ex) {
 			msgErro("Problemas ao salvar ou editar a requisicao", ex);
 		}
@@ -298,6 +317,30 @@ public class RequisicaoBean {
 
 	public void setTipoReq(boolean tipoReq) {
 		this.tipoReq = tipoReq;
+	}
+
+	public boolean isBtEnviReq() {
+		return btEnviReq;
+	}
+
+	public void setBtEnviReq(boolean btEnviReq) {
+		this.btEnviReq = btEnviReq;
+	}
+
+	public String getDescReq() {
+		return descReq;
+	}
+
+	public void setDescReq(String descReq) {
+		this.descReq = descReq;
+	}
+
+	public List<Requisicao> getListaRequisicao() {
+		return listaRequisicao;
+	}
+
+	public void setListaRequisicao(List<Requisicao> listaRequisicao) {
+		this.listaRequisicao = listaRequisicao;
 	}
 
 }

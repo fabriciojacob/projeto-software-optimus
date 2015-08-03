@@ -40,7 +40,8 @@
 			<p:commandButton value="Excluir" update="frmReq"
 				disabled="#{requisicaoBean.btExcluir}" actionListener="#{requisicaoBean.excluir}" />
 			
-			<p:commandButton value="Enviar Requisição"/>
+			<p:commandButton value="Enviar Requisição" disabled="#{requisicaoBean.btEnviReq}"
+				actionListener="#{requisicaoBean.enviarRequisicao}"/>
 
 			<ui:include
 				src="/privado/comercial/requisicao/requisicaoDadosGerais.xhtml" />
@@ -67,9 +68,12 @@
 				height="350" width="600">
 
 				<h:panelGrid columns="3">
+				
 				Descrição:
+				<p:inputText size="30" value="#{requisicaoBean.descReq}"/>
 				 
-				Periodo:
+				Data Inicial:
+				<p:calendar />
 				   
 				<p:commandButton value="Pesquisar" />
 				</h:panelGrid>

@@ -25,6 +25,8 @@ public interface RequisicaoDAO {
 	
 	public List<Requisicao> pesquisaDescricao(String descricao) throws Exception;
 	
-	public List<Requisicao> pesquisaPeriodo(Date dataIni, Date dataFim) throws Exception;
+	public List<Requisicao> pesquisaPeriodo(Date dataIni, Date dataFim, String desc) throws Exception;
+	
+	public int countProdutos(Requisicao requisicao) throws Exception;
 
 }
