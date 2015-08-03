@@ -24,22 +24,23 @@
 				update="frmReq" disabled="#{requisicaoBean.btNovo}" />
 
 			<p:commandButton value="Salvar"
-				actionListener="#{requisicaoBean.salvar}" update="frmReq"
+				actionListener="#{requisicaoBean.salvar(1)}" update="frmReq"
 				disabled="#{requisicaoBean.btSalvar}" />
 
 			<p:commandButton value="Vincula usuário" type="button"
 				onclick="PF('usuarios').show();"
 				disabled="#{requisicaoBean.btVincUser}" />
 
-			<p:commandButton value="Editar" disabled="#{requisicaoBean.btEdit}" />
+			<p:commandButton value="Editar" disabled="#{requisicaoBean.btEdit}" 
+				actionListener="#{requisicaoBean.editar(2)}"/>
 
 			<p:commandButton value="Consulta" type="button"
 				onclick="PF('requisicoes').show();" />
 
-			<p:commandButton value="Cancelar" disabled="#{requisicaoBean.btCanc}" />
-
-			<p:commandButton value="Excluir"
-				disabled="#{requisicaoBean.btExcluir}" />
+			<p:commandButton value="Excluir" update="frmReq"
+				disabled="#{requisicaoBean.btExcluir}" actionListener="#{requisicaoBean.excluir}" />
+			
+			<p:commandButton value="Enviar Requisição"/>
 
 			<ui:include
 				src="/privado/comercial/requisicao/requisicaoDadosGerais.xhtml" />

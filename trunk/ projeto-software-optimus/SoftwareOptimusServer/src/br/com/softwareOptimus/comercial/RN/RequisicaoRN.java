@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import br.com.softwareOptimus.comercial.Requisicao;
+import br.com.softwareOptimus.comercial.StatusGeral;
 import br.com.softwareOptimus.comercial.TipoOrigem;
 import br.com.softwareOptimus.comercial.dao.RequisicaoDAO;
 import br.com.softwareOptimus.entidades.Pessoa;
@@ -35,9 +36,9 @@ public class RequisicaoRN {
 	}
 
 	public String salvar(Requisicao requisicao, Usuario user, Pessoa empresa,
-			String tipoRequisicao) throws Exception {
-		
-		if ((user != null)	&& (tipoRequisicao != null) && (empresa != null)) {
+			String tipoRequisicao, int tipoOper) throws Exception {
+
+		if ((user != null) && (tipoRequisicao != null) && (empresa != null)) {
 			if (tipoRequisicao.equals("PED")) {
 				requisicao.setTipoOrigem(TipoOrigem.PEDIDO_VENDA);
 			} else if (tipoRequisicao.equals("RM")) {
@@ -49,25 +50,31 @@ public class RequisicaoRN {
 			}
 			requisicao.setEmpresa(empresa);
 			requisicao.setUsuRequisita(user);
-			this.requisicaoDAO.salvar(requisicao);
+			if (requisicao.getDataReq() == null) {
+				Date data = new Date(System.currentTimeMillis());
+				requisicao.setDataReq(data);
+			}
+			requisicao.setStatusGeral(StatusGeral.PENDENTE);
+			if (tipoOper == 1) {
+				this.requisicaoDAO.salvar(requisicao);
+			} else {
+				editar(requisicao);
+				return "Registor editado com sucesso !!!";
+			}
 			return "Requisição salva com sucesso !!! ";
 		} else if ((user == null) && (tipoRequisicao == null)) {
 			return "Usuário e tipo de requisição não foram preenchidos !!! ";
-		} else if ((user == null) && (empresa == null)){
+		} else if ((user == null) && (empresa == null)) {
 			return "Usuario e empresa não foram preenchidos !!! ";
-		}else if((empresa == null) && (tipoRequisicao == null)){
+		} else if ((empresa == null) && (tipoRequisicao == null)) {
 			return "Empresa e tipo de requisição não foram preenchidos !!! ";
-		}else if(user == null){
+		} else if (user == null) {
 			return "Usuário não foi vinculado na requisição !!! ";
-		}else if(empresa == null){
+		} else if (empresa == null) {
 			return "Empresa não foi selecionada !!! ";
-		}else{
+		} else {
 			return "Tipo de requisição não foi selecionada !!! ";
 		}
-	}
-
-	public void setTipoReq(String tipoRequisicao) {
-
 	}
 
 	public void editar(Requisicao requisicao) throws Exception {
