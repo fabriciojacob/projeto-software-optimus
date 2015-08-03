@@ -81,6 +81,7 @@ public class RequisicaoHibernate implements RequisicaoDAO {
 		}
 
 		this.session.merge(requisicao);
+		this.transacao.commit();
 
 	}
 
@@ -91,6 +92,7 @@ public class RequisicaoHibernate implements RequisicaoDAO {
 		}
 
 		this.session.remove(requisicao);
+		this.transacao.commit();
 	}
 
 	@Override

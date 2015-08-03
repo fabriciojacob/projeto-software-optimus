@@ -6,11 +6,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-
 import org.primefaces.event.ToggleEvent;
-
 import br.com.softwareOptimus.comercial.Requisicao;
-import br.com.softwareOptimus.comercial.TipoOrigem;
 import br.com.softwareOptimus.comercial.RN.RequisicaoRN;
 import br.com.softwareOptimus.entidades.Pessoa;
 import br.com.softwareOptimus.entidades.Usuario;
@@ -21,7 +18,7 @@ import br.com.softwareOptimus.produto.Produto;
 @ViewScoped
 public class RequisicaoBean {
 
-	private Requisicao requisicao = new Requisicao();
+	private Requisicao requisicao;
 	private Long idEmpresa, idUsuario;
 	private Pessoa empSelecionada;
 	private List<Produto> listaProdutos;
@@ -29,13 +26,14 @@ public class RequisicaoBean {
 	private Usuario user =  new Usuario();
 	private boolean reqDesc = true, reqEmpr = true, reqData = true,
 			btNovo = false, btSalvar = true, btEdit = true, btExcluir = true,
-			btCanc = true, btVincUser = true, obs = true, tipoReq = true;;
+			btVincUser = true, obs = true, tipoReq = true;;
 	private UsuarioRN usuarioRN;
 	private Usuario usuario;
 	private String tipoRequisicao;
-
+	
 	public RequisicaoBean() {
-		requisicaoRN = new RequisicaoRN();
+		this.requisicao = new Requisicao();
+		requisicaoRN 	= new RequisicaoRN();
 	}
 
 	public void checkRegraNull() {
@@ -51,42 +49,65 @@ public class RequisicaoBean {
 		this.reqEmpr = true;
 		this.obs 		= true;
 		this.btNovo 	= true;
-		this.btCanc 	= true;
 		this.btEdit 	= true;
 		this.btExcluir 	= true;
 		this.btSalvar 	= true;
 		this.btVincUser = true;
 		this.tipoReq	= true;
 	}
+	
+	public void excluir(){
+		ativaBool();
+		this.btNovo = false;
+		try{
+			requisicaoRN.excluir(requisicao);
+			msgAcerto("Registro excluido com sucesso !!!");
+			requisicao = new Requisicao();
+		}catch (Exception ex){
+			msgErro("Problemas ao excluir o registro ", ex);
+		}
+	}
 
-	public void inativaBool() {
+	public void inativaBoolNovo() {
 		this.reqData = false;
 		this.reqDesc = false;
 		this.reqData = false;
 		this.reqEmpr = false;
 		this.obs 		= false;
 		this.btNovo 	= false;
-		this.btCanc 	= false;
-		this.btEdit 	= false;
-		this.btExcluir 	= false;
 		this.btSalvar 	= false;
 		this.btVincUser = false;
 		this.tipoReq	= false;
 	}
-
-	public void novo() {
-		if(this.requisicao == null){
-			this.requisicao = new Requisicao();
-		}
-		inativaBool();
+	
+	public void ativaBoolSalvar(){
+		this.btEdit 	= true;
+		this.btExcluir 	= true;
+	}
+	
+	public void editar(int tipoOper){
+		salvar(tipoOper);
+	}
+	
+	public void inativaBoolSalvar(){
+		this.btEdit 	= false;
+		this.btExcluir 	= false;
 	}
 
-	public void salvar() {
+	public void novo() {
+		this.requisicao = new Requisicao();
+		inativaBoolNovo();
+		ativaBoolSalvar();
+	}
+
+	public void salvar(int tipoOper) {
 		try {
-			String check = requisicaoRN.salvar(requisicao, usuario, empSelecionada, tipoRequisicao);
+			String check = requisicaoRN.salvar(requisicao, usuario, empSelecionada, tipoRequisicao,tipoOper);
 			msgAcerto(check);
+			inativaBoolSalvar();
+			this.btSalvar = true;
 		} catch (Exception ex) {
-			msgErro("Problemas ao salvar a requisicao", ex);
+			msgErro("Problemas ao salvar ou editar a requisicao", ex);
 		}
 	}
 
@@ -213,14 +234,6 @@ public class RequisicaoBean {
 
 	public void setBtExcluir(boolean btExcluir) {
 		this.btExcluir = btExcluir;
-	}
-
-	public boolean isBtCanc() {
-		return btCanc;
-	}
-
-	public void setBtCanc(boolean btCanc) {
-		this.btCanc = btCanc;
 	}
 
 	public Usuario getUser() {
