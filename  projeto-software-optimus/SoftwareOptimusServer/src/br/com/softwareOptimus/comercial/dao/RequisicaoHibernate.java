@@ -106,13 +106,21 @@ public class RequisicaoHibernate implements RequisicaoDAO {
 	}
 
 	@Override
-	public List<Requisicao> pesquisaPeriodo(Date dataIni, Date dataFim)
-			throws Exception {
-		String jpql = "Select e From Requisicao where dataReq between :parDataIni and :parDatafim";
-		TypedQuery<Requisicao> listaRequisicao = this.session.createQuery(jpql, Requisicao.class);
+	public List<Requisicao> pesquisaPeriodo(Date dataIni, Date dataFim,
+			String desc) throws Exception {
+		String jpql = "Select e From Requisicao where dataReq between :parDataIni and :parDatafim and a.descricao like '%"
+				+ desc + "'%";
+		TypedQuery<Requisicao> listaRequisicao = this.session.createQuery(jpql,
+				Requisicao.class);
 		listaRequisicao.setParameter("parDataIni", dataIni);
 		listaRequisicao.setParameter("parDataFim", dataFim);
 		return listaRequisicao.getResultList();
+	}
+
+	@Override
+	public int countProdutos(Requisicao requisicao) throws Exception {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

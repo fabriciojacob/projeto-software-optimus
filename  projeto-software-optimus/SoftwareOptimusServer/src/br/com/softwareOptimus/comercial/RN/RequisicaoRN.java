@@ -54,8 +54,8 @@ public class RequisicaoRN {
 				Date data = new Date(System.currentTimeMillis());
 				requisicao.setDataReq(data);
 			}
-			requisicao.setStatusGeral(StatusGeral.PENDENTE);
 			if (tipoOper == 1) {
+				requisicao.setStatusGeral(StatusGeral.PENDENTE);
 				this.requisicaoDAO.salvar(requisicao);
 			} else {
 				editar(requisicao);
@@ -81,17 +81,24 @@ public class RequisicaoRN {
 		this.requisicaoDAO.editar(requisicao);
 	}
 
-	public void excluir(Requisicao requisicao) throws Exception {
-		this.requisicaoDAO.excluir(requisicao);
+	public int excluir(Requisicao requisicao) throws Exception {
+		// 0 ok, 1  requisição ja enviada
+		// somente enviar se houver produtos
+		if(requisicao.getStatusGeral().toString().equals("ENVIADA")){
+			return 1;
+		}else{
+			this.requisicaoDAO.excluir(requisicao);
+			return 0;
+		}
 	}
 
 	public List<Requisicao> listaRequisicao(String descricao) throws Exception {
 		return this.requisicaoDAO.pesquisaDescricao(descricao);
 	}
 
-	public List<Requisicao> listaReqDate(Date dataIni, Date dataFim)
+	public List<Requisicao> listaReqDate(Date dataIni, Date dataFim, String desc)
 			throws Exception {
-		return this.requisicaoDAO.pesquisaPeriodo(dataIni, dataFim);
+		return this.requisicaoDAO.pesquisaPeriodo(dataIni, dataFim, desc);
 	}
 
 }
