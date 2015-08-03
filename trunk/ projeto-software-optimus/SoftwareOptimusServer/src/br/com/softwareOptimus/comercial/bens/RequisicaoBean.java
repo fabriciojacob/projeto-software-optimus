@@ -27,8 +27,8 @@ public class RequisicaoBean {
 	private RequisicaoRN requisicaoRN;
 	private Usuario user =  new Usuario();
 	private boolean reqDesc = true, reqEmpr = true, reqData = true,
-			btNovo = false, btSalvar = true, btEdit = true, btExcluir = true,
-			btVincUser = true, obs = true, tipoReq = true, btEnviReq = true;;
+			btNovo = false, btSalvar = true, btEdit = true, btExcluir = true, reqOb = true,
+			btVincUser = true, tipoReq = true, btEnviReq = true;
 	private UsuarioRN usuarioRN;
 	private Usuario usuario;
 	private String tipoRequisicao, descReq;
@@ -49,7 +49,7 @@ public class RequisicaoBean {
 		this.reqDesc = true;
 		this.reqData = true;
 		this.reqEmpr = true;
-		this.obs 		= true;
+		this.reqOb		= true;
 		this.btNovo 	= true;
 		this.btEdit 	= true;
 		this.btExcluir 	= true;
@@ -81,7 +81,7 @@ public class RequisicaoBean {
 		this.reqDesc = false;
 		this.reqData = false;
 		this.reqEmpr = false;
-		this.obs 		= false;
+		this.reqOb		= false;
 		this.btNovo 	= false;
 		this.btSalvar 	= false;
 		this.btVincUser = false;
@@ -295,14 +295,6 @@ public class RequisicaoBean {
 		this.btVincUser = btVincUser;
 	}
 
-	public boolean isObs() {
-		return obs;
-	}
-
-	public void setObs(boolean obs) {
-		this.obs = obs;
-	}
-
 	public String getTipoRequisicao() {
 		return tipoRequisicao;
 	}
@@ -341,6 +333,14 @@ public class RequisicaoBean {
 
 	public void setListaRequisicao(List<Requisicao> listaRequisicao) {
 		this.listaRequisicao = listaRequisicao;
+	}
+
+	public boolean isReqOb() {
+		return reqOb;
+	}
+
+	public void setReqOb(boolean reqOb) {
+		this.reqOb = reqOb;
 	}
 
 }
