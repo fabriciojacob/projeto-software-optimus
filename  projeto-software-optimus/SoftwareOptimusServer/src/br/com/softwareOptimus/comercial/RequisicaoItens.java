@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import br.com.softwareOptimus.produto.Produto;
@@ -29,9 +30,9 @@ public class RequisicaoItens implements Serializable{
 	private Long idReqItem;
 	
 	@ManyToOne
-	private Requisicao Requisicao;
+	private Requisicao requisicao;
 	
-	@ManyToMany
+	@OneToMany
 	private Collection<Produto> produto;
 	
 	private Double quant;
@@ -68,11 +69,11 @@ public class RequisicaoItens implements Serializable{
 	}
 
 	public Requisicao getIdRequisicao() {
-		return Requisicao;
+		return requisicao;
 	}
 
 	public void setIdRequisicao(Requisicao idRequisicao) {
-		this.Requisicao = idRequisicao;
+		this.requisicao = idRequisicao;
 	}
 
 	public Collection<Produto> getProduto() {

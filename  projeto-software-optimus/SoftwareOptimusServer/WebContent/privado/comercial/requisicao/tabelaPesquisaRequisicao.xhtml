@@ -6,19 +6,23 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
-<p:dataTable id="dataRequisicao" value="#{usuarioBean.listaUsuario}"
-	var="pesUsuario" paginator="true" rows="6">
+<p:dataTable id="dataRequisicao" value="#{requisicaoBean.listaRequisicao}"
+	var="pesRequisicao" paginator="true" rows="6">
 
 	<p:column headerText="Codigo">
-		<h:outputText value="#{pesUsuario.idUsuario}" />
+		<h:outputText value="#{pesRequisicao.idRequisicao}" />
 	</p:column>
 
-	<p:column headerText="Nome do usuario">
-		<h:outputText value="#{pesUsuario.nome}"/>
+	<p:column headerText="Descrição do produto">
+		<h:outputText value="#{pesRequisicao.descricao}"/>
+	</p:column>
+	
+	<p:column headerText="Data Requisição">
+		<h:outputText value="#{pesRequisicao.dataReq}"/>
 	</p:column>
 
 	<p:column headerText="Selecionar">
-		<p:commandLink id="linkUsuario" value="Selecionar"
+		<p:commandLink id="linkReq" value="Selecionar"
 			action="#{requisicaoBean.selecionaUsuario}" ajax="frmReq" update="cadastroRequisicao">
 			<f:setPropertyActionListener value="#{pesUsuario.idUsuario}"
 				target="#{requisicaoBean.idUsuario}" />

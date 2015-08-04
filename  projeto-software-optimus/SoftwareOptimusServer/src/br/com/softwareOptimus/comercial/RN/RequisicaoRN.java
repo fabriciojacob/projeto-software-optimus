@@ -91,6 +91,10 @@ public class RequisicaoRN {
 			return 0;
 		}
 	}
+	
+	public Integer enviarRequisicao(Requisicao requisicao) throws Exception{
+		return this.requisicaoDAO.countProdutos(requisicao);
+	}
 
 	public List<Requisicao> listaRequisicao(String descricao) throws Exception {
 		return this.requisicaoDAO.pesquisaDescricao(descricao);

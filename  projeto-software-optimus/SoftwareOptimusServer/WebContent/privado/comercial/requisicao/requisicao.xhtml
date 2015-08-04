@@ -65,18 +65,25 @@
 			</p:dialog>
 
 			<p:dialog header="Consulta" widgetVar="requisicoes" modal="true"
-				height="350" width="600">
+				height="350" width="800">
 
-				<h:panelGrid columns="3">
+				<h:panelGrid columns="7">
 				
 				Descrição:
 				<p:inputText size="30" value="#{requisicaoBean.descReq}"/>
 				 
 				Data Inicial:
-				<p:calendar />
+				<p:calendar value="#{requisicaoBean.dataIni}"/>
+				
+				Data Final:
+				<p:calendar value="#{requisicaoBean.dataFim}"/>
 				   
-				<p:commandButton value="Pesquisar" />
+				<p:commandButton value="Pesquisar" actionListener="#{requisicaoBean.consultaRequisicao}"
+					update="dataRequisicao"/>
+								
 				</h:panelGrid>
+				
+				<ui:include src="/privado/comercial/requisicao/tabelaPesquisaRequisicao.xhtml"/>	
 
 			</p:dialog>
 
