@@ -1,12 +1,16 @@
 package br.com.softwareOptimus.comercial.bens;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+
 import org.primefaces.event.ToggleEvent;
+
 import br.com.softwareOptimus.comercial.Requisicao;
 import br.com.softwareOptimus.comercial.StatusGeral;
 import br.com.softwareOptimus.comercial.RN.RequisicaoRN;
@@ -32,6 +36,7 @@ public class RequisicaoBean {
 	private UsuarioRN usuarioRN;
 	private Usuario usuario;
 	private String tipoRequisicao, descReq;
+	private Date dataIni, dataFim;
 	
 	public RequisicaoBean() {
 		this.requisicao = new Requisicao();
@@ -41,6 +46,15 @@ public class RequisicaoBean {
 	public void checkRegraNull() {
 		if (this.requisicaoRN == null) {
 			this.requisicaoRN = new RequisicaoRN();
+		}
+	}
+	
+	public void consultaRequisicao(){
+		this.listaRequisicao = new ArrayList<>();
+		try{
+			this.listaRequisicao = this.requisicaoRN.listaReqDate(dataIni, dataFim, descReq);
+		}catch(Exception ex){
+			msgErro("Problemas na pesquisa da requisição !!!", ex);
 		}
 	}
 
@@ -98,10 +112,15 @@ public class RequisicaoBean {
 	}
 	
 	public void enviarRequisicao(){
-		this.requisicao.setStatusGeral(StatusGeral.ENVIADA);
 		try{
-			editar(2);
-			msgAcerto("Requisição enviada!!!");
+			Integer qtaProd = this.requisicaoRN.enviarRequisicao(requisicao);
+			if(qtaProd > 0){
+				this.requisicao.setStatusGeral(StatusGeral.ENVIADA);
+				editar(2);
+				msgAcerto("Requisição enviada!!!");
+			}else{
+				msgAcerto("Requisição sem produtos");
+			}
 		}catch (Exception ex){
 			msgErro("Erro ao enviar a requisição !!!", ex);
 		}
@@ -343,4 +362,19 @@ public class RequisicaoBean {
 		this.reqOb = reqOb;
 	}
 
+	public Date getDataIni() {
+		return dataIni;
+	}
+
+	public void setDataIni(Date dataIni) {
+		this.dataIni = dataIni;
+	}
+
+	public Date getDataFim() {
+		return dataFim;
+	}
+
+	public void setDataFim(Date dataFim) {
+		this.dataFim = dataFim;
+	}
 }

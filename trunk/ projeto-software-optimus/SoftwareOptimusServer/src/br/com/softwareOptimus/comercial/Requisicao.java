@@ -40,7 +40,7 @@ public class Requisicao implements Serializable {
 	@ManyToOne
 	private Pessoa empresa;
 	
-	@OneToMany(mappedBy = "Requisicao")
+	@OneToMany(mappedBy = "requisicao")
 	private Collection<RequisicaoItens> requisicaoItens;
 	
 	private String observacoes;
