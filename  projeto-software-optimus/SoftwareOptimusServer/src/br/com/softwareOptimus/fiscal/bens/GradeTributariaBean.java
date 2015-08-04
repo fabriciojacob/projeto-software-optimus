@@ -61,8 +61,8 @@ public class GradeTributariaBean extends FacesUtil implements Serializable {
 				this.getGradeRN().salvar(this.getGrade());
 				this.info("Grade salva com sucesso");
 				this.setSal(true);
-				this.setAlt(true);
-				this.setRem(true);
+				this.setAlt(false);
+				this.setRem(false);
 				this.setVig(false);
 			} else {
 				this.error("Existem campos nulos no formulário");

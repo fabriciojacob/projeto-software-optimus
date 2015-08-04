@@ -1,6 +1,5 @@
 package br.com.softwareOptimus.util;
 
-import br.com.softwareOptimus.comercial.Requisicao;
 
 
 public class Simulacao {

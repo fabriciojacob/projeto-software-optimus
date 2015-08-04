@@ -4,7 +4,10 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.persistence.Query;
+
 import br.com.softwareOptimus.fiscal.FiguraFiscal;
+import br.com.softwareOptimus.fiscal.GradeTributaria;
 import br.com.softwareOptimus.produto.Produto;
 
 public interface FiguraFiscalDAO {
@@ -19,4 +22,8 @@ public interface FiguraFiscalDAO {
 	public List<FiguraFiscal> listar();
 	public FiguraFiscal editFigura(Long id);
 	public List<Produto> verificaRemocao(FiguraFiscal figura);
+	public int countFiguraFiscalPaginacao(FiguraFiscal figuraFiscal,GradeTributaria gradeTributaria);
+	public List<FiguraFiscal> buscaFiguraFiscalPaginacao(FiguraFiscal figuraFiscal, GradeTributaria gradeTributaria,int first, int pageSize);
+	public void defineCondicao(StringBuilder sql, FiguraFiscal figuraFiscal,GradeTributaria gradeTributaria);
+	public void defineParametros(Query qry, FiguraFiscal figuraFiscal,GradeTributaria gradeTributaria);
 }

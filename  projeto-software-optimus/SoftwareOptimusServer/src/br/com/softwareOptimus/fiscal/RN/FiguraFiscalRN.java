@@ -59,4 +59,12 @@ public class FiguraFiscalRN {
 			return 1;
 		}
 	}
+
+	public int countFiguraFiscalPaginacao(FiguraFiscal figuraFiscal,GradeTributaria gradeTributaria) {
+		return this.figuraDAO.countFiguraFiscalPaginacao(figuraFiscal,gradeTributaria) ;
+	}
+
+	public List<FiguraFiscal> buscaFiguraFiscalPaginacao(FiguraFiscal figuraFiscal, GradeTributaria gradeTributaria,int first, int pageSize) {
+		return this.figuraDAO.buscaFiguraFiscalPaginacao(figuraFiscal, gradeTributaria, first, pageSize);
+	}
 }

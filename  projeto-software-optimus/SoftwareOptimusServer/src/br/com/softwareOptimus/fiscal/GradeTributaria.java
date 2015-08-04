@@ -2,9 +2,11 @@ package br.com.softwareOptimus.fiscal;
 
 import java.io.Serializable;
 import java.util.Collection;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -22,6 +24,9 @@ public class GradeTributaria implements Serializable{
 	
 	@OneToMany(mappedBy = "grade")
 	private Collection<GradeTributariaVigencia> gradeTributariaVigenciaCollection;
+	
+	@ManyToMany(mappedBy = "grades")
+	private Collection<FiguraFiscal> figuraFiscalCollection;
 
 	public Long getIdGradeTrib() {
 		return idGradeTrib;
@@ -46,6 +51,15 @@ public class GradeTributaria implements Serializable{
 	public void setGradeTributariaVigenciaCollection(
 			Collection<GradeTributariaVigencia> gradeTributariaVigenciaCollection) {
 		this.gradeTributariaVigenciaCollection = gradeTributariaVigenciaCollection;
+	}
+
+	public Collection<FiguraFiscal> getFiguraFiscalCollection() {
+		return figuraFiscalCollection;
+	}
+
+	public void setFiguraFiscalCollection(
+			Collection<FiguraFiscal> figuraFiscalCollection) {
+		this.figuraFiscalCollection = figuraFiscalCollection;
 	}
 
 	@Override

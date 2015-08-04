@@ -140,7 +140,7 @@ public class GradeTributariaDAOHibernate implements GradeTributariaDAO {
 				 								 + " left join g.gradeTributariaVigenciaCollection gV "
 				 								 + " left join gV.origem o "
 				 								 + " left Join gV.destino d "
-				 								 + " left join gv.pauta p ".concat(sql.toString()));
+				 								 + " left join gV.pauta p ".concat(sql.toString()));
 		this.defineParametros(qryMaximo, gradeTributaria, gradeTributariaVigencia);
 		Number count = (Number) qryMaximo.getSingleResult();
 		return count.intValue();
@@ -151,11 +151,11 @@ public class GradeTributariaDAOHibernate implements GradeTributariaDAO {
 	public List<GradeTributaria> buscaGradeTributariaPaginacao(GradeTributaria gradeTributaria,GradeTributariaVigencia gradeTributariaVigencia, int first,int pageSize) {
 		StringBuilder sql = new StringBuilder();
 		this.defineCondicao(sql, gradeTributaria, gradeTributariaVigencia);
-		Query qry = this.session.createQuery(" select Count(g) from GradeTributaria g "
+		Query qry = this.session.createQuery(" select g from GradeTributaria g "
 				                           + " left join g.gradeTributariaVigenciaCollection gV "
 				                           + " left join gV.origem o "
 				                           + " left Join gV.destino d "
-				                           + " left join gv.pauta p ".concat(sql.toString()));
+				                           + " left join gV.pauta p ".concat(sql.toString()));
 		this.defineParametros(qry, gradeTributaria, gradeTributariaVigencia);
 		qry.setFirstResult(first);
 		qry.setMaxResults(pageSize);
@@ -165,11 +165,39 @@ public class GradeTributariaDAOHibernate implements GradeTributariaDAO {
 	
 	@Override
 	public void defineCondicao(StringBuilder sql,GradeTributaria gradeTributaria,GradeTributariaVigencia gradeTributariaVigencia){
-		
+		if(gradeTributaria.getIdGradeTrib() != null){
+			sql.append(sql.length() == 0 ? " where ": " and ").append(" g.idGradeTrib = :idGradeTrib");
+		}
+		if(gradeTributaria.getDescricao() != null && gradeTributaria.getDescricao() != "" && !gradeTributaria.getDescricao().equals("")){
+			sql.append(sql.length() == 0 ? " where ": " and ").append(" g.descricao like :descricao");
+		}
+		if(gradeTributariaVigencia.getPauta() != null && gradeTributariaVigencia.getPauta().getIdPauta() != null){
+			sql.append(sql.length() == 0 ? " where ": " and ").append(" p.idPauta = :idPauta");
+		}
+		if(gradeTributariaVigencia.getOrigem() != null && gradeTributariaVigencia.getOrigem().getIdUf() != null){
+			sql.append(sql.length() == 0 ? " where ": " and ").append(" o.idUf = :idUfOr");
+		}
+		if(gradeTributariaVigencia.getDestino() != null && gradeTributariaVigencia.getDestino().getIdUf() != null){
+			sql.append(sql.length() == 0 ? " where ": " and ").append(" d.idUf = :idUfDe");
+		}
 	}
 	
 	@Override
 	public void defineParametros(Query qry, GradeTributaria gradeTributaria,GradeTributariaVigencia gradeTributariaVigencia){
-		
+		if(gradeTributaria.getIdGradeTrib() != null){
+			qry.setParameter("idGradeTrib", gradeTributaria.getIdGradeTrib());
+		}
+		if(gradeTributaria.getDescricao() != null && gradeTributaria.getDescricao() != "" && !gradeTributaria.getDescricao().equals("")){
+			qry.setParameter("descricao", "%" + gradeTributaria.getDescricao() + "%");
+		}
+		if(gradeTributariaVigencia.getPauta() != null && gradeTributariaVigencia.getPauta().getIdPauta() != null){
+			qry.setParameter("idPauta", gradeTributariaVigencia.getPauta().getIdPauta());
+		}
+		if(gradeTributariaVigencia.getOrigem() != null && gradeTributariaVigencia.getOrigem().getIdUf() != null){
+			qry.setParameter("idUfOr", gradeTributariaVigencia.getOrigem().getIdUf());
+		}
+		if(gradeTributariaVigencia.getDestino() != null && gradeTributariaVigencia.getDestino().getIdUf() != null){
+			qry.setParameter("idUfDe", gradeTributariaVigencia.getDestino().getIdUf());
+		}
 	}
 }

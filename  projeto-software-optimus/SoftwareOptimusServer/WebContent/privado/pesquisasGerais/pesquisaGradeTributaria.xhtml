@@ -26,7 +26,7 @@
 				<p:selectOneMenu id="subGrupo" value="#{pesquisaGradeTributariaBean.gradeTributariaVigencia.pauta}" style="width:260px;">
 					<f:selectItem itemLabel="Selecione um Grupo" />
 					<f:selectItems value="#{pesquisaGradeTributariaBean.pautaList}" var="listaPauta" itemValue="#{listaPauta}"
-						itemLabel="#{listaPauta.idGrupo} - #{listaGrupo.descricao}" />
+						itemLabel="#{listaPauta.idPauta} - #{listaPauta.descricao}" />
 				</p:selectOneMenu>
 			</h:panelGrid>
 		</h:panelGrid>
@@ -69,7 +69,7 @@
 				</p:column>
 				<p:column headerText="Selecionar" style="width: 50px; text-align: center">
 		    		<p:commandButton icon="ui-icon-check" title="Selecionar"
-		    			action="#{pesquisaGradeTributariaBean.selecionaGradeTributaria(setor)}"
+		    			action="#{pesquisaGradeTributariaBean.selecionaGradeTributaria(gradeTributaria)}"
 		    			process="@this" />
 				</p:column>
 			</p:dataTable>
