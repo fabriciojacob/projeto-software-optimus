@@ -92,7 +92,7 @@ public class RequisicaoRN {
 		}
 	}
 	
-	public Integer enviarRequisicao(Requisicao requisicao) throws Exception{
+	public Long enviarRequisicao(Requisicao requisicao) throws Exception{
 		return this.requisicaoDAO.countProdutos(requisicao);
 	}
 

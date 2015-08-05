@@ -41,7 +41,7 @@ public class RequisicaoHibernate implements RequisicaoDAO {
 
 	@Override
 	public Requisicao requisicao(Long id) throws Exception {
-		String jpql = "Select r From Requisicao where idRequisicao = :parId";
+		String jpql = "Select r From Requisicao r where r.idRequisicao = :parId";
 		TypedQuery<Requisicao> consulta = this.session.createQuery(jpql,
 				Requisicao.class);
 		consulta.setParameter("parId", id);
@@ -118,10 +118,10 @@ public class RequisicaoHibernate implements RequisicaoDAO {
 	}
 
 	@Override
-	public Integer countProdutos(Requisicao requisicao) throws Exception {
+	public Long countProdutos(Requisicao requisicao) throws Exception {
 		String jpql = "Select count(r) from RequisicaoItens r where r.requisicao = :parRequisicao";
-		TypedQuery<Integer> consulta = this.session.createQuery(jpql,
-				Integer.class);
+		TypedQuery<Long> consulta = this.session.createQuery(jpql,
+				Long.class);
 		consulta.setParameter("parRequisicao", requisicao);
 		return consulta.getSingleResult();
 	}
