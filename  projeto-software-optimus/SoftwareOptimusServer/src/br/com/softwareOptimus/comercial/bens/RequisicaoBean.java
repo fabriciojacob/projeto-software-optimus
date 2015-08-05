@@ -24,7 +24,7 @@ import br.com.softwareOptimus.produto.Produto;
 public class RequisicaoBean {
 
 	private Requisicao requisicao;
-	private Long idEmpresa, idUsuario;
+	private Long idEmpresa, idUsuario, idRequisicao;
 	private Pessoa empSelecionada;
 	private List<Produto> listaProdutos;
 	private List<Requisicao> listaRequisicao;
@@ -89,6 +89,33 @@ public class RequisicaoBean {
 			msgErro("Problemas ao excluir o registro ", ex);
 		}
 	}
+	
+	public void findRequisicao(){
+		
+		try{
+			if(requisicaoRN == null){
+				requisicaoRN = new RequisicaoRN();
+			}
+			requisicao = requisicaoRN.find(idRequisicao);
+			usuario = requisicao.getIdUsuRequisita();
+			this.reqData = false;
+			this.reqDesc = false;
+			this.reqData = false;
+			this.reqEmpr = false;
+			this.reqOb		= false;
+			this.btNovo 	= false;
+			this.btVincUser = false;
+			this.tipoReq	= false;
+			this.btEdit		= false;
+			this.btExcluir	= false;
+			if(requisicao.getStatusGeral() == null){
+				this.btEnviReq	= false;
+			}
+			msgAcerto("Requisição selecionada");
+		}catch(Exception ex){
+			msgErro("Problemas ao selecionar a requisição !!!", ex);
+		}
+	}
 
 	public void inativaBoolNovo() {
 		this.reqData = false;
@@ -113,7 +140,7 @@ public class RequisicaoBean {
 	
 	public void enviarRequisicao(){
 		try{
-			Integer qtaProd = this.requisicaoRN.enviarRequisicao(requisicao);
+			Long qtaProd = this.requisicaoRN.enviarRequisicao(requisicao);
 			if(qtaProd > 0){
 				this.requisicao.setStatusGeral(StatusGeral.ENVIADA);
 				editar(2);
@@ -376,5 +403,13 @@ public class RequisicaoBean {
 
 	public void setDataFim(Date dataFim) {
 		this.dataFim = dataFim;
+	}
+
+	public Long getIdRequisicao() {
+		return idRequisicao;
+	}
+
+	public void setIdRequisicao(Long idRequisicao) {
+		this.idRequisicao = idRequisicao;
 	}
 }

@@ -20,6 +20,10 @@
 		<f:selectItems value="#{empresaBean.listaEmpresa}" var="listaEmpresa"
 			itemValue="#{listaEmpresa}" itemLabel="#{listaEmpresa.fantasia}" />
 		</p:selectOneMenu>
+		
+		Empresa selecionada:
+		<p:inputText id="empSelec" value="#{requisicaoBean.requisicao.empresa.fantasia}"
+			disabled="true"/>
 	
 		Descricao:
 		<p:inputText id="descricao" disabled="#{requisicaoBean.reqDesc}"
@@ -36,6 +40,10 @@
 			<f:selectItem itemLabel="Ordem de produção" 		itemValue="OR" />
 			<f:selectItem itemLabel="Requisição de material" 	itemValue="RM" />
 		</p:selectOneMenu>
+		
+		Tipo requisição selecionada:
+		<p:inputText id="tipoReqSelec" value="#{requisicaoBean.requisicao.tipoOrigem}"
+			disabled="true"/>
 		
 		Data requisicao:
 		<p:calendar id="razaoSocial" disabled="#{requisicaoBean.reqData}"
