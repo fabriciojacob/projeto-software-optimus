@@ -8,10 +8,12 @@ import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import org.primefaces.event.SelectEvent;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
 import br.com.softwareOptimus.comercial.Comercial;
+import br.com.softwareOptimus.entidades.PessoaJuridica;
 import br.com.softwareOptimus.entidades.TipoMovEst;
 import br.com.softwareOptimus.entidades.RN.EmpresaRN;
 import br.com.softwareOptimus.estoque.ProdutoEstoque;
@@ -36,9 +38,6 @@ public class ProdutoEstoqueBean extends FacesUtil implements Serializable{
 	private String tipoMovEstoque;
 	private boolean btnAdicionar = true, txtCustoMedio = true;
 	private Integer verifica =0;
-	private Long empresaSelecionada, produtoSelecionado;
-	
-
 	
 	public ProdutoEstoqueBean(){
 		listaProdutoEstoque = new LazyDataModel<ProdutoEstoque>() {
@@ -79,9 +78,11 @@ public class ProdutoEstoqueBean extends FacesUtil implements Serializable{
 		}
 	}
 	
-	public void selecionaEmpresa() {
+	public void empresaSelecionada(SelectEvent event) {
+		PessoaJuridica empresa;
 		try {
-			this.getDadosPesquisa().setEmpresa(this.getEmpRN().pesquisaId(this.getEmpresaSelecionada()));
+			empresa = (PessoaJuridica) event.getObject();
+			this.getDadosPesquisa().setEmpresa(this.getEmpRN().pesquisaId(empresa.getIdPessoa()));
 			this.getProdutoEstoque().setEmpresa(this.getDadosPesquisa().getEmpresa());
 			this.info("Empresa selecionada");
 			this.verifica = this.verifica + 1;
@@ -93,9 +94,11 @@ public class ProdutoEstoqueBean extends FacesUtil implements Serializable{
 		}
 	}
 	
-	public void selecionaProduto() {
+	public void produtoSelecionado(SelectEvent event) {
+		Produto prod;
 		try {
-			this.getDadosPesquisa().setProduto(this.getProdRN().editPro(this.getProdutoSelecionado()));
+			prod = (Produto) event.getObject();
+			this.getDadosPesquisa().setProduto(this.getProdRN().editPro(prod.getIdProduto()));
 			this.getProdutoEstoque().setProduto(this.getDadosPesquisa().getProduto());
 			this.info("Produto selecionado");
 			this.verifica = this.verifica + 1;
@@ -160,22 +163,6 @@ public class ProdutoEstoqueBean extends FacesUtil implements Serializable{
 
 	public void setQuantEntSai(Double quantEntSai) {
 		this.quantEntSai = quantEntSai;
-	}
-
-	public Long getProdutoSelecionado() {
-		return produtoSelecionado;
-	}
-
-	public void setProdutoSelecionado(Long produtoSelecionado) {
-		this.produtoSelecionado = produtoSelecionado;
-	}
-
-	public Long getEmpresaSelecionada() {
-		return empresaSelecionada;
-	}
-
-	public void setEmpresaSelecionada(Long empresaSelecionada) {
-		this.empresaSelecionada = empresaSelecionada;
 	}
 
 	public ProdutoEstoque getProdutoEstoque() {

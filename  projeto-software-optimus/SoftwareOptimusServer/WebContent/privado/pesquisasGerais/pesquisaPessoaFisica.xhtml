@@ -12,7 +12,7 @@
 </h:head>
 	<h:body>
 		<h:form>
-				<h:panelGrid columns="4" columnClasses="label" cellspacing="3">
+				<h:panelGrid columns="3" columnClasses="label" cellspacing="3">
 					<h:panelGrid>
 						Nome:
 						<p:inputText size="60" value="#{pesquisaPessoaFisicaBean.pessoaFisica.fantasia}" />					
@@ -25,11 +25,12 @@
 						RG:
 						<p:inputText size="20" value="#{pesquisaPessoaFisicaBean.pessoaFisica.rg}" />					
 					</h:panelGrid>
+				</h:panelGrid>
+				<div align="right">
 					<h:panelGrid>
 						<p:commandButton id="btnPesquisar" value="Pesquisar" update="dataPesquisa" />
 					</h:panelGrid>
-				</h:panelGrid>
-				
+				</div>
 				<p:blockUI block="dataPesquisa" trigger="btnPesquisar" />
 				<p:dataTable id="dataPesquisa" value="#{pesquisaPessoaFisicaBean.pessoaFisicaList}" var="pesPF" resizableColumns="true"
 					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"

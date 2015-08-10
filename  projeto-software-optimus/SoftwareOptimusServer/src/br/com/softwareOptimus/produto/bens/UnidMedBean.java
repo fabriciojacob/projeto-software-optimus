@@ -7,6 +7,8 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import org.primefaces.event.SelectEvent;
+
 import br.com.softwareOptimus.produto.UnidMed;
 import br.com.softwareOptimus.produto.RN.UnidMedRN;
 import br.com.softwareOptimus.util.FacesUtil;
@@ -22,7 +24,6 @@ public class UnidMedBean extends FacesUtil implements Serializable {
 	private UnidMedRN unidRN;
 	private String busca;
 	private String filtro;
-	private Long id;
 	private boolean alt = true;
 	private boolean sal = true;
 	private boolean rem = true;
@@ -101,8 +102,10 @@ public class UnidMedBean extends FacesUtil implements Serializable {
 		}
 	}
 
-	public void editUnid() {
-		this.setUnidMed(null);
+	public void unidMedidaSelecionado(SelectEvent event) {
+		UnidMed unid;
+		unid = (UnidMed) event.getObject();
+		this.setUnidMed(unid);
 		this.setSal(true);
 		this.setAlt(false);
 		this.setRem(false);
@@ -170,14 +173,6 @@ public class UnidMedBean extends FacesUtil implements Serializable {
 
 	public void setSal(boolean sal) {
 		this.sal = sal;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public String getFiltro() {
