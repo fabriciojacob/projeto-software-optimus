@@ -7,6 +7,8 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import org.primefaces.event.SelectEvent;
+
 import br.com.softwareOptimus.fiscal.Aliquota;
 import br.com.softwareOptimus.fiscal.CodTabelaGov;
 import br.com.softwareOptimus.fiscal.Ncm;
@@ -181,15 +183,17 @@ public class TipoProdutoBean extends FacesUtil implements Serializable{
 			this.setListaTipoProduto(this.getTipoRN().listar());
 		}
 	}
-
-	public void editTipo() {
-		this.setTipo(this.getTipoRN().editTipo(this.getId()));
+	
+	public void tipoProdutoSelecionado(SelectEvent event){
+		TipoProduto tipo;
+		tipo = (TipoProduto) event.getObject();
+		this.setTipo(this.getTipoRN().editTipo(tipo.getIdTipoProd()));
 		listaVigencia();
 		habilita();
 		this.setAlt(false);
 		this.setVig(false);
 		this.setRem(false);
-		this.setSal(true);
+		this.setSal(true);		
 	}
 
 	public void incluirTipoVig() {

@@ -20,11 +20,15 @@
 				onclick="PF('movEst').show();" update="custoMedio"
 				disabled="#{produtoEstoqueBean.btnAdicionar}" />
 
-			<p:commandButton value="Empresa" type="button"
-				onclick="PF('empresa').show();" update="gridInfPesquisa" />
+			<p:commandButton id="consultaEmp" value="Empresa"
+				action="#{pesquisaPessoaJuridicaBean.abrirDialogo('emp')}">
+				<p:ajax event="dialogReturn" listener="#{produtoEstoqueBean.empresaSelecionada}" update="frmMovEst"/>
+			</p:commandButton>
 
-			<p:commandButton id="prod" value="Produto" type="button"
-				onclick="PF('produto').show();" update="gridInfPesquisa" />
+			<p:commandButton id="consultaProd" value="Produto"
+				action="#{pesquisaProdutoBean.abrirDialogo}">
+				<p:ajax event="dialogReturn" listener="#{produtoEstoqueBean.produtoSelecionado}" update="frmMovEst"/>
+			</p:commandButton>
 
 			<p:commandButton value="Cancelar" update="frmMovEst"
 				actionListener="#{produtoEstoqueBean.limparInfPesquisa}" />
@@ -37,93 +41,6 @@
 
 				<ui:include
 					src="/privado/estoque/panel/produtoEstoqueGerenciaRegistroPanel.xhtml" />
-			</p:dialog>
-
-			<p:dialog header="Consulta Empresa" widgetVar="empresa" modal="true"
-				height="350" width="400" id="dialogEmpresa">
-				<div align="right">
-					<h:panelGrid columns="1">
-						<p:commandButton value="Pesquisar"
-							actionListener="#{empresaBean.pesquisa}" update="dataPesquisa" />
-					</h:panelGrid>
-				</div>
-				<h:panelGrid columns="2">
-					<p:inputText id="textoConsulta" size="40"
-						value="#{empresaBean.tipoConsulta}" />
-					<p:selectOneMenu id="fConsult" value="#{empresaBean.filtro}">/>
-						<f:selectItem itemLabel="CNPJ" itemValue="cnpj" />
-						<f:selectItem itemLabel="Nome Fantasia" itemValue="nomeFantasia" />
-					</p:selectOneMenu>
-				</h:panelGrid>
-				<p:dataTable id="dataPesquisa"
-					value="#{empresaBean.retornoListaPessoa}" var="pesEmpresa"
-					paginator="true" rows="6">
-
-					<p:column headerText="Codigo">
-						<h:outputText value="#{pesEmpresa.idPessoa}" />
-					</p:column>
-
-					<p:column headerText="Nome Fantasia">
-						<h:outputText value="#{pesEmpresa.fantasia}" />
-					</p:column>
-
-					<p:column headerText="CNPJ">
-						<h:outputText value="#{pesEmpresa.cnpj}" />
-					</p:column>
-
-					<p:column headerText="Selecionar">
-						<p:commandLink id="link" value="Selecionar" 
-							action="#{produtoEstoqueBean.selecionaEmpresa}"
-							ajax="dialogEmpresa, frmMovEst">
-							<f:setPropertyActionListener value="#{pesEmpresa.idPessoa}"
-								target="#{produtoEstoqueBean.empresaSelecionada}" />
-						</p:commandLink>
-					</p:column>
-				</p:dataTable>
-			</p:dialog>
-
-			<p:dialog header="Consulta Produto" widgetVar="produto" modal="true"
-				height="350" width="440" id="dialogProduto">
-				<div align="right">
-					<h:panelGrid columns="1">
-						<p:commandButton value="Pesquisar"
-							actionListener="#{produtoBean.buscarProd}" update="gridData">
-						</p:commandButton>
-					</h:panelGrid>
-				</div>
-				<h:panelGrid columns="3" columnClasses="label" cellspacing="3">
-					<p:inputText id="texto" value="#{produtoBean.busca}" size="40" />
-					<p:selectOneMenu id="Consult" value="#{produtoBean.filtro}">
-						<f:selectItem itemLabel="Selecione uma Opção" />
-						<f:selectItem itemLabel="Código" itemValue="id" />
-						<f:selectItem itemLabel="Descrição" itemValue="desc" />
-					</p:selectOneMenu>
-				</h:panelGrid>
-				<h:panelGrid id="gridData" columns="1" columnClasses="label, value">
-					<p:blockUI block="gridData" trigger="prod" />
-					<p:dataTable id="data" value="#{produtoBean.listaProduto}"
-						paginator="true" rows="6" var="produto" rowKey="produto.idPorduto">
-
-						<p:column headerText="Código do Produto">
-							<h:outputText value="#{produto.idProduto}" />
-						</p:column>
-						<p:column headerText="Descrição">
-							<h:outputText value="#{produto.descProd}" />
-						</p:column>
-						<p:column headerText="Selecionar">
-							<p:commandLink id="link2" value="Selecionar"
-								ajax="dialogEmpresa, frmMovEst"
-								action="#{produtoEstoqueBean.selecionaProduto}">
-								<f:setPropertyActionListener value="#{produto.idProduto}"
-									target="#{produtoEstoqueBean.produtoSelecionado}" />
-							</p:commandLink>
-						</p:column>
-					</p:dataTable>
-					<p:blockUI block="data" trigger="data">
-        				LOADING<br />
-						<p:graphicImage name="ajaxloader.gif" />
-					</p:blockUI>
-				</h:panelGrid>
 			</p:dialog>
 
 			<p:tab id="incMov">

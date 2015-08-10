@@ -30,10 +30,11 @@
 			<p:commandButton id="delete" value="Excluir"
 				disabled="#{tipoProdutoBean.rem}"
 				actionListener="#{tipoProdutoBean.remover}" ajax="grid" />
-
-			<p:commandButton id="consulta" value="Consultar" type="button"
-				ajax="dialog, grid" onclick="PF('dlg1').show();"
-				actionListener="#{tipoProdutoBean.cancelar}" />
+				
+			<p:commandButton id="consulta" value="Consulta"
+				action="#{pesquisaTipoProdutoBean.abrirDialogo}">
+				<p:ajax event="dialogReturn" listener="#{tipoProdutoBean.tipoProdutoSelecionado}" update="frmCadTipoProduto"/>
+			</p:commandButton>
 
 			<p:commandButton id="cancelar" value="Cancelar"
 				actionListener="#{tipoProdutoBean.cancelar}" ajax="grid" />
@@ -128,58 +129,6 @@
 					<p:graphicImage name="ajaxloader.gif" />
 				</p:blockUI>
 			</h:panelGrid>
-
-			<p:dialog id="dialog1" header="Consulta" widgetVar="dlg1"
-				modal="true" height="300" width="430">
-
-				<div align="right">
-					<h:panelGrid id="filtroPesquisa" columns="1">
-						<p:commandButton value="Pesquisar"
-							actionListener="#{tipoProdutoBean.buscarTipo}" update="gridData">
-						</p:commandButton>
-					</h:panelGrid>
-				</div>
-				<h:panelGrid id="filtroGeral2" columns="3" columnClasses="label"
-					cellspacing="3">
-					<p:inputText id="texto" value="#{tipoProdutoBean.busca}" size="40" />
-
-					<p:selectOneMenu id="fConsult" value="#{tipoProdutoBean.filtro}">/>
-						<f:selectItem itemLabel="Selecione uma Opção" />
-						<f:selectItem itemLabel="Código" itemValue="id" />
-						<f:selectItem itemLabel="Descrição" itemValue="desc" />
-					</p:selectOneMenu>
-
-				</h:panelGrid>
-				<h:panelGrid id="gridData" columns="1" columnClasses="label, value">
-					<p:blockUI block="gridData" trigger="consulta" />
-					<p:dataTable id="data" value="#{tipoProdutoBean.listaTipoProduto}"
-						paginator="true" rows="6" var="tipoProd"
-						rowKey="tipoProd.idTipoProd">
-
-						<p:column headerText="Código do Tipo de Produto">
-							<h:outputText value="#{tipoProd.idTipoProd}" />
-						</p:column>
-
-						<p:column headerText="Descrição">
-							<h:outputText value="#{tipoProd.descricao}" />
-						</p:column>
-
-						<p:column headerText="Selecionar">
-							<p:commandLink id="link" value="Editar"
-								ajax="grid, dialog1, gridVigTipo"
-								action="#{tipoProdutoBean.editTipo}">
-								<f:setPropertyActionListener value="#{tipoProd.idTipoProd}"
-									target="#{tipoProdutoBean.id}" />
-							</p:commandLink>
-						</p:column>
-					</p:dataTable>
-					<p:blockUI block="data" trigger="data">
-        				LOADING<br />
-						<p:graphicImage name="ajaxloader.gif" />
-					</p:blockUI>
-				</h:panelGrid>
-			</p:dialog>
-
 
 			<p:dialog id="dialog5" header="Busca NCM" widgetVar="dlg5"
 				modal="true" height="600" width="900">
