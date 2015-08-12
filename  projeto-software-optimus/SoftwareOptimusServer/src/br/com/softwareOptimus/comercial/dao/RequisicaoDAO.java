@@ -25,8 +25,10 @@ public interface RequisicaoDAO {
 	
 	public List<Requisicao> pesquisaDescricao(String descricao) throws Exception;
 	
-	public List<Requisicao> pesquisaPeriodo(Date dataIni, Date dataFim, String desc) throws Exception;
+	public List<Requisicao> pesquisaPeriodo(Date dataIni, Date dataFim, String desc, int first, int pageSize) throws Exception;
 	
 	public Long countProdutos(Requisicao requisicao) throws Exception;
+	
+	public int countRequisicaoPaginacao();
 
 }

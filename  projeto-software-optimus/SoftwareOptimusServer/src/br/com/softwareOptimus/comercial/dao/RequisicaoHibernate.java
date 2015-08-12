@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import br.com.softwareOptimus.comercial.Requisicao;
@@ -107,13 +108,15 @@ public class RequisicaoHibernate implements RequisicaoDAO {
 
 	@Override
 	public List<Requisicao> pesquisaPeriodo(Date dataIni, Date dataFim,
-			String desc) throws Exception {
+			String desc, int first, int  pageSize) throws Exception {
 		String jpql = "Select e From Requisicao e where e.dataReq between :parDataIni and :parDataFim and e.descricao like '%"
 				+ desc + "%'";
 		TypedQuery<Requisicao> listaRequisicao = this.session.createQuery(jpql,
 				Requisicao.class);
 		listaRequisicao.setParameter("parDataIni", dataIni);
 		listaRequisicao.setParameter("parDataFim", dataFim);
+		listaRequisicao.setFirstResult(first);
+		listaRequisicao.setMaxResults(pageSize);
 		return listaRequisicao.getResultList();
 	}
 
@@ -124,6 +127,14 @@ public class RequisicaoHibernate implements RequisicaoDAO {
 				Long.class);
 		consulta.setParameter("parRequisicao", requisicao);
 		return consulta.getSingleResult();
+	}
+
+	@Override
+	public int countRequisicaoPaginacao() {
+		String jpql = "Select count(r) from Requisicao r";
+		Query qry = this.session.createQuery(jpql);
+		Number count = (Number) qry.getSingleResult();
+		return count.intValue();
 	}
 
 }
