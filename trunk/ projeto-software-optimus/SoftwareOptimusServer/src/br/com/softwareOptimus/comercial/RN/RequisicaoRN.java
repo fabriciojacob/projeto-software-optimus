@@ -92,6 +92,10 @@ public class RequisicaoRN {
 		}
 	}
 	
+	public int countRequisicao() throws Exception{
+		return this.requisicaoDAO.countRequisicaoPaginacao();
+	}
+	
 	public Long enviarRequisicao(Requisicao requisicao) throws Exception{
 		return this.requisicaoDAO.countProdutos(requisicao);
 	}
@@ -100,9 +104,9 @@ public class RequisicaoRN {
 		return this.requisicaoDAO.pesquisaDescricao(descricao);
 	}
 
-	public List<Requisicao> listaReqDate(Date dataIni, Date dataFim, String desc)
+	public List<Requisicao> listaReqDate(Date dataIni, Date dataFim, String desc, int first, int pageSize)
 			throws Exception {
-		return this.requisicaoDAO.pesquisaPeriodo(dataIni, dataFim, desc);
+		return this.requisicaoDAO.pesquisaPeriodo(dataIni, dataFim, desc, first, pageSize);
 	}
 
 }

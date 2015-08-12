@@ -3,6 +3,7 @@ package br.com.softwareOptimus.comercial.bens;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -10,6 +11,8 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.event.ToggleEvent;
+import org.primefaces.model.LazyDataModel;
+import org.primefaces.model.SortOrder;
 
 import br.com.softwareOptimus.comercial.Requisicao;
 import br.com.softwareOptimus.comercial.StatusGeral;
@@ -27,20 +30,20 @@ public class RequisicaoBean {
 	private Long idEmpresa, idUsuario, idRequisicao;
 	private Pessoa empSelecionada;
 	private List<Produto> listaProdutos;
-	private List<Requisicao> listaRequisicao;
+	private LazyDataModel<Requisicao> listaRequisicao;
 	private RequisicaoRN requisicaoRN;
-	private Usuario user =  new Usuario();
+	private Usuario user = new Usuario();
 	private boolean reqDesc = true, reqEmpr = true, reqData = true,
-			btNovo = false, btSalvar = true, btEdit = true, btExcluir = true, reqOb = true,
-			btVincUser = true, tipoReq = true, btEnviReq = true;
+			btNovo = false, btSalvar = true, btEdit = true, btExcluir = true,
+			reqOb = true, btVincUser = true, tipoReq = true, btEnviReq = true;
 	private UsuarioRN usuarioRN;
 	private Usuario usuario;
 	private String tipoRequisicao, descReq;
 	private Date dataIni, dataFim;
-	
+
 	public RequisicaoBean() {
 		this.requisicao = new Requisicao();
-		requisicaoRN 	= new RequisicaoRN();
+		requisicaoRN = new RequisicaoRN();
 	}
 
 	public void checkRegraNull() {
@@ -48,14 +51,28 @@ public class RequisicaoBean {
 			this.requisicaoRN = new RequisicaoRN();
 		}
 	}
-	
-	public void consultaRequisicao(){
-		this.listaRequisicao = new ArrayList<>();
-		try{
-			this.listaRequisicao = this.requisicaoRN.listaReqDate(dataIni, dataFim, descReq);
-		}catch(Exception ex){
-			msgErro("Problemas na pesquisa da requisição !!!", ex);
-		}
+
+	public void consultaRequisicao() {
+
+		this.listaRequisicao = new LazyDataModel<Requisicao>() {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public List<Requisicao> load(int first, int pageSize,
+					String sortField, SortOrder sortOrder,
+					Map<String, Object> filters) {
+				try {
+					setRowCount(getRequisicaoRN().countRequisicao());
+					return getRequisicaoRN().listaReqDate(dataIni, dataFim,
+							descReq, first, pageSize);
+				} catch (Exception ex) {
+					msgErro("Problemas na pesquisa das requisições ", ex);
+					return null;
+				}
+
+			}
+		};
 	}
 
 	public void ativaBool() {
@@ -63,37 +80,37 @@ public class RequisicaoBean {
 		this.reqDesc = true;
 		this.reqData = true;
 		this.reqEmpr = true;
-		this.reqOb		= true;
-		this.btNovo 	= true;
-		this.btEdit 	= true;
-		this.btExcluir 	= true;
-		this.btSalvar 	= true;
+		this.reqOb = true;
+		this.btNovo = true;
+		this.btEdit = true;
+		this.btExcluir = true;
+		this.btSalvar = true;
 		this.btVincUser = true;
-		this.tipoReq	= true;
+		this.tipoReq = true;
 	}
-	
-	public void excluir(){
+
+	public void excluir() {
 		ativaBool();
 		this.btNovo = false;
-		try{
+		try {
 			int i = requisicaoRN.excluir(requisicao);
-			
-			if(i == 0){
+
+			if (i == 0) {
 				msgAcerto("Registro excluido com sucesso !!!");
-			}else{
-				msgErro("Requisição já enviada, exclusão abortada" , null);
+			} else {
+				msgErro("Requisição já enviada, exclusão abortada", null);
 			}
-			
+
 			requisicao = new Requisicao();
-		}catch (Exception ex){
+		} catch (Exception ex) {
 			msgErro("Problemas ao excluir o registro ", ex);
 		}
 	}
-	
-	public void findRequisicao(){
-		
-		try{
-			if(requisicaoRN == null){
+
+	public void findRequisicao() {
+
+		try {
+			if (requisicaoRN == null) {
 				requisicaoRN = new RequisicaoRN();
 			}
 			requisicao = requisicaoRN.find(idRequisicao);
@@ -102,17 +119,17 @@ public class RequisicaoBean {
 			this.reqDesc = false;
 			this.reqData = false;
 			this.reqEmpr = false;
-			this.reqOb		= false;
-			this.btNovo 	= false;
+			this.reqOb = false;
+			this.btNovo = false;
 			this.btVincUser = false;
-			this.tipoReq	= false;
-			this.btEdit		= false;
-			this.btExcluir	= false;
-			if(requisicao.getStatusGeral() == null){
-				this.btEnviReq	= false;
+			this.tipoReq = false;
+			this.btEdit = false;
+			this.btExcluir = false;
+			if (requisicao.getStatusGeral() == null) {
+				this.btEnviReq = false;
 			}
 			msgAcerto("Requisição selecionada");
-		}catch(Exception ex){
+		} catch (Exception ex) {
 			msgErro("Problemas ao selecionar a requisição !!!", ex);
 		}
 	}
@@ -122,40 +139,40 @@ public class RequisicaoBean {
 		this.reqDesc = false;
 		this.reqData = false;
 		this.reqEmpr = false;
-		this.reqOb		= false;
-		this.btNovo 	= false;
-		this.btSalvar 	= false;
+		this.reqOb = false;
+		this.btNovo = false;
+		this.btSalvar = false;
 		this.btVincUser = false;
-		this.tipoReq	= false;
+		this.tipoReq = false;
 	}
-	
-	public void ativaBoolSalvar(){
-		this.btEdit 	= true;
-		this.btExcluir 	= true;
+
+	public void ativaBoolSalvar() {
+		this.btEdit = true;
+		this.btExcluir = true;
 	}
-	
-	public void editar(int tipoOper){
+
+	public void editar(int tipoOper) {
 		salvar(tipoOper);
 	}
-	
-	public void enviarRequisicao(){
-		try{
+
+	public void enviarRequisicao() {
+		try {
 			Long qtaProd = this.requisicaoRN.enviarRequisicao(requisicao);
-			if(qtaProd > 0){
+			if (qtaProd > 0) {
 				this.requisicao.setStatusGeral(StatusGeral.ENVIADA);
 				editar(2);
 				msgAcerto("Requisição enviada!!!");
-			}else{
+			} else {
 				msgAcerto("Requisição sem produtos");
 			}
-		}catch (Exception ex){
+		} catch (Exception ex) {
 			msgErro("Erro ao enviar a requisição !!!", ex);
 		}
 	}
-	
-	public void inativaBoolSalvar(){
-		this.btEdit 	= false;
-		this.btExcluir 	= false;
+
+	public void inativaBoolSalvar() {
+		this.btEdit = false;
+		this.btExcluir = false;
 	}
 
 	public void novo() {
@@ -166,7 +183,8 @@ public class RequisicaoBean {
 
 	public void salvar(int tipoOper) {
 		try {
-			String check = requisicaoRN.salvar(requisicao, usuario, empSelecionada, tipoRequisicao,tipoOper);
+			String check = requisicaoRN.salvar(requisicao, usuario,
+					empSelecionada, tipoRequisicao, tipoOper);
 			msgAcerto(check);
 			inativaBoolSalvar();
 			this.btSalvar = true;
@@ -373,11 +391,11 @@ public class RequisicaoBean {
 		this.descReq = descReq;
 	}
 
-	public List<Requisicao> getListaRequisicao() {
+	public LazyDataModel<Requisicao> getListaRequisicao() {
 		return listaRequisicao;
 	}
 
-	public void setListaRequisicao(List<Requisicao> listaRequisicao) {
+	public void setListaRequisicao(LazyDataModel<Requisicao> listaRequisicao) {
 		this.listaRequisicao = listaRequisicao;
 	}
 
