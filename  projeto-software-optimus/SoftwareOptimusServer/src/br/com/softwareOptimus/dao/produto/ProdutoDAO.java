@@ -23,4 +23,6 @@ public interface ProdutoDAO {
 	public void definiCondicao(StringBuilder sql, Produto produto);
 	public void defineParametros(Query qry, Produto produto);
 	public int countProdutoPaginacao(Produto produto);
+	public List<Produto> consultDescPag(String desc, int first, int pageSize) throws Exception;
+	public int countProdutoDesc(String desc) throws Exception;
 }
