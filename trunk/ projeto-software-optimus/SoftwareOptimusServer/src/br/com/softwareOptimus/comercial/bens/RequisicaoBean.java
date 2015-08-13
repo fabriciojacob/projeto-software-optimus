@@ -1,44 +1,46 @@
 package br.com.softwareOptimus.comercial.bens;
 
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-
 import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
-
 import br.com.softwareOptimus.comercial.Requisicao;
+import br.com.softwareOptimus.comercial.RequisicaoItens;
 import br.com.softwareOptimus.comercial.StatusGeral;
 import br.com.softwareOptimus.comercial.RN.RequisicaoRN;
 import br.com.softwareOptimus.entidades.Pessoa;
 import br.com.softwareOptimus.entidades.Usuario;
 import br.com.softwareOptimus.entidades.RN.UsuarioRN;
 import br.com.softwareOptimus.produto.Produto;
+import br.com.softwareOptimus.produto.RN.ProdutoRN;
 
 @ManagedBean
 @ViewScoped
 public class RequisicaoBean {
 
 	private Requisicao requisicao;
-	private Long idEmpresa, idUsuario, idRequisicao;
+	private Long idEmpresa, idUsuario, idRequisicao, idProduto;
 	private Pessoa empSelecionada;
-	private List<Produto> listaProdutos;
+	private LazyDataModel<Produto> listaProdutos;
 	private LazyDataModel<Requisicao> listaRequisicao;
+	private List<RequisicaoItens> listaItemReq;
 	private RequisicaoRN requisicaoRN;
+	private ProdutoRN produtoRN;
 	private Usuario user = new Usuario();
 	private boolean reqDesc = true, reqEmpr = true, reqData = true,
 			btNovo = false, btSalvar = true, btEdit = true, btExcluir = true,
 			reqOb = true, btVincUser = true, tipoReq = true, btEnviReq = true;
 	private UsuarioRN usuarioRN;
 	private Usuario usuario;
-	private String tipoRequisicao, descReq;
+	private String tipoRequisicao, descReq, descProduto;
 	private Date dataIni, dataFim;
 
 	public RequisicaoBean() {
@@ -50,6 +52,45 @@ public class RequisicaoBean {
 		if (this.requisicaoRN == null) {
 			this.requisicaoRN = new RequisicaoRN();
 		}
+	}
+	
+	public void selecionaProduto(){
+		
+		if(getProdutoRN() == null){
+			this.produtoRN = new ProdutoRN();
+		}
+		
+		try{
+			produtoRN.editPro(idProduto);
+		}catch(Exception ex){
+			msgErro("Problemas na seleção do produto", ex);
+		}
+	}
+	
+	public void listaProdConsDesc(){
+		
+		if(getProdutoRN() == null){
+			this.produtoRN = new ProdutoRN();
+		}
+
+		this.listaProdutos = new LazyDataModel<Produto>() {
+
+			private static final long serialVersionUID = 1L;
+			
+			@Override
+			public List<Produto> load(int first, int pageSize,
+					String sortField, SortOrder sortOrder,
+					Map<String, Object> filters){
+				try{
+					setRowCount(getProdutoRN().countProdutosDesc(descProduto));
+					return getProdutoRN().consultDescPag(descProduto, first, pageSize);
+				}catch (Exception ex){
+					msgErro("Problemas na pesquisa dos produtos ", ex);
+					return null;
+				}
+			}
+			
+		};
 	}
 
 	public void consultaRequisicao() {
@@ -128,6 +169,9 @@ public class RequisicaoBean {
 			if (requisicao.getStatusGeral() == null) {
 				this.btEnviReq = false;
 			}
+			if(this.requisicao.getRequisicaoItens().isEmpty()){
+				this.listaItemReq = new ArrayList<RequisicaoItens>();
+			}
 			msgAcerto("Requisição selecionada");
 		} catch (Exception ex) {
 			msgErro("Problemas ao selecionar a requisição !!!", ex);
@@ -189,6 +233,7 @@ public class RequisicaoBean {
 			inativaBoolSalvar();
 			this.btSalvar = true;
 			this.btEnviReq = false;
+			this.listaItemReq = new ArrayList<RequisicaoItens>();
 		} catch (Exception ex) {
 			msgErro("Problemas ao salvar ou editar a requisicao", ex);
 		}
@@ -203,6 +248,10 @@ public class RequisicaoBean {
 		} catch (Exception ex) {
 			msgErro("Problemas na seleção do usuário ", ex);
 		}
+	}
+	
+	public void addItemReq(){
+		
 	}
 
 	public void handleToggle(ToggleEvent event) {
@@ -235,11 +284,11 @@ public class RequisicaoBean {
 		this.empSelecionada = empSelecionada;
 	}
 
-	public List<Produto> getListaProdutos() {
+	public LazyDataModel<Produto> getListaProdutos() {
 		return listaProdutos;
 	}
 
-	public void setListaProdutos(List<Produto> listaProdutos) {
+	public void setListaProdutos(LazyDataModel<Produto> listaProdutos) {
 		this.listaProdutos = listaProdutos;
 	}
 
@@ -430,4 +479,37 @@ public class RequisicaoBean {
 	public void setIdRequisicao(Long idRequisicao) {
 		this.idRequisicao = idRequisicao;
 	}
+
+	public ProdutoRN getProdutoRN() {
+		return produtoRN;
+	}
+
+	public void setProdutoRN(ProdutoRN produtoRN) {
+		this.produtoRN = produtoRN;
+	}
+	
+	public String getDescProduto() {
+		return descProduto;
+	}
+	
+	public void setDescProduto(String descProduto) {
+		this.descProduto = descProduto;
+	}
+
+	public Long getIdProduto() {
+		return idProduto;
+	}
+
+	public void setIdProduto(Long idProduto) {
+		this.idProduto = idProduto;
+	}
+
+	public List<RequisicaoItens> getListaItemReq() {
+		return listaItemReq;
+	}
+
+	public void setListaItemReq(List<RequisicaoItens> listaItemReq) {
+		this.listaItemReq = listaItemReq;
+	}
+
 }

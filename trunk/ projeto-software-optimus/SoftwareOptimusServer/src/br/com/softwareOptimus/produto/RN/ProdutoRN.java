@@ -66,4 +66,12 @@ public class ProdutoRN {
 	public int countProdutoPaginacao(Produto produto){
 		return this.produtoDAO.countProdutoPaginacao(produto);
 	}
+	
+	public List<Produto> consultDescPag(String desc, int first, int pageSize) throws Exception{
+		return this.produtoDAO.consultDescPag(desc, first, pageSize);
+	}
+	
+	public int countProdutosDesc(String desc) throws Exception {
+		return this.produtoDAO.countProdutoDesc(desc);
+	}
 }

@@ -86,8 +86,21 @@
 				<ui:include src="/privado/comercial/requisicao/tabelaPesquisaRequisicao.xhtml"/>	
 
 			</p:dialog>
-
-			<!--<ui:include src="/privado/comercial/requisicao/tabelaProdutosRequisicao.xhtml"/> -->
+			
+			<p:dialog header="Consulta" widgetVar="produtosCons" modal="true"
+				height="350" width="800">
+				
+				<h:panelGrid columns="3">
+				Descrição:
+				<p:inputText value="#{requisicaoBean.descProduto}"/>
+				
+				<p:commandButton value="Pesquisar" actionListener="#{requisicaoBean.listaProdConsDesc}"/>
+				
+				</h:panelGrid>
+				
+				<ui:include src="/privado/comercial/requisicao/tabelaProdutosRequisicao.xhtml"/>
+			
+			</p:dialog>
 
 			<p:fieldset legend="Produtos" toggleable="true" toggleSpeed="500">
 				<p:ajax event="toggle" listener="#{fieldsetView.handleToggle}"
