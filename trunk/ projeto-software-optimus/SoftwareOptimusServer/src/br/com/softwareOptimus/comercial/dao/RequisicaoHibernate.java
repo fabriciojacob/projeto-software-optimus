@@ -11,6 +11,7 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import br.com.softwareOptimus.comercial.Requisicao;
+import br.com.softwareOptimus.comercial.RequisicaoItens;
 
 public class RequisicaoHibernate implements RequisicaoDAO {
 
@@ -136,5 +137,35 @@ public class RequisicaoHibernate implements RequisicaoDAO {
 		Number count = (Number) qry.getSingleResult();
 		return count.intValue();
 	}
+
+	@Override
+	public void salvarRequisicaoItem(RequisicaoItens requisicaoItens)
+			throws Exception {
+		this.transacao = this.session.getTransaction();
+		if(!this.transacao.isActive()){
+			this.transacao.begin();
+		}
+		this.session.persist(requisicaoItens);
+		this.transacao.commit();
+		
+	}
+
+	@Override
+	public void atualizarRequisicaoItem(RequisicaoItens requisicaoItens)
+			throws Exception {
+		this.transacao = this.session.getTransaction();
+		if(!this.transacao.isActive()){
+			this.transacao.begin();
+		}
+		this.session.merge(requisicaoItens);
+		this.transacao.commit();
+		
+	}
+	
+	
+	
+	
+	
+	
 
 }

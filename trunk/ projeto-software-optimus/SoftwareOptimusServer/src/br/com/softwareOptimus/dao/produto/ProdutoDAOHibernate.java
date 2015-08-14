@@ -189,7 +189,7 @@ public class ProdutoDAOHibernate implements ProdutoDAO {
 	public List<Produto> consultDescPag(String desc, int first, int pageSize)
 			throws Exception {
 		TypedQuery<Produto> qry = this.session
-				.createQuery("Select p From Produto where p.descricao like '%"
+				.createQuery("Select p From Produto p where p.descProd like '%"
 						+ desc + "%'", Produto.class);
 		return qry.getResultList();
 	}
@@ -197,7 +197,7 @@ public class ProdutoDAOHibernate implements ProdutoDAO {
 	@Override
 	public int countProdutoDesc(String desc) throws Exception {
 		Query qry = this.session
-				.createQuery("Select count(p) From Produto p where p.descricao like '%"
+				.createQuery("Select count(p) From Produto p where p.descProd like '%"
 						+ desc + "%'");
 		Number count = (Number) qry.getSingleResult();
 		return count.intValue();

@@ -27,17 +27,19 @@ import br.com.softwareOptimus.produto.RN.ProdutoRN;
 public class RequisicaoBean {
 
 	private Requisicao requisicao;
+	private RequisicaoItens requisicaoItens;
+	private List<RequisicaoItens> listaRequisicaoItens;
 	private Long idEmpresa, idUsuario, idRequisicao, idProduto;
 	private Pessoa empSelecionada;
 	private LazyDataModel<Produto> listaProdutos;
 	private LazyDataModel<Requisicao> listaRequisicao;
-	private List<RequisicaoItens> listaItemReq;
+	private List<Produto> listaProdutosReq;
 	private RequisicaoRN requisicaoRN;
 	private ProdutoRN produtoRN;
 	private Usuario user = new Usuario();
 	private boolean reqDesc = true, reqEmpr = true, reqData = true,
 			btNovo = false, btSalvar = true, btEdit = true, btExcluir = true,
-			reqOb = true, btVincUser = true, tipoReq = true, btEnviReq = true;
+			reqOb = true, btVincUser = true, tipoReq = true, btEnviReq = true, btIncProd = true;
 	private UsuarioRN usuarioRN;
 	private Usuario usuario;
 	private String tipoRequisicao, descReq, descProduto;
@@ -55,16 +57,24 @@ public class RequisicaoBean {
 	}
 	
 	public void selecionaProduto(){
-		
+		Produto prod = new Produto();
 		if(getProdutoRN() == null){
 			this.produtoRN = new ProdutoRN();
 		}
-		
 		try{
-			produtoRN.editPro(idProduto);
+			prod = produtoRN.editPro(idProduto);
+			this.requisicaoItens = new RequisicaoItens();
+			getRequisicaoItens().setIdRequisicao(requisicao);
+			getRequisicaoItens().setProduto(prod);
+			getListaRequisicaoItens().add(getRequisicaoItens());
+			this.requisicaoRN.salvarRequisicaoItem(requisicaoItens);
 		}catch(Exception ex){
 			msgErro("Problemas na seleção do produto", ex);
 		}
+	}
+	
+	public void editarProduto(){
+		
 	}
 	
 	public void listaProdConsDesc(){
@@ -91,7 +101,7 @@ public class RequisicaoBean {
 			}
 			
 		};
-	}
+	}	
 
 	public void consultaRequisicao() {
 
@@ -125,7 +135,7 @@ public class RequisicaoBean {
 		this.btNovo = true;
 		this.btEdit = true;
 		this.btExcluir = true;
-		this.btSalvar = true;
+		this.btSalvar = true;	
 		this.btVincUser = true;
 		this.tipoReq = true;
 	}
@@ -169,10 +179,10 @@ public class RequisicaoBean {
 			if (requisicao.getStatusGeral() == null) {
 				this.btEnviReq = false;
 			}
-			if(this.requisicao.getRequisicaoItens().isEmpty()){
-				this.listaItemReq = new ArrayList<RequisicaoItens>();
-			}
+			this.listaRequisicaoItens = new ArrayList<RequisicaoItens>();
+			this.listaRequisicaoItens = this.requisicao.getRequisicaoItens();
 			msgAcerto("Requisição selecionada");
+			this.btIncProd = false;
 		} catch (Exception ex) {
 			msgErro("Problemas ao selecionar a requisição !!!", ex);
 		}
@@ -220,6 +230,7 @@ public class RequisicaoBean {
 	}
 
 	public void novo() {
+		this.btIncProd = false;
 		this.requisicao = new Requisicao();
 		inativaBoolNovo();
 		ativaBoolSalvar();
@@ -233,7 +244,8 @@ public class RequisicaoBean {
 			inativaBoolSalvar();
 			this.btSalvar = true;
 			this.btEnviReq = false;
-			this.listaItemReq = new ArrayList<RequisicaoItens>();
+			this.btIncProd = false;
+			this.listaRequisicaoItens = new ArrayList<RequisicaoItens>();
 		} catch (Exception ex) {
 			msgErro("Problemas ao salvar ou editar a requisicao", ex);
 		}
@@ -248,10 +260,6 @@ public class RequisicaoBean {
 		} catch (Exception ex) {
 			msgErro("Problemas na seleção do usuário ", ex);
 		}
-	}
-	
-	public void addItemReq(){
-		
 	}
 
 	public void handleToggle(ToggleEvent event) {
@@ -288,7 +296,7 @@ public class RequisicaoBean {
 		return listaProdutos;
 	}
 
-	public void setListaProdutos(LazyDataModel<Produto> listaProdutos) {
+	public void setListaProduto4545s(LazyDataModel<Produto> listaProdutos) {
 		this.listaProdutos = listaProdutos;
 	}
 
@@ -504,12 +512,36 @@ public class RequisicaoBean {
 		this.idProduto = idProduto;
 	}
 
-	public List<RequisicaoItens> getListaItemReq() {
-		return listaItemReq;
+	public List<Produto> getListaProdutosReq() {
+		return listaProdutosReq;
 	}
 
-	public void setListaItemReq(List<RequisicaoItens> listaItemReq) {
-		this.listaItemReq = listaItemReq;
+	public void setListaProdutosReq(List<Produto> listaProdutosReq) {
+		this.listaProdutosReq = listaProdutosReq;
+	}
+
+	public boolean isBtIncProd() {
+		return btIncProd;
+	}
+
+	public void setBtIncProd(boolean btIncProd) {
+		this.btIncProd = btIncProd;
+	}
+
+	public List<RequisicaoItens> getListaRequisicaoItens() {
+		return listaRequisicaoItens;
+	}
+
+	public void setListaRequisicaoItens(List<RequisicaoItens> listaRequisicaoItens) {
+		this.listaRequisicaoItens = listaRequisicaoItens;
+	}
+
+	public RequisicaoItens getRequisicaoItens() {
+		return requisicaoItens;
+	}
+
+	public void setRequisicaoItens(RequisicaoItens requisicaoItens) {
+		this.requisicaoItens = requisicaoItens;
 	}
 
 }

@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import br.com.softwareOptimus.comercial.Requisicao;
+import br.com.softwareOptimus.comercial.RequisicaoItens;
 
 public interface RequisicaoDAO {
 
@@ -30,5 +31,8 @@ public interface RequisicaoDAO {
 	public Long countProdutos(Requisicao requisicao) throws Exception;
 	
 	public int countRequisicaoPaginacao();
-
+	
+	public void salvarRequisicaoItem(RequisicaoItens requisicaoItens) throws Exception;
+	
+	public void atualizarRequisicaoItem(RequisicaoItens requisicaoItens) throws Exception;
 }

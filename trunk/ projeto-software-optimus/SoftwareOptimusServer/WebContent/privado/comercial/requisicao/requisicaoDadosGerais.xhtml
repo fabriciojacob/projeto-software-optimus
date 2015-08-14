@@ -53,7 +53,7 @@
 		<p:inputText id="usuario" disabled="true" value="#{requisicaoBean.usuario.nome}"/>
 		
 		<p:commandButton id="incProd" value="Incluir produtos" type="button"
-				onclick="PF('produtosCons').show();" />
+				onclick="PF('produtosCons').show();" disabled="#{requisicaoBean.btIncProd}"/>
 
 </h:panelGrid>
 </html>
