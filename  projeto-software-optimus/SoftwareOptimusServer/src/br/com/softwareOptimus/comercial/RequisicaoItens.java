@@ -1,16 +1,11 @@
 package br.com.softwareOptimus.comercial;
 
 import java.io.Serializable;
-import java.util.Collection;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
 import br.com.softwareOptimus.produto.Produto;
 import br.com.softwareOptimus.produto.UnidMed;
 
@@ -32,23 +27,23 @@ public class RequisicaoItens implements Serializable{
 	@ManyToOne
 	private Requisicao requisicao;
 	
-	@OneToMany
-	private Collection<Produto> produto;
+	@ManyToOne
+	private Produto produto;
 	
 	private Double quant;
 	
-	@ManyToMany
-	private Collection<UnidMed> unidade;
+	@ManyToOne
+	private UnidMed unidade;
 	
 	private Double salIni;
 	
 	private String Obs;
 	
-	public Collection<UnidMed> getUnidade() {
+	public UnidMed getUnidade() {
 		return unidade;
 	}
 
-	public void setUnidade(Collection<UnidMed> unidade) {
+	public void setUnidade(UnidMed unidade) {
 		this.unidade = unidade;
 	}
 
@@ -76,11 +71,11 @@ public class RequisicaoItens implements Serializable{
 		this.requisicao = idRequisicao;
 	}
 
-	public Collection<Produto> getProduto() {
+	public Produto getProduto() {
 		return produto;
 	}
 
-	public void setProduto(Collection<Produto> produto) {
+	public void setProduto(Produto produto) {
 		this.produto = produto;
 	}
 

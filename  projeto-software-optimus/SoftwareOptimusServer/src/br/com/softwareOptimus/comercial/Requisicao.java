@@ -1,8 +1,9 @@
 package br.com.softwareOptimus.comercial;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
@@ -40,8 +41,8 @@ public class Requisicao implements Serializable {
 	@ManyToOne
 	private Pessoa empresa;
 	
-	@OneToMany(mappedBy = "requisicao")
-	private Collection<RequisicaoItens> requisicaoItens;
+	@OneToMany
+	private List<RequisicaoItens> requisicaoItens;
 	
 	private String observacoes;
 	
@@ -116,11 +117,11 @@ public class Requisicao implements Serializable {
 		UsuRequisita = usuRequisita;
 	}
 
-	public Collection<RequisicaoItens> getRequisicaoItens() {
+	public List<RequisicaoItens> getRequisicaoItens() {
 		return requisicaoItens;
 	}
 
-	public void setRequisicaoItens(Collection<RequisicaoItens> requisicaoItens) {
+	public void setRequisicaoItens(List<RequisicaoItens> requisicaoItens) {
 		this.requisicaoItens = requisicaoItens;
 	}
 

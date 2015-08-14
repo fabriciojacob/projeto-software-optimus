@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import br.com.softwareOptimus.comercial.Requisicao;
+import br.com.softwareOptimus.comercial.RequisicaoItens;
 import br.com.softwareOptimus.comercial.StatusGeral;
 import br.com.softwareOptimus.comercial.TipoOrigem;
 import br.com.softwareOptimus.comercial.dao.RequisicaoDAO;
@@ -107,6 +108,14 @@ public class RequisicaoRN {
 	public List<Requisicao> listaReqDate(Date dataIni, Date dataFim, String desc, int first, int pageSize)
 			throws Exception {
 		return this.requisicaoDAO.pesquisaPeriodo(dataIni, dataFim, desc, first, pageSize);
+	}
+	
+	public void salvarRequisicaoItem(RequisicaoItens reqItem) throws Exception{
+		this.requisicaoDAO.salvarRequisicaoItem(reqItem);
+	}
+	
+	public void editarRequisicaoItem(RequisicaoItens reqItem) throws Exception {
+		this.requisicaoDAO.atualizarRequisicaoItem(reqItem);
 	}
 
 }
