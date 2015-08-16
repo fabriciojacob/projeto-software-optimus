@@ -21,15 +21,19 @@ public class CodigoSituacaoTributaria implements Serializable{
 
 	@Id
 	@GeneratedValue
+	@Column(name="IDCST")
 	private Long idCst;
 	
-	@Column (length = 350, nullable = true , unique = false)
+	@Column (name="DESCRICAO", length = 350, nullable = true , unique = false)
 	private String descricao;
 	
+	@Column(name="IO", length=10)
 	private IO io;
 	
+	@Column(name="CST", length=10)
 	private String cst;
 	
+	@Column(name="TIPOCST", length=10)
 	private TipoCst tipoCst;
 	
 	public Long getIdCst() {

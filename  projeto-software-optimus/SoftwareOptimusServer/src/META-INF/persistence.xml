@@ -1,9 +1,9 @@
 <persistence version="2.0"
 	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
-	<persistence-unit name="SoftwareOptimusServer"
-		transaction-type="RESOURCE_LOCAL">
+	<persistence-unit name="SoftwareOptimusServer" transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<jta-data-source>/DataSourceSoftwareOptimusServer</jta-data-source>
 		<class>br.com.softwareOptimus.comercial.Comercial</class>
 		<class>br.com.softwareOptimus.comercial.ComercialFiscais</class>
 		<class>br.com.softwareOptimus.comercial.ComercialInfComp</class>
@@ -65,17 +65,22 @@
 		<class>br.com.softwareOptimus.financeiro.ContaBancaria</class>
 		<class>br.com.softwareOptimus.financeiro.ContaFilha</class>
 		<class>br.com.softwareOptimus.financeiro.MovCaixa</class>
-		<class>br.com.softwareOptimus.contabilidade.SaldoContasCC</class>
 		<class>br.com.softwareOptimus.financeiro.Extrato</class>
-
+		
 		 <properties>
-			<property name=" javax.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver" />
-			<property name=" javax.persistence.jdbc.user" value="projeto" />
-			<property name=" javax.persistence.jdbc.password" value="1234" />
-			<property name=" javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:8080:xe" />
-			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect" />
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.format_sql" value="true" />
-		</properties>
+			<property name="hibernate.query.substitutions" value="true=1, false=0" />
+			<property name="hibernate.jdbc.batch_size" value="30" />
+			<property name="hibernate.hbm2ddl.auto" value="update" /> 
+			<property name="hibernate.transaction.factory_class" value="org.hibernate.transaction.JTATransactionFactory" />
+			<property name="hibernate.transaction.manager_lookup_class" value="org.hibernate.transaction.SunONETransactionManagerLookup" />
+			<property name="hibernate.query.factory_class" value="org.hibernate.hql.internal.classic.ClassicQueryTranslatorFactory"/>
+			<property name="hibernate.transaction.jta.platform" value="org.hibernate.service.jta.platform.internal.SunOneJtaPlatform" />
+			<property name="hibernate.jdbc.use_streams_for_binary" value="true"/>
+			<property name="hibernate.default_catalog" value="PROJETO"/>
+    	 </properties>
+	
 	</persistence-unit>
 </persistence>
