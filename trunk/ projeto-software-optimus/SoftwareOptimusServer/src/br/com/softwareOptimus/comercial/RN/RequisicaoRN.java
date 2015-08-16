@@ -93,6 +93,14 @@ public class RequisicaoRN {
 		}
 	}
 	
+	public void atualizarItemRequerido(RequisicaoItens requisicaoItens) throws Exception {
+		this.requisicaoDAO.atualizarRequisicaoItem(requisicaoItens);
+	}
+	
+	public RequisicaoItens finRequisicaoItens(Long id) throws  Exception{
+		return this.requisicaoDAO.findRequisicaoItens(id);
+	}
+	
 	public int countRequisicao() throws Exception{
 		return this.requisicaoDAO.countRequisicaoPaginacao();
 	}

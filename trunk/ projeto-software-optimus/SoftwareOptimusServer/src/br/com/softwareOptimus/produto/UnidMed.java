@@ -26,7 +26,7 @@ public class UnidMed implements Serializable{
 	
 	private String descUnid;
 	
-	@OneToMany(mappedBy = "UnidMed")
+	@OneToMany(mappedBy = "unidMed")
 	private Collection<Produto> produtos;
 	
 	public Collection<Produto> getProdutos() {

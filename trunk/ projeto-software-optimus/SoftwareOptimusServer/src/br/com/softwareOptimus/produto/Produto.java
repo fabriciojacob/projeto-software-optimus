@@ -45,7 +45,7 @@ public class Produto implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "idUnidMed", nullable = false, foreignKey = @ForeignKey(name = "fk_tbUnidMed"))
-	private UnidMed UnidMed;
+	private UnidMed unidMed;
 
 	@ManyToOne
 	@JoinColumn(name = "idTipoProduto", nullable = false, foreignKey = @ForeignKey(name = "fk_tbTipoProd"))
@@ -150,11 +150,11 @@ public class Produto implements Serializable {
 	}
 
 	public UnidMed getUnidMed() {
-		return UnidMed;
+		return unidMed;
 	}
 
 	public void setUnidMed(UnidMed unidMed) {
-		UnidMed = unidMed;
+		this.unidMed = unidMed;
 	}
 
 	public TipoProduto getTipoProd() {

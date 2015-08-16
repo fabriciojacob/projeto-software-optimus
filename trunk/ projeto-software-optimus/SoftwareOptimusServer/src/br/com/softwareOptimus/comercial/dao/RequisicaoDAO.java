@@ -35,4 +35,6 @@ public interface RequisicaoDAO {
 	public void salvarRequisicaoItem(RequisicaoItens requisicaoItens) throws Exception;
 	
 	public void atualizarRequisicaoItem(RequisicaoItens requisicaoItens) throws Exception;
+	
+	public RequisicaoItens findRequisicaoItens(Long id) throws Exception;
 }

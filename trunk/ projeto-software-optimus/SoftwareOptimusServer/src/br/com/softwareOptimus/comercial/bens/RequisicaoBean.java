@@ -29,7 +29,7 @@ public class RequisicaoBean {
 	private Requisicao requisicao;
 	private RequisicaoItens requisicaoItens;
 	private List<RequisicaoItens> listaRequisicaoItens;
-	private Long idEmpresa, idUsuario, idRequisicao, idProduto;
+	private Long idEmpresa, idUsuario, idRequisicao, idProduto, idRequisicaoItem;
 	private Pessoa empSelecionada;
 	private LazyDataModel<Produto> listaProdutos;
 	private LazyDataModel<Requisicao> listaRequisicao;
@@ -74,6 +74,17 @@ public class RequisicaoBean {
 	}
 	
 	public void editarProduto(){
+		try{
+			if(this.requisicaoRN == null){
+				this.requisicaoRN = new RequisicaoRN();
+			}
+			
+			this.requisicaoItens = getRequisicaoRN().finRequisicaoItens(idRequisicaoItem);
+			getRequisicaoRN().atualizarItemRequerido(requisicaoItens);
+			msgAcerto("Quantidade atualizada ");
+		}catch (Exception ex){
+			msgErro("Problemas ao atualizar a quantidade do item requerido ", ex);
+		}
 		
 	}
 	
@@ -544,4 +555,15 @@ public class RequisicaoBean {
 		this.requisicaoItens = requisicaoItens;
 	}
 
+	public Long getIdRequisicaoItem() {
+		return idRequisicaoItem;
+	}
+
+	public void setIdRequisicaoItem(Long idRequisicaoItem) {
+		this.idRequisicaoItem = idRequisicaoItem;
+	}
+
+	public void setListaProdutos(LazyDataModel<Produto> listaProdutos) {
+		this.listaProdutos = listaProdutos;
+	}
 }
