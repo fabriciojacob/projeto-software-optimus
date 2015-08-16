@@ -18,7 +18,9 @@
 	</p:column>
 	
 	<p:column headerText="Data Requisição">
-		<h:outputText value="#{pesRequisicao.dataReq}"/>
+		<h:outputText value="#{pesRequisicao.dataReq}">
+		 <f:convertDateTime pattern="dd/MM/YYYY"/>
+		</h:outputText>
 	</p:column>
 
 	<p:column headerText="Selecionar">

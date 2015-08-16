@@ -161,11 +161,15 @@ public class RequisicaoHibernate implements RequisicaoDAO {
 		this.transacao.commit();
 		
 	}
-	
-	
-	
-	
-	
+
+	@Override
+	public RequisicaoItens findRequisicaoItens(Long id) throws Exception {
+		if(!this.transacao.isActive()){
+			this.transacao.begin();
+		}
+		
+		return this.session.find(RequisicaoItens.class, id);
+	}
 	
 
 }
