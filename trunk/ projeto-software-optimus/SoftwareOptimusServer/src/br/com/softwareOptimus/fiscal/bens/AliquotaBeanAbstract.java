@@ -164,6 +164,9 @@ public abstract class AliquotaBeanAbstract extends FacesUtil{
 	}
 
 	public String getTipTrib() {
+		if(this.tipTrib == null){
+			this.tipTrib = "";
+		}
 		return tipTrib;
 	}
 

@@ -67,6 +67,7 @@ public class AliquotaBean extends AliquotaBeanAbstract implements Serializable{
 				this.error("Existem campos nulos no formulário");
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			this.error("Problemas na gravacao da Alíquota " + e.getMessage());
 		}
 	}
