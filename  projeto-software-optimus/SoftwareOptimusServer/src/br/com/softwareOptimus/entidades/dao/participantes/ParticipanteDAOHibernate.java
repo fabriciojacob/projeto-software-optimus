@@ -202,6 +202,6 @@ public class ParticipanteDAOHibernate extends JpaUtil implements ParticipanteDAO
 		if(pessoaJuridica.getIe() != null && pessoaJuridica.getIe() != ""){
 			qry.setParameter("ie", "%" + pessoaJuridica.getIe() + "%");
 		}
-		qry.setParameter("naturezaPessoa", NaturezaPessoa.EMPRESA);
+		qry.setParameter("naturezaPessoa", NaturezaPessoa.EMPRESA.ordinal());
 	}
 }
