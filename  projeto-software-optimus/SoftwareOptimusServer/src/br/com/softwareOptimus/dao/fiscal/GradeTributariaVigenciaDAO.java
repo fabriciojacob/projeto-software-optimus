@@ -1,7 +1,5 @@
 package br.com.softwareOptimus.dao.fiscal;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
@@ -15,8 +13,6 @@ import br.com.softwareOptimus.fiscal.Pauta;
 
 public interface GradeTributariaVigenciaDAO {
 
-	public void begin() throws IOException, SQLException;
-	public void close() throws Exception;
 	public List<GradeTributariaVigencia> listaVig(GradeTributaria grade);
 	public void remover(Long idGradeVig);
 	public void salvaVig(GradeTributariaVigencia gradeVig);

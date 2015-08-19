@@ -1,6 +1,4 @@
 package br.com.softwareOptimus.dao.fiscal;
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -12,8 +10,6 @@ import br.com.softwareOptimus.produto.Produto;
 
 public interface TipoProdutoDAO {
 
-	public void begin() throws IOException, SQLException;
-	public void close() throws Exception;
 	public void salva(TipoProduto tipo);
 	public void altTipo(TipoProduto tipo);
 	public void remover(TipoProduto tipo);

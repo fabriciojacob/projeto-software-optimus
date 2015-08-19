@@ -133,10 +133,6 @@ public class ExtratoRN {
 			}
 		}
 	}
-	
-	public void closed() throws Exception {
-		this.extratoDAO.close();
-	}
 
 	public ExtratoDAO getExtratoDAO() {
 		return extratoDAO;

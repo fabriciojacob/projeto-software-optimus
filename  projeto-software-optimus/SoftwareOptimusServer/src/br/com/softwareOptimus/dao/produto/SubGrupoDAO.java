@@ -12,8 +12,6 @@ import br.com.softwareOptimus.produto.SubGrupo;
 
 public interface SubGrupoDAO {
 
-	public void begin() throws IOException, SQLException;
-	public void close() throws Exception;
 	public void salvar(SubGrupo subGrupo);
 	public void altSub(SubGrupo subGrupo);
 	public List<Grupo> verificaRemocao(SubGrupo subGrupo);

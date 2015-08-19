@@ -1,40 +1,30 @@
 package br.com.softwareOptimus.financeiro.dao;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
+
 import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureQuery;
 import javax.persistence.TypedQuery;
+
 import br.com.softwareOptimus.entidades.Pessoa;
 import br.com.softwareOptimus.financeiro.StatusConta;
 import br.com.softwareOptimus.financeiro.TipoTitulo;
 import br.com.softwareOptimus.financeiro.Titulo;
+import br.com.softwareOptimus.util.JpaUtil;
 
-public class TituloDAOHibernate implements TituloDAO {
-
-	private EntityManager session;
-
-	private EntityTransaction transacao;
+public class TituloDAOHibernate extends JpaUtil implements TituloDAO {
 
 	@Override
 	public void salvar(Titulo titulo) throws Exception {
-		this.session.persist(titulo);
-		if (!this.transacao.isActive()) {
-			this.transacao.begin();
-		}
-		this.transacao.commit();
-		this.session.clear();
+		beginTransaction();
+		getEntityManager().persist(titulo);
+		commitTransaction();
+		getEntityManager().clear();
 	}
 
 	public void salvarParcelas(Long titulo) throws Exception {
-		if (!this.transacao.isActive()) {
-			this.transacao.begin();
-		}
-		StoredProcedureQuery proc = session
+		StoredProcedureQuery proc = getEntityManager()
 				.createStoredProcedureQuery("pkg_financeiro.addparcelas");
 		proc.registerStoredProcedureParameter("idTitulo", Long.class,
 				ParameterMode.IN);
@@ -47,18 +37,16 @@ public class TituloDAOHibernate implements TituloDAO {
 
 	@Override
 	public void editar(Titulo titulo) throws Exception {
-		if(!this.transacao.isActive()){
-			this.transacao.begin();
-		}
-		this.session.merge(titulo);
-		this.transacao.commit();
-		this.session.clear();
+		beginTransaction();
+		getEntityManager().merge(titulo);
+		commitTransaction();
+		getEntityManager().clear();
 	}
 
 	@Override
 	public List<Titulo> pesquisaPessoa(Pessoa p) throws Exception {
 		String jpql = "Select e from Titulo e where e.empresa = :parEmpresa";
-		TypedQuery<Titulo> consulta = this.session.createQuery(jpql,
+		TypedQuery<Titulo> consulta = getEntityManager().createQuery(jpql,
 				Titulo.class);
 		consulta.setParameter("parEmpresa", p);
 		return consulta.getResultList();
@@ -66,11 +54,9 @@ public class TituloDAOHibernate implements TituloDAO {
 
 	@Override
 	public void excluir(Titulo titulo) throws Exception {
-		if(!this.transacao.isActive()){
-			this.transacao.begin();
-		}
-		this.session.remove(titulo);
-		this.transacao.commit();
+		beginTransaction();
+		getEntityManager().remove(titulo);
+		commitTransaction();
 	}
 
 	@Override
@@ -81,23 +67,23 @@ public class TituloDAOHibernate implements TituloDAO {
 				+ " and e.empresa = :parEmpresa"
 				+ " and e.pessoa = :parParticipante"
 				+ " and e.tipoTitulo = :parTipo" + " and e.status = :parStatus";
-		TypedQuery<Titulo> consulta = this.session.createQuery(jpql,
+		TypedQuery<Titulo> consulta = getEntityManager().createQuery(jpql,
 				Titulo.class);
 		consulta.setParameter("parDataIni", dataInicio);
 		consulta.setParameter("parDataFim", dataFim);
 		consulta.setParameter("parEmpresa", empresa);
 		consulta.setParameter("parParticipante", participante);
 		if (tipo == 0) {
-			consulta.setParameter("parTipo", TipoTitulo.PAGAR);
+			consulta.setParameter("parTipo", TipoTitulo.PAGAR.ordinal());
 		} else {
-			consulta.setParameter("parTipo", TipoTitulo.RECEBER);
+			consulta.setParameter("parTipo", TipoTitulo.RECEBER.ordinal());
 		}
 		if (status == 0) {
-			consulta.setParameter("parStatus", StatusConta.BAIXADA);
+			consulta.setParameter("parStatus", StatusConta.BAIXADA.ordinal());
 		} else if (status == 1) {
-			consulta.setParameter("parStatus", StatusConta.PENDENTE);
+			consulta.setParameter("parStatus", StatusConta.PENDENTE.ordinal());
 		} else {
-			consulta.setParameter("parStatus", StatusConta.CANCELADA);
+			consulta.setParameter("parStatus", StatusConta.CANCELADA.ordinal());
 		}
 		return consulta.getResultList();
 	}
@@ -110,23 +96,23 @@ public class TituloDAOHibernate implements TituloDAO {
 				+ " and e.empresa = :parEmpresa "
 				+ " and e.pessoa = :parParticipante"
 				+ " and e.tipoTitulo = :parTipo" + " and e.status = :parStatus";
-		TypedQuery<Titulo> consulta = this.session.createQuery(jpql,
+		TypedQuery<Titulo> consulta = getEntityManager().createQuery(jpql,
 				Titulo.class);
 		consulta.setParameter("parDataIni", dataInicio);
 		consulta.setParameter("parDataFim", dataFim);
 		consulta.setParameter("parEmpresa", empresa);
 		consulta.setParameter("parParticipante", participante);
 		if (tipo == 0) {
-			consulta.setParameter("parTipo", TipoTitulo.PAGAR);
+			consulta.setParameter("parTipo", TipoTitulo.PAGAR.ordinal());
 		} else {
-			consulta.setParameter("parTipo", TipoTitulo.RECEBER);
+			consulta.setParameter("parTipo", TipoTitulo.RECEBER.ordinal());
 		}
 		if (status == 0) {
-			consulta.setParameter("parStatus", StatusConta.BAIXADA);
+			consulta.setParameter("parStatus", StatusConta.BAIXADA.ordinal());
 		} else if (status == 1) {
-			consulta.setParameter("parStatus", StatusConta.PENDENTE);
+			consulta.setParameter("parStatus", StatusConta.PENDENTE.ordinal());
 		} else {
-			consulta.setParameter("parStatus", StatusConta.CANCELADA);
+			consulta.setParameter("parStatus", StatusConta.CANCELADA.ordinal());
 		}
 		return consulta.getResultList();
 	}
@@ -139,56 +125,31 @@ public class TituloDAOHibernate implements TituloDAO {
 				+ " and e.empresa = :parEmpresa"
 				+ " and e.pessoa = :parParticipante"
 				+ " and e.tipoTitulo = :parTipo" + " and e.status = :parStatus";
-		TypedQuery<Titulo> consulta = this.session.createQuery(jpql,
+		TypedQuery<Titulo> consulta = getEntityManager().createQuery(jpql,
 				Titulo.class);
 		consulta.setParameter("parDataIni", dataInicio);
 		consulta.setParameter("parDataFim", dataFim);
 		consulta.setParameter("parEmpresa", empresa);
 		consulta.setParameter("parParticipante", participante);
 		if (tipo == 0) {
-			consulta.setParameter("parTipo", TipoTitulo.PAGAR);
+			consulta.setParameter("parTipo", TipoTitulo.PAGAR.ordinal());
 		} else {
-			consulta.setParameter("parTipo", TipoTitulo.RECEBER);
+			consulta.setParameter("parTipo", TipoTitulo.RECEBER.ordinal());
 		}
 		if (status == 0) {
-			consulta.setParameter("parStatus", StatusConta.BAIXADA);
+			consulta.setParameter("parStatus", StatusConta.BAIXADA.ordinal());
 		} else if (status == 1) {
-			consulta.setParameter("parStatus", StatusConta.PENDENTE);
+			consulta.setParameter("parStatus", StatusConta.PENDENTE.ordinal());
 		} else {
-			consulta.setParameter("parStatus", StatusConta.CANCELADA);
+			consulta.setParameter("parStatus", StatusConta.CANCELADA.ordinal());
 		}
-
 		return consulta.getResultList();
-	}
-
-	public EntityManager getSession() {
-		return session;
-	}
-
-	public void setSession(EntityManager session) {
-		this.session = session;
-	}
-
-	public EntityTransaction getTransacao() {
-		return transacao;
-	}
-
-	public void setTransacao(EntityTransaction transacao) {
-		this.transacao = transacao;
-	}
-
-	@Override
-	public void begin() throws IOException, SQLException {
-		this.transacao = this.session.getTransaction();
-		if (!this.transacao.isActive()) {
-			this.transacao.begin();
-		}
 	}
 
 	@Override
 	public List<Pessoa> listaParticipante(String nome) throws Exception {
 		String jpql = "Select e From Pessoa e where e.fantasia like :parNome";
-		TypedQuery<Pessoa> consulta = this.session.createQuery(jpql,
+		TypedQuery<Pessoa> consulta = getEntityManager().createQuery(jpql,
 				Pessoa.class);
 		consulta.setParameter("parNome", "%" + nome + "%");
 		return consulta.getResultList();
@@ -196,24 +157,23 @@ public class TituloDAOHibernate implements TituloDAO {
 
 	@Override
 	public Pessoa participante(Long id) throws Exception {
-		return this.session.find(Pessoa.class, id);
+		return getEntityManager().find(Pessoa.class, id);
 	}
 
 	@Override
 	public Titulo retornaTitulo(Long id) throws Exception {
 		String jpql = "Select t from Titulo t where t.idTitulo = :id";
-		TypedQuery<Titulo> consulta = this.session.createQuery(jpql,
+		TypedQuery<Titulo> consulta = getEntityManager().createQuery(jpql,
 				Titulo.class);
 		consulta.setParameter("id", id);
 		return consulta.getSingleResult();
 	}
 
-
 	@Override
 	public void checkStatusBaixaTitulo(Long id) throws Exception {
 		String jpql = "Select t from Titulo t where t.idTitulo = :id"
 				+ " and t.status = 0";
-		TypedQuery<Titulo> consulta = this.session.createQuery(jpql,
+		TypedQuery<Titulo> consulta = getEntityManager().createQuery(jpql,
 				Titulo.class);
 		consulta.setParameter("id", id);
 		consulta.getSingleResult();
@@ -223,26 +183,18 @@ public class TituloDAOHibernate implements TituloDAO {
 	public Titulo retornaTituloBaixado(Long id) throws Exception {
 		String jpql = "Select t from Titulo t where t.idTitulo = :id"
 				+ " and t.status = 0";
-		TypedQuery<Titulo> consulta = this.session.createQuery(jpql,
+		TypedQuery<Titulo> consulta = getEntityManager().createQuery(jpql,
 				Titulo.class);
 		consulta.setParameter("id", id);
 		return consulta.getSingleResult();
-	}
-
-	@Override
-	public void closed() throws Exception {
-		this.transacao.commit();
-		this.session.close();
-		
 	}
 
 	@Override
 	public Titulo retornaTituloGeral(Long id) throws Exception {
 		String jpql = "Select t from Titulo t where t.idTitulo = :id";
-		TypedQuery<Titulo> consulta = this.session.createQuery(jpql,
+		TypedQuery<Titulo> consulta = getEntityManager().createQuery(jpql,
 				Titulo.class);
 		consulta.setParameter("id", id);
 		return consulta.getSingleResult();
 	}
-
 }

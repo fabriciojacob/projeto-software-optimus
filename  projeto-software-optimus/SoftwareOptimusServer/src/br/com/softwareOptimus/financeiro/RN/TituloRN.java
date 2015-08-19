@@ -86,10 +86,6 @@ public class TituloRN {
 		return ret;
 	}
 
-	public void closed() throws Exception {
-		this.titulo.closed();
-	}
-
 	public int editar(Titulo titulo) throws Exception {
 		if(!titulo.getStatus().equals(StatusConta.BAIXADA)){
 			this.titulo.editar(titulo);

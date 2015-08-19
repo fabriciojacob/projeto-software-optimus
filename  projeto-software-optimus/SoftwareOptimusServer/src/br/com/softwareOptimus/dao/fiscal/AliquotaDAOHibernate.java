@@ -1,11 +1,7 @@
 package br.com.softwareOptimus.dao.fiscal;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
@@ -14,38 +10,21 @@ import br.com.softwareOptimus.fiscal.CodTabelaGov;
 import br.com.softwareOptimus.fiscal.GradeTributariaVigencia;
 import br.com.softwareOptimus.fiscal.PisCofins;
 import br.com.softwareOptimus.fiscal.TipoCst;
+import br.com.softwareOptimus.util.JpaUtil;
 
-public class AliquotaDAOHibernate implements AliquotaDAO {
-
-	private EntityManager session;
-	private EntityTransaction transaction;
-
-	public EntityManager getSession() {
-		return session;
-	}
-
-	public void setSession(EntityManager session) {
-		this.session = session;
-	}
-
-	public EntityTransaction getTransaction() {
-		return transaction;
-	}
-
-	public void setTransaction(EntityTransaction transaction) {
-		this.transaction = transaction;
-	}
+public class AliquotaDAOHibernate extends JpaUtil implements AliquotaDAO {
 
 	@Override
 	public void altAliq(Aliquota aliquota) throws Exception {
-		this.session.merge(aliquota);
-		this.transaction.commit();
+		beginTransaction();
+		getEntityManager().merge(aliquota);
+		commitTransaction();
 	}
 
 	@Override
 	public Aliquota editBusc(Long id) {
 		String jpql = "Select a From Aliquota a Where a.idAliq = :id ";
-		TypedQuery<Aliquota> listaAliquota = this.session.createQuery(jpql,
+		TypedQuery<Aliquota> listaAliquota = getEntityManager().createQuery(jpql,
 				Aliquota.class);
 		listaAliquota.setParameter("id", id);
 		return listaAliquota.getSingleResult();
@@ -53,49 +32,38 @@ public class AliquotaDAOHibernate implements AliquotaDAO {
 
 	@Override
 	public void remover(Long id) throws Exception {
-		Aliquota aliq = this.session.find(Aliquota.class, id);
-		this.session.remove(aliq);
-		this.transaction.commit();
+		beginTransaction();
+		Aliquota aliq = getEntityManager().find(Aliquota.class, id);
+		getEntityManager().remove(aliq);
+		commitTransaction();
 	}
 
 	@Override
 	public List<Aliquota> lista() {
 		String jpql = "Select a From Aliquota a";
-		TypedQuery<Aliquota> listaAliquota = this.session.createQuery(jpql,
+		TypedQuery<Aliquota> listaAliquota = getEntityManager().createQuery(jpql,
 				Aliquota.class);
 		return listaAliquota.getResultList();
 	}
 
 	public List<Aliquota> listaAliqIcms() {
 		String jpql = "Select a From Aliquota a Where a.tipo Is Not Null";
-		TypedQuery<Aliquota> listaAliquota = this.session.createQuery(jpql,
+		TypedQuery<Aliquota> listaAliquota = getEntityManager().createQuery(jpql,
 				Aliquota.class);
 		return listaAliquota.getResultList();
 	}
 
 	@Override
-	public void begin() throws IOException, SQLException {
-		this.transaction = session.getTransaction();
-		if (!transaction.isActive()) {
-			transaction.begin();
-		}
-	}
-
-	@Override
-	public void close() throws Exception {
-		this.session.close();
-	}
-
-	@Override
 	public void salva(Aliquota aliquota) throws Exception {
-		this.session.persist(aliquota);
-		this.transaction.commit();
+		beginTransaction();
+		getEntityManager().persist(aliquota);
+		commitTransaction();
 	}
 
 	@Override
 	public List<Aliquota> consultaId(long id) {
 		String jpql = "Select a From Aliquota a Where a.idAliq = :id ";
-		TypedQuery<Aliquota> listaUnidade = this.session.createQuery(jpql,
+		TypedQuery<Aliquota> listaUnidade = getEntityManager().createQuery(jpql,
 				Aliquota.class);
 		listaUnidade.setParameter("id", id);
 		return listaUnidade.getResultList();
@@ -107,7 +75,7 @@ public class AliquotaDAOHibernate implements AliquotaDAO {
 		minimo = aliquota - 2;
 		maximo = aliquota + 2;
 		String jpql = "Select a From Aliquota a Where a.aliquota BETWEEN :minimo And :maximo";
-		TypedQuery<Aliquota> listaAliquota = this.session.createQuery(jpql,
+		TypedQuery<Aliquota> listaAliquota = getEntityManager().createQuery(jpql,
 				Aliquota.class);
 		listaAliquota.setParameter("minimo", minimo);
 		listaAliquota.setParameter("maximo", maximo);
@@ -120,7 +88,7 @@ public class AliquotaDAOHibernate implements AliquotaDAO {
 		minimo = reducao - 10;
 		maximo = reducao + 10;
 		String jpql = "Select a From Aliquota a Where a.reducao BETWEEN :minimo And :maximo";
-		TypedQuery<Aliquota> listaAliquota = this.session.createQuery(jpql,
+		TypedQuery<Aliquota> listaAliquota = getEntityManager().createQuery(jpql,
 				Aliquota.class);
 		listaAliquota.setParameter("minimo", minimo);
 		listaAliquota.setParameter("maximo", maximo);
@@ -130,9 +98,9 @@ public class AliquotaDAOHibernate implements AliquotaDAO {
 	@Override
 	public List<Aliquota> listaAliq(TipoCst tipo) {
 		String jpql = "Select Distinct a From Aliquota a, IN(a.cst) AS b Where b.tipoCst = :tipo";
-		TypedQuery<Aliquota> aliqIpi = this.session.createQuery(jpql,
+		TypedQuery<Aliquota> aliqIpi = getEntityManager().createQuery(jpql,
 				Aliquota.class);
-		aliqIpi.setParameter("tipo", tipo);
+		aliqIpi.setParameter("tipo", tipo.ordinal());
 		return aliqIpi.getResultList();
 	}
 
@@ -140,10 +108,10 @@ public class AliquotaDAOHibernate implements AliquotaDAO {
 	public List<Aliquota> listaAliqPisCofins(TipoCst pisCofins,
 			PisCofins tipoAliq) {
 		String jpql = "Select Distinct a From Aliquota a, IN(a.cst) AS b Where b.tipoCst = :tipo and a.pisCofins = :tipoAliq";
-		TypedQuery<Aliquota> aliqPisCofins = this.session.createQuery(jpql,
+		TypedQuery<Aliquota> aliqPisCofins = getEntityManager().createQuery(jpql,
 				Aliquota.class);
-		aliqPisCofins.setParameter("tipo", pisCofins);
-		aliqPisCofins.setParameter("tipoAliq", tipoAliq);
+		aliqPisCofins.setParameter("tipo", pisCofins.ordinal());
+		aliqPisCofins.setParameter("tipoAliq", tipoAliq.ordinal());
 		return aliqPisCofins.getResultList();
 	}
 
@@ -154,7 +122,7 @@ public class AliquotaDAOHibernate implements AliquotaDAO {
 				+ "or c.entradaCofins = :aliquota2 "
 				+ "or c.saidaPis = :aliquota3 "
 				+ "or c.saidaCofins = :aliquota4";
-		TypedQuery<CodTabelaGov> codTb = this.session.createQuery(jpql,
+		TypedQuery<CodTabelaGov> codTb = getEntityManager().createQuery(jpql,
 				CodTabelaGov.class);
 		codTb.setParameter("aliquota1", aliquota);
 		codTb.setParameter("aliquota2", aliquota);
@@ -166,7 +134,7 @@ public class AliquotaDAOHibernate implements AliquotaDAO {
 	@Override
 	public List<GradeTributariaVigencia> verificaRemocao2(Aliquota aliquota) {
 		String jpql = "select g from GradeTributariaVigencia g where g.aliquota = :aliquota";
-		TypedQuery<GradeTributariaVigencia> grade = this.session.createQuery(
+		TypedQuery<GradeTributariaVigencia> grade = getEntityManager().createQuery(
 				jpql, GradeTributariaVigencia.class);
 		grade.setParameter("aliquota", aliquota);
 		return grade.getResultList();
@@ -178,7 +146,7 @@ public class AliquotaDAOHibernate implements AliquotaDAO {
 		
 		StringBuilder sql = new StringBuilder();
 		this.defineCondicao(sql, maxAliquota, minAliquota, maxReduc, minReduc);
-		Query qry = this.session.createQuery("select a from Aliquota a ".concat(sql.toString()));
+		Query qry = getEntityManager().createQuery("select a from Aliquota a ".concat(sql.toString()));
 		this.defineParametros(qry,  maxAliquota, minAliquota, maxReduc, minReduc);
 		qry.setFirstResult(first);
 		qry.setMaxResults(pageSize);
@@ -190,7 +158,7 @@ public class AliquotaDAOHibernate implements AliquotaDAO {
 	public int countAliquotaPaginacao(Double maxAliquota, Double minAliquota,Double maxReduc, Double minReduc) {
 		StringBuilder sql = new StringBuilder();
 		this.defineCondicao(sql, maxAliquota, minAliquota, maxReduc, minReduc);
-		Query qryMaximo = this.session.createQuery("select Count(a) from Aliquota a ".concat(sql.toString()));
+		Query qryMaximo = getEntityManager().createQuery("select Count(a) from Aliquota a ".concat(sql.toString()));
 		this.defineParametros(qryMaximo, maxAliquota, minAliquota, maxReduc, minReduc);
 		Number count = (Number) qryMaximo.getSingleResult();
 		return count.intValue();
@@ -227,5 +195,4 @@ public class AliquotaDAOHibernate implements AliquotaDAO {
 			qry.setParameter("maxReduc", maxReduc);
 		}
 	}
-
 }

@@ -9,8 +9,6 @@ public interface UsuarioDAO {
 	public void salvar(Usuario usuario);
 	public void atualizar(Usuario usuario);
 	public void excluir(Usuario usuario);
-	public void begin() throws Exception;
-	public void close() throws Exception;
 	public Usuario carregar(Long codigo);
 	public Usuario buscaPorLogin(String login, String senha) throws Exception;
 	public List<Usuario> listar();

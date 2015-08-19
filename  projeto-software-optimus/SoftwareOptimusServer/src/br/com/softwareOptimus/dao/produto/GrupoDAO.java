@@ -1,7 +1,5 @@
 package br.com.softwareOptimus.dao.produto;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -13,8 +11,6 @@ import br.com.softwareOptimus.produto.SubGrupo;
 
 public interface GrupoDAO {
 
-	public void begin() throws IOException, SQLException;
-	public void close() throws Exception;
 	public void salvar(Grupo grupo);
 	public void alterar(Grupo grupo);
 	public List<Setor> verificaRemocao(Grupo grupo);

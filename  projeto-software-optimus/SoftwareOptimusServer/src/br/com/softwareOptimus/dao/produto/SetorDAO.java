@@ -1,7 +1,5 @@
 package br.com.softwareOptimus.dao.produto;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -12,8 +10,6 @@ import br.com.softwareOptimus.produto.Setor;
 
 public interface SetorDAO {
 
-	public void begin() throws IOException, SQLException;
-	public void close() throws Exception;
 	public void salvar(Setor setor);
 	public void altSet(Setor setor);
 	public List<Produto> verProdSet(Setor setor);

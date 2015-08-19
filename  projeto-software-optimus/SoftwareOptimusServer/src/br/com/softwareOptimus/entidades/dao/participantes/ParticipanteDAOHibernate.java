@@ -1,97 +1,62 @@
 package br.com.softwareOptimus.entidades.dao.participantes;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
-import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import javax.persistence.EntityManager;
 
 import br.com.softwareOptimus.entidades.NaturezaPessoa;
 import br.com.softwareOptimus.entidades.PessoaFisica;
 import br.com.softwareOptimus.entidades.PessoaJuridica;
+import br.com.softwareOptimus.util.JpaUtil;
 
-public class ParticipanteDAOHibernate implements ParticipanteDAO {
-
-	private EntityManager session;
-	private EntityTransaction transaction;
-
-	public EntityManager getSession() {
-		return session;
-	}
-
-	public void setSession(EntityManager session) {
-		this.session = session;
-	}
-
-	public EntityTransaction getTransaction() {
-		return transaction;
-	}
-
-	public void setTransaction(EntityTransaction transaction) {
-		this.transaction = transaction;
-	}
+public class ParticipanteDAOHibernate extends JpaUtil implements ParticipanteDAO {
 
 	@Override
 	public void salvarPessoaJuridica(PessoaJuridica pessoa) throws Exception {
-		this.begin();
-		this.session.persist(pessoa);
-		this.transaction.commit();
+		beginTransaction();
+		getEntityManager().persist(pessoa);
+		commitTransaction();
 	}
 
 	@Override
 	public void salvarPessoaFisica(PessoaFisica pessoa) throws Exception {
-		this.begin();
-		this.session.persist(pessoa);
-		this.transaction.commit();
+		beginTransaction();
+		getEntityManager().persist(pessoa);
+		commitTransaction();
 	}
 
 	@Override
 	public void atualizarPessoaJuridica(PessoaJuridica pessoa) throws Exception {
-		this.begin();
-		this.session.merge(pessoa);
-		this.transaction.commit();
+		beginTransaction();
+		getEntityManager().merge(pessoa);
+		commitTransaction();
 	}
 
 	@Override
 	public void atualizarPessoaFisica(PessoaFisica pessoa) throws Exception {
-		this.begin();
-		this.session.merge(pessoa);
-		this.transaction.commit();
-	}
-
-	@Override
-	public void begin() throws IOException, SQLException {
-		this.transaction = this.session.getTransaction();
-		if (!this.transaction.isActive()) {
-			this.transaction.begin();
-		}
-	}
-
-	@Override
-	public void close() throws Exception {
-		this.session.close();
+		beginTransaction();
+		getEntityManager().merge(pessoa);
+		commitTransaction();
 	}
 
 	@Override
 	public PessoaFisica carregarPF(Long codigo) throws Exception {
-		this.begin();
-		return this.session.find(PessoaFisica.class, codigo);
+		beginTransaction();
+		return getEntityManager().find(PessoaFisica.class, codigo);
 	}
 	
 	@Override
 	public PessoaJuridica carregarPJ(Long codigo) throws Exception {
-		this.begin();
-		return this.session.find(PessoaJuridica.class,codigo);
+		beginTransaction();
+		return getEntityManager().find(PessoaJuridica.class,codigo);
 	}
 
 	@Override
 	public List<PessoaJuridica> buscaCNPJ(String cnpj) throws Exception {
 		String jpql = "Select p From PessoaJuridica p "
 				+ " where p.fantasia = :parCnpj " + " and p.naturezaPessoa <> 2";
-		TypedQuery<PessoaJuridica> consulta = this.session.createQuery(jpql,
+		TypedQuery<PessoaJuridica> consulta = getEntityManager().createQuery(jpql,
 				PessoaJuridica.class);
 		consulta.setParameter("parCnpj", cnpj);
 		return consulta.getResultList();
@@ -101,7 +66,7 @@ public class ParticipanteDAOHibernate implements ParticipanteDAO {
 	public List<PessoaJuridica> buscaNomePJ(String nome) throws Exception {
 		String jpql = "Select p From PessoaJuridica p "
 				+ " where p.fantasia LIKE :parNome" + " and p.naturezaPessoa <> 2";
-		TypedQuery<PessoaJuridica> consulta = this.session.createQuery(jpql,
+		TypedQuery<PessoaJuridica> consulta = getEntityManager().createQuery(jpql,
 				PessoaJuridica.class);
 		consulta.setParameter("parNome","%" + nome + "%");
 		return consulta.getResultList();
@@ -111,7 +76,7 @@ public class ParticipanteDAOHibernate implements ParticipanteDAO {
 	public List<PessoaFisica> buscaCPF(String CPF) throws Exception {
 		String jpql = "Select p From PessoaFisica p "
 				+ " where p.cpf = :parCPF " + " and p.naturezaPessoa <> 2";
-		TypedQuery<PessoaFisica> consulta = this.session.createQuery(jpql,
+		TypedQuery<PessoaFisica> consulta = getEntityManager().createQuery(jpql,
 				PessoaFisica.class);
 		consulta.setParameter("parCPF",CPF);
 		return consulta.getResultList();
@@ -122,7 +87,7 @@ public class ParticipanteDAOHibernate implements ParticipanteDAO {
 		String jpql = "Select p From PessoaFisica p"
 				+ " where p.fantasia LIKE :parPessoa"
 				+ " and p.naturezaPessoa <> 2";
-		TypedQuery<PessoaFisica> consulta = this.session.createQuery(jpql,
+		TypedQuery<PessoaFisica> consulta = getEntityManager().createQuery(jpql,
 				PessoaFisica.class);
 		consulta.setParameter("parPessoa","%" + nome + "%");
 		return consulta.getResultList();
@@ -132,7 +97,7 @@ public class ParticipanteDAOHibernate implements ParticipanteDAO {
 	public int countPessoaFisicaPaginacao(PessoaFisica pessoaFisica) {
 		StringBuilder sql = new StringBuilder();
 		this.defineCondicaoPF(sql, pessoaFisica);
-		Query qryMaximo = this.session.createQuery("select Count(p) from PessoaFisica p ".concat(sql.toString()));
+		Query qryMaximo = getEntityManager().createQuery("select Count(p) from PessoaFisica p ".concat(sql.toString()));
 		this.defineParametrosPF(qryMaximo, pessoaFisica);
 		Number count = (Number) qryMaximo.getSingleResult();
 		return count.intValue();
@@ -143,7 +108,7 @@ public class ParticipanteDAOHibernate implements ParticipanteDAO {
 	public List<PessoaFisica> buscaPessoaFisicaPaginacao(PessoaFisica pessoaFisica, int first, int pageSize) {
 		StringBuilder sql = new StringBuilder();
 		this.defineCondicaoPF(sql, pessoaFisica);
-		Query qry = this.session.createQuery("select p from PessoaFisica p ".concat(sql.toString()));
+		Query qry = getEntityManager().createQuery("select p from PessoaFisica p ".concat(sql.toString()));
 		this.defineParametrosPF(qry, pessoaFisica);
 		qry.setFirstResult(first);
 		qry.setMaxResults(pageSize);
@@ -181,7 +146,7 @@ public class ParticipanteDAOHibernate implements ParticipanteDAO {
 	public int countPessoaJuridicaPaginacao(PessoaJuridica pessoaJuridica, String natureza) {
 		StringBuilder sql = new StringBuilder();
 		this.defineCondicaoPJ(sql, pessoaJuridica, natureza);
-		Query qryMaximo = this.session.createQuery("select Count(p) from PessoaJuridica p ".concat(sql.toString()));
+		Query qryMaximo = getEntityManager().createQuery("select Count(p) from PessoaJuridica p ".concat(sql.toString()));
 		this.defineParametrosPJ(qryMaximo, pessoaJuridica);
 		Number count = (Number) qryMaximo.getSingleResult();
 		return count.intValue();
@@ -192,7 +157,7 @@ public class ParticipanteDAOHibernate implements ParticipanteDAO {
 	public List<PessoaJuridica> buscaPessoaJuridicaPaginacao(PessoaJuridica pessoaJuridica, String natureza, int first, int pageSize) {
 		StringBuilder sql = new StringBuilder();
 		this.defineCondicaoPJ(sql, pessoaJuridica, natureza);
-		Query qry = this.session.createQuery("select p from PessoaJuridica p ".concat(sql.toString()));
+		Query qry = getEntityManager().createQuery("select p from PessoaJuridica p ".concat(sql.toString()));
 		this.defineParametrosPJ(qry, pessoaJuridica);
 		qry.setFirstResult(first);
 		qry.setMaxResults(pageSize);

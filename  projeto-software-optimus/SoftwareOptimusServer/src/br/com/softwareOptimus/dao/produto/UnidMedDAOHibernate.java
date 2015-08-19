@@ -1,60 +1,32 @@
 package br.com.softwareOptimus.dao.produto;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import br.com.softwareOptimus.produto.UnidMed;
+import br.com.softwareOptimus.util.JpaUtil;
 
-public class UnidMedDAOHibernate implements UnidMedDAO {
-
-	private EntityManager session;
-	private EntityTransaction transaction;
-
-	public EntityManager getSession() {
-		return session;
-	}
-
-	public void setSession(EntityManager session) {
-		this.session = session;
-	}
-
-	public EntityTransaction getTransaction() {
-		return transaction;
-	}
-
-	public void setTransaction(EntityTransaction transaction) {
-		this.transaction = transaction;
-	}
+public class UnidMedDAOHibernate extends JpaUtil implements UnidMedDAO {
 
 	@Override
 	public void salvar(UnidMed unid) {
-		try {
-			this.begin();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		this.session.persist(unid);
-		this.transaction.commit();
+		beginTransaction();
+		getEntityManager().persist(unid);
+		commitTransaction();
 	}
 	
 	public void remover(Long unid) throws Exception{
-		this.begin();
-		UnidMed unidMed = this.session.find(UnidMed.class, unid);
-		this.session.remove(unidMed);
-		this.transaction.commit();
+		beginTransaction();
+		UnidMed unidMed = getEntityManager().find(UnidMed.class, unid);
+		getEntityManager().remove(unidMed);
+		commitTransaction();
 	}
 
 	public List<UnidMed> consultarId(Long id) {
 		String jpql = "Select u From UnidMed u Where u.idUnidMed = :id ";
-		TypedQuery<UnidMed> listaUnidade = this.session.createQuery(jpql,
+		TypedQuery<UnidMed> listaUnidade = getEntityManager().createQuery(jpql,
 				UnidMed.class);
 		listaUnidade.setParameter("id", id);
 		return listaUnidade.getResultList();
@@ -62,7 +34,7 @@ public class UnidMedDAOHibernate implements UnidMedDAO {
 
 	public List<UnidMed> consultarUnid(String unid) {
 		String jpql = "Select u From UnidMed u Where u.unid LIKE :unid";
-		TypedQuery<UnidMed> listaUnidade = this.session.createQuery(jpql,
+		TypedQuery<UnidMed> listaUnidade = getEntityManager().createQuery(jpql,
 				UnidMed.class);
 		listaUnidade.setParameter("unid", "%" + unid + "%");
 		return listaUnidade.getResultList();
@@ -70,7 +42,7 @@ public class UnidMedDAOHibernate implements UnidMedDAO {
 
 	public List<UnidMed> consultarDesc(String desc) {
 		String jpql = "Select u From UnidMed u Where u.descUnid LIKE :desc";
-		TypedQuery<UnidMed> listaUnidade = this.session.createQuery(jpql,
+		TypedQuery<UnidMed> listaUnidade = getEntityManager().createQuery(jpql,
 				UnidMed.class);
 		listaUnidade.setParameter("desc", "%" + desc + "%");
 		return listaUnidade.getResultList();
@@ -78,43 +50,30 @@ public class UnidMedDAOHibernate implements UnidMedDAO {
 	
 	public List<UnidMed> lista() {
 		String jpql = "Select u From UnidMed u";
-		TypedQuery<UnidMed> listaUnidade = this.session.createQuery(jpql,
+		TypedQuery<UnidMed> listaUnidade = getEntityManager().createQuery(jpql,
 				UnidMed.class);
 		return listaUnidade.getResultList();
 	}
 	
 	public UnidMed editBusc(Long id){
 		String jpql = "Select u From UnidMed u Where u.idUnidMed = :id ";
-		TypedQuery<UnidMed> listaUnidade = this.session.createQuery(jpql,
+		TypedQuery<UnidMed> listaUnidade = getEntityManager().createQuery(jpql,
 				UnidMed.class);
 		listaUnidade.setParameter("id", id);
 		return listaUnidade.getSingleResult();
 	}
 	
 	public void altUnid(UnidMed unidMed) throws Exception{
-		this.begin();
-		this.session.merge(unidMed);
-		this.transaction.commit();
-	}
-
-	@Override
-	public void begin() throws IOException, SQLException {
-		this.transaction = session.getTransaction();
-		if (!transaction.isActive()) {
-			transaction.begin();
-		}
-	}
-
-	@Override
-	public void close() throws Exception {
-		this.session.close();
+		beginTransaction();
+		getEntityManager().merge(unidMed);
+		commitTransaction();
 	}
 
 	@Override
 	public int countUnidadeMedidaPaginacao(UnidMed unidMed) {
 		StringBuilder sql = new StringBuilder();
 		this.defineCondicao(sql, unidMed);
-		Query qryMaximo = this.session.createQuery("select Count(u) from UnidMed u ".concat(sql.toString()));
+		Query qryMaximo = getEntityManager().createQuery("select Count(u) from UnidMed u ".concat(sql.toString()));
 		this.defineParametros(qryMaximo, unidMed);
 		Number count = (Number) qryMaximo.getSingleResult();
 		return count.intValue();
@@ -125,7 +84,7 @@ public class UnidMedDAOHibernate implements UnidMedDAO {
 	public List<UnidMed> buscaUnidadeMedidaPaginacao(UnidMed unidMed,int first, int pageSize) {
 		StringBuilder sql = new StringBuilder();
 		this.defineCondicao(sql, unidMed);
-		Query qry = this.session.createQuery("select u from UnidMed u ".concat(sql.toString()));
+		Query qry = getEntityManager().createQuery("select u from UnidMed u ".concat(sql.toString()));
 		this.defineParametros(qry,  unidMed);
 		qry.setFirstResult(first);
 		qry.setMaxResults(pageSize);

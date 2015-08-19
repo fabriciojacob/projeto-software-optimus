@@ -1,87 +1,46 @@
 package br.com.softwareOptimus.dao.fiscal;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import br.com.softwareOptimus.fiscal.Ncm;
 import br.com.softwareOptimus.fiscal.TipoProduto;
 import br.com.softwareOptimus.produto.Produto;
+import br.com.softwareOptimus.util.JpaUtil;
 
-public class TipoProdutoDAOHibernate implements TipoProdutoDAO {
-
-	private EntityManager session;
-	private EntityTransaction transaction;
-
-	public EntityManager getSession() {
-		return session;
-	}
-
-	public void setSession(EntityManager session) {
-		this.session = session;
-	}
-
-	public EntityTransaction getTransaction() {
-		return transaction;
-	}
-
-	public void setTransaction(EntityTransaction transaction) {
-		this.transaction = transaction;
-	}
-
-	@Override
-	public void begin() throws IOException, SQLException {
-		this.transaction = session.getTransaction();
-		if (!transaction.isActive()) {
-			transaction.begin();
-		}
-	}
-
-	@Override
-	public void close() throws Exception {
-		this.session.close();
-	}
+public class TipoProdutoDAOHibernate extends JpaUtil implements TipoProdutoDAO {
 
 	@Override
 	public void salva(TipoProduto tipo) {
-		if (!transaction.isActive()) {
-			transaction.begin();
-		}
-		this.session.persist(tipo);
-		this.transaction.commit();
+		beginTransaction();
+		getEntityManager().persist(tipo);
+		commitTransaction();
 	}
 
 	@Override
 	public void altTipo(TipoProduto tipo) {
-		if (!transaction.isActive()) {
-			transaction.begin();
-		}
-		this.session.merge(tipo);
-		this.transaction.commit();
+		beginTransaction();
+		getEntityManager().merge(tipo);
+		commitTransaction();
 	}
 
 	@Override
 	public void remover(TipoProduto tipo) {
-		if (!transaction.isActive()) {
-			transaction.begin();
-		}
+		beginTransaction();
 		String deleteQuery = "delete from CodTabelaGov c where c.tipoProduto = :tipo";
-		Query query = session.createQuery(deleteQuery);
+		Query query = getEntityManager().createQuery(deleteQuery);
 		query.setParameter("tipo", tipo);
 		query.executeUpdate();
-		this.session.remove(tipo);
-		this.transaction.commit();
+		getEntityManager().remove(tipo);
+		commitTransaction();
 	}
 
 	@Override
 	public List<TipoProduto> lista() {
 		String jpql = "select t from TipoProduto t";
-		TypedQuery<TipoProduto> tipo = this.session.createQuery(jpql,
+		TypedQuery<TipoProduto> tipo = getEntityManager().createQuery(jpql,
 				TipoProduto.class);
 		return tipo.getResultList();
 	}
@@ -89,7 +48,7 @@ public class TipoProdutoDAOHibernate implements TipoProdutoDAO {
 	@Override
 	public List<TipoProduto> consultaId(long id) {
 		String jpql = "select t from TipoProduto t where t.idTipoProd = :id";
-		TypedQuery<TipoProduto> tipo = this.session.createQuery(jpql,
+		TypedQuery<TipoProduto> tipo = getEntityManager().createQuery(jpql,
 				TipoProduto.class);
 		tipo.setParameter("id", id);
 		return tipo.getResultList();
@@ -98,7 +57,7 @@ public class TipoProdutoDAOHibernate implements TipoProdutoDAO {
 	@Override
 	public List<TipoProduto> consultaDesc(String busca) {
 		String jpql = "select t from TipoProduto t where t.descricao LIKE :desc";
-		TypedQuery<TipoProduto> tipo = this.session.createQuery(jpql,TipoProduto.class);
+		TypedQuery<TipoProduto> tipo = getEntityManager().createQuery(jpql,TipoProduto.class);
 		tipo.setParameter("desc", "%" + busca + "%");
 		return tipo.getResultList();
 	}
@@ -106,7 +65,7 @@ public class TipoProdutoDAOHibernate implements TipoProdutoDAO {
 	@Override
 	public TipoProduto editaTipo(Long id) {
 		String jpql = "select t from TipoProduto t where t.idTipoProd = :id";
-		TypedQuery<TipoProduto> tipo = this.session.createQuery(jpql,TipoProduto.class);
+		TypedQuery<TipoProduto> tipo = getEntityManager().createQuery(jpql,TipoProduto.class);
 		tipo.setParameter("id", id);
 		return tipo.getSingleResult();
 	}
@@ -114,7 +73,7 @@ public class TipoProdutoDAOHibernate implements TipoProdutoDAO {
 	@Override
 	public List<Produto> verificaRemocao(TipoProduto tipo) {
 		String jpql = "select p from Produto p where p.tipoProd = :tipo";
-		TypedQuery<Produto> prod = this.session.createQuery(jpql, Produto.class);
+		TypedQuery<Produto> prod = getEntityManager().createQuery(jpql, Produto.class);
 		prod.setParameter("tipo", tipo);
 		return prod.getResultList();
 	}
@@ -122,7 +81,7 @@ public class TipoProdutoDAOHibernate implements TipoProdutoDAO {
 	@Override
 	public List<Ncm> consultaNCMCod(String busca) {
 		String jpql = "select n from Ncm n where n.ncm LIKE :ncm";
-		TypedQuery<Ncm> ncm = this.session.createQuery(jpql,Ncm.class);
+		TypedQuery<Ncm> ncm = getEntityManager().createQuery(jpql,Ncm.class);
 		ncm.setParameter("ncm", "%" + busca + "%");
 		return ncm.getResultList();
 	}
@@ -130,7 +89,7 @@ public class TipoProdutoDAOHibernate implements TipoProdutoDAO {
 	@Override
 	public List<Ncm> consultaNCMDesc(String busca) {
 		String jpql = "select n from Ncm n where n.descricaoNcm LIKE :ncm";
-		TypedQuery<Ncm> ncm = this.session.createQuery(jpql,Ncm.class);
+		TypedQuery<Ncm> ncm = getEntityManager().createQuery(jpql,Ncm.class);
 		ncm.setParameter("ncm", "%" + busca + "%");
 		return ncm.getResultList();
 	}
@@ -138,7 +97,7 @@ public class TipoProdutoDAOHibernate implements TipoProdutoDAO {
 	@Override
 	public List<Ncm> consultaNatDesc(String busca) {
 		String jpql = "select n from Ncm n where n.descNatRec LIKE :natrec";
-		TypedQuery<Ncm> ncm = this.session.createQuery(jpql,Ncm.class);
+		TypedQuery<Ncm> ncm = getEntityManager().createQuery(jpql,Ncm.class);
 		ncm.setParameter("natrec", "%" + busca + "%");
 		return ncm.getResultList();
 	}
@@ -146,7 +105,7 @@ public class TipoProdutoDAOHibernate implements TipoProdutoDAO {
 	@Override
 	public List<Ncm> consultaNatCod(String busca) {
 		String jpql = "select n from Ncm n where n.natRec LIKE :natRec";
-		TypedQuery<Ncm> ncm = this.session.createQuery(jpql,Ncm.class);
+		TypedQuery<Ncm> ncm = getEntityManager().createQuery(jpql,Ncm.class);
 		ncm.setParameter("natRec", "%" + busca + "%");
 		return ncm.getResultList();
 	}
@@ -154,7 +113,7 @@ public class TipoProdutoDAOHibernate implements TipoProdutoDAO {
 	@Override
 	public List<Ncm> consultaTbDesc(String busca) {
 		String jpql = "select n from Ncm n where n.descTabela LIKE :descTabela";
-		TypedQuery<Ncm> ncm = this.session.createQuery(jpql,Ncm.class);
+		TypedQuery<Ncm> ncm = getEntityManager().createQuery(jpql,Ncm.class);
 		ncm.setParameter("descTabela", "%" + busca + "%");
 		return ncm.getResultList();
 	}
@@ -162,7 +121,7 @@ public class TipoProdutoDAOHibernate implements TipoProdutoDAO {
 	@Override
 	public Ncm consultaNCMId(Long idNcm) {
 		String jpql = "select n from Ncm n where n.idNcm = :idNcm";
-		TypedQuery<Ncm> tipo = this.session.createQuery(jpql,Ncm.class);
+		TypedQuery<Ncm> tipo = getEntityManager().createQuery(jpql,Ncm.class);
 		tipo.setParameter("idNcm", idNcm);
 		return tipo.getSingleResult();
 	}
@@ -170,7 +129,7 @@ public class TipoProdutoDAOHibernate implements TipoProdutoDAO {
 	@Override
 	public List<TipoProduto> listarTipoVig() {
 		String jpql = "Select t From TipoProduto t where exists (select c from CodTabelaGov c where c.tipoProduto = t)";
-		TypedQuery<TipoProduto> listaTipo = this.session.createQuery(jpql,TipoProduto.class);
+		TypedQuery<TipoProduto> listaTipo = getEntityManager().createQuery(jpql,TipoProduto.class);
 		return listaTipo.getResultList();
 	}
 
@@ -178,7 +137,7 @@ public class TipoProdutoDAOHibernate implements TipoProdutoDAO {
 	public int countTipoProdutoPaginacao(TipoProduto tipoProd) {
 		StringBuilder sql = new StringBuilder();
 		this.defineCondicao(sql, tipoProd);
-		Query qryMaximo = this.session.createQuery("select Count(t) from TipoProduto t ".concat(sql.toString()));
+		Query qryMaximo = getEntityManager().createQuery("select Count(t) from TipoProduto t ".concat(sql.toString()));
 		this.defineParametros(qryMaximo, tipoProd);
 		Number count = (Number) qryMaximo.getSingleResult();
 		return count.intValue();
@@ -189,7 +148,7 @@ public class TipoProdutoDAOHibernate implements TipoProdutoDAO {
 	public List<TipoProduto> buscaTipoProdutoPaginacao(TipoProduto tipoProd,int first, int pageSize) {
 		StringBuilder sql = new StringBuilder();
 		this.defineCondicao(sql, tipoProd);
-		Query qry = this.session.createQuery("select t from TipoProduto t ".concat(sql.toString()));
+		Query qry = getEntityManager().createQuery("select t from TipoProduto t ".concat(sql.toString()));
 		this.defineParametros(qry, tipoProd);
 		qry.setFirstResult(first);
 		qry.setMaxResults(pageSize);

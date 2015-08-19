@@ -1,7 +1,5 @@
 package br.com.softwareOptimus.entidades.dao.participantes;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -15,8 +13,6 @@ public interface ParticipanteDAO {
 	public void salvarPessoaFisica(PessoaFisica pessoa) throws Exception;
 	public void atualizarPessoaJuridica(PessoaJuridica pessoa) throws Exception;
 	public void atualizarPessoaFisica(PessoaFisica pessoa) throws Exception;
-	public void begin() throws IOException, SQLException;
-	public void close() throws Exception;
 	public PessoaFisica carregarPF(Long codigo) throws Exception;
 	public PessoaJuridica carregarPJ(Long codigo) throws Exception;
 	public List<PessoaFisica> buscaCPF(String CPF) throws Exception;
