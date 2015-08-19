@@ -1,96 +1,53 @@
 package br.com.softwareOptimus.financeiro.dao;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
+
 import javax.persistence.TypedQuery;
 
 import br.com.softwareOptimus.financeiro.Caixa;
+import br.com.softwareOptimus.util.JpaUtil;
 
-public class CaixaDAOHibernate implements CaixaDAO {
-
-	private EntityManager session;
-	private EntityTransaction transacao;
+public class CaixaDAOHibernate extends JpaUtil implements CaixaDAO {
 
 	@Override
 	public void salvar(Caixa caixa) throws Exception {
-		this.session.persist(caixa);
-		if (!this.transacao.isActive()) {
-			this.transacao.isActive();
-		}
-		this.transacao.commit();
-	}
-
-	@Override
-	public void begin() throws IOException, SQLException {
-		this.transacao = this.session.getTransaction();
-		if (!this.transacao.isActive()) {
-			this.transacao.begin();
-		}
-
+		beginTransaction();
+		getEntityManager().persist(caixa);
+		commitTransaction();
 	}
 
 	@Override
 	public void excluir(Caixa caixa) throws Exception {
-		this.session.remove(caixa);
-		if (!this.transacao.isActive()) {
-			this.transacao.begin();
-		}
-		this.transacao.commit();
-
+		beginTransaction();
+		getEntityManager().remove(caixa);
+		commitTransaction();
 	}
 
 	@Override
 	public List<Caixa> pesquisaCaixa(String descricao) throws Exception {
 		String jpql = "Select c From Caixa c where c.descricao LIKE :parCaixa";
-		TypedQuery<Caixa> consulta = this.session
+		TypedQuery<Caixa> consulta = getEntityManager()
 				.createQuery(jpql, Caixa.class);
 		consulta.setParameter("parCaixa", "%" + descricao + "%");
 		return consulta.getResultList();
 	}
 
 	@Override
-	public void close() throws Exception {
-		this.session.close();
-
-	}
-
-	@Override
 	public void editar(Caixa caixa) throws Exception {
-		this.session.merge(caixa);
-		if (!this.transacao.isActive()) {
-			this.transacao.begin();
-		}
-		this.transacao.commit();
-	}
-
-	public EntityManager getSession() {
-		return session;
-	}
-
-	public void setSession(EntityManager session) {
-		this.session = session;
-	}
-
-	public EntityTransaction getTransacao() {
-		return transacao;
-	}
-
-	public void setTransacao(EntityTransaction transacao) {
-		this.transacao = transacao;
+		beginTransaction();
+		getEntityManager().merge(caixa);
+		commitTransaction();
 	}
 
 	@Override
 	public Caixa pesquisaID(Long id) throws Exception {
-		return this.session.find(Caixa.class, id);
+		return getEntityManager().find(Caixa.class, id);
 	}
 
 	@Override
 	public List<Caixa> listaCaixa() throws Exception {
 		String jpql = "Select c from Caixa c";
-		TypedQuery<Caixa> lista = this.session.createQuery(jpql, Caixa.class);
+		TypedQuery<Caixa> lista = getEntityManager().createQuery(jpql, Caixa.class);
 		return lista.getResultList();
 
 	}

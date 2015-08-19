@@ -12,8 +12,6 @@ import br.com.softwareOptimus.fiscal.GradeTributariaVigencia;
 
 public interface GradeTributariaDAO {
 	
-	public void begin() throws IOException, SQLException;
-	public void close() throws Exception;
 	public void salvar(GradeTributaria grade);
 	public void altGrade(GradeTributaria grade);
 	public void remover(GradeTributaria grade) throws IOException, SQLException;

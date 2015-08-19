@@ -1,80 +1,41 @@
 package br.com.softwareOptimus.dao.fiscal;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
+
 import javax.persistence.TypedQuery;
+
 import br.com.softwareOptimus.fiscal.Pauta;
 import br.com.softwareOptimus.fiscal.PautaMVA;
+import br.com.softwareOptimus.util.JpaUtil;
 
-public class PautaMVADAOHibernate implements PautaMVADAO {
-
-	private EntityManager session;
-	private EntityTransaction transaction;
-
-	public EntityManager getSession() {
-		return session;
-	}
-
-	public void setSession(EntityManager session) {
-		this.session = session;
-	}
-
-	public EntityTransaction getTransaction() {
-		return transaction;
-	}
-
-	public void setTransaction(EntityTransaction transaction) {
-		this.transaction = transaction;
-	}
-
-	@Override
-	public void begin() throws IOException, SQLException {
-		this.transaction = session.getTransaction();
-		if (!transaction.isActive()) {
-			transaction.begin();
-		}
-	}
-
-	@Override
-	public void close() throws Exception {
-		this.session.close();
-	}
+public class PautaMVADAOHibernate extends JpaUtil implements PautaMVADAO {
 
 	@Override
 	public void salva(PautaMVA pauta) {
-		if (!transaction.isActive()) {
-			transaction.begin();
-		}
-		this.session.persist(pauta);
-		this.transaction.commit();
+		beginTransaction();
+		getEntityManager().persist(pauta);
+		commitTransaction();
 	}
 
 	@Override
 	public void alterar(PautaMVA pauta) {
-		if (!transaction.isActive()) {
-			transaction.begin();
-		}
-		this.session.merge(pauta);
-		this.transaction.commit();
+		beginTransaction();
+		getEntityManager().merge(pauta);
+		commitTransaction();
 	}
 
 	@Override
 	public void remover(Long idPautaMVA) {
-		if (!transaction.isActive()) {
-			transaction.begin();
-		}
-		PautaMVA paut = this.session.find(PautaMVA.class, idPautaMVA);
-		this.session.remove(paut);
-		this.transaction.commit();
+		PautaMVA paut = getEntityManager().find(PautaMVA.class, idPautaMVA);
+		beginTransaction();
+		getEntityManager().remove(paut);
+		commitTransaction();
 	}
 
 	@Override
 	public List<PautaMVA> consultaDesc(String desc) {
 		String jpql = "Select p From PautaMVA p Where p.descricao LIKE :desc";
-		TypedQuery<PautaMVA> listaPauta = this.session.createQuery(jpql,
+		TypedQuery<PautaMVA> listaPauta = getEntityManager().createQuery(jpql,
 				PautaMVA.class);
 		listaPauta.setParameter("desc", "%" + desc + "%");
 		return listaPauta.getResultList();
@@ -83,7 +44,7 @@ public class PautaMVADAOHibernate implements PautaMVADAO {
 	@Override
 	public PautaMVA editPauta(Long id) {
 		String jpql = "Select p From PautaMVA p Where p.idPautaMVA = :id ";
-		TypedQuery<PautaMVA> Pauta = this.session.createQuery(jpql,
+		TypedQuery<PautaMVA> Pauta = getEntityManager().createQuery(jpql,
 				PautaMVA.class);
 		Pauta.setParameter("id", id);
 		return Pauta.getSingleResult();
@@ -92,7 +53,7 @@ public class PautaMVADAOHibernate implements PautaMVADAO {
 	@Override
 	public List<PautaMVA> listar(Pauta pauta) throws Exception {
 		String jpql = "Select p from PautaMVA p where p.pauta = :parPauta";
-		TypedQuery<PautaMVA> consulta = this.session.createQuery(jpql,
+		TypedQuery<PautaMVA> consulta = getEntityManager().createQuery(jpql,
 				PautaMVA.class);
 		consulta.setParameter("parPauta", pauta);
 		return consulta.getResultList();

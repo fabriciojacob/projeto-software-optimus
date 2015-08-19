@@ -1,90 +1,45 @@
 package br.com.softwareOptimus.entidades.dao.empresa;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 
 import br.com.softwareOptimus.entidades.NaturezaPessoa;
 import br.com.softwareOptimus.entidades.Pessoa;
 import br.com.softwareOptimus.entidades.PessoaJuridica;
 import br.com.softwareOptimus.fiscal.VigenciaRegime;
+import br.com.softwareOptimus.util.JpaUtil;
 
-public class EmpresaDAOHibernate implements EmpresaDAO {
-
-	private EntityManager session;
-	private EntityTransaction transaction;
-
-	public EntityManager getSession() {
-		return session;
-	}
-
-	public void setSession(EntityManager session) {
-		this.session = session;
-	}
-
-	public EntityTransaction getTransaction() {
-		return transaction;
-	}
-
-	public void setTransaction(EntityTransaction transaction) {
-		this.transaction = transaction;
-	}
+public class EmpresaDAOHibernate extends JpaUtil implements EmpresaDAO {
 
 	@Override
 	public void salvar(PessoaJuridica empresa) {
 		empresa.setNaturezaPessoa(NaturezaPessoa.EMPRESA);
-		if(!this.transaction.isActive()){
-			this.transaction.begin();
-		}
-		this.session.persist(empresa);
-		this.transaction.commit();
+		beginTransaction();
+		getEntityManager().persist(empresa);
+		commitTransaction();
 
 	}
 
 	@Override
 	public void atualizar(PessoaJuridica empresa) {
-		if(!this.transaction.isActive()){
-			this.transaction.begin();
-		}
-		this.session.merge(empresa);
-		this.transaction.commit();
+		beginTransaction();
+		getEntityManager().merge(empresa);
+		commitTransaction();
 	}
 
 	@Override
 	public void excluir(PessoaJuridica empresa) {
-		if(!this.transaction.isActive()){
-			this.transaction.begin();
-		}
-		this.session.remove(empresa);
-		this.transaction.commit();
-
-	}
-
-	@Override
-	public void begin() throws IOException, SQLException {
-		this.transaction = session.getTransaction();
-
-		if (!transaction.isActive()) {
-			transaction.begin();
-		}
-
-	}
-
-	@Override
-	public void close() throws Exception {
-		this.session.close();
-
+		beginTransaction();
+		getEntityManager().remove(empresa);
+		commitTransaction();
 	}
 
 	@Override
 	public PessoaJuridica carregar(Long codigo) {
 		String jpql = "Select a from PessoaJuridica a where a.idPessoa = :parCodigo";
-		TypedQuery<PessoaJuridica> consulta = this.session.createQuery(jpql,
+		TypedQuery<PessoaJuridica> consulta = getEntityManager().createQuery(jpql,
 				PessoaJuridica.class);
 		consulta.setParameter("parCodigo", codigo);
 		return consulta.getSingleResult();
@@ -93,7 +48,7 @@ public class EmpresaDAOHibernate implements EmpresaDAO {
 	@Override
 	public List<Pessoa> listar() {
 		String jpql = "Select emp From Pessoa emp where emp.naturezaPessoa = 2";
-		TypedQuery<Pessoa> consultaList = this.session.createQuery(jpql,
+		TypedQuery<Pessoa> consultaList = getEntityManager().createQuery(jpql,
 				Pessoa.class);
 		return consultaList.getResultList();
 	}
@@ -101,7 +56,7 @@ public class EmpresaDAOHibernate implements EmpresaDAO {
 	@Override
 	public List<PessoaJuridica> buscaCNPJ(String cnpj) throws Exception {
 		String jpql = "Select a from PessoaJuridica a where a.cnpj = :parCNPJ";
-		TypedQuery<PessoaJuridica> consulta = this.session.createQuery(jpql,
+		TypedQuery<PessoaJuridica> consulta = getEntityManager().createQuery(jpql,
 				PessoaJuridica.class);
 		consulta.setParameter("parCNPJ", cnpj);
 		return consulta.getResultList();
@@ -111,7 +66,7 @@ public class EmpresaDAOHibernate implements EmpresaDAO {
 	public List<PessoaJuridica> buscaNome(String nome) throws Exception {
 		String jpql = "Select a from PessoaJuridica a where a.fantasia LIKE :parNome "
 				+ "and a.tipoPessoaJuridica = 1";
-		TypedQuery<PessoaJuridica> consultaLista = this.session.createQuery(
+		TypedQuery<PessoaJuridica> consultaLista = getEntityManager().createQuery(
 				jpql, PessoaJuridica.class);
 		consultaLista.setParameter("parNome", "%" + nome + "%");
 		return consultaLista.getResultList();
@@ -119,17 +74,16 @@ public class EmpresaDAOHibernate implements EmpresaDAO {
 
 	@Override
 	public void salvarRegime(VigenciaRegime regime) throws Exception {
-		if(!this.transaction.isActive()){
-			this.transaction.begin();
-		}
-		this.session.persist(regime);
-		this.transaction.commit();
+		beginTransaction();
+		getEntityManager().persist(regime);
+		commitTransaction();
 	}
 
 	@Override
 	public void atualizarRegime(VigenciaRegime regime) {
-		this.session.merge(regime);
-
+		beginTransaction();
+		getEntityManager().merge(regime);
+		commitTransaction();
 	}
 
 	@Override
@@ -138,12 +92,10 @@ public class EmpresaDAOHibernate implements EmpresaDAO {
 		String jpql = "Select vig From VigenciaRegime vig"
 				+ " where vig.pessoaJuridica = :parPessoa "
 				+ " and vig.dataInicio = :parVig";
-		TypedQuery<VigenciaRegime> consulta = this.session.createQuery(jpql,
+		TypedQuery<VigenciaRegime> consulta = getEntityManager().createQuery(jpql,
 				VigenciaRegime.class);
 		consulta.setParameter("parPessoa", empresa);
 		consulta.setParameter("parVig", data);
 		return consulta.getResultList();
-
 	}
-
 }

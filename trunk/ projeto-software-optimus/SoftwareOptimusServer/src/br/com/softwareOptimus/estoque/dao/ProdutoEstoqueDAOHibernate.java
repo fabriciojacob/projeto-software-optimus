@@ -1,13 +1,9 @@
 package br.com.softwareOptimus.estoque.dao;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.persistence.ParameterMode;
 import javax.persistence.Query;
 import javax.persistence.StoredProcedureQuery;
@@ -15,40 +11,9 @@ import javax.persistence.StoredProcedureQuery;
 import br.com.softwareOptimus.entidades.TipoMovEst;
 import br.com.softwareOptimus.estoque.ProdutoEstoque;
 import br.com.softwareOptimus.estoque.bens.PesquisaEstoquePojo;
+import br.com.softwareOptimus.util.JpaUtil;
 
-public class ProdutoEstoqueDAOHibernate implements ProdutoEstoqueDAO {
-
-	private EntityManager session;
-	private EntityTransaction transaction;
-
-	public EntityManager getSession() {
-		return session;
-	}
-
-	public void setSession(EntityManager session) {
-		this.session = session;
-	}
-
-	public EntityTransaction getTransaction() {
-		return transaction;
-	}
-
-	public void setTransaction(EntityTransaction transaction) {
-		this.transaction = transaction;
-	}
-
-	@Override
-	public void begin() throws IOException, SQLException {
-		this.transaction = session.getTransaction();
-		if (!transaction.isActive()) {
-			transaction.begin();
-		}
-	}
-
-	@Override
-	public void close() throws Exception {
-		this.session.close();
-	}
+public class ProdutoEstoqueDAOHibernate extends JpaUtil implements ProdutoEstoqueDAO {
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -59,11 +24,11 @@ public class ProdutoEstoqueDAOHibernate implements ProdutoEstoqueDAO {
 				+ " where p.empresa = :empresa " + " and p.produto = :produto "
 				+ " and p.data <= :dataHoje " + " and p.tipoMovEst = :compra "
 				+ " order by p.data desc ";
-		Query qry = this.session.createQuery(jpql);
+		Query qry = getEntityManager().createQuery(jpql);
 		qry.setParameter("empresa", produtoEstoque.getEmpresa());
 		qry.setParameter("produto", produtoEstoque.getProduto());
 		qry.setParameter("dataHoje", dataHoje);
-		qry.setParameter("compra", TipoMovEst.COMPRA);
+		qry.setParameter("compra", TipoMovEst.COMPRA.ordinal());
 
 		List<ProdutoEstoque> lista = qry.getResultList();
 
@@ -72,7 +37,7 @@ public class ProdutoEstoqueDAOHibernate implements ProdutoEstoqueDAO {
 
 	@Override
 	public void salvarProdEstoque(ProdutoEstoque produtoEstoque,Integer Situacao, Long tipoMovEst) {
-		StoredProcedureQuery proc = session.createStoredProcedureQuery("pkg_estoque.processaProdutoEstoque");
+		StoredProcedureQuery proc = getEntityManager().createStoredProcedureQuery("pkg_estoque.processaProdutoEstoque");
 		proc.registerStoredProcedureParameter("varCustoMedio", Double.class,ParameterMode.IN);
 		proc.registerStoredProcedureParameter("varData", Date.class,ParameterMode.IN);
 		proc.registerStoredProcedureParameter("varJustificativa", String.class,ParameterMode.IN);
@@ -118,7 +83,7 @@ public class ProdutoEstoqueDAOHibernate implements ProdutoEstoqueDAO {
 		sql.append("Select p From ProdutoEstoque p ");
 		this.definiCondicoes(sql, dadosPesquisaEstoquePojo);
 		sql.append(" order by p.data, p.idProdEst");
-		Query qry = this.session.createQuery(sql.toString());
+		Query qry = getEntityManager().createQuery(sql.toString());
 		this.definiParametros(qry, dadosPesquisaEstoquePojo);
 		qry.setFirstResult(dadosPesquisaEstoquePojo.getPrimeiroRegistro());
 		qry.setMaxResults(dadosPesquisaEstoquePojo.getQuantidadeRegistros());
@@ -133,7 +98,7 @@ public class ProdutoEstoqueDAOHibernate implements ProdutoEstoqueDAO {
 		qry.setParameter("dataFim", dadosPesquisaEstoquePojo.getDataFim());
 		if (dadosPesquisaEstoquePojo.getTipoMovEst() != null) {
 			qry.setParameter("tipoMovEst",
-					dadosPesquisaEstoquePojo.getTipoMovEst());
+					dadosPesquisaEstoquePojo.getTipoMovEst().ordinal());
 		}
 	}
 
@@ -151,7 +116,7 @@ public class ProdutoEstoqueDAOHibernate implements ProdutoEstoqueDAO {
 		StringBuilder sql = new StringBuilder();
 		sql.append("Select count(p) From ProdutoEstoque p ");
 		this.definiCondicoes(sql, dadosPesquisaEstoquePojo);
-		Query qry = this.session.createQuery(sql.toString());
+		Query qry = getEntityManager().createQuery(sql.toString());
 		this.definiParametros(qry, dadosPesquisaEstoquePojo);
 		Number count = (Number) qry.getSingleResult();
 		return count.intValue();

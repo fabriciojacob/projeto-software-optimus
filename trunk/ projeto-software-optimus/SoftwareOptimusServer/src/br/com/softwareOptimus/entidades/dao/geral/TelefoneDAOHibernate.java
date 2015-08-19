@@ -1,74 +1,35 @@
 package br.com.softwareOptimus.entidades.dao.geral;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 
 import br.com.softwareOptimus.entidades.Pessoa;
 import br.com.softwareOptimus.entidades.Telefone;
+import br.com.softwareOptimus.util.JpaUtil;
 
-public class TelefoneDAOHibernate implements TelefoneDAO {
-
-	private EntityManager session;
-	private EntityTransaction transacao;
-
-	public EntityManager getSession() {
-		return session;
-	}
-
-	public void setSession(EntityManager session) {
-		this.session = session;
-	}
-
-	public EntityTransaction getTransacao() {
-		return transacao;
-	}
-
-	public void setTransacao(EntityTransaction transacao) {
-		this.transacao = transacao;
-	}
+public class TelefoneDAOHibernate extends JpaUtil implements TelefoneDAO {
 
 	@Override
 	public void salvar(Telefone telefone) throws Exception {
-		if(!this.transacao.isActive()){
-			this.transacao.begin();
-		}
-		this.session.persist(telefone);
-		this.transacao.commit();
-
-	}
-
-	@Override
-	public void begin() throws IOException, SQLException {
-		this.transacao = this.session.getTransaction();
-
-		if (!this.transacao.isActive()) {
-			this.transacao.begin();
-		}
-
-	}
-
-	@Override
-	public void close() throws Exception {
-		this.session.close();
+		beginTransaction();
+		getEntityManager().persist(telefone);
+		commitTransaction();
 
 	}
 
 	@Override
 	public void excluir(Long idTel) throws Exception {
-		this.session.remove(this.session.getReference(Telefone.class, idTel));
-		this.transacao.commit();
+		beginTransaction();
+		getEntityManager().remove(getEntityManager().getReference(Telefone.class, idTel));
+		commitTransaction();
 
 	}
 
 	@Override
 	public List<Telefone> listaTelefone(Pessoa pessoa) throws Exception {
 		String jpql = "Select e From Telefone e where e.pessoa = :parPessoa";
-		TypedQuery<Telefone> consulta = this.session.createQuery(jpql,
+		TypedQuery<Telefone> consulta = getEntityManager().createQuery(jpql,
 				Telefone.class);
 		consulta.setParameter("parPessoa", pessoa);
 		List<Telefone> result = consulta.getResultList();

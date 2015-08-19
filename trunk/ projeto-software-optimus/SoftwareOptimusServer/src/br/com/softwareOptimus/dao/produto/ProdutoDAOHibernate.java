@@ -1,72 +1,40 @@
 package br.com.softwareOptimus.dao.produto;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import br.com.softwareOptimus.produto.Produto;
+import br.com.softwareOptimus.util.JpaUtil;
 
-public class ProdutoDAOHibernate implements ProdutoDAO {
-
-	private EntityManager session;
-	private EntityTransaction transaction;
-
-	public EntityManager getSession() {
-		return session;
-	}
-
-	public void setSession(EntityManager session) {
-		this.session = session;
-	}
-
-	public EntityTransaction getTransaction() {
-		return transaction;
-	}
-
-	public void setTransaction(EntityTransaction transaction) {
-		this.transaction = transaction;
-	}
-
-	@Override
-	public void salvar(Produto produto) {
-		this.session.persist(produto);
-		this.transaction.commit();
-	}
-
-	@Override
-	public void begin() throws IOException, SQLException {
-		this.transaction = session.getTransaction();
-		if (!transaction.isActive()) {
-			transaction.begin();
-		}
-	}
-
-	@Override
-	public void close() throws Exception {
-		this.session.close();
-	}
+public class ProdutoDAOHibernate extends JpaUtil implements ProdutoDAO {
 
 	@Override
 	public void alterar(Produto produto) {
-		this.session.merge(produto);
-		this.transaction.commit();
+		beginTransaction();
+		getEntityManager().merge(produto);
+		commitTransaction();
+	}
+	
+	@Override
+	public void salvar(Produto produto) {
+		beginTransaction();
+		getEntityManager().persist(produto);
+		commitTransaction();
 	}
 
 	@Override
 	public void remover(Produto produto) {
-		this.session.remove(produto);
-		this.transaction.commit();
+		beginTransaction();
+		getEntityManager().remove(produto);
+		commitTransaction();
 	}
 
 	@Override
 	public List<Produto> consultaId(long id) {
 		String jpql = "select p from Produto p where p.idProduto = :id";
-		TypedQuery<Produto> prod = this.session
+		TypedQuery<Produto> prod = getEntityManager()
 				.createQuery(jpql, Produto.class);
 		prod.setParameter("id", id);
 		return prod.getResultList();
@@ -75,7 +43,7 @@ public class ProdutoDAOHibernate implements ProdutoDAO {
 	@Override
 	public List<Produto> consultaDesc(String busca) {
 		String jpql = "select p from Produto p where p.descProd LIKE :busca";
-		TypedQuery<Produto> prod = this.session
+		TypedQuery<Produto> prod = getEntityManager()
 				.createQuery(jpql, Produto.class);
 		prod.setParameter("busca", "%" + busca + "%");
 		return prod.getResultList();
@@ -84,14 +52,14 @@ public class ProdutoDAOHibernate implements ProdutoDAO {
 	@Override
 	public List<Produto> listar() {
 		String jpql = "select p from Produto p ";
-		TypedQuery<Produto> prod = this.session
+		TypedQuery<Produto> prod = getEntityManager()
 				.createQuery(jpql, Produto.class);
 		return prod.getResultList();
 	}
 
 	@Override
 	public Produto editPro(Long id) {
-		Produto pro = this.session.find(Produto.class, id);
+		Produto pro = getEntityManager().find(Produto.class, id);
 		return pro;
 	}
 
@@ -103,7 +71,7 @@ public class ProdutoDAOHibernate implements ProdutoDAO {
 
 		this.definiCondicao(sql, produto);
 
-		Query qry = this.session.createQuery("select p from Produto p"
+		Query qry = getEntityManager().createQuery("select p from Produto p"
 				.concat(sql.toString()));
 
 		this.defineParametros(qry, produto);
@@ -119,7 +87,7 @@ public class ProdutoDAOHibernate implements ProdutoDAO {
 	public int countProdutoPaginacao(Produto produto) {
 		StringBuilder sql = new StringBuilder();
 		this.definiCondicao(sql, produto);
-		Query qry = this.session.createQuery("select count(p) from Produto p"
+		Query qry = getEntityManager().createQuery("select count(p) from Produto p"
 				.concat(sql.toString()));
 		this.defineParametros(qry, produto);
 		Number count = (Number) qry.getSingleResult();
@@ -188,7 +156,7 @@ public class ProdutoDAOHibernate implements ProdutoDAO {
 	@Override
 	public List<Produto> consultDescPag(String desc, int first, int pageSize)
 			throws Exception {
-		TypedQuery<Produto> qry = this.session
+		TypedQuery<Produto> qry = getEntityManager()
 				.createQuery("Select p From Produto p where p.descProd like '%"
 						+ desc + "%'", Produto.class);
 		return qry.getResultList();
@@ -196,7 +164,7 @@ public class ProdutoDAOHibernate implements ProdutoDAO {
 
 	@Override
 	public int countProdutoDesc(String desc) throws Exception {
-		Query qry = this.session
+		Query qry = getEntityManager()
 				.createQuery("Select count(p) From Produto p where p.descProd like '%"
 						+ desc + "%'");
 		Number count = (Number) qry.getSingleResult();
