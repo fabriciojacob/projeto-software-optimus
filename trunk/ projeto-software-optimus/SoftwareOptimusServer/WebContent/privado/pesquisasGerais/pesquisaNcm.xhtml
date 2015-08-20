@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<h:outputStylesheet library="css" name="fonte.css" />
+	<title>Consulta Pauta</title>
+</h:head>
+<h:body>
+	<h:form>
+		<h:panelGrid columns="2">
+			<h:panelGrid columns="1">
+				Código da Pauta
+				<p:inputText style="width:360px; float: left;" value="#{pesquisaPautaBean.pauta.idPauta}"/>
+			</h:panelGrid>
+			<h:panelGrid columns="1">
+				Descrição da Pauta
+				<p:inputText style="width:360px; float: left;" value="#{pesquisaPautaBean.pauta.descricao}"/>
+			</h:panelGrid>
+		</h:panelGrid>
+		<div align="right">
+			<p:commandButton id="btnPesquisar" value="Pesquisar" update="dataPesquisa" />
+		</div>
+		<h:panelGrid id="gridData" columns="1" columnClasses="label, value">
+			<p:blockUI block="dataPesquisa" trigger="btnPesquisar" />
+			<p:dataTable id="dataPesquisa" value="#{pesquisaPautaBean.pautaList}" var="pauta" resizableColumns="true"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10,15" lazy="true" border="1" paginatorPosition="bottom" cellpadding="2" cellspacing="0"
+				paginator="true" rows="10" rowKey="pauta.idPauta">
+
+				<f:facet name="header">Pautas Cadastradas</f:facet>
+					
+				<p:column headerText="Código da Pauta">
+					<h:outputText value="#{pauta.idPauta}" />
+				</p:column>
+
+				<p:column headerText="Descrição da Pauta">
+					<h:outputText value="#{pauta.descricao}" />
+				</p:column>
+				<p:column headerText="Selecionar" style="width: 50px; text-align: center">
+		    		<p:commandButton icon="ui-icon-check" title="Selecionar"
+		    			action="#{pesquisaPautaBean.selecionaPauta(pauta)}"
+		    			process="@this" />
+				</p:column>
+			</p:dataTable>
+			<p:blockUI block="dataPesquisa" trigger="dataPesquisa">
+      				LOADING<br />
+				<p:graphicImage name="ajaxloader.gif" />
+			</p:blockUI>
+		</h:panelGrid>
+	</h:form>
+</h:body>
+</html>
