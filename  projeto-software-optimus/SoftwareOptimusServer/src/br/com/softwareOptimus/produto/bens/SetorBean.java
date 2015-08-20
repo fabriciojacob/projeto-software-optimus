@@ -33,7 +33,6 @@ public class SetorBean extends FacesUtil implements Serializable{
 	private boolean rem = true;
 	private boolean desc = true;
 	private boolean vig = true;
-	private Long id;
 	private Long idGrup;
 
 	public SetorBean() {
@@ -123,23 +122,6 @@ public class SetorBean extends FacesUtil implements Serializable{
 			}
 		} catch (Exception e) {
 			this.error("Problemas na remoção do Setor " + e.getMessage());
-		}
-	}
-
-	public void buscarSetor() {
-		limpar();
-		if (!this.getBusca().equals("") && (!this.getFiltro().equals(""))) {
-			if (this.getFiltro().equals("id")) {
-				this.setListaSetor(this.getSetRN().consultaId(Long.parseLong(this.getBusca())));
-			} else if (this.getFiltro().equals("desc")) {
-				this.setListaSetor(this.getSetRN().consultaDesc(this.getBusca()));
-			}else if (this.getFiltro().equals("idGrup")) {
-				this.setListaSetor(this.getSetRN().consultaIdGrup(Long.parseLong(this.getBusca())));
-			}else if (this.getFiltro().equals("descGrup")) {
-				this.setListaSetor(this.getSetRN().consultaDescGrup(this.getBusca()));
-			}
-		} else {
-			this.setListaSetor(this.getSetRN().listar());
 		}
 	}
 
@@ -305,14 +287,6 @@ public class SetorBean extends FacesUtil implements Serializable{
 
 	public void setVig(boolean vig) {
 		this.vig = vig;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public List<Grupo> getListaGrupoExib() {

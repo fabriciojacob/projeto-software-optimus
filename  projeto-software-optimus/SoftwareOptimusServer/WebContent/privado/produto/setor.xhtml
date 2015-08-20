@@ -81,59 +81,6 @@
 				</p:blockUI>
 			</h:panelGrid>
 
-
-			<p:dialog id="dialog" header="Consulta" widgetVar="dlg3" modal="true"
-				height="300" width="650">
-
-				<div align="right">
-					<h:panelGrid columns="1">
-						<p:commandButton value="Pesquisar"
-							actionListener="#{setorBean.buscarSetor}" update="gridData">
-						</p:commandButton>
-					</h:panelGrid>
-				</div>
-				<h:panelGrid columns="3" columnClasses="label" cellspacing="3">
-
-					<p:inputText id="texto" value="#{setorBean.busca}" size="40" />
-
-					<p:selectOneMenu id="fConsult" value="#{setorBean.filtro}">
-						<f:selectItem itemLabel="Selecione uma Opção" />
-						<f:selectItem itemLabel="Código" itemValue="id" />
-						<f:selectItem itemLabel="Descrição" itemValue="desc" />
-						<f:selectItem itemLabel="Código do Grupo" itemValue="idGrup" />
-						<f:selectItem itemLabel="Descrição do Grupo" itemValue="descGrup" />
-					</p:selectOneMenu>
-
-				</h:panelGrid>
-				<h:panelGrid id="gridData" columns="1" columnClasses="label, value">
-					<p:blockUI block="gridData" trigger="consulta" />
-					<p:dataTable id="data" value="#{setorBean.listaSetor}"
-						paginator="true" rows="6" var="setor" rowKey="setor.idSetor">
-						<p:column headerText="Código do setor">
-							<h:outputText value="#{setor.idSetor}" />
-						</p:column>
-
-						<p:column headerText="Descrição">
-							<h:outputText value="#{setor.descricao}" />
-						</p:column>
-
-						<p:column headerText="Selecionar">
-							<p:commandLink id="link" value="Editar"
-								ajax="data, grid, listGrupo" action="#{setorBean.editSet}">
-								<f:setPropertyActionListener value="#{setor.idSetor}"
-									target="#{setorBean.id}" />
-							</p:commandLink>
-						</p:column>
-					</p:dataTable>
-					<p:blockUI block="data" trigger="data">
-        				LOADING<br />
-						<p:graphicImage name="ajaxloader.gif" />
-					</p:blockUI>
-				</h:panelGrid>
-
-			</p:dialog>
-
-
 			<p:dialog id="dialog2" header="Grupo" widgetVar="dlg2" modal="true"
 				height="100" width="400">
 
