@@ -112,7 +112,7 @@ public class SetorDAOHibernate extends JpaUtil implements SetorDAO {
 	public List<Setor> buscaSetorPaginacao(Setor setor, Grupo grupo, int first,int pageSize) {
 		StringBuilder sql = new StringBuilder();
 		this.defineCondicao(sql, setor, grupo);
-		Query qry = getEntityManager().createQuery("select s from Setor s "
+		Query qry = getEntityManager().createQuery("select Distinct s from Setor s "
 										   + " left join s.grupo g ".concat(sql.toString()));
 		this.defineParametros(qry, setor, grupo);
 		qry.setFirstResult(first);

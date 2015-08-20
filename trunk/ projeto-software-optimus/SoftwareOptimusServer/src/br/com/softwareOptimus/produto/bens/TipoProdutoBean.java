@@ -41,7 +41,6 @@ public class TipoProdutoBean extends FacesUtil implements Serializable{
 	private boolean vig = true;
 	private boolean desc = true;
 	private String busca, filtro;
-	private Long id;
 	private Long idVig;
 	private Long idNcm;
 
@@ -171,23 +170,14 @@ public class TipoProdutoBean extends FacesUtil implements Serializable{
 		}
 	}
 
-	public void buscarTipo() {
-		limpar();
-		if (!this.getBusca().equals("") && (!this.getFiltro().equals(""))) {
-			if (this.getFiltro().equals("id")) {
-				this.setListaTipoProduto(this.getTipoRN().consultaId(Long.parseLong(this.getBusca())));
-			} else if (this.getFiltro().equals("desc")) {
-				this.setListaTipoProduto(this.getTipoRN().consultaDesc(this.getBusca()));
-			}
-		} else {
-			this.setListaTipoProduto(this.getTipoRN().listar());
-		}
-	}
-	
 	public void tipoProdutoSelecionado(SelectEvent event){
 		TipoProduto tipo;
-		tipo = (TipoProduto) event.getObject();
-		this.setTipo(this.getTipoRN().editTipo(tipo.getIdTipoProd()));
+		try {
+			tipo = (TipoProduto) event.getObject();
+			this.setTipo(this.getTipoRN().editTipo(tipo.getIdTipoProd()));
+		} catch (Exception e) {
+			this.error("Problemas na edição"+ e.getMessage());
+		}
 		listaVigencia();
 		habilita();
 		this.setAlt(false);
@@ -371,14 +361,6 @@ public class TipoProdutoBean extends FacesUtil implements Serializable{
 
 	public void setFiltro(String filtro) {
 		this.filtro = filtro;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public Long getIdVig() {

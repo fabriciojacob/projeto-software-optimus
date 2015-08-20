@@ -7,6 +7,8 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import org.primefaces.event.SelectEvent;
+
 import br.com.softwareOptimus.produto.Grupo;
 import br.com.softwareOptimus.produto.SubGrupo;
 import br.com.softwareOptimus.produto.RN.GrupoRN;
@@ -158,10 +160,16 @@ public class GrupoBean extends FacesUtil implements Serializable{
 		}
 	}
 
-	public void editGrupo() {
+	public void grupoSelecionado(SelectEvent event) {
 		limpar();
-		this.setGrupo(this.getGruRN().editGru(this.getId()));
-		this.getListaSubGrupoExib().addAll(this.getSubRN().listaSubGru(this.id));
+		Grupo grup;
+		try {
+			grup = (Grupo) event.getObject();
+			this.setGrupo(this.getGruRN().editGru(grup.getIdGrupo()));
+		} catch (Exception e) {
+			this.error("Problemas na edição"+ e.getMessage());
+		}
+		this.getListaSubGrupoExib().addAll(this.getSubRN().listaSubGru(this.getGrupo().getIdGrupo()));
 		habilita();
 		this.setSal(true);
 		this.setAlt(false);

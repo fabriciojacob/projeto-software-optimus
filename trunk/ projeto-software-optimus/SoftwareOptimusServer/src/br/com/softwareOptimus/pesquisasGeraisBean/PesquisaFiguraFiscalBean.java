@@ -56,7 +56,7 @@ public class PesquisaFiguraFiscalBean extends FacesUtil implements Serializable 
 		opcoes.put("contentHeight", 600);
 		opcoes.put("contentWidth", 800);
 		
-		RequestContext.getCurrentInstance().openDialog("/privado/pesquisasGerais/pesquisaSetor", opcoes, null);
+		RequestContext.getCurrentInstance().openDialog("/privado/pesquisasGerais/pesquisaFiguraFiscal", opcoes, null);
 	}
 
 	public GradeTributariaRN getGradeTribRN() {

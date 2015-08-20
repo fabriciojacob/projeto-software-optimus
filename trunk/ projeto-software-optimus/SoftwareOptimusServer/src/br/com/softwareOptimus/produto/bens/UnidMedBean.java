@@ -102,10 +102,14 @@ public class UnidMedBean extends FacesUtil implements Serializable {
 		}
 	}
 
-	public void unidMedidaSelecionado(SelectEvent event) {
+	public void unidMedSelecionado(SelectEvent event) {
 		UnidMed unid;
-		unid = (UnidMed) event.getObject();
-		this.setUnidMed(unid);
+		try {
+			unid = (UnidMed) event.getObject();
+			this.setUnidMed(unid);			
+		} catch (Exception e) {
+			this.error("Problemas na edição"+ e.getMessage());
+		}
 		this.setSal(true);
 		this.setAlt(false);
 		this.setRem(false);

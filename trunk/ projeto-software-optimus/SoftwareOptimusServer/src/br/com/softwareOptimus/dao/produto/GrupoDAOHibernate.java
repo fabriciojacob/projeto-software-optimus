@@ -135,7 +135,7 @@ public class GrupoDAOHibernate extends JpaUtil implements GrupoDAO {
 	public List<Grupo> buscaGrupoPaginacao(Grupo grupo, SubGrupo subGrupo,int first, int pageSize) {
 		StringBuilder sql = new StringBuilder();
 		this.defineCondicao(sql, grupo, subGrupo);
-		Query qry = getEntityManager().createQuery("select g from Grupo g "
+		Query qry = getEntityManager().createQuery("select Distinct g from Grupo g "
 										   + " left join g.subGrupo s ".concat(sql.toString()));
 		this.defineParametros(qry, grupo, subGrupo);
 		qry.setFirstResult(first);

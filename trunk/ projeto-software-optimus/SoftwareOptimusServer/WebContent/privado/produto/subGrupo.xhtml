@@ -26,9 +26,10 @@
 			<p:commandButton value="Excluir" disabled="#{subGrupoBean.rem}"
 				actionListener="#{subGrupoBean.remover}" ajax="grid" />
 
-			<p:commandButton id="consulta" value="Consultar" type="button"
-				ajax="dialog, grid" onclick="PF('dlg3').show();"
-				actionListener="#{subGrupoBean.cancelar}" />
+			<p:commandButton id="consulta" value="Consulta"
+				action="#{pesquisaSubGrupoBean.abrirDialogo}">
+				<p:ajax event="dialogReturn" listener="#{subGrupoBean.subGrupoSelecionado}" update="frmCadSubGrupo"/>
+			</p:commandButton>
 
 			<p:commandButton value="Cancelar"
 				actionListener="#{subGrupoBean.cancelar}" ajax="grid" />
@@ -79,59 +80,6 @@
 					<p:graphicImage name="ajaxloader.gif" />
 				</p:blockUI>
 			</h:panelGrid>
-
-
-			<p:dialog id="dialog" header="Consulta" widgetVar="dlg3" modal="true"
-				height="300" width="650">
-
-				<div align="right">
-					<h:panelGrid columns="1">
-						<p:commandButton value="Pesquisar"
-							actionListener="#{subGrupoBean.buscaSub}" update="gridData">
-						</p:commandButton>
-					</h:panelGrid>
-				</div>
-				<h:panelGrid columns="3" columnClasses="label" cellspacing="3">
-
-					<p:inputText id="texto" value="#{subGrupoBean.busca}" size="40" />
-
-					<p:selectOneMenu id="fConsult" value="#{subGrupoBean.filtro}">
-						<f:selectItem itemLabel="Selecione uma Opção" />
-						<f:selectItem itemLabel="Código" itemValue="id" />
-						<f:selectItem itemLabel="Descrição" itemValue="desc" />
-					</p:selectOneMenu>
-
-				</h:panelGrid>
-				<h:panelGrid id="gridData" columns="1" columnClasses="label, value">
-					<p:blockUI block="gridData" trigger="consulta" />
-					<p:dataTable id="data" value="#{subGrupoBean.listaSubGrupo}"
-						paginator="true" rows="6" var="subGrupo"
-						rowKey="subGrupo.idSubGrupo">
-						<p:column headerText="Código do SubGrupo">
-							<h:outputText value="#{subGrupo.idSubGrupo}" />
-						</p:column>
-
-						<p:column headerText="Descrição">
-							<h:outputText value="#{subGrupo.descricao}" />
-						</p:column>
-
-						<p:column headerText="Selecionar">
-							<p:commandLink id="link" value="Editar" ajax="data"
-								action="#{subGrupoBean.editSub}">
-								<f:setPropertyActionListener value="#{subGrupo.idSubGrupo}"
-									target="#{subGrupoBean.id}" />
-							</p:commandLink>
-						</p:column>
-					</p:dataTable>
-					<p:blockUI block="data" trigger="data">
-        				LOADING<br />
-						<p:graphicImage name="ajaxloader.gif" />
-					</p:blockUI>
-				</h:panelGrid>
-
-			</p:dialog>
-
-
 			<p:dialog id="dialog2" header="Categoria" widgetVar="dlg2"
 				modal="true" height="100" width="400">
 

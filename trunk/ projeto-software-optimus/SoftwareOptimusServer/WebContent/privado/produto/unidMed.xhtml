@@ -28,7 +28,7 @@
 				
 			<p:commandButton id="consulta" value="Consulta"
 				action="#{pesquisaUnidadeMedidaBean.abrirDialogo}">
-				<p:ajax event="dialogReturn" listener="#{unidMedBean.unidMedidaSelecionado}" update="frmCadUnidMed"/>
+				<p:ajax event="dialogReturn" listener="#{unidMedBean.unidMedSelecionado}" update="frmCadUnidMed"/>
 			</p:commandButton>
 
 			<p:commandButton value="Cancelar"

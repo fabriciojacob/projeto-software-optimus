@@ -18,7 +18,6 @@ public abstract class AliquotaBeanAbstract extends FacesUtil{
 	public abstract void alterar();
 	public abstract void remover();
 	public abstract void cancelar();
-	public abstract void buscaAliq();
 	public abstract void editAliq();
 	public abstract void eventTipoCst();
 	public abstract void limpa();
@@ -35,8 +34,7 @@ public abstract class AliquotaBeanAbstract extends FacesUtil{
 	private List<CodigoSituacaoTributaria> cstListEnt;
 	private List<CodigoSituacaoTributaria> cstListSai;
 	private List<Aliquota> aliqList;
-	private String busca, filtro, tipCst, tipTrib, tipCstFixo;
-	private Long id;
+	private String tipCst, tipTrib, tipCstFixo;
 	private boolean sal = true, alt = true, rem = true, tipTri = true,
 			vinculo = true, chkIcm = true, chkIpi = true, chkPisCofins = true,
 			aliq = true, red = true;
@@ -185,14 +183,6 @@ public abstract class AliquotaBeanAbstract extends FacesUtil{
 		this.tipCst = tipCst;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
 	public List<Aliquota> getAliqList() {
 		if(this.aliqList == null){
 			this.aliqList = new ArrayList<Aliquota>();
@@ -202,28 +192,6 @@ public abstract class AliquotaBeanAbstract extends FacesUtil{
 
 	public void setAliqList(List<Aliquota> aliqList) {
 		this.aliqList = aliqList;
-	}
-
-	public String getFiltro() {
-		if(this.filtro == null){
-			this.filtro = new String();
-		}
-		return filtro;
-	}
-
-	public void setFiltro(String filtro) {
-		this.filtro = filtro;
-	}
-
-	public String getBusca() {
-		if(this.busca  == null){
-			this.busca = new String();
-		}
-		return busca;
-	}
-
-	public void setBusca(String busca) {
-		this.busca = busca;
 	}
 
 	public boolean isSal() {
