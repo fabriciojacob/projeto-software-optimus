@@ -148,21 +148,6 @@ public class AliquotaBean extends AliquotaBeanAbstract implements Serializable{
 		desabilita();
 	}
 
-	public void buscaAliq() {
-		limpa();
-		if (!this.getBusca().equals("") && !this.getFiltro().equals("")) {
-			if (this.getFiltro().equals("id")) {
-				this.setAliqList(this.getAliqRN().consultaId(Long.parseLong(this.getBusca())));
-			} else if (this.getFiltro().equals("aliq")) {
-				this.setAliqList(this.getAliqRN().consultaAliq(Double.parseDouble(this.getBusca())));
-			} else if (this.getFiltro().equals("red")) {
-				this.setAliqList(this.getAliqRN().consultaRed(Double.parseDouble(this.getBusca())));
-			}
-		} else {
-			this.setAliqList(this.getAliqRN().lista());
-		}
-	}
-	
 	public void aliquotaSelecionado(SelectEvent event){
 		Aliquota ali;
 		try {
@@ -227,8 +212,6 @@ public class AliquotaBean extends AliquotaBeanAbstract implements Serializable{
 		this.setRem(false);
 		this.setVinculo(false);
 		habilita();
-			
-		
 	}
 
 	public void editAliq() {

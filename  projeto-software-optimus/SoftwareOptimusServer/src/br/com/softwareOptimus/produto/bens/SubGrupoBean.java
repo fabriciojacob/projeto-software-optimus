@@ -7,6 +7,8 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import org.primefaces.event.SelectEvent;
+
 import br.com.softwareOptimus.produto.Categoria;
 import br.com.softwareOptimus.produto.SubGrupo;
 import br.com.softwareOptimus.produto.RN.SubGrupoRN;
@@ -22,13 +24,11 @@ public class SubGrupoBean extends FacesUtil implements Serializable{
 	private List<Categoria> listaCategoria;
 	private List<SubGrupo> listaSubGrupo;
 	private SubGrupoRN subRN;
-	private String busca, filtro;
 	private boolean sal = true;
 	private boolean alt = true;
 	private boolean rem = true;
 	private boolean desc = true;
 	private boolean vig = true;
-	private Long id;
 	private Long idCateg;
 
 	public void novo() {
@@ -113,19 +113,6 @@ public class SubGrupoBean extends FacesUtil implements Serializable{
 		}
 	}
 
-	public void buscaSub() {
-		limpar();
-		if (!this.getBusca().equals("") && (!this.getFiltro().equals(""))) {
-			if (this.getFiltro().equals("id")) {
-				this.setListaSubGrupo(this.getSubRN().consultaId(Long.parseLong(this.getBusca())));
-			} else if (this.getFiltro().equals("desc")) {
-				this.setListaSubGrupo(this.getSubRN().consultaDesc(this.getBusca()));
-			}
-		} else {
-			this.setListaSubGrupo(this.getSubRN().listar());
-		}
-	}
-
 	public void remCategoria() {
 		try {
 			Integer retorno = this.getSubRN().VerificaRemCatSub(this.getSubGrupo(), this.getIdCateg());
@@ -141,8 +128,14 @@ public class SubGrupoBean extends FacesUtil implements Serializable{
 		}
 	}
 
-	public void editSub() {
-		this.setSubGrupo(this.getSubRN().editSub(this.id));
+	public void subGrupoSelecionado(SelectEvent event) {
+		SubGrupo subGrup;
+		try {
+			subGrup = (SubGrupo) event.getObject();
+			this.setSubGrupo(this.getSubRN().editSub(subGrup.getIdSubGrupo()));
+		} catch (Exception e) {
+			this.error("Problemas na edição"+ e.getMessage());
+		}
 		listaCategoria();
 		habilita();
 		this.setSal(true);
@@ -214,36 +207,6 @@ public class SubGrupoBean extends FacesUtil implements Serializable{
 
 	public void setIdCateg(Long idCateg) {
 		this.idCateg = idCateg;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getBusca() {
-		if(this.busca == null){
-			this.busca = new String();
-		}
-		return busca;
-	}
-
-	public String getFiltro() {
-		if(this.filtro == null){
-			this.filtro = new String();
-		}
-		return filtro;
-	}
-
-	public void setBusca(String busca) {
-		this.busca = busca;
-	}
-
-	public void setFiltro(String filtro) {
-		this.filtro = filtro;
 	}
 
 	public boolean isVig() {

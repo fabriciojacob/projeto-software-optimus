@@ -28,9 +28,10 @@
 				disabled="#{gradeTributariaBean.rem}"
 				actionListener="#{gradeTributariaBean.remover}" ajax="grid" />
 
-			<p:commandButton id="consulta" value="Consultar" type="button"
-				ajax="dialog, grid" onclick="PF('dlg1').show();"
-				actionListener="#{gradeTributariaBean.cancelar}" />
+			<p:commandButton id="consulta" value="Consulta"
+				action="#{pesquisaGradeTributariaBean.abrirDialogo}">
+				<p:ajax event="dialogReturn" listener="#{gradeTributariaBean.gradeSelecionado}" update="frmCadGrade"/>
+			</p:commandButton>
 
 			<p:commandButton value="Cancelar"
 				actionListener="#{gradeTributariaBean.cancelar}" ajax="grid" />
@@ -55,58 +56,6 @@
 				onclick="PF('dlg2').show();" />
 
 			<ui:include src="/privado/fiscal/dataTable/gradeTributariaVigenciaDataTable.xhtml" />
-
-			<p:dialog id="dialog1" header="Consulta" widgetVar="dlg1"
-				modal="true" height="300" width="430">
-
-				<div align="right">
-					<h:panelGrid columns="1">
-						<p:commandButton value="Pesquisar"
-							actionListener="#{gradeTributariaBean.buscarGrade}"
-							update="gridData">
-						</p:commandButton>
-					</h:panelGrid>
-				</div>
-				<h:panelGrid columns="3" columnClasses="label" cellspacing="3">
-					<p:inputText id="texto" value="#{gradeTributariaBean.busca}"
-						size="40" />
-
-					<p:selectOneMenu id="fConsult"
-						value="#{gradeTributariaBean.filtro}">/>
-						<f:selectItem itemLabel="Selecione uma Opção" />
-						<f:selectItem itemLabel="Código" itemValue="id" />
-						<f:selectItem itemLabel="Descrição" itemValue="desc" />
-					</p:selectOneMenu>
-
-				</h:panelGrid>
-				<h:panelGrid id="gridData" columns="1" columnClasses="label, value">
-					<p:blockUI block="gridData" trigger="consulta" />
-					<p:dataTable id="data" value="#{gradeTributariaBean.listaGrade}"
-						paginator="true" rows="6" var="grade" rowKey="grade.idGradeTrib">
-
-						<p:column headerText="Código da Grade">
-							<h:outputText value="#{grade.idGradeTrib}" />
-						</p:column>
-
-						<p:column headerText="Descrição">
-							<h:outputText value="#{grade.descricao}" />
-						</p:column>
-
-						<p:column headerText="Selecionar">
-							<p:commandLink id="link" value="Editar"
-								ajax="grid, dialog1, gridGradeVig"
-								action="#{gradeTributariaBean.editGrade}">
-								<f:setPropertyActionListener value="#{grade.idGradeTrib}"
-									target="#{gradeTributariaBean.id}" />
-							</p:commandLink>
-						</p:column>
-					</p:dataTable>
-					<p:blockUI block="data" trigger="data">
-        				LOADING<br />
-						<p:graphicImage name="ajaxloader.gif" />
-					</p:blockUI>
-				</h:panelGrid>
-			</p:dialog>
 
 			<p:dialog id="dialog2" header="Inclusão e Edição da Vigência"
 				widgetVar="dlg2" modal="true" height="320" width="400">

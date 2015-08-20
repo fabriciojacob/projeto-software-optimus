@@ -7,6 +7,8 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import org.primefaces.event.SelectEvent;
+
 import br.com.softwareOptimus.fiscal.Pauta;
 import br.com.softwareOptimus.fiscal.PautaMVA;
 import br.com.softwareOptimus.fiscal.RN.PautaRN;
@@ -22,10 +24,9 @@ public class PautaBean extends FacesUtil implements Serializable{
 	private PautaRN pautaRN;
 	private Boolean sal = true, alt = true, rem = true, vig = true,
 			desc = true;
-	private String busca, filtro;
 	private List<PautaMVA> listaPautaMVA;
 	private List<Pauta> listaPauta;
-	private Long id, idPautaMVA;
+	private Long idPautaMVA;
 
 	public void novo() {
 		this.setSal(false);
@@ -134,25 +135,17 @@ public class PautaBean extends FacesUtil implements Serializable{
 		this.setListaPauta(null);
 		this.setPautaMVA(null);
 		this.setPauta(new Pauta());
-		this.setId(null);
 		this.setIdPautaMVA(null);		
 	}
 
-	public void buscaPauta() {
-		limpar();
-		if (!this.getBusca().equals("") && (!this.getFiltro().equals(""))) {
-			if (this.getFiltro().equals("id")) {
-				this.setListaPauta(this.getPautaRN().consultaId(Long.parseLong(this.getBusca())));
-			} else if (this.getFiltro().equals("desc")) {
-				this.setListaPauta(this.getPautaRN().consultaDesc(this.getBusca()));
-			}
-		} else {
-			this.setListaPauta(this.getPautaRN().listar());
+	public void pautaSelecionado(SelectEvent event) {
+		Pauta pa;
+		try {
+			pa = (Pauta) event.getObject();
+			this.setPauta(this.getPautaRN().editPauta(pa.getIdPauta()));
+		} catch (Exception e) {
+			this.error("Problemas na edição"+ e.getMessage());
 		}
-	}
-
-	public void editPauta() {
-		this.setPauta(this.getPautaRN().editPauta(this.getId()));
 		habilita();
 		listaVigencia();
 		this.setSal(true);
@@ -240,14 +233,6 @@ public class PautaBean extends FacesUtil implements Serializable{
 		this.pautaMVA = pautaMVA;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
 	public List<PautaMVA> getPautaList() {
 		if(this.listaPautaMVA == null){
 			this.listaPautaMVA = new ArrayList<PautaMVA>();
@@ -257,39 +242,6 @@ public class PautaBean extends FacesUtil implements Serializable{
 
 	public void setPautaList(List<PautaMVA> pautaList) {
 		this.listaPautaMVA = pautaList;
-	}
-
-	public String getBusca() {
-		if(this.busca == null){
-			this.busca = new String();
-		}
-		return busca;
-	}
-
-	public void setBusca(String busca) {
-		this.busca = busca;
-	}
-
-	public String getFiltro() {
-		if(this.filtro == null){
-			this.filtro = new String();
-		}
-		return filtro;
-	}
-
-	public void setFiltro(String filtro) {
-		this.filtro = filtro;
-	}
-
-	public String getBuscaPauta() {
-		if(this.busca == null){
-			this.busca = new String();
-		}
-		return busca;
-	}
-
-	public void setBuscaPauta(String buscaPauta) {
-		this.busca = buscaPauta;
 	}
 
 	public Pauta getPauta() {

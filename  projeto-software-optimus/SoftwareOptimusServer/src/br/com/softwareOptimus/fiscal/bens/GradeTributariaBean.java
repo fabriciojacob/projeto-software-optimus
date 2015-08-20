@@ -7,6 +7,8 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import org.primefaces.event.SelectEvent;
+
 import br.com.softwareOptimus.entidades.TipoPessoaJuridica;
 import br.com.softwareOptimus.fiscal.Aliquota;
 import br.com.softwareOptimus.fiscal.GradeTributaria;
@@ -32,8 +34,8 @@ public class GradeTributariaBean extends FacesUtil implements Serializable {
 	private AliquotaRN aliqRN;
 	private PautaRN pautaRN;
 	private GradeTributariaRN gradeRN;
-	private String busca, filtro, tipoEntSai, tipoGrade;
-	private Long id, idGradeVig;
+	private String tipoEntSai, tipoGrade;
+	private Long idGradeVig;
 	private boolean sal = true, alt = true, rem = true, vig = true,
 			desc = true;
 
@@ -110,21 +112,14 @@ public class GradeTributariaBean extends FacesUtil implements Serializable {
 		}
 	}
 
-	public void buscarGrade() {
-		limpar();
-		if (!this.getBusca().equals("") && (!this.getFiltro().equals(""))) {
-			if (this.getFiltro().equals("id")) {
-				this.setListaGrade(this.getGradeRN().consultaId(Long.parseLong(this.getBusca())));
-			} else if (this.getFiltro().equals("desc")) {
-				this.setListaGrade(this.getGradeRN().consultaDesc(this.getBusca()));
-			}
-		} else {
-			this.setListaGrade(this.getGradeRN().listar());
+	public void gradeSelecionado(SelectEvent event) {
+		GradeTributaria gradeTrib;
+		try {
+			gradeTrib = (GradeTributaria) event.getObject();
+			this.setGrade(this.getGradeRN().editGrade(gradeTrib.getIdGradeTrib()));			
+		} catch (Exception e) {
+			this.error("Problemas na edição"+ e.getMessage());
 		}
-	}
-
-	public void editGrade() {
-		this.setGrade(this.getGradeRN().editGrade(this.getId()));
 		listaVigencia();
 		habilita();
 		this.setSal(true);
@@ -331,36 +326,6 @@ public class GradeTributariaBean extends FacesUtil implements Serializable {
 
 	public void setListaGrade(List<GradeTributaria> listaGrade) {
 		this.listaGrade = listaGrade;
-	}
-
-	public String getBusca() {
-		if(this.busca == null){
-			this.busca = new String();
-		}
-		return busca;
-	}
-
-	public void setBusca(String busca) {
-		this.busca = busca;
-	}
-
-	public String getFiltro() {
-		if(this.filtro == null){
-			this.filtro = new String();			
-		}
-		return filtro;
-	}
-
-	public void setFiltro(String filtro) {
-		this.filtro = filtro;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public boolean isSal() {

@@ -109,7 +109,7 @@ public class GradeTributariaDAOHibernate extends JpaUtil implements GradeTributa
 	public List<GradeTributaria> buscaGradeTributariaPaginacao(GradeTributaria gradeTributaria,GradeTributariaVigencia gradeTributariaVigencia, int first,int pageSize) {
 		StringBuilder sql = new StringBuilder();
 		this.defineCondicao(sql, gradeTributaria, gradeTributariaVigencia);
-		Query qry = getEntityManager().createQuery(" select g from GradeTributaria g "
+		Query qry = getEntityManager().createQuery(" select distinct g from GradeTributaria g "
 				                           + " left join g.gradeTributariaVigenciaCollection gV "
 				                           + " left join gV.origem o "
 				                           + " left Join gV.destino d "

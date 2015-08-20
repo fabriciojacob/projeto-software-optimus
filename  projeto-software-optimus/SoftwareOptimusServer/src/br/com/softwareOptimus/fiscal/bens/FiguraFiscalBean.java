@@ -7,6 +7,8 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import org.primefaces.event.SelectEvent;
+
 import br.com.softwareOptimus.fiscal.FiguraFiscal;
 import br.com.softwareOptimus.fiscal.GradeTributaria;
 import br.com.softwareOptimus.fiscal.RN.FiguraFiscalRN;
@@ -121,9 +123,15 @@ public class FiguraFiscalBean extends FacesUtil implements Serializable {
 		desabilita();
 	}
 
-	public void editFigura() {
+	public void figuraFiscalSelecionado(SelectEvent event) {
+		FiguraFiscal figFiscal;
+		try {
+			figFiscal = (FiguraFiscal) event.getObject();
+			this.setFigura(this.getFiguraRN().editFigura(figFiscal.getIdFigura()));			
+		} catch (Exception e) {
+			this.error("Problemas na edição"+ e.getMessage());
+		}
 		this.setListaGrade(null);
-		this.setFigura(this.getFiguraRN().editFigura(this.getId()));
 		this.getListaGrade().addAll(this.getFigura().getGrades());
 		habilita();
 		this.setSal(true);

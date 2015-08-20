@@ -26,9 +26,10 @@
 			<p:commandButton value="Excluir" disabled="#{pautaBean.rem}"
 				actionListener="#{pautaBean.remover}" ajax="frmCadPauta" />
 
-			<p:commandButton id="consulta" value="Consultar" type="button"
-				ajax="dialog, grid" onclick="PF('dlg1').show();"
-				actionListener="#{pautaBean.cancelar}" />
+			<p:commandButton id="consulta" value="Consulta"
+				action="#{pesquisaPautaBean.abrirDialogo}">
+				<p:ajax event="dialogReturn" listener="#{pautaBean.pautaSelecionado}" update="frmCadPauta"/>
+			</p:commandButton>
 
 			<p:commandButton value="Cancelar"
 				actionListener="#{pautaBean.cancelar}" ajax="grid" />
@@ -37,54 +38,6 @@
 
 			<ui:include src="/privado/fiscal/panel/pautaPanel.xhtml" />
 			<ui:include src="/privado/fiscal/dataTable/pautaDataTable.xhtml" />
-
-			<p:dialog id="dialog1" header="Consulta" widgetVar="dlg1"
-				modal="true" height="300" width="430">
-
-				<div align="right">
-					<h:panelGrid columns="1">
-						<p:commandButton value="Pesquisar"
-							actionListener="#{pautaBean.buscaPauta}" update="gridData">
-						</p:commandButton>
-					</h:panelGrid>
-				</div>
-				<h:panelGrid columns="3" columnClasses="label" cellspacing="3">
-					<p:inputText id="texto" value="#{pautaBean.busca}" size="40" />
-
-					<p:selectOneMenu id="fConsult" value="#{pautaBean.filtro}">/>
-						<f:selectItem itemLabel="Selecione uma Opção" />
-						<f:selectItem itemLabel="Código" itemValue="id" />
-						<f:selectItem itemLabel="Descrição" itemValue="desc" />
-					</p:selectOneMenu>
-
-				</h:panelGrid>
-				<h:panelGrid id="gridData" columns="1" columnClasses="label, value">
-					<p:blockUI block="gridData" trigger="consulta" />
-					<p:dataTable id="data" value="#{pautaBean.listaPauta}"
-						paginator="true" rows="6" var="pauta" rowKey="pauta.idPauta">
-
-						<p:column headerText="Código da Pauta">
-							<h:outputText value="#{pauta.idPauta}" />
-						</p:column>
-
-						<p:column headerText="Descrição">
-							<h:outputText value="#{pauta.descricao}" />
-						</p:column>
-
-						<p:column headerText="Selecionar">
-							<p:commandLink id="link" value="Editar" ajax="grid, dialog1"
-								action="#{pautaBean.editPauta}">
-								<f:setPropertyActionListener value="#{pauta.idPauta}"
-									target="#{pautaBean.id}" />
-							</p:commandLink>
-						</p:column>
-					</p:dataTable>
-					<p:blockUI block="data" trigger="data">
-        				LOADING<br />
-						<p:graphicImage name="ajaxloader.gif" />
-					</p:blockUI>
-				</h:panelGrid>
-			</p:dialog>
 
 			<p:dialog id="dialog2" header="Inclusão e Edição da Vigência"
 				widgetVar="dlg2" modal="true" height="250" width="380">

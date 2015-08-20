@@ -7,6 +7,8 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import org.primefaces.event.SelectEvent;
+
 import br.com.softwareOptimus.produto.Grupo;
 import br.com.softwareOptimus.produto.Setor;
 import br.com.softwareOptimus.produto.RN.GrupoRN;
@@ -158,9 +160,15 @@ public class SetorBean extends FacesUtil implements Serializable{
 		}
 	}
 
-	public void editSet() {
+	public void setorSelecionado(SelectEvent event) {
+		Setor set;
+		try {
+			set = (Setor) event.getObject();
+			this.setSetor(this.getSetRN().editSet(set.getIdSetor()));
+		} catch (Exception e) {
+			this.error("Problemas na edição"+ e.getMessage());
+		}
 		this.setListaGrupoExib(null);
-		this.setSetor(this.getSetRN().editSet(this.getId()));
 		this.getListaGrupoExib().addAll(this.getSetor().getGrupo());
 		habilita();
 		this.setSal(true);
